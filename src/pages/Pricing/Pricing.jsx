@@ -96,46 +96,46 @@ export default function Pricing() {
             {plans.map((plan) => (
               <motion.div
                 key={plan.tier}
-                className={`relative flex flex-col rounded-2xl p-6 sm:p-8 2xl:p-10 ${
+                className={`relative flex flex-col rounded-2xl p-5 sm:p-8 2xl:p-10 ${
                   plan.featured
-                    ? 'bg-white border-2 border-[#00685e] lg:scale-105 z-10 overflow-hidden'
-                    : 'bg-white border border-[#bcc9c6]/30 hover:border-[#67d9ca] transition-colors duration-300'
+                    ? 'bg-white border-2 border-[#00685e] lg:scale-105 z-10 overflow-hidden shadow-xl'
+                    : 'bg-white border border-[#bcc9c6]/40 hover:border-[#67d9ca] transition-colors duration-300'
                 }`}
                 style={{ boxShadow: plan.featured ? '0px 10px 40px rgba(18,155,142,0.15)' : 'var(--shadow-card)' }}
                 variants={fadeUp}
               >
                 {plan.featured && (
-                  <div className="absolute top-0 right-0 bg-[#00685e] text-white px-5 py-1 text-xs font-bold rounded-bl-xl"
+                  <div className="absolute top-0 right-0 bg-[#00685e] text-white px-4 py-1 text-[11px] sm:text-xs font-bold rounded-bl-xl tracking-wider"
                     style={{ fontFamily: "'Inter', sans-serif" }}>
                     BEST VALUE
                   </div>
                 )}
 
-                <div className="mb-6 sm:mb-8">
+                <div className="mb-5 sm:mb-8">
                   <span className="text-xs sm:text-sm font-bold uppercase tracking-widest"
                     style={{ color: plan.featured ? '#00685e' : '#555e5c', fontFamily: "'Inter', sans-serif" }}>
                     {plan.tier}
                   </span>
                   <div className="mt-2 flex items-baseline gap-1 flex-wrap">
-                    <span className="text-[36px] sm:text-[40px] 2xl:text-[48px] font-bold text-[#121d1f]"
+                    <span className="text-[32px] sm:text-[40px] 2xl:text-[48px] font-bold text-[#121d1f]"
                       style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", letterSpacing: '-0.02em' }}>
                       {plan.price}
                     </span>
                     {plan.period && <span className="text-[#3d4947] text-sm sm:text-base">{plan.period}</span>}
                   </div>
-                  <p className="mt-3 sm:mt-4 text-sm sm:text-base 2xl:text-lg text-[#3d4947]"
+                  <p className="mt-2.5 sm:mt-4 text-xs sm:text-base 2xl:text-lg text-[#3d4947]"
                     style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
                     {plan.description}
                   </p>
                 </div>
 
-                <div className="flex-grow space-y-3 sm:space-y-4 mb-8 sm:mb-10">
+                <div className="flex-grow space-y-3 sm:space-y-4 mb-6 sm:mb-10">
                   {plan.features.map((feat) => (
                     <div key={feat.label} className="flex items-start gap-2.5 sm:gap-3">
                       {feat.included
-                        ? <CheckCircle2 size={20} className="text-[#00685e] shrink-0 mt-0.5" />
-                        : <XCircle     size={20} className="text-[#bcc9c6] shrink-0 mt-0.5" />}
-                      <span className={`text-sm sm:text-base 2xl:text-lg ${feat.included ? 'text-[#121d1f]' : 'text-[#6d7a77]'}`}
+                        ? <CheckCircle2 size={18} className="text-[#00685e] shrink-0 mt-0.5" />
+                        : <XCircle     size={18} className="text-[#bcc9c6] shrink-0 mt-0.5" />}
+                      <span className={`text-xs sm:text-base 2xl:text-lg ${feat.included ? 'text-[#121d1f]' : 'text-[#6d7a77]'}`}
                         style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
                         {feat.label}
                       </span>
@@ -145,7 +145,7 @@ export default function Pricing() {
 
                 <div>
                   <button
-                    className={`w-full py-3.5 sm:py-4 2xl:py-5 px-4 rounded-full font-bold text-sm 2xl:text-base transition-all active:scale-95 ${
+                    className={`w-full py-3.5 sm:py-4 2xl:py-5 min-h-[48px] px-4 rounded-full font-bold text-xs sm:text-sm 2xl:text-base transition-all active:scale-95 ${
                       plan.featured
                         ? 'bg-[#00685e] text-white hover:opacity-90 shadow-lg'
                         : 'border-2 border-[#67d9ca] text-[#00685e] hover:bg-[#eaf6f8]'
@@ -155,7 +155,7 @@ export default function Pricing() {
                     {plan.cta}
                   </button>
                   {plan.featured && (
-                    <p className="text-center mt-3 text-xs text-[#3d4947] opacity-70" style={{ fontFamily: "'Inter', sans-serif" }}>
+                    <p className="text-center mt-2.5 text-[11px] text-[#3d4947] opacity-70" style={{ fontFamily: "'Inter', sans-serif" }}>
                       No credit card required for 30 days
                     </p>
                   )}

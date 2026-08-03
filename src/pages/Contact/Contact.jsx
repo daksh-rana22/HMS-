@@ -68,18 +68,18 @@ export default function Contact() {
             viewport={{ once: true }}
             transition={{ duration: 0.7 }}
           >
-            <div className="card-frosted p-6 md:p-10 rounded-2xl">
+            <div className="card-frosted p-5 sm:p-8 md:p-10 rounded-2xl">
               <h2
-                className="text-2xl font-semibold text-[#121d1f] mb-6"
+                className="text-xl sm:text-2xl font-semibold text-[#121d1f] mb-5 sm:mb-6"
                 style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}
               >
                 Send us a Message
               </h2>
-              <form onSubmit={handleSubmit} className="space-y-6">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <form onSubmit={handleSubmit} className="space-y-5 sm:space-y-6">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-5 sm:gap-6">
                   <div className="space-y-1">
                     <label
-                      className="text-sm text-[#3d4947] ml-1"
+                      className="text-xs sm:text-sm font-medium text-[#3d4947] ml-1"
                       htmlFor="name"
                       style={{ fontFamily: "'Inter', sans-serif" }}
                     >
@@ -98,7 +98,7 @@ export default function Contact() {
                   </div>
                   <div className="space-y-1">
                     <label
-                      className="text-sm text-[#3d4947] ml-1"
+                      className="text-xs sm:text-sm font-medium text-[#3d4947] ml-1"
                       htmlFor="email"
                       style={{ fontFamily: "'Inter', sans-serif" }}
                     >
@@ -119,7 +119,7 @@ export default function Contact() {
 
                 <div className="space-y-1">
                   <label
-                    className="text-sm text-[#3d4947] ml-1"
+                    className="text-xs sm:text-sm font-medium text-[#3d4947] ml-1"
                     htmlFor="facility"
                     style={{ fontFamily: "'Inter', sans-serif" }}
                   >
@@ -138,7 +138,7 @@ export default function Contact() {
 
                 <div className="space-y-1">
                   <label
-                    className="text-sm text-[#3d4947] ml-1"
+                    className="text-xs sm:text-sm font-medium text-[#3d4947] ml-1"
                     htmlFor="message"
                     style={{ fontFamily: "'Inter', sans-serif" }}
                   >
@@ -147,7 +147,7 @@ export default function Contact() {
                   <textarea
                     id="message"
                     name="message"
-                    rows={5}
+                    rows={4}
                     placeholder="How can we help your medical practice today?"
                     required
                     value={formData.message}
@@ -159,7 +159,7 @@ export default function Contact() {
                 <button
                   type="submit"
                   disabled={sending}
-                  className={`inline-flex items-center gap-2 px-10 py-4 rounded-full text-sm font-bold shadow-md active:scale-95 transition-all duration-200 ${
+                  className={`w-full sm:w-auto inline-flex items-center justify-center gap-2 px-8 py-3.5 min-h-[48px] rounded-full text-xs sm:text-sm font-bold shadow-md active:scale-95 transition-all duration-200 ${
                     sent
                       ? 'bg-[#2d685e] text-white'
                       : 'bg-[#00685e] text-white hover:bg-[#008378]'

@@ -83,20 +83,20 @@ export default function Footer() {
 
 function FooterCol({ title, links, isRouterLink }) {
   return (
-    <div className="space-y-5">
+    <div className="space-y-4">
       <h4
-        className="text-[#e7f3f5] font-bold text-xs 2xl:text-sm uppercase tracking-wider"
+        className="text-[#e7f3f5] font-bold text-xs 2xl:text-sm uppercase tracking-wider border-b border-[#6d7a77]/20 pb-2 sm:border-b-0 sm:pb-0"
         style={{ fontFamily: "'Inter', sans-serif" }}
       >
         {title}
       </h4>
-      <ul className="space-y-3">
+      <ul className="space-y-2.5">
         {links.map((link) => (
           <li key={link.name}>
             {isRouterLink ? (
               <Link
                 to={link.path}
-                className="text-[#bcc9c6] hover:text-[#67d9ca] transition-colors text-sm 2xl:text-base"
+                className="text-[#bcc9c6] hover:text-[#67d9ca] transition-colors text-sm 2xl:text-base inline-block py-1 min-h-[36px] flex items-center"
                 style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}
               >
                 {link.name}
@@ -104,7 +104,7 @@ function FooterCol({ title, links, isRouterLink }) {
             ) : (
               <a
                 href={link.path}
-                className="text-[#bcc9c6] hover:text-[#67d9ca] transition-colors text-sm 2xl:text-base"
+                className="text-[#bcc9c6] hover:text-[#67d9ca] transition-colors text-sm 2xl:text-base inline-block py-1 min-h-[36px] flex items-center"
                 style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}
               >
                 {link.name}
