@@ -300,7 +300,7 @@ export default function BillingAccounts() {
                       <div className="p-6 rounded-3xl border-2 border-dashed border-[#bcc9c6]/70 bg-white/70 text-center hover:bg-white hover:border-[#00685e]/50 shadow-sm hover:shadow-md">
                         <span className="text-xs sm:text-sm font-mono font-bold text-[#00685e] flex items-center justify-center gap-2">
                           <span className="material-symbols-outlined text-base">visibility</span>
-                          Click step {topic.id} to inspect full screen image
+                          Click to view image
                         </span>
                       </div>
                     </div>

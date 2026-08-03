@@ -333,22 +333,25 @@ export default function ReportsAnalytics() {
                         {/* Header Bar */}
                         <div 
                           onClick={() => handleTopicSelect(topic.id)}
-                          className="p-5 sm:p-6 cursor-pointer flex items-center justify-between gap-4"
+                          className="p-5 sm:p-7 cursor-pointer flex items-center justify-between gap-4 select-none"
                         >
-                          <div className="flex items-center gap-4">
-                            <span className={`text-xs font-mono font-extrabold px-3 py-1 rounded-full ${
-                              isActive ? 'bg-[#00685e] text-white' : 'bg-[#eaf6f8] text-[#00685e]'
+                          <div className="flex items-center gap-4 min-w-0">
+                            {/* Number Badge (01, 02, 03...) */}
+                            <div className={`w-11 h-11 rounded-2xl flex items-center justify-center text-sm sm:text-base font-mono font-extrabold shrink-0 transition-all ${
+                              isActive
+                                ? 'bg-[#00685e] text-white shadow-lg'
+                                : 'bg-[#effcfe] text-[#00685e] border border-[#00685e]/30'
                             }`}>
                               {topic.id}
-                            </span>
+                            </div>
 
-                            <div>
-                              <h3 className="text-base sm:text-lg font-bold text-[#121d1f] flex flex-wrap items-center gap-2">
-                                {topic.title}
-                              </h3>
-                              <div className="flex flex-wrap gap-1.5 mt-1">
+                            <div className="min-w-0">
+                              <div className="flex items-center flex-wrap gap-2">
+                                <h3 className="text-base sm:text-lg lg:text-xl font-extrabold text-[#121d1f] tracking-tight">
+                                  {topic.title}
+                                </h3>
                                 {topic.tags.map((tag, idx) => (
-                                  <span key={idx} className={`text-[10px] font-extrabold px-2 py-0.5 rounded-md border ${tag.color}`}>
+                                  <span key={idx} className={`text-[10px] sm:text-[11px] font-extrabold px-2 py-0.5 rounded-md border ${tag.color}`}>
                                     {tag.text}
                                   </span>
                                 ))}
@@ -416,7 +419,7 @@ export default function ReportsAnalytics() {
                           <div className="p-6 rounded-3xl border-2 border-dashed border-[#bcc9c6]/70 bg-white/70 text-center hover:bg-white hover:border-[#00685e]/50 shadow-sm hover:shadow-md">
                             <span className="text-xs sm:text-sm font-mono font-bold text-[#00685e] flex items-center justify-center gap-2">
                               <span className="material-symbols-outlined text-base">visibility</span>
-                              Click step {topic.id} to inspect full screen view
+                              Click to view image
                             </span>
                           </div>
                         </div>
