@@ -92,9 +92,8 @@ export default function Navbar() {
                         className="absolute left-1/2 -translate-x-1/2 top-full pt-2 w-80 z-50 pointer-events-auto"
                       >
                         <div className="bg-white/95 backdrop-blur-2xl rounded-2xl shadow-[0_20px_50px_rgba(0,104,94,0.22)] border border-[#00685e]/20 p-2.5 space-y-1">
-                          <div className="px-3 py-1.5 text-[10px] font-mono uppercase tracking-wider text-[#6d7a77] font-bold border-b border-[#bcc9c6]/30 mb-1 flex items-center justify-between">
+                          <div className="px-3 py-1.5 text-[10px] font-mono uppercase tracking-wider text-[#6d7a77] font-bold border-b border-[#bcc9c6]/30 mb-1">
                             <span>System Modules</span>
-                            <span className="text-[#00685e] bg-[#afecde]/60 px-2 py-0.5 rounded-full text-[9px] lowercase font-semibold">5 Sub-Apps</span>
                           </div>
 
                           {link.children.map((child) => (
