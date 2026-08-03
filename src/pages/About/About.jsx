@@ -272,11 +272,11 @@ export default function About() {
               allowing them to focus entirely on patient recovery.
             </p>
             <div className="flex flex-col sm:flex-row flex-wrap justify-center gap-3 sm:gap-4">
-              <button className="bg-[#00685e] text-white px-10 sm:px-12 py-3.5 sm:py-4 2xl:py-5 rounded-full text-sm 2xl:text-base font-bold shadow-lg hover:opacity-90 active:scale-95 transition-all"
+              <button className="w-full sm:w-auto bg-[#00685e] text-white px-8 sm:px-12 py-3.5 sm:py-4 2xl:py-5 min-h-[48px] rounded-full text-xs sm:text-sm 2xl:text-base font-bold shadow-lg hover:opacity-90 active:scale-95 transition-all flex items-center justify-center"
                 style={{ fontFamily: "'Inter', sans-serif" }}>
                 Book a Demo Today
               </button>
-              <button className="border border-[#bcc9c6] text-[#00685e] px-10 sm:px-12 py-3.5 sm:py-4 2xl:py-5 rounded-full text-sm 2xl:text-base font-bold hover:bg-[#eaf6f8] active:scale-95 transition-all"
+              <button className="w-full sm:w-auto border border-[#bcc9c6] text-[#00685e] px-8 sm:px-12 py-3.5 sm:py-4 2xl:py-5 min-h-[48px] rounded-full text-xs sm:text-sm 2xl:text-base font-bold hover:bg-[#eaf6f8] active:scale-95 transition-all flex items-center justify-center"
                 style={{ fontFamily: "'Inter', sans-serif" }}>
                 View Product Tour
               </button>

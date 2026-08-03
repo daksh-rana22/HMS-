@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import { Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import { pageTransition } from '../../utils/animations'
 
@@ -378,6 +379,39 @@ const itBillingThreshold = [
   { category: 'Hospital Employee Family', maxDiscount: '25%', maxCredit: '₹25,000', status: 'Enforced' },
 ]
 
+// ── IPD SHOWCASE DATA ──
+const ipdAdmissions = [
+  { id: 'IPD-2026-1041', patient: 'Ramesh Verma', ward: 'General Ward', bed: 'BED-04', doctor: 'Dr. Avanish Dubey', dept: 'Neurology', status: 'Admitted' },
+  { id: 'IPD-2026-1039', patient: 'Sunita Devi', ward: 'Semi Deluxe', bed: 'BED-12', doctor: 'Dr. Kumar', dept: 'Cardiology', status: 'Admitted' },
+  { id: 'IPD-2026-1037', patient: 'Mohan Lal', ward: 'ICU', bed: 'ICU-02', doctor: 'Dr. Meera Verma', dept: 'Pediatrics', status: 'Critical' },
+  { id: 'IPD-2026-1034', patient: 'Priya Singh', ward: 'Deluxe Room', bed: 'DLX-03', doctor: 'Dr. Rajesh Sharma', dept: 'Orthopedics', status: 'Stable' },
+  { id: 'IPD-2026-1031', patient: 'Anita Gupta', ward: 'A/C Room', bed: 'AC-07', doctor: 'Dr. Sunita Rao', dept: 'Gynecology', status: 'Admitted' },
+]
+
+const ipdBedMatrix = [
+  { ward: 'General Ward', total: 40, occupied: 34, available: 6, icu: false },
+  { ward: 'Semi Deluxe', total: 20, occupied: 16, available: 4, icu: false },
+  { ward: 'Deluxe Room', total: 15, occupied: 11, available: 4, icu: false },
+  { ward: 'A/C Room', total: 10, occupied: 8, available: 2, icu: false },
+  { ward: 'ICU / NICU', total: 12, occupied: 9, available: 3, icu: true },
+]
+
+const ipdNurseTasks = [
+  { task: 'Vitals Check', patient: 'Ramesh Verma (BED-04)', time: '08:00 AM', status: 'Done' },
+  { task: 'IV Drip Change', patient: 'Mohan Lal (ICU-02)', time: '09:30 AM', status: 'Done' },
+  { task: 'Medication Round', patient: 'Sunita Devi (BED-12)', time: '11:00 AM', status: 'Pending' },
+  { task: 'Doctor Round Note', patient: 'Priya Singh (DLX-03)', time: '12:00 PM', status: 'Pending' },
+  { task: 'Discharge Summary', patient: 'Anita Gupta (AC-07)', time: '02:00 PM', status: 'Pending' },
+]
+
+const ipdAccountingData = [
+  { label: 'Advance Collected', amount: '₹1,45,000', type: 'credit' },
+  { label: 'Services Billed', amount: '₹3,82,500', type: 'credit' },
+  { label: 'TPA Claims Pending', amount: '₹98,000', type: 'pending' },
+  { label: 'Refunds Issued', amount: '₹12,200', type: 'debit' },
+  { label: 'Net Revenue (IPD)', amount: '₹5,27,500', type: 'net' },
+]
+
 // ── REST OF CORE MODULES ──
 const restModules = [
   {
@@ -406,6 +440,7 @@ export default function Modules() {
   const [billingActiveTab, setBillingActiveTab] = useState(0)
   const [clinicalActiveTab, setClinicalActiveTab] = useState(0)
   const [reportsActiveTab, setReportsActiveTab] = useState(0)
+  const [ipdActiveTab, setIpdActiveTab] = useState(0)
   
   // Auto-rotating state for IT Administration (0 to 17 - ALL 18 FIELDS FROM USER SCREENSHOT!)
   const [itActiveTab, setItActiveTab] = useState(0)
@@ -455,6 +490,16 @@ export default function Modules() {
     { id: 12, key: 'rapid', label: 'Rapid Consultation', icon: 'medical_services' },
   ]
 
+  useEffect(() => {
+    const timer = setInterval(() => setIpdActiveTab((prev) => (prev + 1) % 2), 5000)
+    return () => clearInterval(timer)
+  }, [ipdActiveTab])
+
+  const ipdTabs = [
+    { id: 0, key: 'nursedashboard', label: 'Nurse Dashboard' },
+    { id: 1, key: 'accounting', label: 'Accounting' },
+  ]
+
   const reportsTabs = [
     { id: 0, key: 'doctorperf', label: 'Doctor Consultation Performance', icon: 'analytics' },
     { id: 1, key: 'opdreg', label: 'OPD Registration Summary', icon: 'assignment' },
@@ -497,268 +542,45 @@ export default function Modules() {
       <main className="site-wrapper pt-24 sm:pt-28 md:pt-32 2xl:pt-40 pb-16 sm:pb-20 2xl:pb-28">
 
         {/* Header */}
-        <motion.header className="max-w-3xl 2xl:max-w-4xl mb-10 sm:mb-14 2xl:mb-20"
+        <motion.header className="max-w-3xl 2xl:max-w-5xl mb-10 sm:mb-14 2xl:mb-20"
           initial="hidden" animate="visible" variants={stagger}>
           <motion.div
-            className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#afecde] text-[#326c62] text-sm mb-4"
+            className="inline-flex items-center gap-2 px-3.5 sm:px-4 py-1.5 rounded-full bg-[#afecde]/80 border border-[#00685e]/20 text-[#326c62] text-xs sm:text-sm font-semibold mb-4 sm:mb-5 shadow-sm"
             style={{ fontFamily: "'Inter', sans-serif" }} variants={fadeUp}>
-            <span className="material-symbols-outlined text-base sm:text-lg">apps</span>
-            <span className="font-medium text-xs sm:text-sm">Interactive Live Dashboard Modules</span>
+            <span className="material-symbols-outlined text-base sm:text-lg text-[#00685e]">apps</span>
+            <span>Enterprise Modular Platform</span>
           </motion.div>
-          <motion.h1 className="heading-hero text-[#00685e] mb-4 sm:mb-6" variants={fadeUp}>
+          <motion.h1 className="heading-hero text-[#00685e] mb-4 sm:mb-6 leading-tight" variants={fadeUp}>
             Comprehensive Hospital Management Ecosystem
           </motion.h1>
-          <motion.p className="text-description text-[#3d4947]" variants={fadeUp}>
-            Explore our 5 interactive live modules — Laboratory, Billing & Accounts, Clinical, Reports & Analytics, and IT Administration (all 18 sub-modules) — featuring auto-rotating live dashboard screens (every 5 seconds with fixed uniform card height) plus IPD.
+          <motion.p className="text-description text-[#3d4947] text-sm sm:text-base lg:text-lg leading-relaxed mb-6 sm:mb-8" variants={fadeUp}>
+            Empower every department with specialized, interconnected clinical and administrative software modules. Explore live interactive dashboards for <strong>Clinical EMR</strong>, <strong>18 IT Administration Masters</strong>, <strong>Analytics & Reports</strong>, <strong>IPD Inpatient Suite</strong>, <strong>Billing & Accounts</strong>, and <strong>Laboratory LIS</strong> — built to scale from specialty clinics to multi-chain hospital networks.
           </motion.p>
+
+          {/* Quick Feature Pills Bar */}
+          <motion.div className="flex items-center gap-2 overflow-x-auto no-scrollbar py-1 sm:py-0 sm:flex-wrap" variants={fadeUp}>
+            <div className="px-3 py-1.5 rounded-xl bg-white border border-[#bcc9c6]/40 text-xs font-bold text-[#00685e] shadow-sm flex items-center gap-1.5">
+              <span className="material-symbols-outlined text-sm">stethoscope</span> Clinical EMR
+            </div>
+            <div className="px-3 py-1.5 rounded-xl bg-white border border-[#bcc9c6]/40 text-xs font-bold text-[#00685e] shadow-sm flex items-center gap-1.5">
+              <span className="material-symbols-outlined text-sm">admin_panel_settings</span> 18 IT Masters
+            </div>
+            <div className="px-3 py-1.5 rounded-xl bg-white border border-[#bcc9c6]/40 text-xs font-bold text-[#00685e] shadow-sm flex items-center gap-1.5">
+              <span className="material-symbols-outlined text-sm">analytics</span> Analytics & BI
+            </div>
+            <div className="px-3 py-1.5 rounded-xl bg-white border border-[#bcc9c6]/40 text-xs font-bold text-[#00685e] shadow-sm flex items-center gap-1.5">
+              <span className="material-symbols-outlined text-sm">hotel</span> IPD Bed Matrix
+            </div>
+            <div className="px-3 py-1.5 rounded-xl bg-white border border-[#bcc9c6]/40 text-xs font-bold text-[#00685e] shadow-sm flex items-center gap-1.5">
+              <span className="material-symbols-outlined text-sm">receipt_long</span> Billing & POS
+            </div>
+            <div className="px-3 py-1.5 rounded-xl bg-white border border-[#bcc9c6]/40 text-xs font-bold text-[#00685e] shadow-sm flex items-center gap-1.5">
+              <span className="material-symbols-outlined text-sm">biotech</span> Laboratory LIS
+            </div>
+          </motion.div>
         </motion.header>
 
-        {/* ── 1. LABORATORY SHOWCASE ── */}
-        <motion.div
-          className="card-frosted rounded-2xl sm:rounded-3xl p-5 sm:p-6 2xl:p-10 mb-8 sm:mb-10 2xl:mb-14 shadow-md border border-[#bcc9c6]/40 relative overflow-hidden"
-          initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.1 }} variants={fadeUp}
-        >
-          {/* Background Image Overlay - Increased Visibility */}
-          <img 
-            src="/images/lab_bg_soft.png" 
-            alt="Laboratory background" 
-            className="absolute inset-0 w-full h-full object-cover opacity-35 pointer-events-none mix-blend-multiply transition-opacity duration-700" 
-          />
-          <div className="absolute inset-0 bg-gradient-to-r from-[#effcfe]/60 via-white/35 to-[#effcfe]/60 pointer-events-none" />
-
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 2xl:gap-8 items-stretch relative z-10">
-            <div className="lg:col-span-5 flex flex-col justify-between h-full space-y-4 2xl:space-y-6">
-              <div>
-                <div className="flex items-center justify-between mb-3 2xl:mb-4">
-                  <div className="w-12 h-12 2xl:w-14 2xl:h-14 module-badge-icon rounded-xl 2xl:rounded-2xl flex items-center justify-center">
-                    <span className="material-symbols-outlined text-[#00685e] text-2xl 2xl:text-3xl">biotech</span>
-                  </div>
-                  <span className="inline-flex items-center px-2.5 py-1 2xl:px-3.5 2xl:py-1.5 rounded-full bg-[#afecde] text-[#326c62] text-[11px] 2xl:text-xs font-semibold">
-                    ISO 15189 Compliant
-                  </span>
-                </div>
-
-                <div className="text-[11px] 2xl:text-xs font-bold uppercase tracking-wider text-[#00685e] mb-1">DIAGNOSTICS & SPECIMEN WORKFLOW</div>
-                <h2 className="text-2xl sm:text-3xl 2xl:text-4xl font-bold text-[#121d1f] mb-2 sm:mb-3">Laboratory</h2>
-                <p className="text-xs sm:text-sm 2xl:text-base text-[#3d4947] leading-relaxed mb-4 2xl:mb-6 bg-white/25 backdrop-blur-sm p-2.5 sm:p-3 2xl:p-4 rounded-xl border border-white/30">
-                  Streamline lab operations with automated test ordering, sample tracking, result management, and seamless clinical integration.
-                </p>
-
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 2xl:gap-3 mb-4 2xl:mb-6">
-                  {['Automated Sample Tracking', 'HL7 & LIS Integration', 'Abnormal Result Flagging', 'Barcoded Specimen Management', 'OPD Lab Orders Sync', 'Instant PDF Report Generation'].map((feat) => (
-                    <div key={feat} className="flex items-center gap-1.5 2xl:gap-2 text-xs 2xl:text-sm text-[#121d1f] font-medium">
-                      <span className="material-symbols-outlined text-[#00685e] text-sm 2xl:text-base">check_circle</span>
-                      {feat}
-                    </div>
-                  ))}
-                </div>
-              </div>
-
-              <div className="pt-1">
-                <button className="inline-flex items-center gap-2 bg-[#00685e] text-white px-5 py-2.5 2xl:px-6 2xl:py-3 rounded-full text-xs sm:text-sm 2xl:text-base font-bold shadow-md hover:bg-[#005049] transition-all">
-                  Explore Laboratory Features <span className="material-symbols-outlined text-sm 2xl:text-base">arrow_forward</span>
-                </button>
-              </div>
-            </div>
-
-            <div className="lg:col-span-7 bg-white/95 backdrop-blur-sm rounded-2xl border border-[#bcc9c6]/40 shadow-sm overflow-hidden flex flex-col justify-between h-[380px] sm:h-[400px] 2xl:h-[480px] 3xl:h-[500px] relative z-10">
-              <div className="bg-[#effcfe] px-4 py-3 border-b border-[#bcc9c6]/30 flex flex-wrap items-center justify-between gap-2 text-xs text-[#3d4947] shrink-0">
-                <div className="flex items-center gap-2">
-                  <span className="material-symbols-outlined text-sm text-[#00685e]">home</span>
-                  <span>Home &gt; Reception &gt;</span>
-                  <span className="font-bold text-[#00685e]">Service Orders</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <span className="px-2.5 py-1 bg-white border border-[#bcc9c6]/30 rounded-lg text-[11px] font-semibold text-[#00685e]">📅 Select Date</span>
-                </div>
-              </div>
-
-              <div className="flex flex-col sm:flex-row flex-1 overflow-hidden">
-                <div className="w-full sm:w-44 bg-[#008378] text-white p-3 space-y-1 shrink-0 text-xs overflow-y-auto custom-scrollbar">
-                  <div className="flex items-center gap-2 p-2 bg-[#00685e] rounded-lg font-bold">
-                    <span className="material-symbols-outlined text-sm">biotech</span>
-                    <span>Laboratory</span>
-                  </div>
-                  <div className="pl-6 py-1 text-[#afecde] font-semibold">↳ OPD Lab Orders</div>
-                  <div className="flex items-center gap-2 p-2 hover:bg-white/10 rounded-lg opacity-80">Billing & Accounts</div>
-                  <div className="flex items-center gap-2 p-2 hover:bg-white/10 rounded-lg opacity-80">Clinical</div>
-                  <div className="flex items-center gap-2 p-2 hover:bg-white/10 rounded-lg opacity-80">Reports</div>
-                </div>
-
-                <div className="flex-1 p-3 overflow-x-auto overflow-y-auto flex flex-col justify-between">
-                  <div>
-                    <div className="flex items-center justify-between mb-2">
-                      <h4 className="text-sm font-bold text-[#121d1f]">Service Orders</h4>
-                      <span className="px-2 py-0.5 bg-[#afecde] text-[#326c62] rounded text-[10px] font-bold">LIVE SYNC</span>
-                    </div>
-
-                    <table className="w-full text-left border-collapse text-[11px]">
-                      <thead>
-                        <tr className="border-b border-[#bcc9c6]/30 text-[#00685e] font-bold uppercase">
-                          <th className="py-1.5 px-1">Patient</th>
-                          <th className="py-1.5 px-1">Ordered At</th>
-                          <th className="py-1.5 px-1">Doctor</th>
-                          <th className="py-1.5 px-1">Status</th>
-                        </tr>
-                      </thead>
-                      <tbody className="divide-y divide-[#bcc9c6]/20">
-                        {labOrders.map((order) => (
-                          <tr key={order.id}>
-                            <td className="py-1.5 px-1 font-semibold">{order.name} <div className="text-[9px] text-[#6d7a77]">{order.id}</div></td>
-                            <td className="py-1.5 px-1 text-[#3d4947] whitespace-nowrap">{order.date}</td>
-                            <td className="py-1.5 px-1 text-[#3d4947]">{order.doctor}</td>
-                            <td className="py-1.5 px-1"><span className="px-2 py-0.5 rounded-full bg-[#afecde] text-[#326c62] font-bold text-[10px]">• {order.status}</span></td>
-                          </tr>
-                        ))}
-                      </tbody>
-                    </table>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </motion.div>
-
-        {/* ── 2. BILLING & ACCOUNTS SHOWCASE ── */}
-        <motion.div
-          className="card-frosted rounded-2xl sm:rounded-3xl p-5 sm:p-6 2xl:p-10 mb-8 sm:mb-10 2xl:mb-14 shadow-md border border-[#bcc9c6]/40 relative overflow-hidden"
-          initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.1 }} variants={fadeUp}
-        >
-          {/* Background Image Overlay - Enhanced High Visibility */}
-          <img 
-            src="/images/billing_bg_soft.png" 
-            alt="Billing & Accounts background" 
-            className="absolute inset-0 w-full h-full object-cover opacity-55 pointer-events-none mix-blend-multiply transition-opacity duration-700" 
-          />
-          <div className="absolute inset-0 bg-gradient-to-r from-[#effcfe]/45 via-white/20 to-[#effcfe]/45 pointer-events-none" />
-
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 2xl:gap-8 items-stretch relative z-10">
-            <div className="lg:col-span-5 flex flex-col justify-between h-full space-y-4 2xl:space-y-6">
-              <div>
-                <div className="flex items-center justify-between mb-3 2xl:mb-4">
-                  <div className="w-12 h-12 2xl:w-14 2xl:h-14 module-badge-icon rounded-xl 2xl:rounded-2xl flex items-center justify-center">
-                    <span className="material-symbols-outlined text-[#00685e] text-2xl 2xl:text-3xl">receipt_long</span>
-                  </div>
-                  <span className="inline-flex items-center px-2.5 py-1 2xl:px-3.5 2xl:py-1.5 rounded-full bg-[#afecde] text-[#326c62] text-[11px] 2xl:text-xs font-semibold">
-                    Real-time Audit Trail
-                  </span>
-                </div>
-
-                <div className="text-[11px] 2xl:text-xs font-bold uppercase tracking-wider text-[#00685e] mb-1">REVENUE CYCLE & FISCAL MANAGEMENT</div>
-                <h2 className="text-2xl sm:text-3xl 2xl:text-4xl font-bold text-[#121d1f] mb-2 sm:mb-3">Billing & Accounts</h2>
-                <p className="text-xs sm:text-sm 2xl:text-base text-[#3d4947] leading-relaxed mb-4 2xl:mb-6 bg-white/25 backdrop-blur-sm p-2.5 sm:p-3 2xl:p-4 rounded-xl border border-white/30">
-                  Comprehensive financial management including invoicing, insurance claims, ledger master, GST & vouchers.
-                </p>
-
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 2xl:gap-3 mb-4 2xl:mb-6">
-                  {['Insurance Claims Engine', 'Multi-currency POS Billing', 'Automated Tariff Lists', 'Revenue Cycle Analytics', 'Account Groups & Ledgers', 'GST & Voucher Masters'].map((feat) => (
-                    <div key={feat} className="flex items-center gap-1.5 2xl:gap-2 text-xs 2xl:text-sm text-[#121d1f] font-medium">
-                      <span className="material-symbols-outlined text-[#00685e] text-sm 2xl:text-base">check_circle</span>
-                      {feat}
-                    </div>
-                  ))}
-                </div>
-              </div>
-
-              <div className="pt-1">
-                <button className="inline-flex items-center gap-2 bg-[#008378] text-white px-5 py-2.5 2xl:px-6 2xl:py-3 rounded-full text-xs sm:text-sm 2xl:text-base font-bold shadow-md hover:bg-[#00685e] transition-all">
-                  Explore Billing & Accounts Features <span className="material-symbols-outlined text-sm 2xl:text-base">arrow_forward</span>
-                </button>
-              </div>
-            </div>
-
-            <div className="lg:col-span-7 bg-white/95 backdrop-blur-sm rounded-2xl border border-[#bcc9c6]/40 shadow-sm overflow-hidden flex flex-col justify-between h-[380px] sm:h-[400px] 2xl:h-[480px] 3xl:h-[500px] relative z-10">
-              <div className="bg-[#effcfe] px-4 py-3 border-b border-[#bcc9c6]/30 flex flex-wrap items-center justify-between gap-2 text-xs shrink-0">
-                <div className="flex items-center gap-2 font-bold text-[#00685e]">Billing & Accounts Master</div>
-                <div className="text-[10px] text-[#6d7a77]">Auto-changes 5s (6 views)</div>
-              </div>
-
-              <div className="flex flex-col sm:flex-row flex-1 overflow-hidden">
-                <div className="w-full sm:w-48 bg-[#008378] text-white p-2.5 space-y-0.5 shrink-0 text-xs overflow-y-auto custom-scrollbar">
-                  {billingTabs.map((tab) => (
-                    <button key={tab.id} onClick={() => setBillingActiveTab(tab.id)}
-                      className={`w-full flex items-center justify-between p-1.5 px-2 rounded-lg text-left transition-all ${
-                        billingActiveTab === tab.id ? 'bg-[#00685e] text-white font-bold' : 'hover:bg-white/10 text-white/90'
-                      }`}>
-                      <span className="truncate text-[11px]">{tab.label}</span>
-                    </button>
-                  ))}
-                </div>
-
-                <div className="flex-1 p-3 overflow-x-auto overflow-y-auto flex flex-col justify-between">
-                  {billingActiveTab === 0 && (
-                    <div>
-                      <h4 className="text-sm font-bold text-[#121d1f] mb-2">Account Groups</h4>
-                      <table className="w-full text-left border-collapse text-[11px]">
-                        <thead><tr className="border-b text-[#00685e]"><th className="py-1">Group</th><th className="py-1">Code</th><th className="py-1">Nature</th></tr></thead>
-                        <tbody>{billingAccountGroups.map((r) => (<tr key={r.code}><td className="py-1 font-semibold">{r.name}</td><td className="py-1">• {r.code}</td><td className="py-1 font-bold">{r.nature}</td></tr>))}</tbody>
-                      </table>
-                    </div>
-                  )}
-
-                  {billingActiveTab === 1 && (
-                    <div>
-                      <h4 className="text-sm font-bold text-[#121d1f] mb-2">Ledger Master</h4>
-                      <table className="w-full text-left border-collapse text-[11px]">
-                        <thead><tr className="border-b text-[#00685e]"><th className="py-1">Ledger</th><th className="py-1">Code</th><th className="py-1">Balance</th></tr></thead>
-                        <tbody>{billingLedgers.map((r) => (<tr key={r.code}><td className="py-1 font-semibold">{r.name}</td><td className="py-1">{r.code}</td><td className="py-1 font-bold text-[#00685e]">{r.balance}</td></tr>))}</tbody>
-                      </table>
-                    </div>
-                  )}
-
-                  {billingActiveTab === 2 && (
-                    <div>
-                      <h4 className="text-sm font-bold text-[#121d1f] mb-2">Service Master Registry</h4>
-                      <table className="w-full text-left border-collapse text-[11px]">
-                        <thead><tr className="border-b text-[#00685e]"><th className="py-1">Code</th><th className="py-1">Name</th><th className="py-1">Rate</th></tr></thead>
-                        <tbody>{billingServices.map((r) => (<tr key={r.code + r.name}><td className="py-1 font-bold text-[#00685e]">• {r.code}</td><td className="py-1 font-semibold">{r.name}</td><td className="py-1 font-bold text-[#008378]">{r.rate}</td></tr>))}</tbody>
-                      </table>
-                    </div>
-                  )}
-
-                  {billingActiveTab === 3 && (
-                    <div>
-                      <h4 className="text-sm font-bold text-[#121d1f] mb-2">GST Rate Master</h4>
-                      <table className="w-full text-left border-collapse text-[11px]">
-                        <thead><tr className="border-b text-[#00685e]"><th className="py-1">Code</th><th className="py-1">Name</th><th className="py-1">IGST</th></tr></thead>
-                        <tbody>{billingGstRates.map((r) => (<tr key={r.code}><td className="py-1 font-bold text-[#00685e]">• {r.code}</td><td className="py-1 font-semibold">{r.name}</td><td className="py-1 font-bold text-[#008378]">{r.igst}</td></tr>))}</tbody>
-                      </table>
-                    </div>
-                  )}
-
-                  {billingActiveTab === 4 && (
-                    <div>
-                      <h4 className="text-sm font-bold text-[#121d1f] mb-2">Voucher Type Master</h4>
-                      <table className="w-full text-left border-collapse text-[11px]">
-                        <thead><tr className="border-b text-[#00685e]"><th className="py-1">Name</th><th className="py-1">Code</th></tr></thead>
-                        <tbody>{billingVoucherTypes.map((r) => (<tr key={r.code + r.name}><td className="py-1 font-semibold">{r.name}</td><td className="py-1 font-bold text-[#00685e]">{r.code}</td></tr>))}</tbody>
-                      </table>
-                    </div>
-                  )}
-
-                  {billingActiveTab === 5 && (
-                    <div>
-                      <h4 className="text-sm font-bold text-[#121d1f] mb-2">Voucher Master</h4>
-                      <table className="w-full text-left border-collapse text-[11px]">
-                        <thead><tr className="border-b text-[#00685e]"><th className="py-1">Name</th><th className="py-1">Prefix</th><th className="py-1">Type</th></tr></thead>
-                        <tbody>{billingVouchers.map((r) => (<tr key={r.name + r.prefix}><td className="py-1 font-semibold">{r.name}</td><td className="py-1 font-bold text-[#00685e]">{r.prefix}</td><td className="py-1">{r.type}</td></tr>))}</tbody>
-                      </table>
-                    </div>
-                  )}
-
-                  <div className="flex items-center justify-center gap-1.5 pt-2 border-t border-[#bcc9c6]/20 shrink-0">
-                    {billingTabs.map((t) => (
-                      <button key={t.id} onClick={() => setBillingActiveTab(t.id)}
-                        className={`h-1.5 rounded-full transition-all ${billingActiveTab === t.id ? 'w-6 bg-[#00685e]' : 'w-2 bg-[#bcc9c6]'}`} />
-                    ))}
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </motion.div>
-
-        {/* ── 3. CLINICAL SHOWCASE ── */}
+        {/* ── 1. CLINICAL SHOWCASE ── */}
         <motion.div
           className="card-frosted rounded-2xl sm:rounded-3xl p-5 sm:p-6 2xl:p-10 mb-8 sm:mb-10 2xl:mb-14 shadow-md border border-[#bcc9c6]/40 relative overflow-hidden"
           initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.1 }} variants={fadeUp}
@@ -800,20 +622,20 @@ export default function Modules() {
               </div>
 
               <div className="pt-1">
-                <button className="inline-flex items-center gap-2 bg-[#2d685e] text-white px-5 py-2.5 2xl:px-6 2xl:py-3 rounded-full text-xs sm:text-sm 2xl:text-base font-bold shadow-md hover:bg-[#00685e] transition-all">
+                <Link to="/modules/clinical" className="inline-flex items-center gap-2 bg-[#2d685e] text-white px-5 py-2.5 2xl:px-6 2xl:py-3 rounded-full text-xs sm:text-sm 2xl:text-base font-bold shadow-md hover:bg-[#00685e] transition-all cursor-pointer">
                   Explore Clinical Features <span className="material-symbols-outlined text-sm 2xl:text-base">arrow_forward</span>
-                </button>
+                </Link>
               </div>
             </div>
 
-            <div className="lg:col-span-7 bg-white/95 backdrop-blur-sm rounded-2xl border border-[#bcc9c6]/40 shadow-sm overflow-hidden flex flex-col justify-between h-[380px] sm:h-[400px] 2xl:h-[480px] 3xl:h-[500px] relative z-10">
+            <div className="lg:col-span-7 bg-white/95 backdrop-blur-sm rounded-2xl border border-[#bcc9c6]/40 shadow-sm overflow-hidden flex flex-col justify-between min-h-[420px] sm:h-[400px] 2xl:h-[480px] 3xl:h-[500px] relative z-10">
               <div className="bg-[#effcfe] px-4 py-3 border-b border-[#bcc9c6]/30 flex flex-wrap items-center justify-between gap-2 text-xs shrink-0">
                 <div className="flex items-center gap-2 font-bold text-[#00685e]">Clinical Care Master (13 Sub-Modules)</div>
                 <div className="text-[10px] text-[#6d7a77]">Auto-changes 5s (13 views)</div>
               </div>
 
               <div className="flex flex-col sm:flex-row flex-1 overflow-hidden">
-                <div className="w-full sm:w-52 bg-[#008378] text-white p-2 space-y-0.5 shrink-0 text-xs overflow-y-auto custom-scrollbar">
+                <div className="w-full sm:w-52 bg-[#008378] text-white p-2 flex flex-row sm:flex-col overflow-x-auto sm:overflow-y-auto no-scrollbar sm:custom-scrollbar gap-1 shrink-0 text-xs">
                   {clinicalTabs.map((tab) => (
                     <button key={tab.id} onClick={() => setClinicalActiveTab(tab.id)}
                       className={`w-full flex items-center justify-between p-1.5 px-2 rounded-lg text-left transition-all ${
@@ -1085,293 +907,7 @@ export default function Modules() {
           </div>
         </motion.div>
 
-        {/* ── 4. REPORTS & ANALYTICS SHOWCASE ── */}
-        <motion.div
-          className="card-frosted rounded-2xl sm:rounded-3xl p-5 sm:p-6 2xl:p-10 mb-8 sm:mb-10 2xl:mb-14 shadow-md border border-[#bcc9c6]/40 relative overflow-hidden"
-          initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.1 }} variants={fadeUp}
-        >
-          {/* Background Image Overlay - Enhanced High Visibility (Mirrored) */}
-          <img 
-            src="/images/reports_bg_soft.png" 
-            alt="Reports & Analytics background" 
-            className="absolute inset-0 w-full h-full object-cover opacity-55 pointer-events-none mix-blend-multiply transition-opacity duration-700 -scale-x-100" 
-          />
-          <div className="absolute inset-0 bg-gradient-to-r from-[#effcfe]/45 via-white/20 to-[#effcfe]/45 pointer-events-none" />
-
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 2xl:gap-8 items-stretch relative z-10">
-            <div className="lg:col-span-5 flex flex-col justify-between h-full space-y-4 2xl:space-y-6">
-              <div>
-                <div className="flex items-center justify-between mb-3 2xl:mb-4">
-                  <div className="w-12 h-12 2xl:w-14 2xl:h-14 module-badge-icon rounded-xl 2xl:rounded-2xl flex items-center justify-center">
-                    <span className="material-symbols-outlined text-[#00685e] text-2xl 2xl:text-3xl">analytics</span>
-                  </div>
-                  <span className="inline-flex items-center px-2.5 py-1 2xl:px-3.5 2xl:py-1.5 rounded-full bg-[#afecde] text-[#326c62] text-[11px] 2xl:text-xs font-semibold">
-                    12 Business Intelligence Reports
-                  </span>
-                </div>
-
-                <div className="text-[11px] 2xl:text-xs font-bold uppercase tracking-wider text-[#00685e] mb-1">BI DASHBOARDS & EXECUTIVE REPORTING</div>
-                <h2 className="text-2xl sm:text-3xl 2xl:text-4xl font-bold text-[#121d1f] mb-2 sm:mb-3">Reports & Analytics</h2>
-                <p className="text-xs sm:text-sm 2xl:text-base text-[#3d4947] leading-relaxed mb-4 2xl:mb-6 bg-white/25 backdrop-blur-sm p-2.5 sm:p-3 2xl:p-4 rounded-xl border border-white/30">
-                  Generate and export insightful reports across departments — Doctor Performance, OPD Summaries, Collections, Refunds & Discounts.
-                </p>
-
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 2xl:gap-3 mb-4 2xl:mb-6">
-                  {['Doctor Consultation Performance', 'OPD Registration & Appt Summaries', 'Userwise & Department Collections', 'Billwise & Payment Mode Analytics', 'Due Amount & Refund Tracking', 'Discount & Cancelled Bills Audit', 'Automated PDF / Excel Export', 'Real-Time KPI Dashboards'].map((feat) => (
-                    <div key={feat} className="flex items-center gap-1.5 2xl:gap-2 text-xs 2xl:text-sm text-[#121d1f] font-medium">
-                      <span className="material-symbols-outlined text-[#00685e] text-sm 2xl:text-base">check_circle</span>
-                      {feat}
-                    </div>
-                  ))}
-                </div>
-              </div>
-
-              <div className="pt-1">
-                <button className="inline-flex items-center gap-2 bg-[#00685e] text-white px-5 py-2.5 2xl:px-6 2xl:py-3 rounded-full text-xs sm:text-sm 2xl:text-base font-bold shadow-md hover:bg-[#005049] transition-all">
-                  Explore Reports & Analytics <span className="material-symbols-outlined text-sm 2xl:text-base">arrow_forward</span>
-                </button>
-              </div>
-            </div>
-
-            <div className="lg:col-span-7 bg-white/95 backdrop-blur-sm rounded-2xl border border-[#bcc9c6]/40 shadow-sm overflow-hidden flex flex-col justify-between h-[380px] sm:h-[400px] 2xl:h-[480px] 3xl:h-[500px] relative z-10">
-              <div className="bg-[#effcfe] px-4 py-3 border-b border-[#bcc9c6]/30 flex flex-wrap items-center justify-between gap-2 text-xs shrink-0">
-                <div className="flex items-center gap-2 font-bold text-[#00685e]">Reports Master (12 Sub-Modules)</div>
-                <div className="text-[10px] text-[#6d7a77]">Auto-changes 5s (12 views)</div>
-              </div>
-
-              <div className="flex flex-col sm:flex-row flex-1 overflow-hidden">
-                <div className="w-full sm:w-56 bg-[#008378] text-white p-2 space-y-0.5 shrink-0 text-xs overflow-y-auto custom-scrollbar">
-                  {reportsTabs.map((tab) => (
-                    <button key={tab.id} onClick={() => setReportsActiveTab(tab.id)}
-                      className={`w-full flex items-center justify-between p-1.5 px-2 rounded-lg text-left transition-all ${
-                        reportsActiveTab === tab.id ? 'bg-[#00685e] text-white font-bold' : 'hover:bg-white/10 text-white/90'
-                      }`}>
-                      <span className="truncate text-[11px]">{tab.label}</span>
-                    </button>
-                  ))}
-                </div>
-
-                <div className="flex-1 p-3 overflow-x-auto overflow-y-auto flex flex-col justify-between">
-                  {reportsActiveTab === 0 && (
-                    <div>
-                      <h4 className="text-sm font-bold text-[#00685e] mb-2">Doctor Consultation Performance</h4>
-                      <table className="w-full text-left text-[11px]">
-                        <thead><tr className="border-b text-[#00685e]"><th className="py-1">Doctor</th><th className="py-1">Consults</th><th className="py-1">Revenue</th></tr></thead>
-                        <tbody>{reportDoctorPerf.map((r) => (<tr key={r.doctor}><td className="py-1 font-semibold">{r.doctor}</td><td className="py-1">{r.count}</td><td className="py-1 font-bold text-[#008378]">{r.revenue}</td></tr>))}</tbody>
-                      </table>
-                    </div>
-                  )}
-
-                  {reportsActiveTab === 1 && (
-                    <div>
-                      <h4 className="text-sm font-bold text-[#00685e] mb-2">OPD Registration Summary</h4>
-                      <div className="grid grid-cols-2 gap-2"><div className="bg-[#eaf6f8] p-2 rounded">New: <strong>{reportOpdRegSummary.newPatients}</strong></div><div className="bg-[#eaf6f8] p-2 rounded">Re-visit: <strong>{reportOpdRegSummary.revisitPatients}</strong></div></div>
-                    </div>
-                  )}
-
-                  {reportsActiveTab === 2 && (
-                    <div>
-                      <h4 className="text-sm font-bold text-[#00685e] mb-2">OPD Appointment Summary</h4>
-                      <div className="grid grid-cols-3 gap-1 text-center"><div className="bg-[#eaf6f8] p-1.5 rounded">Attended: {reportOpdApptSummary.attended}</div><div className="bg-[#eaf6f8] p-1.5 rounded">Cancelled: {reportOpdApptSummary.cancelled}</div></div>
-                    </div>
-                  )}
-
-                  {reportsActiveTab === 3 && (
-                    <div>
-                      <h4 className="text-sm font-bold text-[#00685e] mb-2">Userwise Collection</h4>
-                      <table className="w-full text-left text-[11px]">
-                        <thead><tr className="border-b text-[#00685e]"><th className="py-1">User</th><th className="py-1">Amount</th></tr></thead>
-                        <tbody>{reportUserwiseCollection.map((r) => (<tr key={r.user}><td className="py-1 font-semibold">{r.user}</td><td className="py-1 font-bold text-[#008378]">{r.amount}</td></tr>))}</tbody>
-                      </table>
-                    </div>
-                  )}
-
-                  {/* FIELD 4: DEPARTMENTWISE COLLECTION */}
-                  {reportsActiveTab === 4 && (
-                    <div className="flex-1 flex flex-col justify-between">
-                      <div>
-                        <h4 className="text-sm font-bold text-[#00685e] mb-2 flex items-center gap-1">
-                          <span className="material-symbols-outlined text-base">domain</span> Departmentwise Collection
-                        </h4>
-                        <div className="space-y-2">
-                          {reportDeptwiseCollection.map((r) => (
-                            <div key={r.dept} className="p-2.5 bg-[#eaf6f8] rounded-2xl flex items-center justify-between text-[11px]">
-                              <span className="font-semibold text-[#121d1f]">{r.dept}</span>
-                              <span className="font-bold text-[#00685e]">{r.revenue}</span>
-                            </div>
-                          ))}
-                        </div>
-                      </div>
-                      <div className="text-[10px] text-[#6d7a77]">Departmental Revenue Share Breakdown</div>
-                    </div>
-                  )}
-
-                  {/* FIELD 5: BILLWISE COLLECTION */}
-                  {reportsActiveTab === 5 && (
-                    <div className="flex-1 flex flex-col justify-between">
-                      <div>
-                        <h4 className="text-sm font-bold text-[#00685e] mb-2 flex items-center gap-1">
-                          <span className="material-symbols-outlined text-base">receipt_long</span> Billwise Detailed Collections
-                        </h4>
-                        <table className="w-full text-left border-collapse text-[11px]" style={{ fontFamily: "'Inter', sans-serif" }}>
-                          <thead>
-                            <tr className="border-b border-[#bcc9c6]/30 text-[#00685e] font-bold uppercase">
-                              <th className="py-1.5 px-1">Bill No</th>
-                              <th className="py-1.5 px-1">Patient</th>
-                              <th className="py-1.5 px-1">Total Paid</th>
-                            </tr>
-                          </thead>
-                          <tbody className="divide-y divide-[#bcc9c6]/20">
-                            {reportBillwiseCollection.map((r) => (
-                              <tr key={r.bill} className="hover:bg-[#eaf6f8]/50 transition-colors">
-                                <td className="py-1.5 px-1 font-bold text-[#00685e]">{r.bill}</td>
-                                <td className="py-1.5 px-1 font-semibold text-[#121d1f]">{r.patient}</td>
-                                <td className="py-1.5 px-1 font-bold text-[#008378]">{r.amount}</td>
-                              </tr>
-                            ))}
-                          </tbody>
-                        </table>
-                      </div>
-                      <div className="text-[10px] text-[#6d7a77]">Individual Invoice Reconciliation Audit</div>
-                    </div>
-                  )}
-
-                  {/* FIELD 6: PAYMENT MODE COLLECTION */}
-                  {reportsActiveTab === 6 && (
-                    <div className="flex-1 flex flex-col justify-between">
-                      <div>
-                        <h4 className="text-sm font-bold text-[#00685e] mb-2 flex items-center gap-1">
-                          <span className="material-symbols-outlined text-base">credit_card</span> Payment Mode Collections
-                        </h4>
-                        <div className="space-y-2">
-                          {reportPaymentModeCollection.map((r) => (
-                            <div key={r.mode} className="p-2.5 bg-[#eaf6f8] rounded-2xl flex items-center justify-between text-[11px]">
-                              <span className="font-semibold text-[#121d1f]">💳 {r.mode}</span>
-                              <span className="font-bold text-[#00685e]">{r.amount}</span>
-                            </div>
-                          ))}
-                        </div>
-                      </div>
-                      <div className="text-[10px] text-[#6d7a77]">Payment Gateway Channel Revenue Analysis</div>
-                    </div>
-                  )}
-
-                  {/* FIELD 7: DUE AMOUNT */}
-                  {reportsActiveTab === 7 && (
-                    <div className="flex-1 flex flex-col justify-between">
-                      <div>
-                        <h4 className="text-sm font-bold text-[#00685e] mb-2 flex items-center gap-1">
-                          <span className="material-symbols-outlined text-base">hourglass_empty</span> Due Amount Log
-                        </h4>
-                        <div className="space-y-2">
-                          {reportDueAmount.map((r) => (
-                            <div key={r.patient} className="p-2.5 bg-[#fef2f2] rounded-2xl flex items-center justify-between text-[11px]">
-                              <span className="font-semibold text-[#121d1f]">{r.patient}</span>
-                              <span className="font-bold text-red-600">Due: {r.balance}</span>
-                            </div>
-                          ))}
-                        </div>
-                      </div>
-                      <div className="text-[10px] text-[#6d7a77]">Inpatient & Outpatient Pending Receivables</div>
-                    </div>
-                  )}
-
-                  {/* FIELD 8: REFUND REPORT */}
-                  {reportsActiveTab === 8 && (
-                    <div className="flex-1 flex flex-col justify-between">
-                      <div>
-                        <h4 className="text-sm font-bold text-[#00685e] mb-2 flex items-center gap-1">
-                          <span className="material-symbols-outlined text-base">price_change</span> Refund Audit Report
-                        </h4>
-                        <div className="space-y-2">
-                          {reportRefunds.map((r) => (
-                            <div key={r.ref} className="p-2.5 bg-[#eaf6f8] rounded-2xl flex items-center justify-between text-[11px]">
-                              <div>
-                                <span className="font-bold text-[#00685e]">{r.ref}</span>
-                                <span className="font-semibold text-[#121d1f] ml-2">{r.patient}</span>
-                              </div>
-                              <span className="font-bold text-[#008378]">{r.amount}</span>
-                            </div>
-                          ))}
-                        </div>
-                      </div>
-                      <div className="text-[10px] text-[#6d7a77]">Manager-Approved Refund Log</div>
-                    </div>
-                  )}
-
-                  {/* FIELD 9: DISCOUNT REPORT */}
-                  {reportsActiveTab === 9 && (
-                    <div className="flex-1 flex flex-col justify-between">
-                      <div>
-                        <h4 className="text-sm font-bold text-[#00685e] mb-2 flex items-center gap-1">
-                          <span className="material-symbols-outlined text-base">sell</span> Discount & Concession Report
-                        </h4>
-                        <div className="space-y-2">
-                          {reportDiscounts.map((r) => (
-                            <div key={r.scheme} className="p-2.5 bg-[#eaf6f8] rounded-2xl flex items-center justify-between text-[11px]">
-                              <span className="font-semibold text-[#121d1f]">{r.scheme}</span>
-                              <span className="font-bold text-[#00685e]">{r.totalConcession}</span>
-                            </div>
-                          ))}
-                        </div>
-                      </div>
-                      <div className="text-[10px] text-[#6d7a77]">Concession & Special Discount Audits</div>
-                    </div>
-                  )}
-
-                  {/* FIELD 10: CANCELLED BILLS AUDIT */}
-                  {reportsActiveTab === 10 && (
-                    <div className="flex-1 flex flex-col justify-between">
-                      <div>
-                        <h4 className="text-sm font-bold text-[#00685e] mb-2 flex items-center gap-1">
-                          <span className="material-symbols-outlined text-base">cancel</span> Cancelled Bills Audit
-                        </h4>
-                        <div className="space-y-2">
-                          {reportCancelledBills.map((r) => (
-                            <div key={r.bill} className="p-2.5 bg-[#fef2f2] rounded-2xl flex items-center justify-between text-[11px]">
-                              <div className="font-bold text-red-700 flex items-center gap-1.5">
-                                <span>🚫</span>
-                                <span>{r.bill}</span>
-                              </div>
-                              <span className="font-bold text-red-600">{r.amount}</span>
-                            </div>
-                          ))}
-                        </div>
-                      </div>
-                      <div className="text-[10px] text-[#6d7a77]">Audit-Compliant Voided Invoice Register</div>
-                    </div>
-                  )}
-
-                  {/* FIELD 11: MASTER BILL REGISTER */}
-                  {reportsActiveTab === 11 && (
-                    <div className="flex-1 flex flex-col justify-between text-xs">
-                      <div>
-                        <h4 className="text-sm font-bold text-[#00685e] mb-2 flex items-center gap-1">
-                          <span className="material-symbols-outlined text-base">auto_stories</span> Master Bill Register
-                        </h4>
-                        <div className="bg-[#eaf6f8] p-3.5 rounded-2xl text-[11px] space-y-1">
-                          <div className="flex justify-between"><span>Total Invoices Generated:</span> <strong>{reportBillRegister.totalInvoices}</strong></div>
-                          <div className="flex justify-between"><span>Gross Hospital Revenue:</span> <strong className="text-[#00685e]">{reportBillRegister.grossRevenue}</strong></div>
-                          <div className="flex justify-between"><span>Total Tax Collected (GST):</span> <strong>{reportBillRegister.taxCollected}</strong></div>
-                        </div>
-                      </div>
-                      <div className="text-[10px] text-[#6d7a77]">Complete Monthly Financial Bill Register</div>
-                    </div>
-                  )}
-
-                  <div className="flex items-center justify-center gap-1 pt-2 border-t border-[#bcc9c6]/20 shrink-0">
-                    {reportsTabs.map((t) => (
-                      <button key={t.id} onClick={() => setReportsActiveTab(t.id)}
-                        className={`h-1.5 rounded-full transition-all ${reportsActiveTab === t.id ? 'w-5 bg-[#00685e]' : 'w-1.5 bg-[#bcc9c6]'}`} />
-                    ))}
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </motion.div>
-
-        {/* ── 5. IT ADMINISTRATION SHOWCASE (ALL 18 FIELDS FROM USER SCREENSHOT!) ── */}
+        {/* ── 2. IT ADMINISTRATION SHOWCASE ── */}
         <motion.div
           className="card-frosted rounded-2xl sm:rounded-3xl p-5 sm:p-6 2xl:p-10 mb-8 sm:mb-10 2xl:mb-14 shadow-md border border-[#bcc9c6]/40 relative overflow-hidden"
           initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.1 }} variants={fadeUp}
@@ -1429,18 +965,21 @@ export default function Modules() {
                 </div>
               </div>
 
-              {/* Action Button */}
+              {/* Action Link */}
               <div className="pt-1">
-                <button className="inline-flex items-center gap-2 bg-[#326c62] text-white px-5 py-2.5 2xl:px-6 2xl:py-3 rounded-full text-xs sm:text-sm 2xl:text-base font-bold shadow-md hover:bg-[#00685e] transition-all"
-                  style={{ fontFamily: "'Inter', sans-serif" }}>
+                <Link 
+                  to="/modules/it-admin"
+                  className="inline-flex items-center gap-2 bg-[#326c62] text-white px-5 py-2.5 2xl:px-6 2xl:py-3 rounded-full text-xs sm:text-sm 2xl:text-base font-bold shadow-md hover:bg-[#00685e] transition-all"
+                  style={{ fontFamily: "'Inter', sans-serif" }}
+                >
                   Explore IT Administration
                   <span className="material-symbols-outlined text-sm 2xl:text-base">arrow_forward</span>
-                </button>
+                </Link>
               </div>
             </div>
 
-            {/* Right Side Card: Compact proportional height with 2xl scaling */}
-            <div className="lg:col-span-7 bg-white/95 backdrop-blur-sm rounded-2xl border border-[#bcc9c6]/40 shadow-sm overflow-hidden flex flex-col justify-between h-[380px] sm:h-[400px] 2xl:h-[480px] 3xl:h-[500px] relative z-10">
+            {/* Right Side Card */}
+            <div className="lg:col-span-7 bg-white/95 backdrop-blur-sm rounded-2xl border border-[#bcc9c6]/40 shadow-sm overflow-hidden flex flex-col justify-between min-h-[420px] sm:h-[400px] 2xl:h-[480px] 3xl:h-[500px] relative z-10">
               
               {/* Card Header */}
               <div className="bg-[#effcfe] px-4 py-3 border-b border-[#bcc9c6]/30 flex flex-wrap items-center justify-between gap-2 text-xs shrink-0" style={{ fontFamily: "'Inter', sans-serif" }}>
@@ -1457,8 +996,8 @@ export default function Modules() {
               {/* App Body Layout */}
               <div className="flex flex-col sm:flex-row flex-1 overflow-hidden">
                 
-                {/* Left Sidebar Menu (EXACT MATCH of User Screenshot with ALL 18 IT ADMIN ITEMS!) */}
-                <div className="w-full sm:w-56 bg-[#008378] text-white p-2 space-y-0.5 shrink-0 text-xs overflow-y-auto custom-scrollbar" style={{ fontFamily: "'Inter', sans-serif" }}>
+                {/* Left Sidebar Menu */}
+                <div className="w-full sm:w-56 bg-[#008378] text-white p-2 flex flex-row sm:flex-col overflow-x-auto sm:overflow-y-auto no-scrollbar sm:custom-scrollbar gap-1 shrink-0 text-xs" style={{ fontFamily: "'Inter', sans-serif" }}>
                   <div className="font-bold text-white/70 text-[9px] uppercase tracking-wider mb-1 px-2">
                     IT Admin Menu (18 Fields)
                   </div>
@@ -1466,19 +1005,13 @@ export default function Modules() {
                     <button
                       key={tab.id}
                       onClick={() => setItActiveTab(tab.id)}
-                      className={`w-full flex items-center justify-between p-1.5 px-2 rounded-lg text-left transition-all ${
+                      className={`w-full flex items-center p-1.5 px-2 rounded-lg text-left transition-all ${
                         itActiveTab === tab.id
                           ? 'bg-[#00685e] text-white font-bold shadow-sm'
                           : 'hover:bg-white/10 text-white/90'
                       }`}
                     >
-                      <div className="flex items-center gap-1.5 truncate">
-                        <span className="material-symbols-outlined text-xs shrink-0">{tab.icon}</span>
-                        <span className="truncate text-[11px]">{tab.label}</span>
-                      </div>
-                      {itActiveTab === tab.id && (
-                        <span className="w-1.5 h-1.5 rounded-full bg-[#85f5e6] shrink-0"></span>
-                      )}
+                      <span className="truncate text-[11px]">{tab.label}</span>
                     </button>
                   ))}
                 </div>
@@ -1948,70 +1481,757 @@ export default function Modules() {
           </div>
         </motion.div>
 
-        {/* ── REST OF CORE MODULE CONTAINERS (IPD) ── */}
+        {/* ── 3. REPORTS & ANALYTICS SHOWCASE ── */}
         <motion.div
-          className="grid grid-cols-1 md:grid-cols-12 gap-5 sm:gap-6 2xl:gap-8 mb-16"
-          initial="hidden" whileInView="visible" viewport={{ once: true, margin: '-40px' }} variants={stagger}>
+          className="card-frosted rounded-2xl sm:rounded-3xl p-5 sm:p-6 2xl:p-10 mb-8 sm:mb-10 2xl:mb-14 shadow-md border border-[#bcc9c6]/40 relative overflow-hidden"
+          initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.1 }} variants={fadeUp}
+        >
+          {/* Background Image Overlay - Enhanced High Visibility (Mirrored) */}
+          <img 
+            src="/images/reports_bg_soft.png" 
+            alt="Reports & Analytics background" 
+            className="absolute inset-0 w-full h-full object-cover opacity-55 pointer-events-none mix-blend-multiply transition-opacity duration-700 -scale-x-100" 
+          />
+          <div className="absolute inset-0 bg-gradient-to-r from-[#effcfe]/45 via-white/20 to-[#effcfe]/45 pointer-events-none" />
 
-          {restModules.map((mod) => (
-            <motion.div
-              key={mod.title}
-              className="md:col-span-12 card-frosted rounded-2xl sm:rounded-3xl p-5 sm:p-6 2xl:p-10 relative shadow-md border border-[#bcc9c6]/40 overflow-hidden min-h-[380px] sm:min-h-[400px] 2xl:min-h-[460px] flex flex-col justify-between"
-              variants={fadeUp}
-            >
-              {/* Background Image Overlay - Enhanced High Visibility */}
-              <img 
-                src="/images/ipd_bg_soft.png" 
-                alt="IPD Inpatient background" 
-                className="absolute inset-0 w-full h-full object-cover opacity-55 pointer-events-none mix-blend-multiply transition-opacity duration-700" 
-              />
-              <div className="absolute inset-0 bg-gradient-to-r from-[#effcfe]/45 via-white/20 to-[#effcfe]/45 pointer-events-none" />
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 2xl:gap-8 items-stretch relative z-10">
+            <div className="lg:col-span-5 flex flex-col justify-between h-full space-y-4 2xl:space-y-6">
+              <div>
+                <div className="flex items-center justify-between mb-3 2xl:mb-4">
+                  <div className="w-12 h-12 2xl:w-14 2xl:h-14 module-badge-icon rounded-xl 2xl:rounded-2xl flex items-center justify-center">
+                    <span className="material-symbols-outlined text-[#00685e] text-2xl 2xl:text-3xl">analytics</span>
+                  </div>
+                  <span className="inline-flex items-center px-2.5 py-1 2xl:px-3.5 2xl:py-1.5 rounded-full bg-[#afecde] text-[#326c62] text-[11px] 2xl:text-xs font-semibold">
+                    12 Business Intelligence Reports
+                  </span>
+                </div>
 
-              <div className="flex-1 flex flex-col justify-between relative z-10 space-y-4 2xl:space-y-6">
-                <div>
-                  <div className="flex items-center justify-between mb-3 2xl:mb-4">
-                    <div className="w-12 h-12 2xl:w-14 2xl:h-14 module-badge-icon rounded-xl 2xl:rounded-2xl flex items-center justify-center">
-                      <span className="material-symbols-outlined text-[#00685e] text-2xl 2xl:text-3xl">{mod.icon}</span>
+                <div className="text-[11px] 2xl:text-xs font-bold uppercase tracking-wider text-[#00685e] mb-1">BI DASHBOARDS & EXECUTIVE REPORTING</div>
+                <h2 className="text-2xl sm:text-3xl 2xl:text-4xl font-bold text-[#121d1f] mb-2 sm:mb-3">Reports & Analytics</h2>
+                <p className="text-xs sm:text-sm 2xl:text-base text-[#3d4947] leading-relaxed mb-4 2xl:mb-6 bg-white/25 backdrop-blur-sm p-2.5 sm:p-3 2xl:p-4 rounded-xl border border-white/30">
+                  Generate and export insightful reports across departments — Doctor Performance, OPD Summaries, Collections, Refunds & Discounts.
+                </p>
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 2xl:gap-3 mb-4 2xl:mb-6">
+                  {['Doctor Consultation Performance', 'OPD Registration & Appt Summaries', 'Userwise & Department Collections', 'Billwise & Payment Mode Analytics', 'Due Amount & Refund Tracking', 'Discount & Cancelled Bills Audit', 'Automated PDF / Excel Export', 'Real-Time KPI Dashboards'].map((feat) => (
+                    <div key={feat} className="flex items-center gap-1.5 2xl:gap-2 text-xs 2xl:text-sm text-[#121d1f] font-medium">
+                      <span className="material-symbols-outlined text-[#00685e] text-sm 2xl:text-base">check_circle</span>
+                      {feat}
                     </div>
-                    {mod.badge && (
-                      <span className="inline-flex items-center px-2.5 py-1 2xl:px-3.5 2xl:py-1.5 rounded-full bg-[#afecde] text-[#326c62] text-[11px] 2xl:text-xs font-semibold"
-                        style={{ fontFamily: "'Inter', sans-serif" }}>
-                        {mod.badge}
-                      </span>
-                    )}
-                  </div>
+                  ))}
+                </div>
+              </div>
 
-                  <div className="text-[11px] 2xl:text-xs font-bold uppercase tracking-wider text-[#00685e] mb-1" style={{ fontFamily: "'Inter', sans-serif" }}>
-                    {mod.tagline}
-                  </div>
-                  <h3 className="text-2xl sm:text-3xl 2xl:text-4xl font-bold text-[#121d1f] mb-2 sm:mb-3" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
-                    {mod.title}
-                  </h3>
-                  <p className="text-xs sm:text-sm 2xl:text-base text-[#3d4947] mb-4 2xl:mb-6 leading-relaxed bg-white/25 backdrop-blur-sm p-2.5 sm:p-3 2xl:p-4 rounded-xl border border-white/30" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
-                    {mod.desc}
-                  </p>
+              <div className="pt-1">
+                <Link to="/modules/reports" className="inline-flex items-center gap-2 bg-[#00685e] text-white px-5 py-2.5 2xl:px-6 2xl:py-3 rounded-full text-xs sm:text-sm 2xl:text-base font-bold shadow-md hover:bg-[#005049] transition-all">
+                  Explore Reports & Analytics <span className="material-symbols-outlined text-sm 2xl:text-base">arrow_forward</span>
+                </Link>
+              </div>
+            </div>
 
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 2xl:gap-3 mb-4 2xl:mb-6">
-                    {mod.features.map((feat) => (
-                      <div key={feat} className="flex items-center gap-1.5 2xl:gap-2 text-xs 2xl:text-sm text-[#121d1f]" style={{ fontFamily: "'Inter', sans-serif" }}>
-                        <span className="material-symbols-outlined text-[#00685e] text-sm 2xl:text-base">check_circle</span>
-                        {feat}
+            <div className="lg:col-span-7 bg-white/95 backdrop-blur-sm rounded-2xl border border-[#bcc9c6]/40 shadow-sm overflow-hidden flex flex-col justify-between min-h-[420px] sm:h-[400px] 2xl:h-[480px] 3xl:h-[500px] relative z-10">
+              <div className="bg-[#effcfe] px-4 py-3 border-b border-[#bcc9c6]/30 flex flex-wrap items-center justify-between gap-2 text-xs shrink-0">
+                <div className="flex items-center gap-2 font-bold text-[#00685e]">Reports Master (12 Sub-Modules)</div>
+                <div className="text-[10px] text-[#6d7a77]">Auto-changes 5s (12 views)</div>
+              </div>
+
+              <div className="flex flex-col sm:flex-row flex-1 overflow-hidden">
+                <div className="w-full sm:w-56 bg-[#008378] text-white p-2 flex flex-row sm:flex-col overflow-x-auto sm:overflow-y-auto no-scrollbar sm:custom-scrollbar gap-1 shrink-0 text-xs">
+                  {reportsTabs.map((tab) => (
+                    <button key={tab.id} onClick={() => setReportsActiveTab(tab.id)}
+                      className={`w-full flex items-center justify-between p-1.5 px-2 rounded-lg text-left transition-all ${
+                        reportsActiveTab === tab.id ? 'bg-[#00685e] text-white font-bold' : 'hover:bg-white/10 text-white/90'
+                      }`}>
+                      <span className="truncate text-[11px]">{tab.label}</span>
+                    </button>
+                  ))}
+                </div>
+
+                <div className="flex-1 p-3 overflow-x-auto overflow-y-auto flex flex-col justify-between">
+                  {reportsActiveTab === 0 && (
+                    <div>
+                      <h4 className="text-sm font-bold text-[#00685e] mb-2">Doctor Consultation Performance</h4>
+                      <table className="w-full text-left text-[11px]">
+                        <thead><tr className="border-b text-[#00685e]"><th className="py-1">Doctor</th><th className="py-1">Consults</th><th className="py-1">Revenue</th></tr></thead>
+                        <tbody>{reportDoctorPerf.map((r) => (<tr key={r.doctor}><td className="py-1 font-semibold">{r.doctor}</td><td className="py-1">{r.count}</td><td className="py-1 font-bold text-[#008378]">{r.revenue}</td></tr>))}</tbody>
+                      </table>
+                    </div>
+                  )}
+
+                  {reportsActiveTab === 1 && (
+                    <div>
+                      <h4 className="text-sm font-bold text-[#00685e] mb-2">OPD Registration Summary</h4>
+                      <div className="grid grid-cols-2 gap-2"><div className="bg-[#eaf6f8] p-2 rounded">New: <strong>{reportOpdRegSummary.newPatients}</strong></div><div className="bg-[#eaf6f8] p-2 rounded">Re-visit: <strong>{reportOpdRegSummary.revisitPatients}</strong></div></div>
+                    </div>
+                  )}
+
+                  {reportsActiveTab === 2 && (
+                    <div>
+                      <h4 className="text-sm font-bold text-[#00685e] mb-2">OPD Appointment Summary</h4>
+                      <div className="grid grid-cols-3 gap-1 text-center"><div className="bg-[#eaf6f8] p-1.5 rounded">Attended: {reportOpdApptSummary.attended}</div><div className="bg-[#eaf6f8] p-1.5 rounded">Cancelled: {reportOpdApptSummary.cancelled}</div></div>
+                    </div>
+                  )}
+
+                  {reportsActiveTab === 3 && (
+                    <div>
+                      <h4 className="text-sm font-bold text-[#00685e] mb-2">Userwise Collection</h4>
+                      <table className="w-full text-left text-[11px]">
+                        <thead><tr className="border-b text-[#00685e]"><th className="py-1">User</th><th className="py-1">Amount</th></tr></thead>
+                        <tbody>{reportUserwiseCollection.map((r) => (<tr key={r.user}><td className="py-1 font-semibold">{r.user}</td><td className="py-1 font-bold text-[#008378]">{r.amount}</td></tr>))}</tbody>
+                      </table>
+                    </div>
+                  )}
+
+                  {/* FIELD 4: DEPARTMENTWISE COLLECTION */}
+                  {reportsActiveTab === 4 && (
+                    <div className="flex-1 flex flex-col justify-between">
+                      <div>
+                        <h4 className="text-sm font-bold text-[#00685e] mb-2 flex items-center gap-1">
+                          <span className="material-symbols-outlined text-base">domain</span> Departmentwise Collection
+                        </h4>
+                        <div className="space-y-2">
+                          {reportDeptwiseCollection.map((r) => (
+                            <div key={r.dept} className="p-2.5 bg-[#eaf6f8] rounded-2xl flex items-center justify-between text-[11px]">
+                              <span className="font-semibold text-[#121d1f]">{r.dept}</span>
+                              <span className="font-bold text-[#00685e]">{r.revenue}</span>
+                            </div>
+                          ))}
+                        </div>
                       </div>
+                      <div className="text-[10px] text-[#6d7a77]">Departmental Revenue Share Breakdown</div>
+                    </div>
+                  )}
+
+                  {/* FIELD 5: BILLWISE COLLECTION */}
+                  {reportsActiveTab === 5 && (
+                    <div className="flex-1 flex flex-col justify-between">
+                      <div>
+                        <h4 className="text-sm font-bold text-[#00685e] mb-2 flex items-center gap-1">
+                          <span className="material-symbols-outlined text-base">receipt_long</span> Billwise Detailed Collections
+                        </h4>
+                        <table className="w-full text-left border-collapse text-[11px]" style={{ fontFamily: "'Inter', sans-serif" }}>
+                          <thead>
+                            <tr className="border-b border-[#bcc9c6]/30 text-[#00685e] font-bold uppercase">
+                              <th className="py-1.5 px-1">Bill No</th>
+                              <th className="py-1.5 px-1">Patient</th>
+                              <th className="py-1.5 px-1">Total Paid</th>
+                            </tr>
+                          </thead>
+                          <tbody className="divide-y divide-[#bcc9c6]/20">
+                            {reportBillwiseCollection.map((r) => (
+                              <tr key={r.bill} className="hover:bg-[#eaf6f8]/50 transition-colors">
+                                <td className="py-1.5 px-1 font-bold text-[#00685e]">{r.bill}</td>
+                                <td className="py-1.5 px-1 font-semibold text-[#121d1f]">{r.patient}</td>
+                                <td className="py-1.5 px-1 font-bold text-[#008378]">{r.amount}</td>
+                              </tr>
+                            ))}
+                          </tbody>
+                        </table>
+                      </div>
+                      <div className="text-[10px] text-[#6d7a77]">Individual Invoice Reconciliation Audit</div>
+                    </div>
+                  )}
+
+                  {/* FIELD 6: PAYMENT MODE COLLECTION */}
+                  {reportsActiveTab === 6 && (
+                    <div className="flex-1 flex flex-col justify-between">
+                      <div>
+                        <h4 className="text-sm font-bold text-[#00685e] mb-2 flex items-center gap-1">
+                          <span className="material-symbols-outlined text-base">credit_card</span> Payment Mode Collections
+                        </h4>
+                        <div className="space-y-2">
+                          {reportPaymentModeCollection.map((r) => (
+                            <div key={r.mode} className="p-2.5 bg-[#eaf6f8] rounded-2xl flex items-center justify-between text-[11px]">
+                              <span className="font-semibold text-[#121d1f]">💳 {r.mode}</span>
+                              <span className="font-bold text-[#00685e]">{r.amount}</span>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                      <div className="text-[10px] text-[#6d7a77]">Payment Gateway Channel Revenue Analysis</div>
+                    </div>
+                  )}
+
+                  {/* FIELD 7: DUE AMOUNT */}
+                  {reportsActiveTab === 7 && (
+                    <div className="flex-1 flex flex-col justify-between">
+                      <div>
+                        <h4 className="text-sm font-bold text-[#00685e] mb-2 flex items-center gap-1">
+                          <span className="material-symbols-outlined text-base">hourglass_empty</span> Due Amount Log
+                        </h4>
+                        <div className="space-y-2">
+                          {reportDueAmount.map((r) => (
+                            <div key={r.patient} className="p-2.5 bg-[#fef2f2] rounded-2xl flex items-center justify-between text-[11px]">
+                              <span className="font-semibold text-[#121d1f]">{r.patient}</span>
+                              <span className="font-bold text-red-600">Due: {r.balance}</span>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                      <div className="text-[10px] text-[#6d7a77]">Inpatient & Outpatient Pending Receivables</div>
+                    </div>
+                  )}
+
+                  {/* FIELD 8: REFUND REPORT */}
+                  {reportsActiveTab === 8 && (
+                    <div className="flex-1 flex flex-col justify-between">
+                      <div>
+                        <h4 className="text-sm font-bold text-[#00685e] mb-2 flex items-center gap-1">
+                          <span className="material-symbols-outlined text-base">price_change</span> Refund Audit Report
+                        </h4>
+                        <div className="space-y-2">
+                          {reportRefunds.map((r) => (
+                            <div key={r.ref} className="p-2.5 bg-[#eaf6f8] rounded-2xl flex items-center justify-between text-[11px]">
+                              <div>
+                                <span className="font-bold text-[#00685e]">{r.ref}</span>
+                                <span className="font-semibold text-[#121d1f] ml-2">{r.patient}</span>
+                              </div>
+                              <span className="font-bold text-[#008378]">{r.amount}</span>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                      <div className="text-[10px] text-[#6d7a77]">Manager-Approved Refund Log</div>
+                    </div>
+                  )}
+
+                  {/* FIELD 9: DISCOUNT REPORT */}
+                  {reportsActiveTab === 9 && (
+                    <div className="flex-1 flex flex-col justify-between">
+                      <div>
+                        <h4 className="text-sm font-bold text-[#00685e] mb-2 flex items-center gap-1">
+                          <span className="material-symbols-outlined text-base">sell</span> Discount & Concession Report
+                        </h4>
+                        <div className="space-y-2">
+                          {reportDiscounts.map((r) => (
+                            <div key={r.scheme} className="p-2.5 bg-[#eaf6f8] rounded-2xl flex items-center justify-between text-[11px]">
+                              <span className="font-semibold text-[#121d1f]">{r.scheme}</span>
+                              <span className="font-bold text-[#00685e]">{r.totalConcession}</span>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                      <div className="text-[10px] text-[#6d7a77]">Concession & Special Discount Audits</div>
+                    </div>
+                  )}
+
+                  {/* FIELD 10: CANCELLED BILLS AUDIT */}
+                  {reportsActiveTab === 10 && (
+                    <div className="flex-1 flex flex-col justify-between">
+                      <div>
+                        <h4 className="text-sm font-bold text-[#00685e] mb-2 flex items-center gap-1">
+                          <span className="material-symbols-outlined text-base">cancel</span> Cancelled Bills Audit
+                        </h4>
+                        <div className="space-y-2">
+                          {reportCancelledBills.map((r) => (
+                            <div key={r.bill} className="p-2.5 bg-[#fef2f2] rounded-2xl flex items-center justify-between text-[11px]">
+                              <div className="font-bold text-red-700 flex items-center gap-1.5">
+                                <span>🚫</span>
+                                <span>{r.bill}</span>
+                              </div>
+                              <span className="font-bold text-red-600">{r.amount}</span>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                      <div className="text-[10px] text-[#6d7a77]">Audit-Compliant Voided Invoice Register</div>
+                    </div>
+                  )}
+
+                  {/* FIELD 11: MASTER BILL REGISTER */}
+                  {reportsActiveTab === 11 && (
+                    <div className="flex-1 flex flex-col justify-between text-xs">
+                      <div>
+                        <h4 className="text-sm font-bold text-[#00685e] mb-2 flex items-center gap-1">
+                          <span className="material-symbols-outlined text-base">auto_stories</span> Master Bill Register
+                        </h4>
+                        <div className="bg-[#eaf6f8] p-3.5 rounded-2xl text-[11px] space-y-1">
+                          <div className="flex justify-between"><span>Total Invoices Generated:</span> <strong>{reportBillRegister.totalInvoices}</strong></div>
+                          <div className="flex justify-between"><span>Gross Hospital Revenue:</span> <strong className="text-[#00685e]">{reportBillRegister.grossRevenue}</strong></div>
+                          <div className="flex justify-between"><span>Total Tax Collected (GST):</span> <strong>{reportBillRegister.taxCollected}</strong></div>
+                        </div>
+                      </div>
+                      <div className="text-[10px] text-[#6d7a77]">Complete Monthly Financial Bill Register</div>
+                    </div>
+                  )}
+
+                  <div className="flex items-center justify-center gap-1 pt-2 border-t border-[#bcc9c6]/20 shrink-0">
+                    {reportsTabs.map((t) => (
+                      <button key={t.id} onClick={() => setReportsActiveTab(t.id)}
+                        className={`h-1.5 rounded-full transition-all ${reportsActiveTab === t.id ? 'w-5 bg-[#00685e]' : 'w-1.5 bg-[#bcc9c6]'}`} />
                     ))}
                   </div>
                 </div>
+              </div>
+            </div>
+          </div>
+        </motion.div>
 
-                <div className="pt-2 mt-auto">
-                  <button className="inline-flex items-center gap-2 text-[#00685e] font-bold text-xs sm:text-sm 2xl:text-base hover:gap-3 transition-all"
+        {/* ── 4. IPD SHOWCASE ── */}
+        <motion.div
+          className="card-frosted rounded-2xl sm:rounded-3xl p-5 sm:p-6 2xl:p-10 mb-8 sm:mb-10 2xl:mb-14 shadow-md border border-[#bcc9c6]/40 relative overflow-hidden"
+          initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.1 }} variants={fadeUp}
+        >
+          <img 
+            src="/images/ipd_bg_soft.png" 
+            alt="IPD Inpatient background" 
+            className="absolute inset-0 w-full h-full object-cover opacity-55 pointer-events-none mix-blend-multiply transition-opacity duration-700" 
+          />
+          <div className="absolute inset-0 bg-gradient-to-r from-[#effcfe]/45 via-white/20 to-[#effcfe]/45 pointer-events-none" />
+
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 2xl:gap-8 items-stretch relative z-10">
+            {/* Left: IPD Details */}
+            <div className="lg:col-span-5 flex flex-col justify-between h-full space-y-4 2xl:space-y-6">
+              <div>
+                <div className="flex items-center justify-between mb-3 2xl:mb-4">
+                  <div className="w-12 h-12 2xl:w-14 2xl:h-14 module-badge-icon rounded-xl 2xl:rounded-2xl flex items-center justify-center">
+                    <span className="material-symbols-outlined text-[#00685e] text-2xl 2xl:text-3xl">bed</span>
+                  </div>
+                  <span className="inline-flex items-center px-2.5 py-1 2xl:px-3.5 2xl:py-1.5 rounded-full bg-[#afecde] text-[#326c62] text-[11px] 2xl:text-xs font-semibold"
                     style={{ fontFamily: "'Inter', sans-serif" }}>
-                    Explore {mod.title} Features
-                    <span className="material-symbols-outlined text-sm 2xl:text-base">arrow_forward</span>
-                  </button>
+                    Real-Time Bed Matrix
+                  </span>
+                </div>
+
+                <div className="text-[11px] 2xl:text-xs font-bold uppercase tracking-wider text-[#00685e] mb-1" style={{ fontFamily: "'Inter', sans-serif" }}>INPATIENT CARE, WARDS & BED MANAGEMENT</div>
+                <h2 className="text-2xl sm:text-3xl 2xl:text-4xl font-bold text-[#121d1f] mb-2 sm:mb-3" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>IPD</h2>
+                <p className="text-xs sm:text-sm 2xl:text-base text-[#3d4947] leading-relaxed mb-4 2xl:mb-6 bg-white/25 backdrop-blur-sm p-2.5 sm:p-3 2xl:p-4 rounded-xl border border-white/30" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
+                  End-to-end inpatient care — bed allocation, ward management, nurse dashboards, treatment tracking, discharge summaries & IPD accounting.
+                </p>
+
+                {/* Feature Pills */}
+                <div className="flex flex-wrap gap-2 mb-4 2xl:mb-6">
+                  {['Visual Bed Matrix', 'Nurse Dashboard', 'IPD Accounting', 'Discharge Summary', 'Ward Management', 'OT Scheduling'].map((feat) => (
+                    <span key={feat} className="px-2.5 py-1 rounded-full bg-[#eaf6f8] border border-[#00685e]/20 text-[#00685e] text-[10px] font-bold">{feat}</span>
+                  ))}
+                </div>
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 2xl:gap-3 mb-4 2xl:mb-6">
+                  {['IPD Admission & Bed Allocation', 'Nurse & Doctor Duty Dashboard', 'Ward Bed Availability Matrix', 'Patient Treatment Chart', 'IPD Advance & Billing Ledger', 'TPA & Insurance IPD Claims', 'Discharge Summary Builder', 'OT & Surgical Scheduling'].map((feat) => (
+                    <div key={feat} className="flex items-center gap-1.5 2xl:gap-2 text-xs 2xl:text-sm text-[#121d1f] font-medium" style={{ fontFamily: "'Inter', sans-serif" }}>
+                      <span className="material-symbols-outlined text-[#00685e] text-sm 2xl:text-base">check_circle</span>
+                      {feat}
+                    </div>
+                  ))}
                 </div>
               </div>
-            </motion.div>
-          ))}
+
+              <div className="pt-1">
+                <Link
+                  to="/modules/ipd"
+                  className="inline-flex items-center gap-2 bg-[#2d685e] text-white px-5 py-2.5 2xl:px-6 2xl:py-3 rounded-full text-xs sm:text-sm 2xl:text-base font-bold shadow-md hover:bg-[#00685e] transition-all"
+                  style={{ fontFamily: "'Inter', sans-serif" }}
+                >
+                  Explore IPD Features <span className="material-symbols-outlined text-sm 2xl:text-base">arrow_forward</span>
+                </Link>
+              </div>
+            </div>
+
+            {/* Right: Interactive IPD Card */}
+            <div className="lg:col-span-7 bg-white/95 backdrop-blur-sm rounded-2xl border border-[#bcc9c6]/40 shadow-sm overflow-hidden flex flex-col justify-between min-h-[420px] sm:h-[400px] 2xl:h-[480px] 3xl:h-[500px] relative z-10">
+
+              {/* Card Header */}
+              <div className="bg-[#effcfe] px-4 py-3 border-b border-[#bcc9c6]/30 flex flex-wrap items-center justify-between gap-2 text-xs shrink-0" style={{ fontFamily: "'Inter', sans-serif" }}>
+                <div className="flex items-center gap-2">
+                  <span className="material-symbols-outlined text-sm text-[#00685e]">bed</span>
+                  <span className="font-bold text-[#00685e]">IPD — Inpatient Management (2 Views)</span>
+                </div>
+                <div className="flex items-center gap-1.5">
+                  <span className="text-[10px] text-[#6d7a77]">Auto-changes 5s (2 views)</span>
+                  <span className="w-2 h-2 rounded-full bg-[#00685e] animate-pulse"></span>
+                </div>
+              </div>
+
+              {/* App Body */}
+              <div className="flex flex-col sm:flex-row flex-1 overflow-hidden">
+
+                {/* Sidebar */}
+                <div className="w-full sm:w-48 bg-[#008378] text-white p-2 flex flex-row sm:flex-col overflow-x-auto sm:overflow-y-auto no-scrollbar sm:custom-scrollbar gap-1 shrink-0 text-xs" style={{ fontFamily: "'Inter', sans-serif" }}>
+                  <div className="font-bold text-white/70 text-[9px] uppercase tracking-wider mb-1 px-2 hidden sm:block">IPD</div>
+                  {ipdTabs.map((tab) => (
+                    <button key={tab.id} onClick={() => setIpdActiveTab(tab.id)}
+                      className={`w-full flex items-center p-1.5 px-2 rounded-lg text-left transition-all ${
+                        ipdActiveTab === tab.id ? 'bg-[#00685e] text-white font-bold' : 'hover:bg-white/10 text-white/90'
+                      }`}>
+                      <span className="truncate text-[11px]">{tab.label}</span>
+                    </button>
+                  ))}
+                </div>
+
+                {/* Main Content */}
+                <div className="flex-1 p-3 overflow-x-auto overflow-y-auto flex flex-col justify-between">
+
+                  {/* NURSE DASHBOARD */}
+                  {ipdActiveTab === 0 && (
+                    <div className="flex-1 flex flex-col justify-between">
+                      <div>
+                        <div className="flex items-center justify-between mb-2">
+                          <h4 className="text-sm font-bold text-[#00685e] flex items-center gap-1">
+                            <span className="material-symbols-outlined text-base">health_and_safety</span> Nurse Dashboard — Ward Overview
+                          </h4>
+                          <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-[#afecde] text-[#326c62]">Live 311 Beds</span>
+                        </div>
+
+                        {/* Top Bed Metrics Cards */}
+                        <div className="grid grid-cols-4 gap-1.5 mb-2.5">
+                          <div className="bg-[#eaf6f8] p-1.5 rounded-xl border border-[#00685e]/20 text-center">
+                            <div className="text-[9px] font-bold text-[#6d7a77]">TOTAL BEDS</div>
+                            <div className="text-sm font-extrabold text-[#00685e]">311</div>
+                            <div className="text-[8px] text-[#008378]">Occ: 68 (21.9%)</div>
+                          </div>
+                          <div className="bg-[#eaf6f8] p-1.5 rounded-xl border border-[#00685e]/20 text-center">
+                            <div className="text-[9px] font-bold text-[#6d7a77]">ADMITTED</div>
+                            <div className="text-sm font-extrabold text-[#008378]">161</div>
+                            <div className="text-[8px] text-[#6d7a77]">Today: +0</div>
+                          </div>
+                          <div className="bg-red-50 p-1.5 rounded-xl border border-red-200 text-center">
+                            <div className="text-[9px] font-bold text-red-600">EMERGENCY</div>
+                            <div className="text-sm font-extrabold text-red-700">49</div>
+                            <div className="text-[8px] text-red-500">Needs attention</div>
+                          </div>
+                          <div className="bg-emerald-50 p-1.5 rounded-xl border border-emerald-200 text-center">
+                            <div className="text-[9px] font-bold text-emerald-600">DISCHARGES</div>
+                            <div className="text-sm font-extrabold text-emerald-700">0</div>
+                            <div className="text-[8px] text-emerald-500">Today</div>
+                          </div>
+                        </div>
+
+                        {/* Patient Registry Table */}
+                        <table className="w-full text-left text-[10px]">
+                          <thead>
+                            <tr className="border-b text-[#00685e] font-bold uppercase">
+                              <th className="py-1">Name</th>
+                              <th className="py-1">UHID</th>
+                              <th className="py-1">Ward / Bed</th>
+                              <th className="py-1">Status</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            {[
+                              { name: 'Lucifer Yadav', uhid: 'LCI202600464', ward: 'EMERGENCY - E101', status: 'Stable' },
+                              { name: 'Suresh sharma', uhid: 'LCI202600453', ward: 'Pvt - bed103', status: 'Stable' },
+                              { name: 'Neelam', uhid: 'LCI202600449', ward: 'Pvt - bed102', status: 'Stable' },
+                              { name: 'Charu', uhid: 'LCI202600432', ward: 'Gen - 104', status: 'Stable' },
+                            ].map((r) => (
+                              <tr key={r.uhid} className="border-b border-[#bcc9c6]/20">
+                                <td className="py-1 font-semibold text-[#121d1f]">{r.name}</td>
+                                <td className="py-1 font-mono text-[#00685e]">{r.uhid}</td>
+                                <td className="py-1 text-[#3d4947]">{r.ward}</td>
+                                <td className="py-1">
+                                  <span className="px-1.5 py-0.5 rounded-full bg-emerald-100 text-emerald-700 font-bold text-[8px]">• {r.status}</span>
+                                </td>
+                              </tr>
+                            ))}
+                          </tbody>
+                        </table>
+                      </div>
+                      <div className="text-[10px] text-[#6d7a77] mt-1">Real-Time Inpatient Nursing Dashboard</div>
+                    </div>
+                  )}
+
+                  {/* ACCOUNTING */}
+                  {ipdActiveTab === 1 && (
+                    <div className="flex-1 flex flex-col justify-between">
+                      <div>
+                        <div className="flex items-center justify-between mb-2">
+                          <h4 className="text-sm font-bold text-[#00685e] flex items-center gap-1">
+                            <span className="material-symbols-outlined text-base">account_balance_wallet</span> IPD Accounting Sub-Features
+                          </h4>
+                          <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-[#afecde] text-[#326c62]">6 Options</span>
+                        </div>
+                        <div className="grid grid-cols-2 gap-2 mb-3">
+                          {[
+                            { name: 'IPD Dashboard', icon: 'grid_view', active: false },
+                            { name: 'Advance Payment', icon: 'payments', active: false },
+                            { name: 'Provisional Billing', icon: 'receipt_long', active: false },
+                            { name: 'Package Billing', icon: 'inventory_2', active: false },
+                            { name: 'Provisional Estimate', icon: 'assignment', active: true },
+                            { name: 'Final Bill', icon: 'assignment_turned_in', active: false },
+                          ].map((sub) => (
+                            <div
+                              key={sub.name}
+                              className={`flex items-center gap-2 p-2 rounded-2xl border text-[11px] transition-all ${
+                                sub.active
+                                  ? 'bg-[#00685e] text-white font-bold border-[#00685e] shadow-sm'
+                                  : 'bg-[#eaf6f8]/80 text-[#121d1f] font-semibold border-[#bcc9c6]/40 hover:bg-[#eaf6f8]'
+                              }`}
+                            >
+                              <div className={`w-6 h-6 rounded-xl flex items-center justify-center text-xs shrink-0 ${
+                                sub.active ? 'bg-white/20 text-white' : 'bg-white text-[#00685e]'
+                              }`}>
+                                <span className="material-symbols-outlined text-sm">{sub.icon}</span>
+                              </div>
+                              <span className="truncate">{sub.name}</span>
+                            </div>
+                          ))}
+                        </div>
+                        <div className="p-2 bg-[#eaf6f8] rounded-xl text-[10px] text-[#3d4947] flex items-center justify-between font-medium">
+                          <span>Active View: <strong>Provisional Estimate</strong></span>
+                          <span className="font-bold text-[#00685e]">Ref: IP-99023</span>
+                        </div>
+                      </div>
+                      <div className="text-[10px] text-[#6d7a77] mt-2">Inpatient Financial & Billing Sub-Modules</div>
+                    </div>
+                  )}
+
+                  {/* Progress Dots */}
+                  <div className="flex items-center justify-center gap-1 pt-2 border-t border-[#bcc9c6]/20 shrink-0">
+                    {ipdTabs.map((t) => (
+                      <button key={t.id} onClick={() => setIpdActiveTab(t.id)}
+                        className={`h-1.5 rounded-full transition-all ${ipdActiveTab === t.id ? 'w-5 bg-[#00685e]' : 'w-1.5 bg-[#bcc9c6]'}`} />
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </motion.div>
+
+        {/* ── 5. BILLING & ACCOUNTS SHOWCASE ── */}
+        <motion.div
+          className="card-frosted rounded-2xl sm:rounded-3xl p-5 sm:p-6 2xl:p-10 mb-8 sm:mb-10 2xl:mb-14 shadow-md border border-[#bcc9c6]/40 relative overflow-hidden"
+          initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.1 }} variants={fadeUp}
+        >
+          {/* Background Image Overlay - Enhanced High Visibility */}
+          <img 
+            src="/images/billing_bg_soft.png" 
+            alt="Billing & Accounts background" 
+            className="absolute inset-0 w-full h-full object-cover opacity-55 pointer-events-none mix-blend-multiply transition-opacity duration-700" 
+          />
+          <div className="absolute inset-0 bg-gradient-to-r from-[#effcfe]/45 via-white/20 to-[#effcfe]/45 pointer-events-none" />
+
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 2xl:gap-8 items-stretch relative z-10">
+            <div className="lg:col-span-5 flex flex-col justify-between h-full space-y-4 2xl:space-y-6">
+              <div>
+                <div className="flex items-center justify-between mb-3 2xl:mb-4">
+                  <div className="w-12 h-12 2xl:w-14 2xl:h-14 module-badge-icon rounded-xl 2xl:rounded-2xl flex items-center justify-center">
+                    <span className="material-symbols-outlined text-[#00685e] text-2xl 2xl:text-3xl">receipt_long</span>
+                  </div>
+                  <span className="inline-flex items-center px-2.5 py-1 2xl:px-3.5 2xl:py-1.5 rounded-full bg-[#afecde] text-[#326c62] text-[11px] 2xl:text-xs font-semibold">
+                    Real-time Audit Trail
+                  </span>
+                </div>
+
+                <div className="text-[11px] 2xl:text-xs font-bold uppercase tracking-wider text-[#00685e] mb-1">REVENUE CYCLE & FISCAL MANAGEMENT</div>
+                <h2 className="text-2xl sm:text-3xl 2xl:text-4xl font-bold text-[#121d1f] mb-2 sm:mb-3">Billing & Accounts</h2>
+                <p className="text-xs sm:text-sm 2xl:text-base text-[#3d4947] leading-relaxed mb-4 2xl:mb-6 bg-white/25 backdrop-blur-sm p-2.5 sm:p-3 2xl:p-4 rounded-xl border border-white/30">
+                  Comprehensive financial management including invoicing, insurance claims, ledger master, GST & vouchers.
+                </p>
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 2xl:gap-3 mb-4 2xl:mb-6">
+                  {['Insurance Claims Engine', 'Multi-currency POS Billing', 'Automated Tariff Lists', 'Revenue Cycle Analytics', 'Account Groups & Ledgers', 'GST & Voucher Masters'].map((feat) => (
+                    <div key={feat} className="flex items-center gap-1.5 2xl:gap-2 text-xs 2xl:text-sm text-[#121d1f] font-medium">
+                      <span className="material-symbols-outlined text-[#00685e] text-sm 2xl:text-base">check_circle</span>
+                      {feat}
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              <div className="pt-1">
+                <Link to="/modules/billing-accounts" className="inline-flex items-center gap-2 bg-[#008378] text-white px-5 py-2.5 2xl:px-6 2xl:py-3 rounded-full text-xs sm:text-sm 2xl:text-base font-bold shadow-md hover:bg-[#00685e] transition-all cursor-pointer">
+                  Explore Billing & Accounts Features <span className="material-symbols-outlined text-sm 2xl:text-base">arrow_forward</span>
+                </Link>
+              </div>
+            </div>
+
+            <div className="lg:col-span-7 bg-white/95 backdrop-blur-sm rounded-2xl border border-[#bcc9c6]/40 shadow-sm overflow-hidden flex flex-col justify-between min-h-[420px] sm:h-[400px] 2xl:h-[480px] 3xl:h-[500px] relative z-10">
+              <div className="bg-[#effcfe] px-4 py-3 border-b border-[#bcc9c6]/30 flex flex-wrap items-center justify-between gap-2 text-xs shrink-0">
+                <div className="flex items-center gap-2 font-bold text-[#00685e]">Billing & Accounts Master</div>
+                <div className="text-[10px] text-[#6d7a77]">Auto-changes 5s (6 views)</div>
+              </div>
+
+              <div className="flex flex-col sm:flex-row flex-1 overflow-hidden">
+                <div className="w-full sm:w-48 bg-[#008378] text-white p-2 sm:p-2.5 flex flex-row sm:flex-col overflow-x-auto sm:overflow-y-auto no-scrollbar sm:custom-scrollbar gap-1 shrink-0 text-xs">
+                  {billingTabs.map((tab) => (
+                    <button key={tab.id} onClick={() => setBillingActiveTab(tab.id)}
+                      className={`w-full flex items-center justify-between p-1.5 px-2 rounded-lg text-left transition-all ${
+                        billingActiveTab === tab.id ? 'bg-[#00685e] text-white font-bold' : 'hover:bg-white/10 text-white/90'
+                      }`}>
+                      <span className="truncate text-[11px]">{tab.label}</span>
+                    </button>
+                  ))}
+                </div>
+
+                <div className="flex-1 p-3 overflow-x-auto overflow-y-auto flex flex-col justify-between">
+                  {billingActiveTab === 0 && (
+                    <div>
+                      <h4 className="text-sm font-bold text-[#121d1f] mb-2">Account Groups</h4>
+                      <table className="w-full text-left border-collapse text-[11px]">
+                        <thead><tr className="border-b text-[#00685e]"><th className="py-1">Group</th><th className="py-1">Code</th><th className="py-1">Nature</th></tr></thead>
+                        <tbody>{billingAccountGroups.map((r) => (<tr key={r.code}><td className="py-1 font-semibold">{r.name}</td><td className="py-1">• {r.code}</td><td className="py-1 font-bold">{r.nature}</td></tr>))}</tbody>
+                      </table>
+                    </div>
+                  )}
+
+                  {billingActiveTab === 1 && (
+                    <div>
+                      <h4 className="text-sm font-bold text-[#121d1f] mb-2">Ledger Master</h4>
+                      <table className="w-full text-left border-collapse text-[11px]">
+                        <thead><tr className="border-b text-[#00685e]"><th className="py-1">Ledger</th><th className="py-1">Code</th><th className="py-1">Balance</th></tr></thead>
+                        <tbody>{billingLedgers.map((r) => (<tr key={r.code}><td className="py-1 font-semibold">{r.name}</td><td className="py-1">{r.code}</td><td className="py-1 font-bold text-[#00685e]">{r.balance}</td></tr>))}</tbody>
+                      </table>
+                    </div>
+                  )}
+
+                  {billingActiveTab === 2 && (
+                    <div>
+                      <h4 className="text-sm font-bold text-[#121d1f] mb-2">Service Master Registry</h4>
+                      <table className="w-full text-left border-collapse text-[11px]">
+                        <thead><tr className="border-b text-[#00685e]"><th className="py-1">Code</th><th className="py-1">Name</th><th className="py-1">Rate</th></tr></thead>
+                        <tbody>{billingServices.map((r) => (<tr key={r.code + r.name}><td className="py-1 font-bold text-[#00685e]">• {r.code}</td><td className="py-1 font-semibold">{r.name}</td><td className="py-1 font-bold text-[#008378]">{r.rate}</td></tr>))}</tbody>
+                      </table>
+                    </div>
+                  )}
+
+                  {billingActiveTab === 3 && (
+                    <div>
+                      <h4 className="text-sm font-bold text-[#121d1f] mb-2">GST Rate Master</h4>
+                      <table className="w-full text-left border-collapse text-[11px]">
+                        <thead><tr className="border-b text-[#00685e]"><th className="py-1">Code</th><th className="py-1">Name</th><th className="py-1">IGST</th></tr></thead>
+                        <tbody>{billingGstRates.map((r) => (<tr key={r.code}><td className="py-1 font-bold text-[#00685e]">• {r.code}</td><td className="py-1 font-semibold">{r.name}</td><td className="py-1 font-bold text-[#008378]">{r.igst}</td></tr>))}</tbody>
+                      </table>
+                    </div>
+                  )}
+
+                  {billingActiveTab === 4 && (
+                    <div>
+                      <h4 className="text-sm font-bold text-[#121d1f] mb-2">Voucher Type Master</h4>
+                      <table className="w-full text-left border-collapse text-[11px]">
+                        <thead><tr className="border-b text-[#00685e]"><th className="py-1">Name</th><th className="py-1">Code</th></tr></thead>
+                        <tbody>{billingVoucherTypes.map((r) => (<tr key={r.code + r.name}><td className="py-1 font-semibold">{r.name}</td><td className="py-1 font-bold text-[#00685e]">{r.code}</td></tr>))}</tbody>
+                      </table>
+                    </div>
+                  )}
+
+                  {billingActiveTab === 5 && (
+                    <div>
+                      <h4 className="text-sm font-bold text-[#121d1f] mb-2">Voucher Master</h4>
+                      <table className="w-full text-left border-collapse text-[11px]">
+                        <thead><tr className="border-b text-[#00685e]"><th className="py-1">Name</th><th className="py-1">Prefix</th><th className="py-1">Type</th></tr></thead>
+                        <tbody>{billingVouchers.map((r) => (<tr key={r.name + r.prefix}><td className="py-1 font-semibold">{r.name}</td><td className="py-1 font-bold text-[#00685e]">{r.prefix}</td><td className="py-1">{r.type}</td></tr>))}</tbody>
+                      </table>
+                    </div>
+                  )}
+
+                  <div className="flex items-center justify-center gap-1.5 pt-2 border-t border-[#bcc9c6]/20 shrink-0">
+                    {billingTabs.map((t) => (
+                      <button key={t.id} onClick={() => setBillingActiveTab(t.id)}
+                        className={`h-1.5 rounded-full transition-all ${billingActiveTab === t.id ? 'w-6 bg-[#00685e]' : 'w-2 bg-[#bcc9c6]'}`} />
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </motion.div>
+
+        {/* ── 6. LABORATORY SHOWCASE ── */}
+        <motion.div
+          className="card-frosted rounded-2xl sm:rounded-3xl p-5 sm:p-6 2xl:p-10 mb-8 sm:mb-10 2xl:mb-14 shadow-md border border-[#bcc9c6]/40 relative overflow-hidden"
+          initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.1 }} variants={fadeUp}
+        >
+          {/* Background Image Overlay - Increased Visibility */}
+          <img 
+            src="/images/lab_bg_soft.png" 
+            alt="Laboratory background" 
+            className="absolute inset-0 w-full h-full object-cover opacity-35 pointer-events-none mix-blend-multiply transition-opacity duration-700" 
+          />
+          <div className="absolute inset-0 bg-gradient-to-r from-[#effcfe]/60 via-white/35 to-[#effcfe]/60 pointer-events-none" />
+
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 2xl:gap-8 items-stretch relative z-10">
+            <div className="lg:col-span-5 flex flex-col justify-between h-full space-y-4 2xl:space-y-6">
+              <div>
+                <div className="flex items-center justify-between mb-3 2xl:mb-4">
+                  <div className="w-12 h-12 2xl:w-14 2xl:h-14 module-badge-icon rounded-xl 2xl:rounded-2xl flex items-center justify-center">
+                    <span className="material-symbols-outlined text-[#00685e] text-2xl 2xl:text-3xl">biotech</span>
+                  </div>
+                  <span className="inline-flex items-center px-2.5 py-1 2xl:px-3.5 2xl:py-1.5 rounded-full bg-[#afecde] text-[#326c62] text-[11px] 2xl:text-xs font-semibold">
+                    ISO 15189 Compliant
+                  </span>
+                </div>
+
+                <div className="text-[11px] 2xl:text-xs font-bold uppercase tracking-wider text-[#00685e] mb-1">DIAGNOSTICS & SPECIMEN WORKFLOW</div>
+                <h2 className="text-2xl sm:text-3xl 2xl:text-4xl font-bold text-[#121d1f] mb-2 sm:mb-3">Laboratory</h2>
+                <p className="text-xs sm:text-sm 2xl:text-base text-[#3d4947] leading-relaxed mb-4 2xl:mb-6 bg-white/25 backdrop-blur-sm p-2.5 sm:p-3 2xl:p-4 rounded-xl border border-white/30">
+                  Streamline lab operations with automated test ordering, sample tracking, result management, and seamless clinical integration.
+                </p>
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 2xl:gap-3 mb-4 2xl:mb-6">
+                  {['Automated Sample Tracking', 'HL7 & LIS Integration', 'Abnormal Result Flagging', 'Barcoded Specimen Management', 'OPD Lab Orders Sync', 'Instant PDF Report Generation'].map((feat) => (
+                    <div key={feat} className="flex items-center gap-1.5 2xl:gap-2 text-xs 2xl:text-sm text-[#121d1f] font-medium">
+                      <span className="material-symbols-outlined text-[#00685e] text-sm 2xl:text-base">check_circle</span>
+                      {feat}
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              <div className="pt-1">
+                <Link to="/modules/laboratory" className="inline-flex items-center gap-2 bg-[#00685e] text-white px-5 py-2.5 2xl:px-6 2xl:py-3 rounded-full text-xs sm:text-sm 2xl:text-base font-bold shadow-md hover:bg-[#005049] transition-all">
+                  Explore Laboratory Features <span className="material-symbols-outlined text-sm 2xl:text-base">arrow_forward</span>
+                </Link>
+              </div>
+            </div>
+
+            <div className="lg:col-span-7 bg-white/95 backdrop-blur-sm rounded-2xl border border-[#bcc9c6]/40 shadow-sm overflow-hidden flex flex-col justify-between min-h-[420px] sm:h-[400px] 2xl:h-[480px] 3xl:h-[500px] relative z-10">
+              <div className="bg-[#effcfe] px-4 py-3 border-b border-[#bcc9c6]/30 flex flex-wrap items-center justify-between gap-2 text-xs text-[#3d4947] shrink-0">
+                <div className="flex items-center gap-2">
+                  <span className="material-symbols-outlined text-sm text-[#00685e]">home</span>
+                  <span>Home &gt; Reception &gt;</span>
+                  <span className="font-bold text-[#00685e]">Service Orders</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <span className="px-2.5 py-1 bg-white border border-[#bcc9c6]/30 rounded-lg text-[11px] font-semibold text-[#00685e]">📅 Select Date</span>
+                </div>
+              </div>
+
+              <div className="flex flex-col sm:flex-row flex-1 overflow-hidden">
+                <div className="w-full sm:w-44 bg-[#008378] text-white p-2.5 sm:p-3 flex flex-row sm:flex-col overflow-x-auto sm:overflow-y-auto no-scrollbar sm:custom-scrollbar gap-1 shrink-0 text-xs">
+                  <div className="flex items-center gap-2 p-2 bg-[#00685e] rounded-lg font-bold">
+                    <span className="material-symbols-outlined text-sm">biotech</span>
+                    <span>Laboratory</span>
+                  </div>
+                  <div className="pl-6 py-1 text-[#afecde] font-semibold">↳ OPD Lab Orders</div>
+                  <div className="flex items-center gap-2 p-2 hover:bg-white/10 rounded-lg opacity-80">Billing & Accounts</div>
+                  <div className="flex items-center gap-2 p-2 hover:bg-white/10 rounded-lg opacity-80">Clinical</div>
+                  <div className="flex items-center gap-2 p-2 hover:bg-white/10 rounded-lg opacity-80">Reports</div>
+                </div>
+
+                <div className="flex-1 p-3 overflow-x-auto overflow-y-auto flex flex-col justify-between">
+                  <div>
+                    <div className="flex items-center justify-between mb-2">
+                      <h4 className="text-sm font-bold text-[#121d1f]">Service Orders</h4>
+                      <span className="px-2 py-0.5 bg-[#afecde] text-[#326c62] rounded text-[10px] font-bold">LIVE SYNC</span>
+                    </div>
+
+                    <table className="w-full text-left border-collapse text-[11px]">
+                      <thead>
+                        <tr className="border-b border-[#bcc9c6]/30 text-[#00685e] font-bold uppercase">
+                          <th className="py-1.5 px-1">Patient</th>
+                          <th className="py-1.5 px-1">Ordered At</th>
+                          <th className="py-1.5 px-1">Doctor</th>
+                          <th className="py-1.5 px-1">Status</th>
+                        </tr>
+                      </thead>
+                      <tbody className="divide-y divide-[#bcc9c6]/20">
+                        {labOrders.map((order) => (
+                          <tr key={order.id}>
+                            <td className="py-1.5 px-1 font-semibold">{order.name} <div className="text-[9px] text-[#6d7a77]">{order.id}</div></td>
+                            <td className="py-1.5 px-1 text-[#3d4947] whitespace-nowrap">{order.date}</td>
+                            <td className="py-1.5 px-1 text-[#3d4947]">{order.doctor}</td>
+                            <td className="py-1.5 px-1"><span className="px-2 py-0.5 rounded-full bg-[#afecde] text-[#326c62] font-bold text-[10px]">• {order.status}</span></td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </motion.div>
+
 
         {/* ── ADDITIONAL SPECIALIZED CONTAINERS ── */}
         <div className="mb-10">

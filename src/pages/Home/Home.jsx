@@ -34,85 +34,164 @@ export default function Home() {
   return (
     <motion.div {...pageTransition} className="min-h-screen bg-[#f8fdfe]">
       {/* ── 1. HERO SECTION (SIDE-BY-SIDE IN 1 LINE) ── */}
-      <section className="pt-24 sm:pt-28 md:pt-32 pb-12 sm:pb-16 bg-gradient-to-b from-[#effcfe] via-[#f5fdfe] to-[#f8fdfe]">
+      <section className="pt-20 sm:pt-28 md:pt-32 pb-8 sm:pb-14 lg:pb-16 bg-gradient-to-b from-[#effcfe] via-[#f5fdfe] to-[#f8fdfe]">
         <div className="site-wrapper">
           
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-center">
             
-            {/* Left Content (5 Columns) */}
-            <motion.div className="lg:col-span-5 space-y-5" initial="hidden" animate="visible" variants={stagger}>
+            {/* Left Content (5 Columns on Desktop, Center Aligned on Mobile) */}
+            <motion.div className="lg:col-span-5 space-y-2 sm:space-y-4 lg:space-y-5 text-center lg:text-left flex flex-col items-center lg:items-start" initial="hidden" animate="visible" variants={stagger}>
               <motion.div variants={fadeUp} className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#afecde]/80 text-[#00685e] text-xs font-semibold shadow-sm">
                 <span className="material-symbols-outlined text-sm">verified_user</span>
                 Trusted by 500+ Hospitals Globally
               </motion.div>
 
-              <motion.h1 variants={fadeUp} className="text-3xl sm:text-4xl lg:text-5xl font-bold text-[#121d1f] leading-[1.15] tracking-tight" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
+              <motion.h1 variants={fadeUp} className="text-3xl sm:text-4xl lg:text-5xl font-bold text-[#121d1f] leading-[1.15] tracking-tight text-center lg:text-left" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
                 Transforming<br />
                 Healthcare through<br />
                 <span className="text-[#00685e]">Intelligent Automation</span>
               </motion.h1>
 
-              <motion.p variants={fadeUp} className="text-xs sm:text-sm text-[#3d4947] leading-relaxed">
+              <motion.p variants={fadeUp} className="text-xs sm:text-sm text-[#3d4947] leading-relaxed text-center lg:text-left max-w-lg mx-auto lg:mx-0">
                 Empower your medical staff with a unified Hospital Management System designed for the modern healthcare era. Reduce administrative burden and focus on what matters most: patient health.
               </motion.p>
 
-              <motion.div variants={fadeUp} className="flex flex-wrap items-center gap-3 pt-1">
-                <Link to="/contact" className="inline-flex items-center gap-2 bg-[#00685e] text-white px-6 py-3 rounded-full text-xs sm:text-sm font-bold shadow-md hover:bg-[#005049] transition-all">
-                  Book a Demo <span className="material-symbols-outlined text-sm">arrow_forward</span>
+              {/* MOBILE POV: Showcase Image Card placed ABOVE Book Demo & Explore Features with ultra-tight top gap & expanded bottom gap */}
+              <motion.div 
+                className="block lg:hidden -mt-0.5 mb-7 w-full max-w-lg mx-auto"
+                initial={{ opacity: 0, scale: 0.95 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.7 }}
+              >
+                <div 
+                  className="relative rounded-2xl sm:rounded-3xl overflow-hidden shadow-2xl border border-[#bcc9c6]/40 bg-white transition-all duration-300 ease-out"
+                  onMouseEnter={() => setIsPaused(true)}
+                  onMouseLeave={() => setIsPaused(false)}
+                >
+                  <div className="relative bg-[#f4fafb] overflow-hidden w-full aspect-[2/1] group/card">
+                    <AnimatePresence mode="wait">
+                      <motion.img
+                        key={heroSlides[currentSlide].id}
+                        src={heroSlides[currentSlide].img}
+                        alt={heroSlides[currentSlide].title}
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                        transition={{ duration: 0.4, ease: 'easeInOut' }}
+                        className="w-full h-full object-contain block"
+                      />
+                    </AnimatePresence>
+
+                    {/* Tag Overlay */}
+                    <div className="absolute top-2 left-2 z-20 pointer-events-none">
+                      <span className="px-2.5 py-1 rounded-full bg-[#00685e]/85 text-white text-[9px] font-bold shadow-md backdrop-blur-md border border-white/20 flex items-center gap-1.5">
+                        <span className="w-1.5 h-1.5 rounded-full bg-[#85f5e6] animate-pulse" />
+                        {heroSlides[currentSlide].tag}
+                      </span>
+                    </div>
+
+                    {/* Bottom Left Arrow */}
+                    <button
+                      onClick={(e) => {
+                        e.stopPropagation()
+                        setCurrentSlide((prev) => (prev === 0 ? heroSlides.length - 1 : prev - 1))
+                      }}
+                      className="absolute bottom-2 left-2 w-8 h-8 rounded-full bg-white/90 text-[#00685e] border border-[#00685e]/30 shadow-md active:scale-95 flex items-center justify-center z-30"
+                      aria-label="Previous slide"
+                    >
+                      <span className="material-symbols-outlined text-base font-bold select-none">arrow_back_ios_new</span>
+                    </button>
+
+                    {/* Bottom Center Dots */}
+                    <div className="absolute bottom-2 left-1/2 -translate-x-1/2 flex items-center justify-center z-20 pointer-events-auto">
+                      <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-black/35 backdrop-blur-md border border-white/20 shadow-sm">
+                        {heroSlides.map((_, idx) => (
+                          <button
+                            key={idx}
+                            onClick={() => setCurrentSlide(idx)}
+                            className={`transition-all rounded-full ${
+                              currentSlide === idx 
+                                ? 'w-5 h-1.5 bg-[#85f5e6]' 
+                                : 'w-1.5 h-1.5 bg-white/60'
+                            }`}
+                            aria-label={`Go to slide ${idx + 1}`}
+                          />
+                        ))}
+                      </div>
+                    </div>
+
+                    {/* Bottom Right Arrow */}
+                    <button
+                      onClick={(e) => {
+                        e.stopPropagation()
+                        setCurrentSlide((prev) => (prev + 1) % heroSlides.length)
+                      }}
+                      className="absolute bottom-2 right-2 w-8 h-8 rounded-full bg-white/90 text-[#00685e] border border-[#00685e]/30 shadow-md active:scale-95 flex items-center justify-center z-30"
+                      aria-label="Next slide"
+                    >
+                      <span className="material-symbols-outlined text-base font-bold select-none">arrow_forward_ios</span>
+                    </button>
+                  </div>
+                </div>
+              </motion.div>
+
+              <motion.div variants={fadeUp} className="flex flex-wrap items-center justify-center lg:justify-start gap-2.5 sm:gap-3 pt-3 w-full">
+                <Link to="/contact" className="inline-flex items-center gap-1.5 bg-[#00685e] text-white px-4 py-2 sm:px-6 sm:py-3 rounded-full text-[11px] sm:text-sm font-bold shadow-md hover:bg-[#005049] transition-all">
+                  Book a Demo <span className="material-symbols-outlined text-xs sm:text-sm">arrow_forward</span>
                 </Link>
-                <Link to="/modules" className="inline-flex items-center gap-2 border border-[#bcc9c6] text-[#00685e] px-6 py-3 rounded-full text-xs sm:text-sm font-semibold hover:bg-white transition-all">
+                <Link to="/modules" className="inline-flex items-center gap-1.5 border border-[#bcc9c6] text-[#00685e] px-4 py-2 sm:px-6 sm:py-3 rounded-full text-[11px] sm:text-sm font-semibold hover:bg-white transition-all">
                   Explore Features
                 </Link>
               </motion.div>
 
               {/* Social Proof */}
-              <motion.div variants={fadeUp} className="flex items-center gap-3 pt-3 border-t border-[#bcc9c6]/30">
-                <div className="flex -space-x-2">
-                  <span className="w-8 h-8 rounded-full bg-[#00685e] text-white text-xs font-bold flex items-center justify-center border-2 border-white">DR</span>
-                  <span className="w-8 h-8 rounded-full bg-[#008378] text-white text-xs font-bold flex items-center justify-center border-2 border-white">RN</span>
-                  <span className="w-8 h-8 rounded-full bg-[#326c62] text-white text-xs font-bold flex items-center justify-center border-2 border-white">AD</span>
+              <motion.div variants={fadeUp} className="flex items-center justify-center lg:justify-start gap-2.5 sm:gap-3 pt-3.5 mt-2 border-t border-[#bcc9c6]/30 w-full max-w-lg mx-auto lg:mx-0">
+                <div className="flex -space-x-2 shrink-0">
+                  <span className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-[#00685e] text-white text-[11px] sm:text-xs font-bold flex items-center justify-center border-2 border-white shadow-sm">DR</span>
+                  <span className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-[#008378] text-white text-[11px] sm:text-xs font-bold flex items-center justify-center border-2 border-white shadow-sm">RN</span>
+                  <span className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-[#326c62] text-white text-[11px] sm:text-xs font-bold flex items-center justify-center border-2 border-white shadow-sm">AD</span>
                 </div>
-                <span className="text-xs text-[#6d7a77] font-medium">100+ Accredited Digital Hospitals Today</span>
+                <span className="text-[11px] sm:text-xs text-[#6d7a77] font-medium text-left">100+ Accredited Digital Hospitals Today</span>
               </motion.div>
             </motion.div>
 
-            {/* Right Side: High Definition macOS Browser Showcase Card (7 Columns - Side by Side) */}
+            {/* DESKTOP POV: High Definition macOS Browser Showcase Card (7 Columns - Side by Side) */}
             <motion.div 
-              className="lg:col-span-7"
+              className="hidden lg:block lg:col-span-7"
               initial={{ opacity: 0, scale: 0.95 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.7 }}
             >
               <div 
-                className="relative rounded-2xl sm:rounded-3xl overflow-hidden shadow-2xl border border-[#bcc9c6]/40 bg-white transition-all duration-300 ease-out hover:scale-[1.02] hover:-translate-y-1.5 hover:shadow-[0_25px_50px_-12px_rgba(0,104,94,0.22)] hover:border-[#00685e]/40"
+                className="relative rounded-2xl sm:rounded-3xl overflow-hidden shadow-2xl border border-[#bcc9c6]/40 bg-white transition-all duration-300 ease-out hover:shadow-[0_25px_50px_-12px_rgba(0,104,94,0.22)] hover:border-[#00685e]/40"
                 onMouseEnter={() => setIsPaused(true)}
                 onMouseLeave={() => setIsPaused(false)}
               >
                 
                 {/* macOS Window Controls Header */}
-                <div className="bg-[#eaf6f8] px-3.5 py-2.5 border-b border-[#bcc9c6]/40 flex flex-wrap items-center justify-between gap-2 text-xs">
-                  <div className="flex items-center gap-2">
+                <div className="bg-[#eaf6f8] px-3 sm:px-4 py-2 sm:py-2.5 border-b border-[#bcc9c6]/40 flex flex-row items-center justify-between gap-2 text-xs">
+                  <div className="flex items-center justify-between sm:justify-start gap-2">
                     <div className="flex items-center gap-1.5">
                       <span className="w-2.5 h-2.5 rounded-full bg-[#ff5f56] inline-block" />
                       <span className="w-2.5 h-2.5 rounded-full bg-[#ffbd2e] inline-block" />
                       <span className="w-2.5 h-2.5 rounded-full bg-[#27c93f] inline-block" />
                     </div>
-                    <div className="hidden sm:flex items-center gap-1 bg-white/80 px-2.5 py-0.5 rounded text-[#3d4947] text-[10px] font-mono border border-[#bcc9c6]/30">
+                    <div className="flex items-center gap-1 bg-white/90 px-2.5 py-0.5 rounded text-[#3d4947] text-[10px] font-mono border border-[#bcc9c6]/30">
                       <span className="material-symbols-outlined text-[11px] text-[#00685e]">lock</span>
-                      app.medcarehms.com
+                      <span>app.medcarehms.com</span>
                     </div>
                   </div>
 
-                  {/* Module Switching Tabs */}
-                  <div className="flex items-center gap-1 overflow-x-auto custom-scrollbar py-0.5 max-w-full">
+                  {/* Module Switching Tabs Strip */}
+                  <div className="flex items-center gap-1.5 overflow-x-auto no-scrollbar py-1 sm:py-0 w-full sm:w-auto shrink-0">
                     {heroSlides.map((slide, idx) => (
                       <button
                         key={slide.id}
                         onClick={() => setCurrentSlide(idx)}
-                        className={`px-2.5 py-0.5 rounded-full text-[11px] font-semibold whitespace-nowrap transition-all ${
+                        className={`px-2.5 py-1 sm:py-0.5 rounded-full text-[11px] font-semibold whitespace-nowrap transition-all touch-manipulation min-h-[30px] flex items-center ${
                           currentSlide === idx 
-                            ? 'bg-[#00685e] text-white shadow-sm' 
-                            : 'bg-white/60 text-[#3d4947] hover:bg-white'
+                            ? 'bg-[#00685e] text-white shadow-sm font-bold' 
+                            : 'bg-white/80 text-[#3d4947] hover:bg-white border border-[#bcc9c6]/30 sm:border-none'
                         }`}
                       >
                         {slide.title}
@@ -121,8 +200,8 @@ export default function Home() {
                   </div>
                 </div>
 
-                {/* Full-Width Uncropped Image Container (Exact 2:1 Aspect Ratio Matching Original Screenshot) */}
-                <div className="relative bg-white overflow-hidden w-full aspect-[2/1]">
+                {/* Full-Width Uncropped Image Container (Exact 2:1 Aspect Ratio) */}
+                <div className="relative bg-[#f4fafb] overflow-hidden w-full aspect-[2/1] group/card">
                   <AnimatePresence mode="wait">
                     <motion.img
                       key={heroSlides[currentSlide].id}
@@ -131,12 +210,60 @@ export default function Home() {
                       initial={{ opacity: 0 }}
                       animate={{ opacity: 1 }}
                       exit={{ opacity: 0 }}
-                      transition={{ duration: 0.5, ease: 'easeInOut' }}
-                      className="w-full h-full object-fill block"
+                      transition={{ duration: 0.4, ease: 'easeInOut' }}
+                      className="w-full h-full object-contain sm:object-fill block"
                     />
                   </AnimatePresence>
 
+                  {/* Slide Title Tag Pill Overlay */}
+                  <div className="absolute top-2 left-2 sm:top-3 sm:left-3 z-20 pointer-events-none">
+                    <span className="px-2.5 py-1 sm:px-3.5 sm:py-1.5 rounded-full bg-[#00685e]/85 text-white text-[9px] sm:text-xs font-bold shadow-md backdrop-blur-md border border-white/20 flex items-center gap-1.5">
+                      <span className="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-[#85f5e6] animate-pulse" />
+                      {heroSlides[currentSlide].tag}
+                    </span>
+                  </div>
 
+                  {/* Bottom Left Navigation Arrow */}
+                  <button
+                    onClick={(e) => {
+                      e.stopPropagation()
+                      setCurrentSlide((prev) => (prev === 0 ? heroSlides.length - 1 : prev - 1))
+                    }}
+                    className="absolute bottom-2 sm:bottom-3 left-2 sm:left-3.5 w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-white/90 hover:bg-[#00685e] text-[#00685e] hover:text-white border border-[#00685e]/30 shadow-md hover:shadow-lg hover:scale-105 active:scale-95 transition-all duration-200 backdrop-blur-md flex items-center justify-center z-30 group/left"
+                    aria-label="Previous slide"
+                  >
+                    <span className="material-symbols-outlined text-base sm:text-xl font-bold select-none transition-transform duration-200 group-hover/left:-translate-x-0.5">arrow_back_ios_new</span>
+                  </button>
+
+                  {/* Bottom Center Slide Navigation Dots */}
+                  <div className="absolute bottom-2 sm:bottom-3 left-1/2 -translate-x-1/2 flex items-center justify-center z-20 pointer-events-auto">
+                    <div className="flex items-center gap-1.5 px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-full bg-black/35 backdrop-blur-md border border-white/20 shadow-sm">
+                      {heroSlides.map((_, idx) => (
+                        <button
+                          key={idx}
+                          onClick={() => setCurrentSlide(idx)}
+                          className={`transition-all rounded-full ${
+                            currentSlide === idx 
+                              ? 'w-5 h-1.5 sm:w-6 sm:h-2 bg-[#85f5e6]' 
+                              : 'w-1.5 h-1.5 sm:w-2 sm:h-2 bg-white/60 hover:bg-white'
+                          }`}
+                          aria-label={`Go to slide ${idx + 1}`}
+                        />
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Bottom Right Navigation Arrow */}
+                  <button
+                    onClick={(e) => {
+                      e.stopPropagation()
+                      setCurrentSlide((prev) => (prev + 1) % heroSlides.length)
+                    }}
+                    className="absolute bottom-2 sm:bottom-3 right-2 sm:right-3.5 w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-white/90 hover:bg-[#00685e] text-[#00685e] hover:text-white border border-[#00685e]/30 shadow-md hover:shadow-lg hover:scale-105 active:scale-95 transition-all duration-200 backdrop-blur-md flex items-center justify-center z-30 group/right"
+                    aria-label="Next slide"
+                  >
+                    <span className="material-symbols-outlined text-base sm:text-xl font-bold select-none transition-transform duration-200 group-hover/right:translate-x-0.5">arrow_forward_ios</span>
+                  </button>
                 </div>
 
               </div>
@@ -374,6 +501,9 @@ export default function Home() {
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 relative items-start">
           
+          {/* Mobile Vertical Connector Line */}
+          <div className="md:hidden absolute left-1/2 top-8 bottom-8 w-0.5 bg-[#bcc9c6]/40 -translate-x-1/2 z-0 pointer-events-none" />
+
           {/* ECG Connector 1: Plays Sequence 1 (Step 1 to Step 2) */}
           <div className="hidden md:block absolute top-7 left-[16.66%] w-[33.33%] z-0 pointer-events-none">
             <svg className="w-full h-10 text-[#00685e]" viewBox="0 0 300 40" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -505,14 +635,14 @@ export default function Home() {
 
             {/* Right Integration Grid */}
             <div className="lg:col-span-6">
-              <div className="bg-white/80 border border-[#bcc9c6]/40 p-5 sm:p-8 rounded-2xl sm:rounded-3xl shadow-sm">
-                <div className="grid grid-cols-3 gap-3 sm:gap-4 text-center">
-                  <div className="bg-[#f2fafb] border border-[#bcc9c6]/30 p-3 sm:p-4 rounded-xl sm:rounded-2xl font-bold text-xs sm:text-sm text-[#00685e]">HL7</div>
-                  <div className="bg-[#f2fafb] border border-[#bcc9c6]/30 p-3 sm:p-4 rounded-xl sm:rounded-2xl font-bold text-xs sm:text-sm text-[#00685e]">DICOM</div>
-                  <div className="bg-[#f2fafb] border border-[#bcc9c6]/30 p-3 sm:p-4 rounded-xl sm:rounded-2xl font-bold text-xs sm:text-sm text-[#00685e]">FHIR</div>
-                  <div className="bg-[#f2fafb] border border-[#bcc9c6]/30 p-3 sm:p-4 rounded-xl sm:rounded-2xl font-bold text-xs sm:text-sm text-[#00685e]">SAP</div>
-                  <div className="bg-[#f2fafb] border border-[#bcc9c6]/30 p-3 sm:p-4 rounded-xl sm:rounded-2xl font-bold text-xs sm:text-sm text-[#00685e]">Oracle Health</div>
-                  <div className="bg-[#f2fafb] border border-[#bcc9c6]/30 p-3 sm:p-4 rounded-xl sm:rounded-2xl font-bold text-xs sm:text-sm text-[#00685e]">Epic</div>
+              <div className="bg-white/80 border border-[#bcc9c6]/40 p-4 sm:p-8 rounded-2xl sm:rounded-3xl shadow-sm">
+                <div className="grid grid-cols-2 sm:grid-cols-3 gap-2.5 sm:gap-4 text-center">
+                  <div className="bg-[#f2fafb] border border-[#bcc9c6]/30 p-3 sm:p-4 rounded-xl sm:rounded-2xl font-bold text-xs sm:text-sm text-[#00685e] shadow-sm">HL7</div>
+                  <div className="bg-[#f2fafb] border border-[#bcc9c6]/30 p-3 sm:p-4 rounded-xl sm:rounded-2xl font-bold text-xs sm:text-sm text-[#00685e] shadow-sm">DICOM</div>
+                  <div className="bg-[#f2fafb] border border-[#bcc9c6]/30 p-3 sm:p-4 rounded-xl sm:rounded-2xl font-bold text-xs sm:text-sm text-[#00685e] shadow-sm">FHIR</div>
+                  <div className="bg-[#f2fafb] border border-[#bcc9c6]/30 p-3 sm:p-4 rounded-xl sm:rounded-2xl font-bold text-xs sm:text-sm text-[#00685e] shadow-sm">SAP</div>
+                  <div className="bg-[#f2fafb] border border-[#bcc9c6]/30 p-3 sm:p-4 rounded-xl sm:rounded-2xl font-bold text-xs sm:text-sm text-[#00685e] shadow-sm">Oracle Health</div>
+                  <div className="bg-[#f2fafb] border border-[#bcc9c6]/30 p-3 sm:p-4 rounded-xl sm:rounded-2xl font-bold text-xs sm:text-sm text-[#00685e] shadow-sm">Epic Systems</div>
                 </div>
               </div>
             </div>
