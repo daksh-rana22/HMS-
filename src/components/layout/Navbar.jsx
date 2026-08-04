@@ -8,7 +8,7 @@ export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
   const [modulesHovered, setModulesHovered] = useState(false)
-  const [mobileModulesOpen, setMobileModulesOpen] = useState(true)
+  const [mobileModulesOpen, setMobileModulesOpen] = useState(false)
   const location = useLocation()
 
   useEffect(() => {
@@ -17,7 +17,7 @@ export default function Navbar() {
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
-  useEffect(() => { 
+  useEffect(() => {
     setIsOpen(false)
     setModulesHovered(false)
   }, [location.pathname])
@@ -38,7 +38,7 @@ export default function Navbar() {
       animate={{ y: 0 }}
       transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
     >
-      {/* ── Top bar (h-14 on mobile for compact, sleek appearance) ── */}
+      {/* ── Top bar ── */}
       <div className="site-wrapper flex justify-between items-center h-14 sm:h-16 md:h-20 2xl:h-24">
 
         {/* Logo */}
@@ -93,7 +93,7 @@ export default function Navbar() {
                       >
                         <div className="bg-white/95 backdrop-blur-2xl rounded-2xl shadow-[0_20px_50px_rgba(0,104,94,0.22)] border border-[#00685e]/20 p-2.5 space-y-1">
                           <div className="px-3 py-1.5 text-[10px] font-mono uppercase tracking-wider text-[#6d7a77] font-bold border-b border-[#bcc9c6]/30 mb-1">
-                            <span>System Modules</span>
+                            <span>System Sub-Modules</span>
                           </div>
 
                           {link.children.map((child) => (
@@ -116,13 +116,6 @@ export default function Navbar() {
                               <div className="flex-1 min-w-0">
                                 <div className="flex items-center gap-1.5">
                                   <span className="text-xs font-bold truncate">{child.name}</span>
-                                  {child.badge && (
-                                    <span className={`text-[9px] px-1.5 py-0.2 rounded-full font-extrabold uppercase ${
-                                      location.pathname === child.path ? 'bg-[#85f5e6] text-[#00685e]' : 'bg-[#00685e] text-white'
-                                    }`}>
-                                      {child.badge}
-                                    </span>
-                                  )}
                                 </div>
                                 <p className={`text-[10px] truncate leading-snug mt-0.5 ${
                                   location.pathname === child.path ? 'text-white/80' : 'text-[#6d7a77]'
@@ -168,7 +161,7 @@ export default function Navbar() {
           </Link>
         </div>
 
-        {/* Mobile Hamburger Button (Guaranteed 44px touch target) */}
+        {/* Mobile Hamburger Button */}
         <button
           type="button"
           onClick={(e) => {
@@ -205,21 +198,33 @@ export default function Navbar() {
                       transition={{ delay: i * 0.03 + 0.03 }}
                       className="space-y-1"
                     >
-                      <button
-                        onClick={() => setMobileModulesOpen(!mobileModulesOpen)}
-                        className={`w-full flex items-center justify-between px-4 py-3 min-h-[44px] text-base font-semibold rounded-xl transition-all duration-150 ${
-                          location.pathname.startsWith(link.path)
-                            ? 'text-[#00685e] bg-[#afecde]/60 font-bold border border-[#00685e]/30 shadow-xs'
-                            : 'text-[#121d1f] bg-white/60 hover:bg-[#eaf6f8]'
-                        }`}
-                        style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}
-                      >
-                        <div className="flex items-center gap-2">
+                      {/* Split item: Left area opens /modules directly; Right arrow toggles sub-modules */}
+                      <div className={`w-full flex items-center justify-between min-h-[44px] rounded-xl transition-all duration-150 ${
+                        location.pathname.startsWith(link.path)
+                          ? 'text-[#00685e] bg-[#afecde]/60 font-bold border border-[#00685e]/30 shadow-xs'
+                          : 'text-[#121d1f] bg-white/60 hover:bg-[#eaf6f8]'
+                      }`}>
+                        <Link
+                          to={link.path}
+                          onClick={() => setIsOpen(false)}
+                          className="flex-1 flex items-center gap-2 px-4 py-3 text-base font-semibold"
+                          style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}
+                        >
                           <span className="material-symbols-outlined text-lg text-[#00685e]">grid_view</span>
                           <span>{link.name}</span>
-                        </div>
-                        <ChevronDown size={18} className={`transition-transform duration-200 text-[#00685e] ${mobileModulesOpen ? 'rotate-180' : ''}`} />
-                      </button>
+                        </Link>
+                        <button
+                          type="button"
+                          onClick={(e) => {
+                            e.stopPropagation()
+                            setMobileModulesOpen(!mobileModulesOpen)
+                          }}
+                          className="p-3 hover:bg-[#00685e]/10 rounded-r-xl cursor-pointer"
+                          aria-label="Toggle sub-modules list"
+                        >
+                          <ChevronDown size={18} className={`transition-transform duration-200 text-[#00685e] ${mobileModulesOpen ? 'rotate-180' : ''}`} />
+                        </button>
+                      </div>
 
                       {/* Mobile Sub-Links accordion */}
                       {mobileModulesOpen && (
@@ -239,13 +244,6 @@ export default function Navbar() {
                                 <span className="material-symbols-outlined text-base">{child.icon}</span>
                                 <span>{child.name}</span>
                               </div>
-                              {child.badge && (
-                                <span className={`text-[9px] px-1.5 py-0.5 rounded-full font-bold ${
-                                  location.pathname === child.path ? 'bg-[#85f5e6] text-[#00685e]' : 'bg-[#00685e] text-white'
-                                }`}>
-                                  {child.badge}
-                                </span>
-                              )}
                             </Link>
                           ))}
                         </div>
@@ -275,27 +273,31 @@ export default function Navbar() {
                 )
               })}
 
-              <motion.div className="mt-4 pt-4 border-t border-[#bcc9c6]/40 space-y-3"
-                initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.2 }}>
+              <motion.div
+                className="mt-4 pt-4 border-t border-[#bcc9c6]/40 space-y-3"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 0.2 }}
+              >
                 <Link
                   to="/contact"
                   onClick={() => setIsOpen(false)}
-                  className="w-full min-h-[46px] bg-[#00685e] text-white py-3 px-5 rounded-full text-base font-bold flex items-center justify-center gap-2 shadow-md hover:bg-[#005049] active:scale-98 transition-all"
-                  style={{ fontFamily: "'Inter', sans-serif" }}
+                  className="w-full flex items-center justify-center gap-2 bg-[#00685e] text-white py-3.5 rounded-full text-base font-bold shadow-md active:scale-98 transition-all"
+                  style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}
                 >
                   <span>Book a Demo</span>
-                  <span className="material-symbols-outlined text-sm">arrow_forward</span>
+                  <span className="material-symbols-outlined text-lg">arrow_forward</span>
                 </Link>
 
-                <div className="flex items-center justify-center gap-3 text-xs font-semibold text-[#3d4947] pt-2">
+                <div className="flex items-center justify-center gap-4 text-xs font-semibold text-[#6d7a77] pt-2">
                   <a href="tel:+15552345678" className="flex items-center gap-1 hover:text-[#00685e]">
-                    <span className="material-symbols-outlined text-base text-[#00685e]">call</span>
-                    <span>+1 (555) 234-5678</span>
+                    <span className="material-symbols-outlined text-sm text-[#00685e]">call</span>
+                    +1(555) 234-5678
                   </a>
                   <span>•</span>
-                  <a href="mailto:hello@medcarehms.com" className="flex items-center gap-1 hover:text-[#00685e]">
-                    <span className="material-symbols-outlined text-base text-[#00685e]">mail</span>
-                    <span>Support</span>
+                  <a href="mailto:support@medcare.com" className="flex items-center gap-1 hover:text-[#00685e]">
+                    <span className="material-symbols-outlined text-sm text-[#00685e]">mail</span>
+                    Support
                   </a>
                 </div>
               </motion.div>
