@@ -2274,7 +2274,7 @@ export default function Modules() {
             <button className="bg-white text-[#00685e] px-10 sm:px-12 py-3.5 sm:py-4 rounded-full text-sm 2xl:text-base font-bold shadow-lg hover:bg-[#f0f9f7] active:scale-95 transition-all"
               style={{ fontFamily: "'Inter', sans-serif" }}>Get Started Now</button>
             <button className="border-2 border-white/30 text-white px-10 sm:px-12 py-3.5 sm:py-4 rounded-full text-sm 2xl:text-base font-bold hover:bg-white/10 active:scale-95 transition-all"
-              style={{ fontFamily: "'Inter', sans-serif" }}>Request Module Demo</button>
+              style={{ fontFamily: "'Inter', sans-serif" }}>Request Demo</button>
           </div>
         </div>
       </section>

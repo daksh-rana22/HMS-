@@ -166,7 +166,7 @@ export default function BillingAccounts() {
 
             <motion.div variants={fadeUp} className="flex flex-wrap items-center justify-center gap-3 pt-2">
               <Link to="/contact" className="inline-flex items-center gap-2 bg-[#00685e] text-white px-6 py-2.5 sm:py-3 rounded-full text-xs sm:text-sm font-bold shadow-md hover:bg-[#005049] transition-all">
-                Request Billing Demo <span className="material-symbols-outlined text-sm">arrow_forward</span>
+                Request Demo <span className="material-symbols-outlined text-sm">arrow_forward</span>
               </Link>
               <Link to="/modules" className="inline-flex items-center gap-2 border border-[#bcc9c6] text-[#00685e] px-5 py-2.5 sm:py-3 rounded-full text-xs sm:text-sm font-semibold hover:bg-white transition-all">
                 All Modules
@@ -177,10 +177,19 @@ export default function BillingAccounts() {
       </section>
 
       {/* ── CRISS-CROSS ALTERNATING TIMELINE ROADMAP SECTION (BIGGER & BOLDER REFERENCE DESIGN) ── */}
-      <section className="site-wrapper pt-10 sm:pt-16 px-4 sm:px-8 relative max-w-7xl mx-auto">
+      <section className="site-wrapper py-12 sm:py-16 px-4 relative max-w-7xl mx-auto">
         
+        <div className="text-center max-w-3xl mx-auto mb-12 sm:mb-16">
+          <h2 className="text-2xl sm:text-3xl font-extrabold text-[#121d1f] tracking-tight">
+            6 Master <span className="text-[#00685e]">Billing & Accounts Sub-Modules</span>
+          </h2>
+          <p className="text-xs sm:text-sm text-[#3d4947] mt-2">
+            Click any billing step to inspect live GST ledgers, payment collection workflows, and full-resolution screenshot previews.
+          </p>
+        </div>
+
         {/* Central Vertical Timeline Dashed Line */}
-        <div className="hidden lg:block absolute left-1/2 -translate-x-1/2 top-12 bottom-28 w-0.5 border-l-2 border-dashed border-[#00685e]/35 pointer-events-none z-0" />
+        <div className="hidden lg:block absolute left-1/2 -translate-x-1/2 top-44 bottom-28 w-0.5 border-l-2 border-dashed border-[#00685e]/35 pointer-events-none z-0" />
 
         <div className="space-y-16 sm:space-y-20 relative z-10">
           {billingTopics.map((topic, index) => {
@@ -231,11 +240,6 @@ export default function BillingAccounts() {
                             <h3 className="text-base sm:text-lg lg:text-xl font-extrabold text-[#121d1f] tracking-tight">
                               {topic.title}
                             </h3>
-                            {topic.tags.map((t, idx) => (
-                              <span key={idx} className={`text-[10px] sm:text-[11px] font-extrabold px-2 py-0.5 rounded-md border ${t.color}`}>
-                                {t.text}
-                              </span>
-                            ))}
                           </div>
                           <p className="text-xs sm:text-sm text-[#6d7a77] leading-relaxed mt-1">
                             {topic.subtitle}

@@ -270,7 +270,7 @@ export default function ReportsAnalytics() {
 
             <motion.div variants={fadeUp} className="flex flex-wrap items-center justify-center gap-3 pt-2">
               <Link to="/contact" className="inline-flex items-center gap-2 bg-[#00685e] text-white px-6 py-2.5 sm:py-3 rounded-full text-xs sm:text-sm font-bold shadow-md hover:bg-[#005049] transition-all">
-                Request Reports Demo <span className="material-symbols-outlined text-sm">arrow_forward</span>
+                Request Demo <span className="material-symbols-outlined text-sm">arrow_forward</span>
               </Link>
               <Link to="/modules" className="inline-flex items-center gap-2 border border-[#bcc9c6] text-[#00685e] px-5 py-2.5 sm:py-3 rounded-full text-xs sm:text-sm font-semibold hover:bg-white transition-all">
                 All Modules
@@ -350,11 +350,6 @@ export default function ReportsAnalytics() {
                                 <h3 className="text-base sm:text-lg lg:text-xl font-extrabold text-[#121d1f] tracking-tight">
                                   {topic.title}
                                 </h3>
-                                {topic.tags.map((tag, idx) => (
-                                  <span key={idx} className={`text-[10px] sm:text-[11px] font-extrabold px-2 py-0.5 rounded-md border ${tag.color}`}>
-                                    {tag.text}
-                                  </span>
-                                ))}
                               </div>
                               <p className="text-xs sm:text-sm text-[#6d7a77] leading-relaxed mt-1">
                                 {topic.subtitle}

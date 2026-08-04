@@ -66,16 +66,7 @@ export default function About() {
                 }}
               />
             </div>
-            {/* Floating stat — only sm+ */}
-            <div className="absolute -bottom-5 sm:-bottom-6 -left-4 sm:-left-6 card-frosted p-3 sm:p-4 rounded-2xl hidden sm:flex items-center gap-3 animate-float">
-              <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-[#008378] flex items-center justify-center shrink-0">
-                <span className="material-symbols-outlined text-white text-lg sm:text-xl">ecg_heart</span>
-              </div>
-              <div>
-                <div className="text-xs text-[#3d4947]" style={{ fontFamily: "'Inter', sans-serif" }}>Active Monitoring</div>
-                <div className="text-base sm:text-xl font-bold text-[#00685e]" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>99.9% Uptime</div>
-              </div>
-            </div>
+
           </motion.div>
         </div>
       </section>
@@ -260,7 +251,7 @@ export default function About() {
       <section className="section-padding">
         <div className="site-wrapper">
           <motion.div
-            className="card-frosted rounded-3xl sm:rounded-[40px] p-8 sm:p-12 md:p-16 2xl:p-20 text-center relative overflow-hidden"
+            className="card-frosted rounded-2xl p-8 sm:p-12 md:p-16 2xl:p-20 text-center relative overflow-hidden"
             initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }} transition={{ duration: 0.7 }}>
             <div className="absolute top-0 right-0 p-6 sm:p-10 opacity-10 pointer-events-none hidden sm:block">

@@ -1,145 +1,277 @@
 import { motion } from 'framer-motion'
-import { ArrowRight, CheckCircle2 } from 'lucide-react'
+import { Link } from 'react-router-dom'
+import HeroBackground from '../common/HeroBackground'
 
 const fadeUp = {
   hidden: { opacity: 0, y: 24 },
   visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] } },
 }
-const stagger = { hidden: {}, visible: { transition: { staggerChildren: 0.12 } } }
-
-const avatars = [
-  { initials: 'DR', bg: '#85f5e6', text: '#00201d' },
-  { initials: 'MS', bg: '#b2eee1', text: '#00201b' },
-  { initials: 'JA', bg: '#dbe4e2', text: '#151d1c' },
-]
+const stagger = { hidden: {}, visible: { transition: { staggerChildren: 0.1 } } }
 
 export default function Hero() {
   return (
-    <section className="relative overflow-hidden bg-gradient-to-b from-[#361e14] via-[#48291c] to-[#361e14] pt-24 sm:pt-28 md:pt-32 2xl:pt-40 pb-16 sm:pb-20 md:pb-24 2xl:pb-32 text-white">
-      {/* Ambient radial blob */}
-      <div
-        className="absolute top-0 left-1/2 -translate-x-1/2 w-[500px] sm:w-[700px] 2xl:w-[900px] h-[500px] sm:h-[700px] 2xl:h-[900px] rounded-full pointer-events-none -z-10"
-        style={{ background: 'radial-gradient(circle, rgba(243,194,145,0.18) 0%, transparent 70%)' }}
-      />
+    <section className="relative overflow-hidden pt-24 sm:pt-28 md:pt-32 pb-16 sm:pb-20 lg:pb-24 text-[#0F172A]">
+      {/* Animated Enterprise Healthcare SaaS Hero Background */}
+      <HeroBackground />
 
-      <div className="site-wrapper">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 xl:gap-16 2xl:gap-20 items-center">
+      <div className="site-wrapper relative z-10">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-14 items-center">
 
-          {/* ── Left: Text ── */}
-          <motion.div
-            className="lg:col-span-6 space-y-5 sm:space-y-6 2xl:space-y-8 text-center lg:text-left"
-            initial="hidden" animate="visible" variants={stagger}
-          >
+          {/* ── Left Content Column ── */}
+          <motion.div className="lg:col-span-5 space-y-6 text-center lg:text-left flex flex-col items-center lg:items-start" initial="hidden" animate="visible" variants={stagger}>
+
             {/* Badge */}
-            <motion.div
-              className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#5c3625] border border-[#855038] text-[#fbe2cc] mx-auto lg:mx-0 shadow-sm"
-              variants={fadeUp}
-            >
-              <CheckCircle2 size={18} className="text-[#f3c291] shrink-0" />
-              <span className="text-xs sm:text-sm font-medium whitespace-nowrap" style={{ fontFamily: "'Inter', sans-serif" }}>
-                Trusted by 500+ Hospitals Globally
+            <motion.div variants={fadeUp} className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-[#2563EB]/20 bg-white/80 backdrop-blur-md shadow-md shadow-blue-500/5">
+              <span className="flex w-2.5 h-2.5 rounded-full bg-[#10B981] animate-pulse shadow-[0_0_8px_#10B981]" />
+              <span className="text-xs font-semibold text-[#2563EB] tracking-wide">
+                Trusted by Modern Healthcare Providers
               </span>
             </motion.div>
 
             {/* Headline */}
-            <motion.h1
-              className="heading-hero font-bold text-[#fff8f0]"
-              variants={fadeUp}
-            >
-              Streamline Your{' '}
-              <span className="text-[#f3c291]">Clinical Workflow</span>
-              {' '}with Intelligent Automation
+            <motion.h1 variants={fadeUp} className="text-3xl sm:text-4xl lg:text-5xl font-extrabold leading-[1.15] tracking-tight text-[#0F172A]" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
+              Modern <br className="hidden sm:inline" />
+              <span className="bg-gradient-to-r from-[#2563EB] via-[#3B82F6] to-[#06B6D4] bg-clip-text text-transparent">
+                Hospital Management System
+              </span>
             </motion.h1>
 
-            {/* Body */}
-            <motion.p
-              className="text-description text-[#e4cebe] max-w-xl mx-auto lg:mx-0"
-              variants={fadeUp}
-            >
-              Empower your medical staff with a unified Hospital Management System designed for the
-              modern healthcare era. Reduce administrative burden and focus on what matters most:
-              patient health.
+            {/* Supporting Text */}
+            <motion.p variants={fadeUp} className="text-sm sm:text-base text-[#475569] leading-relaxed max-w-lg mx-auto lg:mx-0 font-normal">
+              Simplify hospital operations with a unified platform for patient management, appointments, billing, pharmacy, laboratory, inventory, HR, and analytics.
             </motion.p>
 
             {/* CTA Buttons */}
-            <motion.div
-              className="flex flex-col sm:flex-row gap-3 sm:gap-4 pt-1 justify-center lg:justify-start"
-              variants={fadeUp}
-            >
-              <button
-                className="inline-flex items-center justify-center gap-2 bg-[#f3c291] text-[#2c1810]
-                           px-8 sm:px-10 h-12 sm:h-14 2xl:h-16 rounded-full
-                           text-sm 2xl:text-base font-bold
-                           hover:bg-[#f7d0a1] hover:shadow-lg active:scale-95 transition-all duration-200 cursor-pointer"
-                style={{ fontFamily: "'Inter', sans-serif" }}
+            <motion.div variants={fadeUp} className="flex flex-wrap items-center justify-center lg:justify-start gap-4 pt-1 w-full">
+              <Link to="/contact"
+                className="inline-flex items-center gap-2 bg-[#2563EB] hover:bg-[#1D4ED8] text-white px-7 py-3.5 rounded-full text-sm font-bold shadow-xl shadow-blue-500/25 hover:shadow-blue-500/40 hover:scale-[1.03] transition-all duration-200"
               >
-                Book a Demo
-                <ArrowRight size={18} />
-              </button>
-              <button
-                className="inline-flex items-center justify-center
-                           border-2 border-[#f3c291] text-[#f3c291]
-                           px-8 sm:px-10 h-12 sm:h-14 2xl:h-16 rounded-full
-                           text-sm 2xl:text-base font-bold
-                           hover:bg-[#f3c291]/15 active:scale-95 transition-all duration-200 cursor-pointer"
-                style={{ fontFamily: "'Inter', sans-serif" }}
+                Request Demo
+                <span className="material-symbols-outlined text-sm">arrow_forward</span>
+              </Link>
+              <Link to="/modules"
+                className="inline-flex items-center gap-2 bg-white/80 hover:bg-white border border-[#3B82F6]/30 text-[#2563EB] px-7 py-3.5 rounded-full text-sm font-semibold shadow-sm backdrop-blur-md hover:shadow-md hover:scale-[1.02] transition-all duration-200"
               >
                 Explore Features
-              </button>
+              </Link>
             </motion.div>
 
-            {/* Social proof */}
-            <motion.div
-              className="flex items-center gap-3 sm:gap-4 pt-1 justify-center lg:justify-start"
-              variants={fadeUp}
-            >
-              <div className="flex -space-x-3">
-                {avatars.map((av) => (
-                  <div
-                    key={av.initials}
-                    className="w-9 h-9 sm:w-10 sm:h-10 2xl:w-12 2xl:h-12 rounded-full border-2 border-[#361e14] flex items-center justify-center text-[11px] sm:text-[12px] font-bold"
-                    style={{ backgroundColor: av.bg, color: av.text }}
-                  >
-                    {av.initials}
-                  </div>
-                ))}
+            {/* Trust Metrics Below Buttons */}
+            <motion.div variants={fadeUp} className="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-4 w-full border-t border-slate-200/60 mt-2">
+              <div className="bg-white/80 backdrop-blur-md border border-white p-3 rounded-2xl shadow-sm text-center lg:text-left">
+                <div className="text-lg font-extrabold text-[#2563EB] leading-tight">500+</div>
+                <div className="text-[11px] font-medium text-[#64748B]">Hospitals</div>
               </div>
-              <p className="text-xs sm:text-sm text-[#e4cebe]" style={{ fontFamily: "'Inter', sans-serif" }}>
-                Join thousands of physicians today
-              </p>
+              <div className="bg-white/80 backdrop-blur-md border border-white p-3 rounded-2xl shadow-sm text-center lg:text-left">
+                <div className="text-lg font-extrabold text-[#06B6D4] leading-tight">50K+</div>
+                <div className="text-[11px] font-medium text-[#64748B]">Patients Managed Daily</div>
+              </div>
+              <div className="bg-white/80 backdrop-blur-md border border-white p-3 rounded-2xl shadow-sm text-center lg:text-left">
+                <div className="text-lg font-extrabold text-[#10B981] leading-tight">99.9%</div>
+                <div className="text-[11px] font-medium text-[#64748B]">Uptime</div>
+              </div>
+              <div className="bg-white/80 backdrop-blur-md border border-white p-3 rounded-2xl shadow-sm text-center lg:text-left">
+                <div className="text-lg font-extrabold text-[#3B82F6] leading-tight">256-bit</div>
+                <div className="text-[11px] font-medium text-[#64748B]">Secure Cloud Platform</div>
+              </div>
             </motion.div>
+
           </motion.div>
 
-          {/* ── Right: Dashboard image ── */}
+          {/* ── Right Content Column: Floating Glassmorphism Dashboard Mockup ── */}
           <motion.div
-            className="lg:col-span-6 relative mt-6 lg:mt-0"
-            initial={{ opacity: 0, x: 40 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.8, delay: 0.3, ease: [0.22, 1, 0.36, 1] }}
+            className="lg:col-span-7 flex justify-center items-center"
+            initial={{ opacity: 0, scale: 0.9, y: 20 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            transition={{ duration: 0.9, delay: 0.2 }}
           >
-            {/* Card */}
-            <div className="relative z-10 bg-[#45281b] rounded-2xl shadow-2xl overflow-hidden border border-[#7a4933]/50 p-2">
-              <img
-                src="https://lh3.googleusercontent.com/aida-public/AB6AXuDpwLpGzqAFUezisZk95pTf_rOJ7YMdKZlrmZvTCb5pvyrGpqmjs5kD7xH9_Pk4oH1DVIKQXTYSoZMLhGxrC3Mq71IlJrmlh-6jUExFC_LJFOeSsULCeKxxUS9Lx_657gat5cOwMhKwDLVKwyfDSGX73UmOgXgg7EFMsRQa_fk6xpJlf4xGDezjj19Evm9UMC4sZcl9xlOINPadMXnxmKmS9Jw1ijhg4ra0zpe8n-Xv8fmb_SE9N_uf"
-                alt="Modern healthcare facility with medical staff"
-                className="w-full h-auto rounded-xl object-cover"
-                onError={(e) => {
-                  e.target.style.display = 'none'
-                  e.target.parentNode.style.background = 'linear-gradient(135deg, #5c3625 0%, #361e14 100%)'
-                  e.target.parentNode.style.minHeight = '300px'
-                }}
-              />
-            </div>
+            <div className="relative w-full max-w-xl bg-white/70 backdrop-blur-xl border border-white/90 rounded-3xl shadow-2xl p-4 sm:p-6 space-y-4 shadow-blue-500/10">
 
-            {/* Decorative blobs */}
-            <div
-              className="absolute -top-10 -right-10 w-32 sm:w-40 2xl:w-56 h-32 sm:h-40 2xl:h-56 rounded-full mix-blend-screen filter blur-3xl opacity-60 animate-pulse-glow"
-              style={{ backgroundColor: '#855038' }}
-            />
-            <div
-              className="absolute -bottom-10 -left-10 w-40 sm:w-48 2xl:w-64 h-40 sm:h-48 2xl:h-64 rounded-full mix-blend-screen filter blur-3xl opacity-50 animate-pulse-glow"
-              style={{ backgroundColor: '#f3c291', animationDelay: '2s' }}
-            />
+              {/* Dashboard Header Bar */}
+              <div className="flex items-center justify-between pb-3 border-b border-slate-200/60">
+                <div className="flex items-center gap-2.5">
+                  <div className="w-3 h-3 rounded-full bg-red-400" />
+                  <div className="w-3 h-3 rounded-full bg-amber-400" />
+                  <div className="w-3 h-3 rounded-full bg-emerald-400" />
+                  <span className="text-xs font-bold text-[#0F172A] ml-2 tracking-wide flex items-center gap-1.5">
+                    <span className="w-2 h-2 rounded-full bg-[#10B981] animate-ping" />
+                    MedCare Enterprise Live Hub
+                  </span>
+                </div>
+                <div className="hidden sm:flex items-center gap-2 text-[11px] font-semibold text-[#10B981] bg-emerald-50 border border-emerald-200/80 px-2.5 py-1 rounded-full">
+                  <span className="material-symbols-outlined text-xs">shield</span>
+                  System 100% Operational
+                </div>
+              </div>
+
+              {/* Grid of Glassmorphism Dashboard Cards */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
+
+                {/* 1. Patient Statistics */}
+                <motion.div 
+                  animate={{ y: [-4, 4, -4] }}
+                  transition={{ duration: 5, repeat: Infinity, ease: 'easeInOut' }}
+                  className="bg-white/90 backdrop-blur-md border border-slate-100 p-3.5 rounded-2xl shadow-sm hover:shadow-md transition-all group"
+                >
+                  <div className="flex items-center justify-between">
+                    <div className="w-8 h-8 rounded-xl bg-blue-50 text-[#2563EB] flex items-center justify-center font-bold">
+                      <span className="material-symbols-outlined text-lg">person_search</span>
+                    </div>
+                    <span className="text-[10px] font-bold text-[#10B981] bg-emerald-50 px-2 py-0.5 rounded-full flex items-center gap-0.5">
+                      <span className="material-symbols-outlined text-[10px]">trending_up</span> +12.4%
+                    </span>
+                  </div>
+                  <div className="mt-2.5">
+                    <div className="text-[11px] font-semibold text-[#64748B]">Patient Statistics</div>
+                    <div className="text-lg font-extrabold text-[#0F172A] tracking-tight">1,482 <span className="text-xs font-medium text-[#64748B]">Active</span></div>
+                  </div>
+                  {/* Mini Sparkline Bar Chart */}
+                  <div className="flex items-end gap-1 h-5 mt-2 pt-1">
+                    <div className="w-1/6 bg-blue-200 h-[40%] rounded-t" />
+                    <div className="w-1/6 bg-blue-300 h-[65%] rounded-t" />
+                    <div className="w-1/6 bg-blue-400 h-[50%] rounded-t" />
+                    <div className="w-1/6 bg-[#2563EB] h-[85%] rounded-t" />
+                    <div className="w-1/6 bg-blue-400 h-[70%] rounded-t" />
+                    <div className="w-1/6 bg-[#06B6D4] h-[100%] rounded-t animate-pulse" />
+                  </div>
+                </motion.div>
+
+                {/* 2. Today's Appointments */}
+                <motion.div 
+                  animate={{ y: [4, -4, 4] }}
+                  transition={{ duration: 5.5, repeat: Infinity, ease: 'easeInOut' }}
+                  className="bg-white/90 backdrop-blur-md border border-slate-100 p-3.5 rounded-2xl shadow-sm hover:shadow-md transition-all"
+                >
+                  <div className="flex items-center justify-between">
+                    <div className="w-8 h-8 rounded-xl bg-cyan-50 text-[#06B6D4] flex items-center justify-center">
+                      <span className="material-symbols-outlined text-lg">calendar_month</span>
+                    </div>
+                    <span className="text-[10px] font-bold text-[#2563EB] bg-blue-50 px-2 py-0.5 rounded-full">142 OPD</span>
+                  </div>
+                  <div className="mt-2.5">
+                    <div className="text-[11px] font-semibold text-[#64748B]">Today's Appointments</div>
+                    <div className="text-xs font-bold text-[#0F172A] mt-0.5 truncate">Dr. Sarah Jenkins</div>
+                    <div className="text-[10px] text-[#64748B] flex items-center gap-1 mt-0.5">
+                      <span className="w-1.5 h-1.5 rounded-full bg-[#10B981]" /> Room 304 • In Progress
+                    </div>
+                  </div>
+                </motion.div>
+
+                {/* 3. Bed Occupancy */}
+                <motion.div 
+                  animate={{ y: [-4, 4, -4] }}
+                  transition={{ duration: 6, repeat: Infinity, ease: 'easeInOut' }}
+                  className="bg-white/90 backdrop-blur-md border border-slate-100 p-3.5 rounded-2xl shadow-sm hover:shadow-md transition-all"
+                >
+                  <div className="flex items-center justify-between">
+                    <div className="w-8 h-8 rounded-xl bg-indigo-50 text-[#3B82F6] flex items-center justify-center">
+                      <span className="material-symbols-outlined text-lg">bed</span>
+                    </div>
+                    <span className="text-xs font-extrabold text-[#3B82F6]">88%</span>
+                  </div>
+                  <div className="mt-2.5">
+                    <div className="text-[11px] font-semibold text-[#64748B]">Bed Occupancy</div>
+                    <div className="text-xs font-bold text-[#0F172A] mt-0.5">176 / 200 Wards Occupied</div>
+                    {/* Progress Bar */}
+                    <div className="w-full bg-slate-100 h-1.5 rounded-full mt-2 overflow-hidden">
+                      <div className="bg-gradient-to-r from-[#2563EB] to-[#06B6D4] h-full rounded-full w-[88%]" />
+                    </div>
+                  </div>
+                </motion.div>
+
+                {/* 4. Revenue Overview */}
+                <motion.div 
+                  animate={{ y: [4, -4, 4] }}
+                  transition={{ duration: 4.8, repeat: Infinity, ease: 'easeInOut' }}
+                  className="bg-white/90 backdrop-blur-md border border-slate-100 p-3.5 rounded-2xl shadow-sm hover:shadow-md transition-all"
+                >
+                  <div className="flex items-center justify-between">
+                    <div className="w-8 h-8 rounded-xl bg-emerald-50 text-[#10B981] flex items-center justify-center">
+                      <span className="material-symbols-outlined text-lg">payments</span>
+                    </div>
+                    <span className="text-[10px] font-bold text-[#10B981] bg-emerald-50 px-2 py-0.5 rounded-full">+18.4%</span>
+                  </div>
+                  <div className="mt-2.5">
+                    <div className="text-[11px] font-semibold text-[#64748B]">Revenue Overview</div>
+                    <div className="text-lg font-extrabold text-[#0F172A] tracking-tight">$124,500 <span className="text-[10px] font-medium text-[#64748B]">/ Month</span></div>
+                  </div>
+                </motion.div>
+
+                {/* 5. Pharmacy Stock */}
+                <motion.div 
+                  animate={{ y: [-3, 3, -3] }}
+                  transition={{ duration: 5.2, repeat: Infinity, ease: 'easeInOut' }}
+                  className="bg-white/90 backdrop-blur-md border border-slate-100 p-3.5 rounded-2xl shadow-sm hover:shadow-md transition-all"
+                >
+                  <div className="flex items-center justify-between">
+                    <div className="w-8 h-8 rounded-xl bg-[#06B6D4]/10 text-[#06B6D4] flex items-center justify-center">
+                      <span className="material-symbols-outlined text-lg">medication</span>
+                    </div>
+                    <span className="text-[10px] font-bold text-amber-600 bg-amber-50 px-2 py-0.5 rounded-full">12 Reorders</span>
+                  </div>
+                  <div className="mt-2.5">
+                    <div className="text-[11px] font-semibold text-[#64748B]">Pharmacy Stock</div>
+                    <div className="text-xs font-bold text-[#0F172A] mt-0.5">98.4% Optimal Supply</div>
+                  </div>
+                </motion.div>
+
+                {/* 6. Laboratory Reports */}
+                <motion.div 
+                  animate={{ y: [3, -3, 3] }}
+                  transition={{ duration: 5.8, repeat: Infinity, ease: 'easeInOut' }}
+                  className="bg-white/90 backdrop-blur-md border border-slate-100 p-3.5 rounded-2xl shadow-sm hover:shadow-md transition-all"
+                >
+                  <div className="flex items-center justify-between">
+                    <div className="w-8 h-8 rounded-xl bg-purple-50 text-purple-600 flex items-center justify-center">
+                      <span className="material-symbols-outlined text-lg">science</span>
+                    </div>
+                    <span className="text-[10px] font-bold text-purple-600 bg-purple-50 px-2 py-0.5 rounded-full">8 Pending</span>
+                  </div>
+                  <div className="mt-2.5">
+                    <div className="text-[11px] font-semibold text-[#64748B]">Laboratory Reports</div>
+                    <div className="text-xs font-bold text-[#0F172A] mt-0.5">342 Tests Processed</div>
+                  </div>
+                </motion.div>
+
+                {/* 7. Staff Management */}
+                <motion.div 
+                  animate={{ y: [-4, 4, -4] }}
+                  transition={{ duration: 6.2, repeat: Infinity, ease: 'easeInOut' }}
+                  className="bg-white/90 backdrop-blur-md border border-slate-100 p-3.5 rounded-2xl shadow-sm hover:shadow-md transition-all"
+                >
+                  <div className="flex items-center justify-between">
+                    <div className="w-8 h-8 rounded-xl bg-blue-50 text-[#2563EB] flex items-center justify-center">
+                      <span className="material-symbols-outlined text-lg">groups</span>
+                    </div>
+                    <span className="text-[10px] font-bold text-[#2563EB] bg-blue-50 px-2 py-0.5 rounded-full">48 Active</span>
+                  </div>
+                  <div className="mt-2.5">
+                    <div className="text-[11px] font-semibold text-[#64748B]">Staff Management</div>
+                    <div className="text-xs font-bold text-[#0F172A] mt-0.5">18 Doctors • 30 Nurses</div>
+                  </div>
+                </motion.div>
+
+                {/* 8. Emergency Cases */}
+                <motion.div 
+                  animate={{ y: [4, -4, 4] }}
+                  transition={{ duration: 4.6, repeat: Infinity, ease: 'easeInOut' }}
+                  className="bg-white/90 backdrop-blur-md border border-rose-100 p-3.5 rounded-2xl shadow-sm hover:shadow-md transition-all bg-gradient-to-r from-white to-rose-50/30"
+                >
+                  <div className="flex items-center justify-between">
+                    <div className="w-8 h-8 rounded-xl bg-rose-50 text-rose-600 flex items-center justify-center">
+                      <span className="material-symbols-outlined text-lg">e911_emergency</span>
+                    </div>
+                    <span className="text-[10px] font-bold text-rose-600 bg-rose-100/80 px-2 py-0.5 rounded-full animate-pulse">Critical ER</span>
+                  </div>
+                  <div className="mt-2.5">
+                    <div className="text-[11px] font-semibold text-[#64748B]">Emergency Cases</div>
+                    <div className="text-xs font-bold text-rose-700 mt-0.5">3 Critical Admissions Active</div>
+                  </div>
+                </motion.div>
+
+              </div>
+
+            </div>
           </motion.div>
 
         </div>
