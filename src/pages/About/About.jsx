@@ -1,4 +1,6 @@
-import { motion } from 'framer-motion'
+import { useState } from 'react'
+import { motion, AnimatePresence } from 'framer-motion'
+import { Link } from 'react-router-dom'
 import { pageTransition } from '../../utils/animations'
 
 const fadeUp = {
@@ -14,19 +16,67 @@ const stats = [
   { value: '0',    label: 'Data Breaches' },
 ]
 
-const timeline = [
-  { year: '2012', title: 'The Inception', description: 'Founded by a team of pediatricians and software engineers in Zurich, aiming to digitize paper records.' },
-  { year: '2017', title: 'Global Expansion', description: 'MedCare HMS 2.0 launched with cloud-native architecture, supporting multiple languages and international coding standards.' },
-  { year: '2024', title: 'AI-Driven Care', description: 'Integration of MedAI—predictive diagnostics and intelligent resource scheduling for hospitals of the future.' },
+const aboutFaqs = [
+  {
+    question: 'How long does it take to implement MedCare HMS in our hospital?',
+    answer:
+      'Typical deployment takes 2 to 4 weeks for single-facility hospitals. Our dedicated onboarding team handles full data migration, module configuration, and hands-on staff training with zero downtime.',
+  },
+  {
+    question: 'Is MedCare HMS HIPAA compliant and secure for patient data?',
+    answer:
+      'Yes, 100%. We employ bank-grade 256-bit encryption, role-based access control (RBAC), automatic daily encrypted backups, and full HIPAA audit logging.',
+  },
+  {
+    question: 'Can MedCare HMS integrate with our existing lab machines and pharmacy POS?',
+    answer:
+      'Absolutely. MedCare HMS supports REST APIs and HL7/FHIR healthcare standards for seamless integration with laboratory equipment, RIS/PACS imaging, pharmacy POS hardware, and Tally accounting.',
+  },
+  {
+    question: 'What kind of customer support and training is provided?',
+    answer:
+      'We provide 24/7 dedicated support via phone, live chat, and email, along with personalized on-site and remote training modules for doctors, nurses, cashiers, and IT administrators.',
+  },
+  {
+    question: 'Can I schedule a live personalized demo for my medical facility?',
+    answer:
+      'Yes! Simply fill out the contact form or reach out to our team, and we will organize a customized walk-through tailored to your hospital’s specific specialty workflows.',
+  },
+  {
+    question: 'Does MedCare HMS support multi-branch hospital chains and centralized reporting?',
+    answer:
+      'Yes. MedCare HMS offers centralized cloud administration allowing hospital groups to manage multiple branches, consolidate financial analytics, share doctor schedules, and track inventory across locations seamlessly.',
+  },
+  {
+    question: 'How are automated backups and cloud uptime handled?',
+    answer:
+      'We maintain a 99.99% cloud uptime SLA backed by AWS & Azure redundant infrastructure. Automated encrypted backups are generated hourly with instant disaster recovery and failover protection.',
+  },
+  {
+    question: 'Can we customize department workflows and doctor prescription templates?',
+    answer:
+      'Absolutely. Every module—including IPD bed management, OPD clinical notes, e-prescriptions, and lab test master templates—can be fully configured according to your specialty and hospital procedures.',
+  },
+  {
+    question: 'Does the system handle insurance TPA claims, patient billing, and tax exports?',
+    answer:
+      'Yes. The Billing & Accounts module features automated TPA tariff calculation, itemized billing, insurance pre-authorization workflows, and one-click export to Tally, Quickbooks, and GST filing tools.',
+  },
+  {
+    question: 'Is there a patient portal or mobile access for doctors on duty?',
+    answer:
+      'Yes! MedCare HMS includes a responsive web portal and mobile-friendly interface for doctors to review IPD rounds, approve lab reports, and check patient vitals anytime, anywhere.',
+  },
 ]
 
 export default function About() {
+  const [openFaq, setOpenFaq] = useState(0)
   return (
     <motion.div {...pageTransition}>
 
       {/* ── Hero ── */}
-      <section className="relative overflow-hidden bg-[#effcfe] pt-24 sm:pt-28 md:pt-36 2xl:pt-44 pb-16 sm:pb-20 2xl:pb-28">
-        <div className="site-wrapper grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 2xl:gap-24 items-center">
+      <section className="relative overflow-hidden bg-[#effcfe] pt-24 sm:pt-28 md:pt-32 pb-6 sm:pb-8 md:pb-10">
+        <div className="site-wrapper grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 2xl:gap-16 items-center">
           {/* Text */}
           <motion.div className="space-y-5 sm:space-y-6 text-center lg:text-left"
             initial="hidden" animate="visible" variants={stagger}>
@@ -58,7 +108,7 @@ export default function About() {
               <img
                 src="https://lh3.googleusercontent.com/aida-public/AB6AXuCLatTJhDYJMxHOcrt035OUJtWdNT5cLm5ImRjFbTh03W05PzhNFHidhsSIfgBftQs53bbyQV8T-tHhPllZhsmasuMR33unqL-w-QDwCUee2H7TxNO_UGHuNiCuKuve9jdBq8461Rd7HNpECJ4m093m6EQjF0hDGfXQjPeZF2KfcIz-WzA8RcL3rVTNxPZB4q5G0nrIXCIayGfHkPtNUUnVwAeGssWk0Qi7H8Gtuk3TxfDdA3im0LDe"
                 alt="Medical team in modern hospital"
-                className="w-full h-auto object-cover rounded-2xl max-h-[400px] sm:max-h-[500px] 2xl:max-h-[600px] object-center"
+                className="w-full h-auto object-cover rounded-2xl max-h-[360px] sm:max-h-[440px] 2xl:max-h-[500px] object-center"
                 onError={(e) => {
                   e.target.style.display = 'none'
                   e.target.parentNode.style.background = 'linear-gradient(135deg, #b2eee1, #effcfe)'
@@ -72,9 +122,9 @@ export default function About() {
       </section>
 
       {/* ── Core Principles Bento ── */}
-      <section className="section-padding">
+      <section className="pt-4 sm:pt-6 md:pt-8 pb-12 sm:pb-16 md:pb-20">
         <div className="site-wrapper">
-          <div className="text-center mb-10 sm:mb-12 2xl:mb-16">
+          <div className="text-center mb-8 sm:mb-10 2xl:mb-12">
             <h2 className="heading-section text-[#121d1f] mb-2">Built on Core Principles</h2>
             <p className="text-description text-[#3d4947]">The foundations of every line of code we write.</p>
           </div>
@@ -194,61 +244,93 @@ export default function About() {
         </div>
       </section>
 
-      {/* ── Timeline ── */}
-      <section className="section-padding">
+      {/* ── Q&A Section ── */}
+      <section className="pt-10 sm:pt-14 pb-2 sm:pb-4">
         <div className="site-wrapper">
-          <div className="text-center mb-10 sm:mb-16">
-            <h2 className="heading-section text-[#121d1f] mb-2">Our Evolution</h2>
-            <p className="text-description text-[#3d4947]">A decade of transforming healthcare delivery.</p>
+          <div className="text-center mb-8 sm:mb-12">
+            <div
+              className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#afecde] text-[#326c62] text-xs font-semibold mb-3 shadow-xs"
+              style={{ fontFamily: "'Inter', sans-serif" }}
+            >
+              <span className="material-symbols-outlined text-base">help_outline</span>
+              <span>Questions & Answers</span>
+            </div>
+            <h2
+              className="heading-hero text-[#121d1f] mb-3"
+              style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}
+            >
+              Frequently Asked Questions (Q&A)
+            </h2>
+            <p
+              className="text-description text-[#3d4947] max-w-2xl mx-auto"
+              style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}
+            >
+              Find detailed answers to common queries regarding implementation, data security, system integrations, and multi-branch management.
+            </p>
           </div>
 
-          <div className="relative max-w-4xl 2xl:max-w-5xl mx-auto">
-            {/* Vertical line — md+ */}
-            <div className="absolute left-1/2 -translate-x-1/2 h-full w-0.5 bg-[#bcc9c6]/30 hidden md:block" />
+          <div className="space-y-3 w-full">
+            {aboutFaqs.map((faq, index) => {
+              const isOpen = openFaq === index
+              return (
+                <motion.div
+                  key={index}
+                  initial={{ opacity: 0, y: 15 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.4, delay: index * 0.04 }}
+                  className={`rounded-2xl border transition-all duration-300 overflow-hidden ${
+                    isOpen
+                      ? 'bg-white border-[#00685e] shadow-lg ring-2 ring-[#00685e]/15'
+                      : 'bg-white/90 border-[#bcc9c6]/50 hover:border-[#00685e]/40 shadow-xs'
+                  }`}
+                >
+                  <button
+                    type="button"
+                    onClick={() => setOpenFaq(isOpen ? -1 : index)}
+                    className="w-full p-4 sm:p-5 text-left flex items-center justify-between gap-4 cursor-pointer select-none"
+                  >
+                    <span
+                      className="text-sm sm:text-base font-bold text-[#121d1f] flex items-center gap-2.5"
+                      style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}
+                    >
+                      <span className="w-7 h-7 rounded-xl bg-[#effcfe] text-[#00685e] font-extrabold text-xs flex items-center justify-center shrink-0 border border-[#00685e]/20">
+                        Q{index + 1}
+                      </span>
+                      {faq.question}
+                    </span>
+                    <span
+                      className={`w-7 h-7 rounded-full flex items-center justify-center shrink-0 transition-transform duration-300 ${
+                        isOpen ? 'bg-[#00685e] text-white rotate-180' : 'bg-[#eaf6f8] text-[#00685e]'
+                      }`}
+                    >
+                      <span className="material-symbols-outlined text-base">expand_more</span>
+                    </span>
+                  </button>
 
-            <div className="space-y-12 sm:space-y-16 2xl:space-y-20">
-              {timeline.map((item, i) => (
-                <motion.div key={i}
-                  className={`relative flex flex-col md:flex-row items-start md:items-center gap-6 md:gap-0 ${i % 2 === 1 ? 'md:flex-row-reverse' : ''}`}
-                  initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }} transition={{ duration: 0.6 }}>
-
-                  {/* Mobile: left line */}
-                  <div className="absolute left-5 top-10 bottom-0 w-0.5 bg-[#bcc9c6]/30 md:hidden last:hidden" />
-
-                  <div className={`md:w-5/12 ${i % 2 === 0 ? 'md:text-right md:pr-12' : 'md:text-left md:pl-12'} pl-12 md:pl-0`}>
-                    <div className="text-[40px] sm:text-[56px] 2xl:text-[72px] font-bold text-[#00685e] opacity-15 mb-1 leading-none"
-                      style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", letterSpacing: '-0.02em' }}>
-                      {item.year}
-                    </div>
-                    <h4 className="text-lg sm:text-2xl 2xl:text-3xl font-semibold text-[#121d1f] mb-2"
-                      style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
-                      {item.title}
-                    </h4>
-                    <p className="text-sm sm:text-base 2xl:text-lg text-[#3d4947]"
-                      style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
-                      {item.description}
-                    </p>
-                  </div>
-
-                  {/* Center dot */}
-                  <div className="hidden md:flex w-2/12 justify-center shrink-0">
-                    <div className="w-8 h-8 sm:w-10 sm:h-10 bg-[#00685e] rounded-full z-10 border-4 border-[#effcfe]" />
-                  </div>
-
-                  {/* Mobile dot */}
-                  <div className="absolute left-2.5 top-2 w-5 h-5 bg-[#00685e] rounded-full border-4 border-[#effcfe] md:hidden z-10" />
-
-                  <div className="md:w-5/12" />
+                  <AnimatePresence initial={false}>
+                    {isOpen && (
+                      <motion.div
+                        initial={{ height: 0, opacity: 0 }}
+                        animate={{ height: 'auto', opacity: 1 }}
+                        exit={{ height: 0, opacity: 0 }}
+                        transition={{ duration: 0.25, ease: 'easeOut' }}
+                        className="px-4 sm:px-5 pb-5 pt-1 text-xs sm:text-sm text-[#3d4947] leading-relaxed border-t border-[#bcc9c6]/20 bg-[#effcfe]/30"
+                        style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}
+                      >
+                        <div className="pl-9">{faq.answer}</div>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
                 </motion.div>
-              ))}
-            </div>
+              )
+            })}
           </div>
         </div>
       </section>
 
       {/* ── CTA ── */}
-      <section className="section-padding">
+      <section className="pt-4 sm:pt-6 pb-12 sm:pb-16 md:pb-20">
         <div className="site-wrapper">
           <motion.div
             className="card-frosted rounded-2xl p-8 sm:p-12 md:p-16 2xl:p-20 text-center relative overflow-hidden"
@@ -263,14 +345,14 @@ export default function About() {
               allowing them to focus entirely on patient recovery.
             </p>
             <div className="flex flex-col sm:flex-row flex-wrap justify-center gap-3 sm:gap-4">
-              <button className="w-full sm:w-auto bg-[#00685e] text-white px-8 sm:px-12 py-3.5 sm:py-4 2xl:py-5 min-h-[48px] rounded-full text-xs sm:text-sm 2xl:text-base font-bold shadow-lg hover:opacity-90 active:scale-95 transition-all flex items-center justify-center"
+              <Link to="/contact" className="w-full sm:w-auto bg-[#00685e] text-white px-8 sm:px-12 py-3.5 sm:py-4 2xl:py-5 min-h-[48px] rounded-full text-xs sm:text-sm 2xl:text-base font-bold shadow-lg hover:opacity-90 active:scale-95 transition-all flex items-center justify-center"
                 style={{ fontFamily: "'Inter', sans-serif" }}>
                 Book a Demo Today
-              </button>
-              <button className="w-full sm:w-auto border border-[#bcc9c6] text-[#00685e] px-8 sm:px-12 py-3.5 sm:py-4 2xl:py-5 min-h-[48px] rounded-full text-xs sm:text-sm 2xl:text-base font-bold hover:bg-[#eaf6f8] active:scale-95 transition-all flex items-center justify-center"
+              </Link>
+              <Link to="/contact" className="w-full sm:w-auto border border-[#bcc9c6] text-[#00685e] px-8 sm:px-12 py-3.5 sm:py-4 2xl:py-5 min-h-[48px] rounded-full text-xs sm:text-sm 2xl:text-base font-bold hover:bg-[#eaf6f8] active:scale-95 transition-all flex items-center justify-center"
                 style={{ fontFamily: "'Inter', sans-serif" }}>
                 View Product Tour
-              </button>
+              </Link>
             </div>
           </motion.div>
         </div>

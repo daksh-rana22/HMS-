@@ -83,6 +83,7 @@ export default function PricingPreview() {
                 variant={plan.highlighted ? 'primary' : 'outline'}
                 size="sm"
                 className="w-full"
+                href="/contact"
               >
                 {plan.price === 'Custom' ? 'Contact Sales' : 'Get Started'}
               </Button>

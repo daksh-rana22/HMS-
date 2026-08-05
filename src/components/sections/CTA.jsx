@@ -1,4 +1,5 @@
 import { motion } from 'framer-motion'
+import { Link } from 'react-router-dom'
 
 export default function CTA() {
   return (
@@ -27,7 +28,8 @@ export default function CTA() {
               Join over 500 institutions that have upgraded their operations with MedCare HMS.
             </p>
             <div className="flex flex-col sm:flex-row justify-center gap-3 sm:gap-4 pt-2">
-              <button
+              <Link
+                to="/contact"
                 className="inline-flex items-center justify-center bg-white text-[#00685e]
                            px-8 sm:px-10 2xl:px-12 h-12 sm:h-14 2xl:h-16 rounded-full
                            text-sm 2xl:text-base font-bold
@@ -35,8 +37,9 @@ export default function CTA() {
                 style={{ fontFamily: "'Inter', sans-serif" }}
               >
                 Start Free Trial
-              </button>
-              <button
+              </Link>
+              <Link
+                to="/contact"
                 className="inline-flex items-center justify-center bg-[#00685e] text-white
                            border border-white/20
                            px-8 sm:px-10 2xl:px-12 h-12 sm:h-14 2xl:h-16 rounded-full
@@ -45,7 +48,7 @@ export default function CTA() {
                 style={{ fontFamily: "'Inter', sans-serif" }}
               >
                 Talk to Sales
-              </button>
+              </Link>
             </div>
           </div>
         </motion.div>

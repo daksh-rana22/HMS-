@@ -1,4 +1,5 @@
 import { motion } from 'framer-motion'
+import { Link } from 'react-router-dom'
 import { pageTransition } from '../../utils/animations'
 import { CheckCircle2, XCircle } from 'lucide-react'
 
@@ -144,8 +145,9 @@ export default function Pricing() {
                 </div>
 
                 <div>
-                  <button
-                    className={`w-full py-3.5 sm:py-4 2xl:py-5 min-h-[48px] px-4 rounded-full font-bold text-xs sm:text-sm 2xl:text-base transition-all active:scale-95 ${
+                  <Link
+                    to="/contact"
+                    className={`w-full py-3.5 sm:py-4 2xl:py-5 min-h-[48px] px-4 rounded-full font-bold text-xs sm:text-sm 2xl:text-base transition-all active:scale-95 flex items-center justify-center ${
                       plan.featured
                         ? 'bg-[#00685e] text-white hover:opacity-90 shadow-lg'
                         : 'border-2 border-[#67d9ca] text-[#00685e] hover:bg-[#eaf6f8]'
@@ -153,7 +155,7 @@ export default function Pricing() {
                     style={{ fontFamily: "'Inter', sans-serif" }}
                   >
                     {plan.cta}
-                  </button>
+                  </Link>
                   {plan.featured && (
                     <p className="text-center mt-2.5 text-[11px] text-[#3d4947] opacity-70" style={{ fontFamily: "'Inter', sans-serif" }}>
                       No credit card required for 30 days
@@ -218,10 +220,10 @@ export default function Pricing() {
               </p>
             </div>
             <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 w-full md:w-auto shrink-0">
-              <button className="flex-1 md:flex-none px-8 sm:px-10 py-3.5 sm:py-4 bg-[#85f5e6] text-[#00201d] font-bold rounded-full hover:opacity-90 active:scale-95 transition-all text-sm 2xl:text-base whitespace-nowrap"
-                style={{ fontFamily: "'Inter', sans-serif" }}>Get Started</button>
-              <button className="flex-1 md:flex-none px-8 sm:px-10 py-3.5 sm:py-4 border-2 border-[#85f5e6] text-[#85f5e6] font-bold rounded-full hover:bg-white/10 active:scale-95 transition-all text-sm 2xl:text-base whitespace-nowrap"
-                style={{ fontFamily: "'Inter', sans-serif" }}>See Features</button>
+              <Link to="/contact" className="flex-1 md:flex-none px-8 sm:px-10 py-3.5 sm:py-4 bg-[#85f5e6] text-[#00201d] font-bold rounded-full hover:opacity-90 active:scale-95 transition-all text-sm 2xl:text-base whitespace-nowrap flex items-center justify-center"
+                style={{ fontFamily: "'Inter', sans-serif" }}>Get Started</Link>
+              <Link to="/modules" className="flex-1 md:flex-none px-8 sm:px-10 py-3.5 sm:py-4 border-2 border-[#85f5e6] text-[#85f5e6] font-bold rounded-full hover:bg-white/10 active:scale-95 transition-all text-sm 2xl:text-base whitespace-nowrap flex items-center justify-center"
+                style={{ fontFamily: "'Inter', sans-serif" }}>See Features</Link>
             </div>
           </div>
         </section>

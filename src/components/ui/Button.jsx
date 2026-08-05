@@ -1,4 +1,5 @@
 import { motion } from 'framer-motion'
+import { Link } from 'react-router-dom'
 import { tapScale } from '../../utils/animations'
 
 const variants = {
@@ -47,6 +48,15 @@ export default function Button({
   )
 
   if (href) {
+    if (href.startsWith('/')) {
+      return (
+        <motion.div whileHover={{ y: -2 }} whileTap={tapScale} className="inline-block">
+          <Link to={href} className={classes} {...props}>
+            {content}
+          </Link>
+        </motion.div>
+      )
+    }
     return (
       <motion.a
         href={href}

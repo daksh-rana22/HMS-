@@ -61,6 +61,7 @@ export default function PricingCard({ plan }) {
         variant={highlighted ? 'primary' : 'secondary'}
         size="lg"
         className="w-full"
+        href="/contact"
       >
         {cta}
       </Button>
