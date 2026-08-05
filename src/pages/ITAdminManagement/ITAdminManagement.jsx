@@ -575,7 +575,7 @@ export default function ITAdminManagement() {
         
         <div className="text-center max-w-3xl mx-auto mb-12 sm:mb-16">
           <h2 className="text-2xl sm:text-3xl font-extrabold text-[#121d1f] tracking-tight">
-            18 Master <span className="text-[#00685e]">IT Admin Sub-Modules</span>
+            {itAdminTopics.length} Master <span className="text-[#00685e]">IT Admin Sub-Modules</span>
           </h2>
           <p className="text-xs sm:text-sm text-[#3d4947] mt-2">
             Click any IT admin step to inspect live governance workflows, access control matrices, and full-resolution screenshot previews.

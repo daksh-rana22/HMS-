@@ -9,7 +9,7 @@ const heroSlides = [
   { id: 1, title: 'Clinical Dashboard', img: '/images/hero_slide_1.png', tag: 'Live Clinical OPD & Emergency' },
   { id: 2, title: 'OPD Collections', img: '/images/hero_slide_2.png', tag: 'Real-Time Financial Collections' },
   { id: 3, title: 'Cancel & Refunds', img: '/images/hero_slide_3.png', tag: 'Refund & Audit Tracking' },
-  { id: 4, title: 'IT Governance', img: '/images/hero_slide_4.png', tag: '18 IT Admin Sub-Modules' },
+  { id: 4, title: 'IT Governance', img: '/images/hero_slide_4.png', tag: '19 IT Admin Sub-Modules' },
   { id: 5, title: 'Department Registry', img: '/images/hero_slide_5.png', tag: 'Department & Staff Master' },
 ]
 
@@ -36,7 +36,7 @@ export default function Home() {
   return (
     <motion.div {...pageTransition} className="min-h-screen bg-[#f8fdfe]">
       {/* ── 1. HERO SECTION ── */}
-      <section className="relative overflow-hidden pt-20 sm:pt-28 md:pt-32 pb-10 sm:pb-16 lg:pb-20">
+      <section className="relative overflow-hidden pt-20 sm:pt-28 md:pt-32 pb-3 sm:pb-6 lg:pb-8">
         {/* Animated Enterprise Healthcare SaaS Hero Background */}
         <HeroBackground />
 
@@ -341,24 +341,27 @@ export default function Home() {
       </section>
 
       {/* ── 2. TRUSTED LOGOS BANNER ── */}
-      <section className="py-8 sm:py-10 lg:py-12 bg-white border-y border-[#bcc9c6]/30">
-        <div className="site-wrapper text-center">
-          <p className="text-[10px] sm:text-[11px] font-bold uppercase tracking-widest text-[#6d7a77] mb-4 sm:mb-6">TRUSTED BY LEADING INSTITUTIONS</p>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6 items-center justify-items-center opacity-80">
-            <div className="flex items-center gap-2 font-bold text-[#3d4947] text-xs sm:text-sm lg:text-base">
-              <span className="material-symbols-outlined text-[#00685e]">public</span>
+      <section className="py-5 sm:py-7 lg:py-8 bg-gradient-to-r from-[#031d1b] via-[#003c37] to-[#031d1b] border-y border-[#00685e]/50 shadow-inner relative overflow-hidden">
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(0,203,183,0.15)_0%,transparent_70%)] pointer-events-none" />
+        <div className="site-wrapper text-center relative z-10">
+          <p className="text-[10px] sm:text-[11px] font-extrabold uppercase tracking-[0.2em] text-[#4cdac9] mb-4 sm:mb-6" style={{ textShadow: '0 0 10px rgba(76,218,201,0.3)' }}>
+            TRUSTED BY LEADING INSTITUTIONS
+          </p>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-8 items-center justify-items-center">
+            <div className="flex items-center gap-2.5 font-bold text-white/90 hover:text-white text-xs sm:text-sm lg:text-base transition-colors duration-200 group">
+              <span className="material-symbols-outlined text-[#00cbb7] group-hover:scale-110 transition-transform duration-200" style={{ filter: 'drop-shadow(0 0 6px rgba(0,203,183,0.6))' }}>public</span>
               CITY GENERAL
             </div>
-            <div className="flex items-center gap-2 font-bold text-[#3d4947] text-xs sm:text-sm lg:text-base">
-              <span className="material-symbols-outlined text-[#00685e]">local_hospital</span>
+            <div className="flex items-center gap-2.5 font-bold text-white/90 hover:text-white text-xs sm:text-sm lg:text-base transition-colors duration-200 group">
+              <span className="material-symbols-outlined text-[#00cbb7] group-hover:scale-110 transition-transform duration-200" style={{ filter: 'drop-shadow(0 0 6px rgba(0,203,183,0.6))' }}>local_hospital</span>
               APEX CARE
             </div>
-            <div className="flex items-center gap-2 font-bold text-[#3d4947] text-xs sm:text-sm lg:text-base">
-              <span className="material-symbols-outlined text-[#00685e]">corporate_fare</span>
+            <div className="flex items-center gap-2.5 font-bold text-white/90 hover:text-white text-xs sm:text-sm lg:text-base transition-colors duration-200 group">
+              <span className="material-symbols-outlined text-[#00cbb7] group-hover:scale-110 transition-transform duration-200" style={{ filter: 'drop-shadow(0 0 6px rgba(0,203,183,0.6))' }}>corporate_fare</span>
               UNITY MED
             </div>
-            <div className="flex items-center gap-2 font-bold text-[#3d4947] text-xs sm:text-sm lg:text-base">
-              <span className="material-symbols-outlined text-[#00685e]">stethoscope</span>
+            <div className="flex items-center gap-2.5 font-bold text-white/90 hover:text-white text-xs sm:text-sm lg:text-base transition-colors duration-200 group">
+              <span className="material-symbols-outlined text-[#00cbb7] group-hover:scale-110 transition-transform duration-200" style={{ filter: 'drop-shadow(0 0 6px rgba(0,203,183,0.6))' }}>stethoscope</span>
               GLOBAL CLINIC
             </div>
           </div>

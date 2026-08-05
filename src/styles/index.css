@@ -69,7 +69,8 @@
     box-sizing: border-box;
   }
 
-  html, body {
+  html,
+  body {
     scroll-behavior: smooth;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
@@ -88,7 +89,10 @@
 
   /* Prevent auto-zoom on iOS inputs */
   @media (max-width: 767px) {
-    input, select, textarea {
+
+    input,
+    select,
+    textarea {
       font-size: 16px !important;
     }
   }
@@ -108,15 +112,18 @@
     width: 6px;
     height: 6px;
   }
+
   ::-webkit-scrollbar-track {
     background: rgba(0, 104, 94, 0.05);
     border-radius: 9999px;
   }
+
   ::-webkit-scrollbar-thumb {
     background: rgba(0, 104, 94, 0.35);
     border-radius: 9999px;
     transition: background 0.2s ease;
   }
+
   ::-webkit-scrollbar-thumb:hover {
     background: rgba(0, 104, 94, 0.7);
   }
@@ -125,18 +132,22 @@
     scrollbar-width: thin;
     scrollbar-color: #67d9ca rgba(255, 255, 255, 0.1);
   }
+
   .custom-scrollbar::-webkit-scrollbar {
     width: 5px;
     height: 5px;
   }
+
   .custom-scrollbar::-webkit-scrollbar-track {
     background: rgba(255, 255, 255, 0.08);
     border-radius: 4px;
   }
+
   .custom-scrollbar::-webkit-scrollbar-thumb {
     background: #67d9ca;
     border-radius: 4px;
   }
+
   .custom-scrollbar::-webkit-scrollbar-thumb:hover {
     background: #85f5e6;
   }
@@ -146,12 +157,14 @@
     -ms-overflow-style: none;
     scrollbar-width: none;
   }
+
   .no-scrollbar::-webkit-scrollbar {
     display: none;
   }
 }
 
 @layer utilities {
+
   /* ── SITE LAYOUT CONTAINER ── */
   .site-wrapper {
     width: 100%;
@@ -163,16 +176,33 @@
   }
 
   @media (min-width: 640px) {
-    .site-wrapper { padding-left: 20px; padding-right: 20px; }
+    .site-wrapper {
+      padding-left: 20px;
+      padding-right: 20px;
+    }
   }
+
   @media (min-width: 1024px) {
-    .site-wrapper { padding-left: 32px; padding-right: 32px; }
+    .site-wrapper {
+      padding-left: 32px;
+      padding-right: 32px;
+    }
   }
+
   @media (min-width: 1920px) {
-    .site-wrapper { max-width: 1600px; padding-left: 40px; padding-right: 40px; }
+    .site-wrapper {
+      max-width: 1600px;
+      padding-left: 40px;
+      padding-right: 40px;
+    }
   }
+
   @media (min-width: 2560px) {
-    .site-wrapper { max-width: 2000px; padding-left: 56px; padding-right: 56px; }
+    .site-wrapper {
+      max-width: 2000px;
+      padding-left: 56px;
+      padding-right: 56px;
+    }
   }
 
   /* Compatibility alias */
@@ -184,10 +214,36 @@
     padding-left: 16px;
     padding-right: 16px;
   }
-  @media (min-width: 640px) { .page-container { padding-left: 20px; padding-right: 20px; } }
-  @media (min-width: 1024px) { .page-container { padding-left: 32px; padding-right: 32px; } }
-  @media (min-width: 1920px) { .page-container { max-width: 1600px; padding-left: 40px; padding-right: 40px; } }
-  @media (min-width: 2560px) { .page-container { max-width: 2000px; padding-left: 56px; padding-right: 56px; } }
+
+  @media (min-width: 640px) {
+    .page-container {
+      padding-left: 20px;
+      padding-right: 20px;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .page-container {
+      padding-left: 32px;
+      padding-right: 32px;
+    }
+  }
+
+  @media (min-width: 1920px) {
+    .page-container {
+      max-width: 1600px;
+      padding-left: 40px;
+      padding-right: 40px;
+    }
+  }
+
+  @media (min-width: 2560px) {
+    .page-container {
+      max-width: 2000px;
+      padding-left: 56px;
+      padding-right: 56px;
+    }
+  }
 
   /* ── RELATABLE TYPOGRAPHY CLASSES ── */
   .heading-hero {
@@ -197,8 +253,18 @@
     line-height: 1.1;
     font-family: 'Plus Jakarta Sans', sans-serif;
   }
-  @media (min-width: 1920px) { .heading-hero { font-size: 56px; } }
-  @media (min-width: 2560px) { .heading-hero { font-size: 64px; } }
+
+  @media (min-width: 1920px) {
+    .heading-hero {
+      font-size: 56px;
+    }
+  }
+
+  @media (min-width: 2560px) {
+    .heading-hero {
+      font-size: 64px;
+    }
+  }
 
   .heading-section {
     font-size: clamp(20px, 3vw, 28px);
@@ -206,15 +272,30 @@
     line-height: 1.3;
     font-family: 'Plus Jakarta Sans', sans-serif;
   }
-  @media (min-width: 1920px) { .heading-section { font-size: 32px; } }
+
+  @media (min-width: 1920px) {
+    .heading-section {
+      font-size: 32px;
+    }
+  }
 
   .text-description {
     font-size: clamp(16px, 1.2vw, 18px);
     line-height: 1.7;
     font-family: 'Plus Jakarta Sans', sans-serif;
   }
-  @media (min-width: 1920px) { .text-description { font-size: 20px; } }
-  @media (min-width: 2560px) { .text-description { font-size: 22px; } }
+
+  @media (min-width: 1920px) {
+    .text-description {
+      font-size: 20px;
+    }
+  }
+
+  @media (min-width: 2560px) {
+    .text-description {
+      font-size: 22px;
+    }
+  }
 
   /* Legacy aliases for compatibility */
   .text-display {
@@ -224,8 +305,18 @@
     line-height: 1.1;
     font-family: 'Plus Jakarta Sans', sans-serif;
   }
-  @media (min-width: 1920px) { .text-display { font-size: 56px; } }
-  @media (min-width: 2560px) { .text-display { font-size: 64px; } }
+
+  @media (min-width: 1920px) {
+    .text-display {
+      font-size: 56px;
+    }
+  }
+
+  @media (min-width: 2560px) {
+    .text-display {
+      font-size: 64px;
+    }
+  }
 
   .text-headline {
     font-size: clamp(20px, 3vw, 28px);
@@ -233,15 +324,30 @@
     line-height: 1.3;
     font-family: 'Plus Jakarta Sans', sans-serif;
   }
-  @media (min-width: 1920px) { .text-headline { font-size: 32px; } }
+
+  @media (min-width: 1920px) {
+    .text-headline {
+      font-size: 32px;
+    }
+  }
 
   .text-body-lg {
     font-size: clamp(16px, 1.2vw, 18px);
     line-height: 1.7;
     font-family: 'Plus Jakarta Sans', sans-serif;
   }
-  @media (min-width: 1920px) { .text-body-lg { font-size: 20px; } }
-  @media (min-width: 2560px) { .text-body-lg { font-size: 22px; } }
+
+  @media (min-width: 1920px) {
+    .text-body-lg {
+      font-size: 20px;
+    }
+  }
+
+  @media (min-width: 2560px) {
+    .text-body-lg {
+      font-size: 22px;
+    }
+  }
 
   /* ── CARD & CONTAINER STYLES ── */
   .card-frosted {
@@ -253,6 +359,7 @@
     box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.04);
     transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
   }
+
   .card-frosted:hover {
     transform: translateY(-4px);
     box-shadow: 0px 10px 40px rgba(18, 155, 142, 0.12);
@@ -269,6 +376,7 @@
     box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.04);
     transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
   }
+
   .glass-card:hover {
     transform: translateY(-4px);
     box-shadow: 0px 10px 40px rgba(18, 155, 142, 0.12);
@@ -316,13 +424,22 @@
     transition: all 0.2s;
     outline: none;
   }
+
   .form-input:focus {
     border-color: var(--color-primary);
     box-shadow: 0 0 0 2px rgba(103, 217, 202, 0.4);
   }
-  .form-input::placeholder { color: var(--color-gray-light); }
+
+  .form-input::placeholder {
+    color: var(--color-gray-light);
+  }
+
   @media (min-width: 1920px) {
-    .form-input { padding: 16px 20px; font-size: 18px; border-radius: 10px; }
+    .form-input {
+      padding: 16px 20px;
+      font-size: 18px;
+      border-radius: 10px;
+    }
   }
 
   .input-teal {
@@ -337,42 +454,115 @@
     transition: all 0.2s;
     outline: none;
   }
+
   .input-teal:focus {
     border-color: var(--color-primary);
     box-shadow: 0 0 0 2px rgba(103, 217, 202, 0.4);
   }
-  .input-teal::placeholder { color: var(--color-gray-light); }
+
+  .input-teal::placeholder {
+    color: var(--color-gray-light);
+  }
 
   /* ── ANIMATIONS ── */
   @keyframes float {
-    0%   { transform: translateY(0px); }
-    50%  { transform: translateY(-10px); }
-    100% { transform: translateY(0px); }
+    0% {
+      transform: translateY(0px);
+    }
+
+    50% {
+      transform: translateY(-10px);
+    }
+
+    100% {
+      transform: translateY(0px);
+    }
   }
-  .animate-float { animation: float 6s ease-in-out infinite; }
+
+  .animate-float {
+    animation: float 6s ease-in-out infinite;
+  }
 
   @keyframes pulse-glow {
-    0%, 100% { opacity: 0.3; }
-    50%       { opacity: 0.5; }
+
+    0%,
+    100% {
+      opacity: 0.3;
+    }
+
+    50% {
+      opacity: 0.5;
+    }
   }
-  .animate-pulse-glow { animation: pulse-glow 3s ease-in-out infinite; }
+
+  .animate-pulse-glow {
+    animation: pulse-glow 3s ease-in-out infinite;
+  }
 
   /* ── SECTION PADDING ── */
   .section-padding {
     padding-top: 60px;
     padding-bottom: 60px;
   }
-  @media (min-width: 768px)  { .section-padding { padding-top: 80px;  padding-bottom: 80px; } }
-  @media (min-width: 1280px) { .section-padding { padding-top: 96px;  padding-bottom: 96px; } }
-  @media (min-width: 1920px) { .section-padding { padding-top: 120px; padding-bottom: 120px; } }
-  @media (min-width: 2560px) { .section-padding { padding-top: 160px; padding-bottom: 160px; } }
+
+  @media (min-width: 768px) {
+    .section-padding {
+      padding-top: 80px;
+      padding-bottom: 80px;
+    }
+  }
+
+  @media (min-width: 1280px) {
+    .section-padding {
+      padding-top: 96px;
+      padding-bottom: 96px;
+    }
+  }
+
+  @media (min-width: 1920px) {
+    .section-padding {
+      padding-top: 120px;
+      padding-bottom: 120px;
+    }
+  }
+
+  @media (min-width: 2560px) {
+    .section-padding {
+      padding-top: 160px;
+      padding-bottom: 160px;
+    }
+  }
 
   .section-py {
     padding-top: 60px;
     padding-bottom: 60px;
   }
-  @media (min-width: 768px)  { .section-py { padding-top: 80px;  padding-bottom: 80px; } }
-  @media (min-width: 1280px) { .section-py { padding-top: 96px;  padding-bottom: 96px; } }
-  @media (min-width: 1920px) { .section-py { padding-top: 120px; padding-bottom: 120px; } }
-  @media (min-width: 2560px) { .section-py { padding-top: 160px; padding-bottom: 160px; } }
+
+  @media (min-width: 768px) {
+    .section-py {
+      padding-top: 80px;
+      padding-bottom: 80px;
+    }
+  }
+
+  @media (min-width: 1280px) {
+    .section-py {
+      padding-top: 96px;
+      padding-bottom: 96px;
+    }
+  }
+
+  @media (min-width: 1920px) {
+    .section-py {
+      padding-top: 120px;
+      padding-bottom: 120px;
+    }
+  }
+
+  @media (min-width: 2560px) {
+    .section-py {
+      padding-top: 160px;
+      padding-bottom: 160px;
+    }
+  }
 }

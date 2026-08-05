@@ -379,6 +379,13 @@ const itBillingThreshold = [
   { category: 'Hospital Employee Family', maxDiscount: '25%', maxCredit: '₹25,000', status: 'Enforced' },
 ]
 
+const itBedTpa = [
+  { roomType: 'Deluxe Suite', rackRate: '₹12,000/day', tpaCap: '₹8,500/day', plan: 'Star Health / Max Bupa' },
+  { roomType: 'Semi Deluxe', rackRate: '₹7,500/day', tpaCap: '₹5,500/day', plan: 'Care Health / HDFC Ergo' },
+  { roomType: 'General Ward', rackRate: '₹2,500/day', tpaCap: '₹2,000/day', plan: 'ICICI Lombard' },
+  { roomType: 'ICU / NICU', rackRate: '₹15,000/day', tpaCap: '₹12,000/day', plan: 'Aditya Birla Health' },
+]
+
 // ── IPD SHOWCASE DATA ──
 const ipdAdmissions = [
   { id: 'IPD-2026-1041', patient: 'Ramesh Verma', ward: 'General Ward', bed: 'BED-04', doctor: 'Dr. Avanish Dubey', dept: 'Neurology', status: 'Admitted' },
@@ -442,7 +449,7 @@ export default function Modules() {
   const [reportsActiveTab, setReportsActiveTab] = useState(0)
   const [ipdActiveTab, setIpdActiveTab] = useState(0)
   
-  // Auto-rotating state for IT Administration (0 to 17 - ALL 18 FIELDS FROM USER SCREENSHOT!)
+  // Auto-rotating state for IT Administration (0 to 18 - ALL 19 FIELDS FROM USER SCREENSHOT!)
   const [itActiveTab, setItActiveTab] = useState(0)
 
   useEffect(() => {
@@ -461,7 +468,7 @@ export default function Modules() {
   }, [reportsActiveTab])
 
   useEffect(() => {
-    const timer = setInterval(() => setItActiveTab((prev) => (prev + 1) % 18), 5000)
+    const timer = setInterval(() => setItActiveTab((prev) => (prev + 1) % 19), 5000)
     return () => clearInterval(timer)
   }, [itActiveTab])
 
@@ -515,7 +522,7 @@ export default function Modules() {
     { id: 11, key: 'billreg', label: 'Bill Register', icon: 'auto_stories' },
   ]
 
-  // ALL 18 IT ADMINISTRATION SUB-MODULE FIELDS FROM USER SCREENSHOT
+  // ALL 19 IT ADMINISTRATION SUB-MODULE FIELDS FROM USER SCREENSHOT
   const itTabs = [
     { id: 0, key: 'dashboard', label: 'Dashboard', icon: 'grid_view' },
     { id: 1, key: 'drschedule', label: 'Doctor OPD Schedule', icon: 'schedule' },
@@ -535,6 +542,7 @@ export default function Modules() {
     { id: 15, key: 'refdrmaster', label: 'Referral Doctor Master', icon: 'group_add' },
     { id: 16, key: 'treatmentmaster', label: 'Treatment Master', icon: 'healing' },
     { id: 17, key: 'billingthresh', label: 'Billing Threshold Config', icon: 'tune' },
+    { id: 18, key: 'bedtpa', label: 'Bed TPA', icon: 'hotel' },
   ]
 
   return (
@@ -554,7 +562,7 @@ export default function Modules() {
             Comprehensive Hospital Management Ecosystem
           </motion.h1>
           <motion.p className="text-description text-[#3d4947] text-sm sm:text-base lg:text-lg leading-relaxed mb-6 sm:mb-8" variants={fadeUp}>
-            Empower every department with specialized, interconnected clinical and administrative software modules. Explore live interactive dashboards for <strong>Clinical EMR</strong>, <strong>18 IT Administration Masters</strong>, <strong>Analytics & Reports</strong>, <strong>IPD Inpatient Suite</strong>, <strong>Billing & Accounts</strong>, and <strong>Laboratory LIS</strong> — built to scale from specialty clinics to multi-chain hospital networks.
+            Empower every department with specialized, interconnected clinical and administrative software modules. Explore live interactive dashboards for <strong>Clinical EMR</strong>, <strong>19 IT Administration Masters</strong>, <strong>Analytics & Reports</strong>, <strong>IPD Inpatient Suite</strong>, <strong>Billing & Accounts</strong>, and <strong>Laboratory LIS</strong> — built to scale from specialty clinics to multi-chain hospital networks.
           </motion.p>
 
           {/* Quick Feature Pills Bar */}
@@ -985,10 +993,10 @@ export default function Modules() {
               <div className="bg-[#effcfe] px-4 py-3 border-b border-[#bcc9c6]/30 flex flex-wrap items-center justify-between gap-2 text-xs shrink-0" style={{ fontFamily: "'Inter', sans-serif" }}>
                 <div className="flex items-center gap-2">
                   <span className="material-symbols-outlined text-sm text-[#00685e]">laptop</span>
-                  <span className="font-bold text-[#00685e]">IT Administration Master (18 Sub-Modules)</span>
+                  <span className="font-bold text-[#00685e]">IT Administration Master (19 Sub-Modules)</span>
                 </div>
                 <div className="flex items-center gap-1.5">
-                  <span className="text-[10px] text-[#6d7a77]">Auto-changes 5s (18 views)</span>
+                  <span className="text-[10px] text-[#6d7a77]">Auto-changes 5s (19 views)</span>
                   <span className="w-2 h-2 rounded-full bg-[#00685e] animate-pulse"></span>
                 </div>
               </div>
@@ -999,7 +1007,7 @@ export default function Modules() {
                 {/* Left Sidebar Menu */}
                 <div className="w-full sm:w-56 bg-[#008378] text-white p-2 flex flex-row sm:flex-col overflow-x-auto sm:overflow-y-auto no-scrollbar sm:custom-scrollbar gap-1 shrink-0 text-xs" style={{ fontFamily: "'Inter', sans-serif" }}>
                   <div className="font-bold text-white/70 text-[9px] uppercase tracking-wider mb-1 px-2">
-                    IT Admin Menu (18 Fields)
+                    IT Admin Menu (19 Fields)
                   </div>
                   {itTabs.map((tab) => (
                     <button
@@ -1016,7 +1024,7 @@ export default function Modules() {
                   ))}
                 </div>
 
-                {/* Right Interactive View Container for ALL 18 IT ADMIN VIEWS */}
+                {/* Right Interactive View Container for ALL 19 IT ADMIN VIEWS */}
                 <div className="flex-1 p-3 overflow-x-auto overflow-y-auto flex flex-col justify-between">
                   
                   {/* FIELD 0: DASHBOARD */}
@@ -1456,6 +1464,42 @@ export default function Modules() {
                         </table>
                       </div>
                       <div className="text-[10px] text-[#6d7a77]">Corporate Credit & Discount Limit Enforcer</div>
+                    </div>
+                  )}
+
+                  {/* FIELD 18: BED TPA TARIFF MAPPING */}
+                  {itActiveTab === 18 && (
+                    <div className="flex-1 flex flex-col justify-between text-xs">
+                      <div>
+                        <h4 className="text-sm font-bold text-[#00685e] mb-2 flex items-center gap-1">
+                          <span className="material-symbols-outlined text-base">hotel</span> Bed TPA Tariff Mapping
+                        </h4>
+                        <table className="w-full text-left border-collapse text-[11px]" style={{ fontFamily: "'Inter', sans-serif" }}>
+                          <thead>
+                            <tr className="border-b border-[#bcc9c6]/30 text-[#00685e] font-bold uppercase">
+                              <th className="py-1.5 px-1">Room Category</th>
+                              <th className="py-1.5 px-1">Hospital Rack Rate</th>
+                              <th className="py-1.5 px-1">TPA Negotiated Cap</th>
+                              <th className="py-1.5 px-1">Empaneled TPA Plan</th>
+                            </tr>
+                          </thead>
+                          <tbody className="divide-y divide-[#bcc9c6]/20">
+                            {itBedTpa.map((r) => (
+                              <tr key={r.roomType} className="hover:bg-[#eaf6f8]/50 transition-colors">
+                                <td className="py-1.5 px-1 font-semibold text-[#121d1f]">{r.roomType}</td>
+                                <td className="py-1.5 px-1 font-bold text-[#6d7a77]">{r.rackRate}</td>
+                                <td className="py-1.5 px-1 font-bold text-[#00685e]">{r.tpaCap}</td>
+                                <td className="py-1.5 px-1">
+                                  <span className="px-2 py-0.5 rounded-full bg-[#afecde] text-[#326c62] font-bold text-[9px]">
+                                    • {r.plan}
+                                  </span>
+                                </td>
+                              </tr>
+                            ))}
+                          </tbody>
+                        </table>
+                      </div>
+                      <div className="text-[10px] text-[#6d7a77]">Insurance Bed Rate & Room Rent Cap Mapping</div>
                     </div>
                   )}
 
@@ -2271,10 +2315,10 @@ export default function Modules() {
             Join over 500+ healthcare facilities worldwide using our core modules to deliver superior patient outcomes.
           </p>
           <div className="flex flex-col sm:flex-row justify-center gap-3 sm:gap-4">
-            <button className="bg-white text-[#00685e] px-10 sm:px-12 py-3.5 sm:py-4 rounded-full text-sm 2xl:text-base font-bold shadow-lg hover:bg-[#f0f9f7] active:scale-95 transition-all"
-              style={{ fontFamily: "'Inter', sans-serif" }}>Get Started Now</button>
-            <button className="border-2 border-white/30 text-white px-10 sm:px-12 py-3.5 sm:py-4 rounded-full text-sm 2xl:text-base font-bold hover:bg-white/10 active:scale-95 transition-all"
-              style={{ fontFamily: "'Inter', sans-serif" }}>Request Demo</button>
+            <Link to="/contact" className="bg-white text-[#00685e] px-10 sm:px-12 py-3.5 sm:py-4 rounded-full text-sm 2xl:text-base font-bold shadow-lg hover:bg-[#f0f9f7] active:scale-95 transition-all flex items-center justify-center"
+              style={{ fontFamily: "'Inter', sans-serif" }}>Get Started Now</Link>
+            <Link to="/contact" className="border-2 border-white/30 text-white px-10 sm:px-12 py-3.5 sm:py-4 rounded-full text-sm 2xl:text-base font-bold hover:bg-white/10 active:scale-95 transition-all flex items-center justify-center"
+              style={{ fontFamily: "'Inter', sans-serif" }}>Request Demo</Link>
           </div>
         </div>
       </section>

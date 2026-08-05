@@ -1,4 +1,5 @@
 import { motion } from 'framer-motion'
+import { Link } from 'react-router-dom'
 import { fadeUp, hoverLift } from '../../utils/animations'
 import { ArrowRight } from 'lucide-react'
 
@@ -32,10 +33,10 @@ export default function ModuleCard({ icon: Icon, title, description, color }) {
       <h3 className="text-xl font-bold text-text mb-3">{title}</h3>
       <p className="text-gray leading-relaxed text-sm mb-6">{description}</p>
 
-      <button className="inline-flex items-center gap-2 text-sm font-semibold text-primary hover:gap-3 transition-all duration-300 cursor-pointer">
+      <Link to="/contact" className="inline-flex items-center gap-2 text-sm font-semibold text-primary hover:gap-3 transition-all duration-300 cursor-pointer">
         Learn More
         <ArrowRight size={16} className="transition-transform duration-300 group-hover:translate-x-1" />
-      </button>
+      </Link>
     </motion.div>
   )
 }
