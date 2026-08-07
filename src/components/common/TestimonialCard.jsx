@@ -20,7 +20,7 @@ export default function TestimonialCard({ name, role, organization, content, rat
 
       <div className="flex gap-1 mb-4">
         {Array.from({ length: rating }).map((_, i) => (
-          <Star key={i} size={16} className="fill-amber-400 text-amber-400" />
+          <Star key={i} size={16} style={{ color: 'var(--t-primary, #00685e)', fill: 'var(--t-primary, #00685e)' }} />
         ))}
       </div>
 

@@ -26,17 +26,23 @@ const legalLinks = [
 
 export default function Footer() {
   return (
-    <footer className="bg-[#172224] border-t border-[#6d7a77]/25 text-[#bcc9c6]">
+    <footer
+      style={{
+        background: 'color-mix(in srgb, var(--t-primary, #00685e) 12%, #111111)',
+        borderTop: '1px solid color-mix(in srgb, var(--t-border, #6d7a77) 25%, transparent)',
+        color: 'color-mix(in srgb, var(--t-accent, #67d9ca) 50%, #aaaaaa)',
+      }}
+    >
       <div className="site-wrapper">
-        {/* Compact Grid: 1 col on mobile for brand, 2-cols for links */}
+        {/* Compact Grid */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 py-8 sm:py-10 lg:py-12">
-          
-          {/* Brand Column (4 Cols on desktop) */}
+
+          {/* Brand Column */}
           <div className="lg:col-span-4 space-y-3">
             <Link to="/" className="inline-flex items-center gap-1.5">
               <span
-                className="material-symbols-outlined text-[#85f5e6] text-xl sm:text-2xl"
-                style={{ fontVariationSettings: "'FILL' 1" }}
+                className="material-symbols-outlined text-xl sm:text-2xl"
+                style={{ fontVariationSettings: "'FILL' 1", color: 'var(--t-accent-light, #85f5e6)' }}
               >
                 medical_services
               </span>
@@ -47,33 +53,59 @@ export default function Footer() {
                 MedCare HMS
               </span>
             </Link>
-            <p className="text-xs text-[#9eb2af] leading-relaxed max-w-sm">
+            <p style={{ fontSize: '12px', color: 'color-mix(in srgb, var(--t-accent, #67d9ca) 40%, #999)', lineHeight: '1.6', maxWidth: '28rem' }}>
               Unified healthcare management platform for modern hospitals, OPD/IPD workflows, labs, and billing automation.
             </p>
             <div className="flex items-center gap-3 pt-1">
               {['public', 'mail', 'phone'].map((icon) => (
-                <Link key={icon} to="/contact" className="w-8 h-8 rounded-full bg-[#243336] hover:bg-[#00685e] text-[#85f5e6] hover:text-white transition-all flex items-center justify-center">
+                <Link
+                  key={icon}
+                  to="/contact"
+                  className="w-8 h-8 rounded-full flex items-center justify-center transition-all"
+                  style={{
+                    background: 'color-mix(in srgb, var(--t-primary, #00685e) 30%, #1a1a1a)',
+                    color: 'var(--t-accent-light, #85f5e6)',
+                  }}
+                  onMouseEnter={e => {
+                    e.currentTarget.style.background = 'var(--t-primary, #00685e)'
+                    e.currentTarget.style.color = 'white'
+                  }}
+                  onMouseLeave={e => {
+                    e.currentTarget.style.background = 'color-mix(in srgb, var(--t-primary, #00685e) 30%, #1a1a1a)'
+                    e.currentTarget.style.color = 'var(--t-accent-light, #85f5e6)'
+                  }}
+                >
                   <span className="material-symbols-outlined text-base">{icon}</span>
                 </Link>
               ))}
             </div>
           </div>
 
-          {/* Links Grid: 2 columns on mobile (grid-cols-2), 3 cols on tablet (sm:grid-cols-3) */}
+          {/* Links Grid */}
           <div className="lg:col-span-8 grid grid-cols-2 sm:grid-cols-3 gap-6">
-            
+
             {/* System Modules */}
             <div className="space-y-2.5">
               <h4
-                className="text-white font-bold text-xs uppercase tracking-wider border-b border-[#6d7a77]/30 pb-1.5"
-                style={{ fontFamily: "'Inter', sans-serif" }}
+                className="font-bold text-xs uppercase tracking-wider pb-1.5"
+                style={{
+                  color: 'white',
+                  borderBottom: '1px solid color-mix(in srgb, var(--t-border, #6d7a77) 30%, transparent)',
+                  fontFamily: "'Inter', sans-serif",
+                }}
               >
                 System Modules
               </h4>
               <ul className="space-y-1.5 text-xs">
                 {moduleLinks.map((link) => (
                   <li key={link.name}>
-                    <Link to={link.path} className="hover:text-[#85f5e6] transition-colors py-0.5 inline-block">
+                    <Link
+                      to={link.path}
+                      className="py-0.5 inline-block transition-colors"
+                      style={{ color: 'inherit' }}
+                      onMouseEnter={e => { e.currentTarget.style.color = 'var(--t-accent-light, #85f5e6)' }}
+                      onMouseLeave={e => { e.currentTarget.style.color = '' }}
+                    >
                       {link.name}
                     </Link>
                   </li>
@@ -84,15 +116,25 @@ export default function Footer() {
             {/* Quick Links */}
             <div className="space-y-2.5">
               <h4
-                className="text-white font-bold text-xs uppercase tracking-wider border-b border-[#6d7a77]/30 pb-1.5"
-                style={{ fontFamily: "'Inter', sans-serif" }}
+                className="font-bold text-xs uppercase tracking-wider pb-1.5"
+                style={{
+                  color: 'white',
+                  borderBottom: '1px solid color-mix(in srgb, var(--t-border, #6d7a77) 30%, transparent)',
+                  fontFamily: "'Inter', sans-serif",
+                }}
               >
                 Navigation
               </h4>
               <ul className="space-y-1.5 text-xs">
                 {mainLinks.map((link) => (
                   <li key={link.name}>
-                    <Link to={link.path} className="hover:text-[#85f5e6] transition-colors py-0.5 inline-block">
+                    <Link
+                      to={link.path}
+                      className="py-0.5 inline-block transition-colors"
+                      style={{ color: 'inherit' }}
+                      onMouseEnter={e => { e.currentTarget.style.color = 'var(--t-accent-light, #85f5e6)' }}
+                      onMouseLeave={e => { e.currentTarget.style.color = '' }}
+                    >
                       {link.name}
                     </Link>
                   </li>
@@ -103,15 +145,25 @@ export default function Footer() {
             {/* Support & Legal */}
             <div className="col-span-2 sm:col-span-1 space-y-2.5 pt-2 sm:pt-0">
               <h4
-                className="text-white font-bold text-xs uppercase tracking-wider border-b border-[#6d7a77]/30 pb-1.5"
-                style={{ fontFamily: "'Inter', sans-serif" }}
+                className="font-bold text-xs uppercase tracking-wider pb-1.5"
+                style={{
+                  color: 'white',
+                  borderBottom: '1px solid color-mix(in srgb, var(--t-border, #6d7a77) 30%, transparent)',
+                  fontFamily: "'Inter', sans-serif",
+                }}
               >
                 Support & Legal
               </h4>
               <ul className="space-y-1.5 text-xs flex flex-wrap sm:block gap-x-4 gap-y-1.5">
                 {legalLinks.map((link) => (
                   <li key={link.name}>
-                    <Link to={link.path} className="hover:text-[#85f5e6] transition-colors py-0.5 inline-block">
+                    <Link
+                      to={link.path}
+                      className="py-0.5 inline-block transition-colors"
+                      style={{ color: 'inherit' }}
+                      onMouseEnter={e => { e.currentTarget.style.color = 'var(--t-accent-light, #85f5e6)' }}
+                      onMouseLeave={e => { e.currentTarget.style.color = '' }}
+                    >
                       {link.name}
                     </Link>
                   </li>
@@ -123,8 +175,14 @@ export default function Footer() {
 
         </div>
 
-        {/* Bottom Bar - Mobile Friendly */}
-        <div className="border-t border-[#6d7a77]/20 py-4 flex flex-col sm:flex-row justify-between items-center gap-2.5 text-[11px] text-[#869996]">
+        {/* Bottom Bar */}
+        <div
+          className="py-4 flex flex-col sm:flex-row justify-between items-center gap-2.5 text-[11px]"
+          style={{
+            borderTop: '1px solid color-mix(in srgb, var(--t-border, #6d7a77) 20%, transparent)',
+            color: 'color-mix(in srgb, var(--t-accent, #67d9ca) 35%, #888)',
+          }}
+        >
           <p className="text-center sm:text-left" style={{ fontFamily: "'Inter', sans-serif" }}>
             © {new Date().getFullYear()} MedCare Health Systems. All rights reserved.
           </p>

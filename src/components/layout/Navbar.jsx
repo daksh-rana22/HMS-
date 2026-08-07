@@ -29,11 +29,16 @@ export default function Navbar() {
 
   return (
     <motion.header
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        scrolled
-          ? 'bg-[#effcfe]/90 backdrop-blur-xl border-b border-[#bcc9c6]/30 shadow-sm'
-          : 'bg-[#effcfe]/60 backdrop-blur-md border-b border-[#bcc9c6]/15'
-      }`}
+      className="fixed top-0 left-0 right-0 z-50 transition-all duration-300"
+      style={{
+        background: scrolled
+          ? 'var(--t-nav-bg, rgba(239,252,254,0.90))'
+          : 'color-mix(in srgb, var(--t-surface, #effcfe) 60%, transparent)',
+        backdropFilter: 'blur(20px)',
+        WebkitBackdropFilter: 'blur(20px)',
+        borderBottom: `1px solid var(--t-nav-border, rgba(188,201,198,0.30))`,
+        boxShadow: scrolled ? '0 1px 4px rgba(0,0,0,0.06)' : 'none',
+      }}
       initial={{ y: -100 }}
       animate={{ y: 0 }}
       transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
@@ -44,14 +49,14 @@ export default function Navbar() {
         {/* Logo */}
         <Link to="/" className="flex items-center gap-1.5 shrink-0">
           <span
-            className="material-symbols-outlined text-[#00685e] text-xl sm:text-2xl md:text-3xl 2xl:text-4xl"
-            style={{ fontVariationSettings: "'FILL' 1" }}
+            className="material-symbols-outlined text-xl sm:text-2xl md:text-3xl 2xl:text-4xl"
+            style={{ fontVariationSettings: "'FILL' 1", color: 'var(--t-primary, #00685e)' }}
           >
             medical_services
           </span>
           <span
-            className="text-base sm:text-lg md:text-2xl 2xl:text-3xl font-bold text-[#00685e]"
-            style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}
+            className="text-base sm:text-lg md:text-2xl 2xl:text-3xl font-bold"
+            style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", color: 'var(--t-primary, #00685e)' }}
           >
             MedCare HMS
           </span>
@@ -70,15 +75,17 @@ export default function Navbar() {
                 >
                   <Link
                     to={link.path}
-                    className={`inline-flex items-center gap-1 text-sm 2xl:text-base font-medium transition-colors duration-200 whitespace-nowrap ${
-                      location.pathname.startsWith(link.path)
-                        ? 'text-[#00685e] font-bold border-b-2 border-[#00685e] pb-1'
-                        : 'text-[#3d4947] hover:text-[#00685e]'
-                    }`}
-                    style={{ fontFamily: "'Inter', sans-serif" }}
+                    className="inline-flex items-center gap-1 text-sm 2xl:text-base font-medium transition-colors duration-200 whitespace-nowrap"
+                    style={{
+                      fontFamily: "'Inter', sans-serif",
+                      color: location.pathname.startsWith(link.path) ? 'var(--t-primary, #00685e)' : 'var(--t-text-secondary, #3d4947)',
+                      fontWeight: location.pathname.startsWith(link.path) ? '700' : '500',
+                      borderBottom: location.pathname.startsWith(link.path) ? '2px solid var(--t-primary, #00685e)' : 'none',
+                      paddingBottom: location.pathname.startsWith(link.path) ? '4px' : '0',
+                    }}
                   >
                     <span>{link.name}</span>
-                    <ChevronDown size={14} className={`transition-transform duration-200 ${modulesHovered ? 'rotate-180 text-[#00685e]' : ''}`} />
+                    <ChevronDown size={14} style={{ color: modulesHovered ? 'var(--t-primary)' : 'currentColor', transform: modulesHovered ? 'rotate(180deg)' : 'none', transition: 'transform 0.2s' }} />
                   </Link>
 
                   {/* Glassmorphic Dropdown Menu */}
@@ -91,8 +98,8 @@ export default function Navbar() {
                         transition={{ duration: 0.18, ease: 'easeOut' }}
                         className="absolute left-1/2 -translate-x-1/2 top-full pt-2 w-80 z-50 pointer-events-auto"
                       >
-                        <div className="bg-white/95 backdrop-blur-2xl rounded-2xl shadow-[0_20px_50px_rgba(0,104,94,0.22)] border border-[#00685e]/20 p-2.5 space-y-1">
-                          <div className="px-3 py-1.5 text-[10px] font-mono uppercase tracking-wider text-[#6d7a77] font-bold border-b border-[#bcc9c6]/30 mb-1">
+                        <div className="bg-white/95 backdrop-blur-2xl rounded-2xl p-2.5 space-y-1" style={{ boxShadow: '0 20px 50px var(--t-dropdown-shadow, rgba(0,104,94,0.22))', border: '1px solid color-mix(in srgb, var(--t-primary) 20%, transparent)' }}>
+                          <div className="px-3 py-1.5 text-[10px] font-mono uppercase tracking-wider font-bold mb-1" style={{ color: 'var(--t-text-muted)', borderBottom: '1px solid var(--t-border-light)' }}>
                             <span>System Sub-Modules</span>
                           </div>
 
@@ -100,26 +107,26 @@ export default function Navbar() {
                             <Link
                               key={child.path}
                               to={child.path}
-                              className={`flex items-start gap-3 p-2.5 rounded-xl transition-all ${
-                                location.pathname === child.path
-                                  ? 'bg-[#00685e] text-white shadow-md'
-                                  : 'hover:bg-[#effcfe] text-[#121d1f] hover:text-[#00685e]'
-                              }`}
+                              className="flex items-start gap-3 p-2.5 rounded-xl transition-all"
+                              style={{
+                                background: location.pathname === child.path ? 'var(--t-primary, #00685e)' : 'transparent',
+                                color: location.pathname === child.path ? '#fff' : 'var(--t-text, #121d1f)',
+                              }}
                             >
-                              <div className={`w-8 h-8 rounded-lg flex items-center justify-center shrink-0 ${
-                                location.pathname === child.path
-                                  ? 'bg-white/20 text-white'
-                                  : 'bg-[#afecde]/50 text-[#00685e]'
-                              }`}>
+                              <div
+                                className="w-8 h-8 rounded-lg flex items-center justify-center shrink-0"
+                                style={{
+                                  background: location.pathname === child.path ? 'rgba(255,255,255,0.2)' : 'color-mix(in srgb, var(--t-accent, #67d9ca) 40%, transparent)',
+                                  color: location.pathname === child.path ? '#fff' : 'var(--t-primary, #00685e)',
+                                }}
+                              >
                                 <span className="material-symbols-outlined text-lg">{child.icon}</span>
                               </div>
                               <div className="flex-1 min-w-0">
                                 <div className="flex items-center gap-1.5">
                                   <span className="text-xs font-bold truncate">{child.name}</span>
                                 </div>
-                                <p className={`text-[10px] truncate leading-snug mt-0.5 ${
-                                  location.pathname === child.path ? 'text-white/80' : 'text-[#6d7a77]'
-                                }`}>
+                                <p className="text-[10px] truncate leading-snug mt-0.5" style={{ color: location.pathname === child.path ? 'rgba(255,255,255,0.8)' : 'var(--t-text-muted, #6d7a77)' }}>
                                   {child.desc}
                                 </p>
                               </div>
@@ -137,12 +144,14 @@ export default function Navbar() {
               <Link
                 key={link.path}
                 to={link.path}
-                className={`text-sm 2xl:text-base font-medium transition-colors duration-200 whitespace-nowrap ${
-                  location.pathname === link.path
-                    ? 'text-[#00685e] font-bold border-b-2 border-[#00685e] pb-1'
-                    : 'text-[#3d4947] hover:text-[#00685e]'
-                }`}
-                style={{ fontFamily: "'Inter', sans-serif" }}
+                className="text-sm 2xl:text-base font-medium transition-colors duration-200 whitespace-nowrap"
+                style={{
+                  fontFamily: "'Inter', sans-serif",
+                  color: location.pathname === link.path ? 'var(--t-primary, #00685e)' : 'var(--t-text-secondary, #3d4947)',
+                  fontWeight: location.pathname === link.path ? '700' : '500',
+                  borderBottom: location.pathname === link.path ? '2px solid var(--t-primary, #00685e)' : 'none',
+                  paddingBottom: location.pathname === link.path ? '4px' : '0',
+                }}
               >
                 {link.name}
               </Link>
@@ -154,8 +163,8 @@ export default function Navbar() {
         <div className="hidden md:flex items-center gap-3">
           <Link
             to="/contact"
-            className="bg-[#00685e] text-white px-5 py-2 2xl:px-7 2xl:py-3 rounded-full text-sm 2xl:text-base font-bold hover:opacity-90 active:scale-95 transition-all duration-200 shadow-md whitespace-nowrap inline-flex items-center gap-1.5"
-            style={{ fontFamily: "'Inter', sans-serif" }}
+            className="px-5 py-2 2xl:px-7 2xl:py-3 rounded-full text-sm 2xl:text-base font-bold hover:opacity-90 active:scale-95 transition-all duration-200 shadow-md whitespace-nowrap inline-flex items-center gap-1.5"
+            style={{ fontFamily: "'Inter', sans-serif", background: 'var(--t-primary, #00685e)', color: '#fff', boxShadow: '0 4px 14px var(--t-btn-shadow)' }}
           >
             Book a Demo
           </Link>
@@ -168,13 +177,14 @@ export default function Navbar() {
             e.stopPropagation()
             setIsOpen((prev) => !prev)
           }}
-          className="md:hidden w-10 h-10 min-w-[44px] min-h-[44px] flex items-center justify-center rounded-xl bg-white hover:bg-[#eaf6f8] active:scale-90 transition-all duration-200 border border-[#bcc9c6]/50 shadow-sm cursor-pointer z-50 select-none"
+          className="md:hidden w-10 h-10 min-w-[44px] min-h-[44px] flex items-center justify-center rounded-xl active:scale-90 transition-all duration-200 shadow-sm cursor-pointer z-50 select-none"
+          style={{ background: 'white', border: '1px solid var(--t-border)', color: 'var(--t-primary, #00685e)' }}
           aria-label="Toggle navigation menu"
         >
           {isOpen ? (
-            <X size={20} className="text-[#00685e]" />
+            <X size={20} style={{ color: 'var(--t-primary, #00685e)' }} />
           ) : (
-            <Menu size={20} className="text-[#00685e]" />
+            <Menu size={20} style={{ color: 'var(--t-primary, #00685e)' }} />
           )}
         </button>
       </div>
@@ -183,7 +193,8 @@ export default function Navbar() {
       <AnimatePresence>
         {isOpen && (
           <motion.div
-            className="md:hidden fixed left-0 right-0 top-14 bottom-0 h-[calc(100dvh-3.5rem)] bg-[#effcfe] backdrop-blur-2xl z-40 border-t border-[#bcc9c6]/40 overflow-y-auto flex flex-col justify-between shadow-2xl"
+            className="md:hidden fixed left-0 right-0 top-14 bottom-0 h-[calc(100dvh-3.5rem)] backdrop-blur-2xl z-40 overflow-y-auto flex flex-col justify-between shadow-2xl"
+            style={{ background: 'var(--t-mobile-bg, #effcfe)', borderTop: '1px solid var(--t-border-light)' }}
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -10 }}
@@ -199,18 +210,22 @@ export default function Navbar() {
                       className="space-y-1"
                     >
                       {/* Split item: Left area opens /modules directly; Right arrow toggles sub-modules */}
-                      <div className={`w-full flex items-center justify-between min-h-[44px] rounded-xl transition-all duration-150 ${
-                        location.pathname.startsWith(link.path)
-                          ? 'text-[#00685e] bg-[#afecde]/60 font-bold border border-[#00685e]/30 shadow-xs'
-                          : 'text-[#121d1f] bg-white/60 hover:bg-[#eaf6f8]'
-                      }`}>
+                      <div
+                        className="w-full flex items-center justify-between min-h-[44px] rounded-xl transition-all duration-150"
+                        style={{
+                          background: location.pathname.startsWith(link.path) ? 'var(--t-active-bg)' : 'rgba(255,255,255,0.6)',
+                          color: location.pathname.startsWith(link.path) ? 'var(--t-primary)' : 'var(--t-text)',
+                          border: location.pathname.startsWith(link.path) ? '1px solid var(--t-active-border)' : 'none',
+                          fontWeight: location.pathname.startsWith(link.path) ? '700' : '600',
+                        }}
+                      >
                         <Link
                           to={link.path}
                           onClick={() => setIsOpen(false)}
                           className="flex-1 flex items-center gap-2 px-4 py-3 text-base font-semibold"
                           style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}
                         >
-                          <span className="material-symbols-outlined text-lg text-[#00685e]">grid_view</span>
+                          <span className="material-symbols-outlined text-lg" style={{ color: 'var(--t-primary)' }}>grid_view</span>
                           <span>{link.name}</span>
                         </Link>
                         <button
@@ -234,11 +249,11 @@ export default function Navbar() {
                               key={child.path}
                               to={child.path}
                               onClick={() => setIsOpen(false)}
-                              className={`flex items-center justify-between px-3 py-2.5 rounded-lg text-xs font-semibold transition-all ${
-                                location.pathname === child.path
-                                  ? 'bg-[#00685e] text-white shadow-sm font-bold'
-                                  : 'bg-white/80 text-[#121d1f] hover:bg-[#afecde]/30'
-                              }`}
+                              className="flex items-center justify-between px-3 py-2.5 rounded-lg text-xs font-semibold transition-all"
+                              style={{
+                                background: location.pathname === child.path ? 'var(--t-primary)' : 'rgba(255,255,255,0.8)',
+                                color: location.pathname === child.path ? '#fff' : 'var(--t-text)',
+                              }}
                             >
                               <div className="flex items-center gap-2">
                                 <span className="material-symbols-outlined text-base">{child.icon}</span>
@@ -259,12 +274,14 @@ export default function Navbar() {
                     <Link
                       to={link.path}
                       onClick={() => setIsOpen(false)}
-                      className={`flex items-center justify-between px-4 py-3 min-h-[44px] text-base font-semibold rounded-xl transition-all duration-150 ${
-                        location.pathname === link.path
-                          ? 'text-[#00685e] bg-[#afecde]/60 font-bold border border-[#00685e]/30 shadow-xs'
-                          : 'text-[#121d1f] hover:bg-[#eaf6f8] active:bg-[#afecde]/20'
-                      }`}
-                      style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}
+                      className="flex items-center justify-between px-4 py-3 min-h-[44px] text-base font-semibold rounded-xl transition-all duration-150"
+                      style={{
+                        fontFamily: "'Plus Jakarta Sans', sans-serif",
+                        background: location.pathname === link.path ? 'var(--t-active-bg)' : 'transparent',
+                        color: location.pathname === link.path ? 'var(--t-primary)' : 'var(--t-text)',
+                        border: location.pathname === link.path ? '1px solid var(--t-active-border)' : 'none',
+                        fontWeight: location.pathname === link.path ? '700' : '600',
+                      }}
                     >
                       <span>{link.name}</span>
                       <span className="material-symbols-outlined text-sm opacity-60">chevron_right</span>
@@ -282,8 +299,8 @@ export default function Navbar() {
                 <Link
                   to="/contact"
                   onClick={() => setIsOpen(false)}
-                  className="w-full flex items-center justify-center gap-2 bg-[#00685e] text-white py-3.5 rounded-full text-base font-bold shadow-md active:scale-98 transition-all"
-                  style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}
+                  className="w-full flex items-center justify-center gap-2 py-3.5 rounded-full text-base font-bold shadow-md active:scale-98 transition-all"
+                  style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", background: 'var(--t-primary)', color: '#fff', boxShadow: '0 4px 14px var(--t-btn-shadow)' }}
                 >
                   <span>Book a Demo</span>
                   <span className="material-symbols-outlined text-lg">arrow_forward</span>

@@ -4,8 +4,8 @@ import { CheckCircle2 } from 'lucide-react'
 const features = [
   {
     icon: 'bolt',
-    iconBg: '#afecde',
-    iconColor: '#326c62',
+    iconBgVar: 'color-mix(in srgb, var(--t-accent) 35%, white)',
+    iconColorVar: 'var(--t-primary)',
     title: 'Operational Efficiency',
     description:
       'Automate billing, scheduling, and resource allocation. Our AI-driven algorithms predict patient inflow to optimize staff scheduling and reduce wait times by up to 40%.',
@@ -13,8 +13,8 @@ const features = [
   },
   {
     icon: 'medical_services',
-    iconBg: '#85f5e6',
-    iconColor: '#00201d',
+    iconBgVar: 'color-mix(in srgb, var(--t-accent-light) 45%, white)',
+    iconColorVar: 'var(--t-primary-dark)',
     title: 'Enhanced Patient Care',
     description:
       'Put patients first with integrated Electronic Health Records (EHR) that offer a 360-degree view of medical history, labs, and medications in real-time.',
@@ -23,8 +23,8 @@ const features = [
   },
   {
     icon: 'shield_lock',
-    iconBg: '#6d7675',
-    iconColor: '#f5fefc',
+    iconBgVar: 'color-mix(in srgb, var(--t-text-muted) 25%, white)',
+    iconColorVar: 'var(--t-bg)',
     title: 'Uncompromising Security',
     description:
       'HIPAA and GDPR compliant data storage. We employ bank-level encryption and multi-factor authentication to ensure sensitive patient data remains confidential.',
@@ -40,7 +40,7 @@ const stagger = { hidden: {}, visible: { transition: { staggerChildren: 0.15 } }
 
 export default function Features() {
   return (
-    <section className="section-padding bg-[#eaf6f8] relative overflow-hidden">
+    <section className="section-padding relative overflow-hidden" style={{ backgroundColor: 'var(--t-bg-light, #eaf6f8)' }}>
       {/* Decorative rings — hidden on smallest screens */}
       <div className="absolute top-0 left-1/2 -translate-x-1/2 pointer-events-none opacity-10 hidden md:block">
         <div className="w-[600px] 2xl:w-[800px] h-[600px] 2xl:h-[800px] border border-[#00685e] rounded-full" />
@@ -51,7 +51,8 @@ export default function Features() {
         {/* Section Title */}
         <div className="text-center mb-10 sm:mb-12 2xl:mb-16 space-y-2 sm:space-y-3">
           <h2
-            className="heading-section text-[#00685e]"
+            className="heading-section"
+            style={{ color: 'var(--t-primary, #00685e)' }}
           >
             Core Advantages
           </h2>
@@ -92,9 +93,9 @@ export default function Features() {
               <div
                 className="w-12 h-12 sm:w-14 sm:h-14 2xl:w-16 2xl:h-16 rounded-full flex items-center justify-center
                            group-hover:scale-110 transition-transform shrink-0"
-                style={{ backgroundColor: feat.iconBg }}
+                style={{ backgroundColor: feat.iconBgVar }}
               >
-                <span className="material-symbols-outlined text-2xl sm:text-3xl" style={{ color: feat.iconColor }}>
+                <span className="material-symbols-outlined text-2xl sm:text-3xl" style={{ color: feat.iconColorVar }}>
                   {feat.icon}
                 </span>
               </div>
@@ -114,9 +115,9 @@ export default function Features() {
               {/* Checklist */}
               <ul className="space-y-2.5 w-full">
                 {feat.items.map((item) => (
-                  <li key={item} className="flex items-center gap-2 text-sm 2xl:text-base text-[#3d4947]"
-                    style={{ fontFamily: "'Inter', sans-serif" }}>
-                    <CheckCircle2 size={18} className="text-[#00685e] shrink-0" />
+                  <li key={item} className="flex items-center gap-2 text-sm 2xl:text-base"
+                    style={{ fontFamily: "'Inter', sans-serif", color: 'var(--t-text-secondary)' }}>
+                    <CheckCircle2 size={18} style={{ color: 'var(--t-primary)', flexShrink: 0 }} />
                     {item}
                   </li>
                 ))}
