@@ -6,7 +6,8 @@ export default function CTA() {
     <section className="section-padding">
       <div className="site-wrapper">
         <motion.div
-          className="bg-[#008378] rounded-2xl sm:rounded-3xl px-6 sm:px-12 md:px-16 2xl:px-24 py-12 sm:py-16 2xl:py-20 text-center relative overflow-hidden"
+          className="rounded-2xl sm:rounded-3xl px-6 sm:px-12 md:px-16 2xl:px-24 py-12 sm:py-16 2xl:py-20 text-center relative overflow-hidden"
+          style={{ background: 'linear-gradient(135deg, var(--t-primary) 0%, var(--t-primary-mid) 100%)' }}
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
@@ -18,34 +19,43 @@ export default function CTA() {
 
           <div className="relative z-10 max-w-xl sm:max-w-2xl 2xl:max-w-3xl mx-auto space-y-5 sm:space-y-6">
             <h2
-              className="heading-hero text-[#f4fffc]"
+              className="heading-hero"
+              style={{ color: '#ffffff' }}
             >
               Ready to transform your healthcare facility?
             </h2>
             <p
-              className="text-description text-[#f4fffc]/80"
+              className="text-description"
+              style={{ color: 'rgba(255,255,255,0.82)' }}
             >
               Join over 500 institutions that have upgraded their operations with MedCare HMS.
             </p>
             <div className="flex flex-col sm:flex-row justify-center gap-3 sm:gap-4 pt-2">
               <Link
                 to="/contact"
-                className="inline-flex items-center justify-center bg-white text-[#00685e]
+                className="inline-flex items-center justify-center
                            px-8 sm:px-10 2xl:px-12 h-12 sm:h-14 2xl:h-16 rounded-full
                            text-sm 2xl:text-base font-bold
-                           hover:bg-[#eaf6f8] active:scale-95 transition-all duration-200"
-                style={{ fontFamily: "'Inter', sans-serif" }}
+                           active:scale-95 transition-all duration-200"
+                style={{
+                  background: 'white',
+                  color: 'var(--t-primary)',
+                  fontFamily: "'Inter', sans-serif",
+                }}
               >
                 Start Free Trial
               </Link>
               <Link
                 to="/contact"
-                className="inline-flex items-center justify-center bg-[#00685e] text-white
-                           border border-white/20
+                className="inline-flex items-center justify-center
+                           border border-white/30
                            px-8 sm:px-10 2xl:px-12 h-12 sm:h-14 2xl:h-16 rounded-full
                            text-sm 2xl:text-base font-bold
-                           hover:bg-[#00685e]/90 active:scale-95 transition-all duration-200"
-                style={{ fontFamily: "'Inter', sans-serif" }}
+                           hover:bg-white/10 active:scale-95 transition-all duration-200"
+                style={{
+                  color: '#ffffff',
+                  fontFamily: "'Inter', sans-serif",
+                }}
               >
                 Talk to Sales
               </Link>

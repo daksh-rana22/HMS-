@@ -63,9 +63,22 @@ export default function HeroBackground() {
     // ── Particle Network Setup ──
     const particleCount = Math.floor(Math.min(width, 1400) / 22)
     const particles = []
-    const colors = ['#3DD6D0', '#4F9DFF', '#00B4A2', '#7ADDF4', '#85F5E6']
+
+    // Read theme colors from CSS variables
+    const getThemeColor = (varName) => {
+      return getComputedStyle(document.documentElement).getPropertyValue(varName).trim() || '#3DD6D0'
+    }
+
+    const getParticleColors = () => [
+      getThemeColor('--t-accent'),
+      getThemeColor('--t-primary'),
+      getThemeColor('--t-accent-light'),
+      getThemeColor('--t-primary-mid'),
+      getThemeColor('--t-primary-dark'),
+    ]
 
     for (let i = 0; i < particleCount; i++) {
+      const colors = getParticleColors()
       particles.push({
         x: Math.random() * width,
         y: Math.random() * height,
@@ -116,16 +129,21 @@ export default function HeroBackground() {
 
       // ── Interactive Mouse Spotlight Glow ──
       if (mouse.active) {
+        const accentColor = getThemeColor('--t-accent') || '#3DD6D0'
+        const primaryColor = getThemeColor('--t-primary') || '#4F9DFF'
         const mouseGlow = ctx.createRadialGradient(
-          mouse.x,
-          mouse.y,
-          0,
-          mouse.x,
-          mouse.y,
-          mouse.radius * 1.4
+          mouse.x, mouse.y, 0,
+          mouse.x, mouse.y, mouse.radius * 1.4
         )
-        mouseGlow.addColorStop(0, 'rgba(61, 214, 208, 0.18)')
-        mouseGlow.addColorStop(0.5, 'rgba(79, 157, 255, 0.08)')
+        // Parse hex to rgba
+        const hexToRgba = (hex, a) => {
+          const r = parseInt(hex.slice(1,3),16)
+          const g = parseInt(hex.slice(3,5),16)
+          const b = parseInt(hex.slice(5,7),16)
+          return `rgba(${r},${g},${b},${a})`
+        }
+        mouseGlow.addColorStop(0, hexToRgba(accentColor.startsWith('#') ? accentColor : '#3DD6D0', 0.18))
+        mouseGlow.addColorStop(0.5, hexToRgba(primaryColor.startsWith('#') ? primaryColor : '#4F9DFF', 0.08))
         mouseGlow.addColorStop(1, 'rgba(61, 214, 208, 0)')
 
         ctx.fillStyle = mouseGlow
@@ -157,10 +175,11 @@ export default function HeroBackground() {
       ]
 
       paths.forEach((p, idx) => {
+        const lineColor = getThemeColor('--t-accent') || '#3DD6D0'
         ctx.beginPath()
         ctx.moveTo(p[0].x, p[0].y)
         ctx.bezierCurveTo(p[1].x, p[1].y, p[2].x, p[2].y, p[3].x, p[3].y)
-        ctx.strokeStyle = 'rgba(61, 214, 208, 0.14)'
+        ctx.strokeStyle = `${lineColor}25`
         ctx.lineWidth = 1.5
         ctx.setLineDash([6, 12])
         ctx.lineDashOffset = -time * 5
@@ -258,7 +277,7 @@ export default function HeroBackground() {
             ctx.beginPath()
             ctx.moveTo(p.x, p.y)
             ctx.lineTo(p2.x, p2.y)
-            ctx.strokeStyle = '#3DD6D0'
+            ctx.strokeStyle = getThemeColor('--t-accent')
             ctx.globalAlpha = lineAlpha
             ctx.lineWidth = 0.9
             ctx.stroke()
@@ -283,13 +302,13 @@ export default function HeroBackground() {
 
         ctx.save()
         ctx.globalAlpha = s.alpha * 0.65
-        ctx.fillStyle = '#4F9DFF'
+        ctx.fillStyle = getThemeColor('--t-primary')
         ctx.beginPath()
         ctx.arc(s.x, s.y, s.size, 0, Math.PI * 2)
         ctx.fill()
 
         // Tiny cross star sheen
-        ctx.strokeStyle = 'rgba(61, 214, 208, 0.7)'
+        ctx.strokeStyle = getThemeColor('--t-accent') + 'B0'
         ctx.lineWidth = 0.6
         ctx.beginPath()
         ctx.moveTo(s.x - s.size * 2.2, s.y)
@@ -317,15 +336,14 @@ export default function HeroBackground() {
       ref={containerRef}
       className="absolute inset-0 pointer-events-auto overflow-hidden -z-0 select-none"
       style={{
-        background:
-          'radial-gradient(circle at 50% 30%, #F8FBFF 0%, #F2FAFF 50%, #EAF7FF 100%)',
+        background: 'linear-gradient(135deg, color-mix(in srgb, var(--t-bg) 95%, white) 0%, color-mix(in srgb, var(--t-bg-light) 90%, white) 100%)',
       }}
     >
       {/* Animated Layer 2: Drifting Blurred Glowing Orbs with Mouse Parallax Shift */}
       <div
         className="absolute top-[-10%] right-[-5%] w-[650px] h-[650px] rounded-full pointer-events-none opacity-[0.16] transition-transform duration-700 ease-out"
         style={{
-          background: 'radial-gradient(circle, #3DD6D0 0%, rgba(61,214,208,0) 70%)',
+          background: 'radial-gradient(circle, var(--t-accent) 0%, transparent 70%)',
           filter: 'blur(160px)',
           transform: `translate3d(${parallax.x * 0.8}px, ${parallax.y * 0.8}px, 0)`,
         }}
@@ -333,7 +351,7 @@ export default function HeroBackground() {
       <div
         className="absolute bottom-[-15%] left-[-10%] w-[600px] h-[600px] rounded-full pointer-events-none opacity-[0.14] transition-transform duration-700 ease-out"
         style={{
-          background: 'radial-gradient(circle, #4F9DFF 0%, rgba(79,157,255,0) 70%)',
+          background: 'radial-gradient(circle, var(--t-primary) 0%, transparent 70%)',
           filter: 'blur(180px)',
           transform: `translate3d(${-parallax.x * 1.1}px, ${-parallax.y * 1.1}px, 0)`,
         }}
@@ -341,7 +359,7 @@ export default function HeroBackground() {
       <div
         className="absolute top-[35%] left-[25%] w-[450px] h-[450px] rounded-full pointer-events-none opacity-[0.11] transition-transform duration-700 ease-out"
         style={{
-          background: 'radial-gradient(circle, #7ADDF4 0%, rgba(122,221,244,0) 70%)',
+          background: 'radial-gradient(circle, var(--t-accent-light) 0%, transparent 70%)',
           filter: 'blur(140px)',
           transform: `translate3d(${parallax.x * 0.5}px, ${parallax.y * 0.5}px, 0)`,
         }}
