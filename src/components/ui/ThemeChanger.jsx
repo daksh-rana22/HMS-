@@ -19,100 +19,93 @@ export default function ThemeChanger() {
     return () => document.removeEventListener('mousedown', handleClick)
   }, [open])
 
-  const isOceanic = heroTheme === 'oceanic'
-
   return (
     <>
-      {/* Floating Action Button (FAB) — Dynamic Theme Color */}
+      {/* Floating Action Button — compact */}
       <motion.button
         onClick={() => setOpen((v) => !v)}
-        className="fixed bottom-6 right-6 z-[9999] w-14 h-14 rounded-full text-white flex items-center justify-center cursor-pointer outline-none border-2 border-white/20 transition-all duration-300 shadow-[0_8px_25px_var(--t-btn-shadow)]"
+        className="fixed bottom-5 right-5 z-[9999] w-11 h-11 rounded-full text-white flex items-center justify-center cursor-pointer outline-none border border-white/20 transition-all duration-300 shadow-[0_6px_18px_var(--t-btn-shadow)]"
         style={{ background: 'var(--t-primary, #00685e)' }}
         aria-label="Change Appearance"
-        whileHover={{ scale: 1.1 }}
+        whileHover={{ scale: 1.08 }}
         whileTap={{ scale: 0.92 }}
         title="Appearance Settings"
       >
-        <Palette size={26} strokeWidth={2.2} />
+        <Palette size={20} strokeWidth={2.2} />
       </motion.button>
 
-      {/* Appearance Modal Drawer */}
+      {/* Appearance Panel */}
       <AnimatePresence>
         {open && (
-          <div className="fixed inset-0 z-[9998] flex items-end sm:items-center justify-center sm:justify-end p-4 sm:p-8 bg-black/20 backdrop-blur-xs">
+          <div className="fixed inset-0 z-[9998] flex items-end sm:items-center justify-center sm:justify-end p-4 sm:p-6 bg-black/15 backdrop-blur-xs">
             <motion.div
               ref={panelRef}
-              className="w-full max-w-[340px] bg-white/95 backdrop-blur-2xl rounded-3xl p-5 shadow-[0_25px_60px_rgba(0,0,0,0.18)] border border-white/80 space-y-4 text-slate-800"
-              initial={{ opacity: 0, y: 30, scale: 0.95 }}
+              className="w-full max-w-[280px] bg-white/96 backdrop-blur-2xl rounded-2xl p-3.5 shadow-[0_20px_50px_rgba(0,0,0,0.16)] border border-white/80 space-y-2.5 text-slate-800"
+              initial={{ opacity: 0, y: 24, scale: 0.95 }}
               animate={{ opacity: 1, y: 0, scale: 1 }}
-              exit={{ opacity: 0, y: 20, scale: 0.95 }}
-              transition={{ duration: 0.22, ease: [0.22, 1, 0.36, 1] }}
+              exit={{ opacity: 0, y: 16, scale: 0.95 }}
+              transition={{ duration: 0.2, ease: [0.22, 1, 0.36, 1] }}
             >
               {/* Header */}
-              <div className="flex items-center justify-between pb-1 border-b border-slate-100">
-                <div className="flex items-center gap-2.5">
-                  <div className="w-8 h-8 rounded-full flex items-center justify-center border transition-colors bg-white shadow-xs"
-                    style={{ borderColor: 'color-mix(in srgb, var(--t-primary) 30%, transparent)', color: 'var(--t-primary)' }}>
-                    <Settings size={18} />
+              <div className="flex items-center justify-between pb-2 border-b border-slate-100">
+                <div className="flex items-center gap-2">
+                  <div
+                    className="w-6 h-6 rounded-full flex items-center justify-center border bg-white shadow-xs"
+                    style={{ borderColor: 'color-mix(in srgb, var(--t-primary) 30%, transparent)', color: 'var(--t-primary)' }}
+                  >
+                    <Settings size={13} />
                   </div>
-                  <h2 className="text-lg font-extrabold tracking-tight text-slate-900" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
+                  <h2 className="text-sm font-extrabold tracking-tight text-slate-900" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
                     Appearance
                   </h2>
                 </div>
                 <button
                   onClick={() => setOpen(false)}
-                  className="text-sm font-bold text-slate-500 hover:text-slate-900 transition-colors px-2 py-1 cursor-pointer"
+                  className="text-xs font-bold text-slate-400 hover:text-slate-800 transition-colors px-1.5 py-0.5 cursor-pointer"
                 >
                   Done
                 </button>
               </div>
 
-              {/* Themes list */}
-              <div>
-                <div className="grid grid-cols-1 gap-3">
-                  {Object.values(HERO_FOOTER_THEMES).map((t) => {
-                    const active = heroTheme === t.id
-                    return (
-                      <button
-                        key={t.id}
-                        onClick={() => setHeroTheme(t.id)}
-                        className={`group relative text-left p-3.5 rounded-2xl border transition-all cursor-pointer bg-white ${
-                          active
-                            ? 'shadow-sm ring-2'
-                            : 'border-slate-200 hover:border-slate-300 shadow-xs'
-                        }`}
-                        style={{
-                          borderColor: active ? t.dotColor : undefined,
-                          boxShadow: active ? `0 0 0 2px ${t.dotColor}33` : undefined,
-                        }}
+              {/* 2-column theme grid */}
+              <div className="grid grid-cols-2 gap-2">
+                {Object.values(HERO_FOOTER_THEMES).map((t) => {
+                  const active = heroTheme === t.id
+                  return (
+                    <button
+                      key={t.id}
+                      onClick={() => setHeroTheme(t.id)}
+                      className={`group relative text-left p-2 rounded-xl border transition-all cursor-pointer bg-white ${
+                        active
+                          ? 'shadow-sm ring-2'
+                          : 'border-slate-200 hover:border-slate-300 shadow-xs'
+                      }`}
+                      style={{
+                        borderColor: active ? t.dotColor : undefined,
+                        boxShadow: active ? `0 0 0 2px ${t.dotColor}33` : undefined,
+                      }}
+                    >
+                      {/* Compact swatch bar */}
+                      <div
+                        className="relative h-8 rounded-lg mb-1.5 overflow-hidden flex items-start justify-end p-1.5 border border-black/5"
+                        style={{ background: t.gradientBg }}
                       >
-                        {/* Gradient preview rectangle */}
-                        <div
-                          className="relative h-14 rounded-xl mb-3 overflow-hidden flex items-start justify-end p-2 border border-black/5"
-                          style={{ background: t.gradientBg }}
-                        >
-                          <span
-                            className="w-3.5 h-3.5 rounded-full shadow-xs shrink-0"
-                            style={{ background: t.dotColor }}
-                          />
-                        </div>
+                        {active
+                          ? <Check size={11} strokeWidth={3} style={{ color: t.dotColor, background: 'rgba(255,255,255,0.85)', borderRadius: '50%', padding: '1px' }} />
+                          : <span className="w-2 h-2 rounded-full shrink-0 shadow-xs" style={{ background: t.dotColor }} />
+                        }
+                      </div>
 
-                        {/* Card Title & Desc */}
-                        <div className="flex items-center justify-between gap-1">
-                          <span className="text-sm font-extrabold text-slate-900 leading-snug">
-                            {t.name}
-                          </span>
-                          {active && (
-                            <Check size={16} className="shrink-0" style={{ color: t.dotColor }} strokeWidth={3} />
-                          )}
-                        </div>
-                        <span className="text-xs text-slate-400 font-medium block leading-tight mt-0.5">
-                          {t.description}
-                        </span>
-                      </button>
-                    )
-                  })}
-                </div>
+                      {/* Name & Desc */}
+                      <span className="text-[11px] font-bold text-slate-800 leading-tight block">
+                        {t.name}
+                      </span>
+                      <span className="text-[9.5px] text-slate-400 font-medium leading-tight mt-0.5 block truncate">
+                        {t.description}
+                      </span>
+                    </button>
+                  )
+                })}
               </div>
 
             </motion.div>

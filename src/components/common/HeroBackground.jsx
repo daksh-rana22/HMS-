@@ -30,7 +30,6 @@ export default function HeroBackground() {
     const handleMouseMove = (e) => {
       if (!container) return
       const rect = container.getBoundingClientRect()
-      // Check if mouse is near container
       if (
         e.clientX >= rect.left - 100 &&
         e.clientX <= rect.right + 100 &&
@@ -40,8 +39,6 @@ export default function HeroBackground() {
         mouse.targetX = e.clientX - rect.left
         mouse.targetY = e.clientY - rect.top
         mouse.active = true
-
-        // Parallax shift calculation (-20px to +20px)
         const relX = (e.clientX - rect.left - width / 2) / (width / 2)
         const relY = (e.clientY - rect.top - height / 2) / (height / 2)
         setParallax({ x: relX * 25, y: relY * 25 })
@@ -57,16 +54,19 @@ export default function HeroBackground() {
       width = canvas.width = container.offsetWidth
       height = canvas.height = container.offsetHeight
     }
-
     window.addEventListener('resize', handleResize)
 
-    // ── Particle Network Setup ──
-    const particleCount = Math.floor(Math.min(width, 1400) / 22)
-    const particles = []
+    // ── Read CSS variables live (called every frame for lines/glow) ──
+    const getThemeColor = (varName) =>
+      getComputedStyle(document.documentElement).getPropertyValue(varName).trim() || '#3DD6D0'
 
-    // Read theme colors from CSS variables
-    const getThemeColor = (varName) => {
-      return getComputedStyle(document.documentElement).getPropertyValue(varName).trim() || '#3DD6D0'
+    const hexToRgba = (hex, a) => {
+      const h = (hex || '').replace('#', '')
+      if (h.length < 6) return `rgba(100,150,200,${a})`
+      const r = parseInt(h.slice(0, 2), 16)
+      const g = parseInt(h.slice(2, 4), 16)
+      const b = parseInt(h.slice(4, 6), 16)
+      return `rgba(${r},${g},${b},${a})`
     }
 
     const getParticleColors = () => [
@@ -77,18 +77,36 @@ export default function HeroBackground() {
       getThemeColor('--t-primary-dark'),
     ]
 
-    for (let i = 0; i < particleCount; i++) {
-      const colors = getParticleColors()
-      particles.push({
-        x: Math.random() * width,
-        y: Math.random() * height,
-        vx: (Math.random() - 0.5) * 0.18,
-        vy: (Math.random() - 0.5) * 0.18,
-        radius: Math.random() * 2.5 + 2, // 2 to 5px
-        color: colors[Math.floor(Math.random() * colors.length)],
-        alpha: Math.random() * 0.4 + 0.3,
-      })
+    // ── Particle Network Setup ──
+    const particleCount = Math.floor(Math.min(width, 1400) / 22)
+    let particles = []
+
+    const initParticles = () => {
+      particles = []
+      for (let i = 0; i < particleCount; i++) {
+        const colors = getParticleColors()
+        particles.push({
+          x: Math.random() * width,
+          y: Math.random() * height,
+          vx: (Math.random() - 0.5) * 0.18,
+          vy: (Math.random() - 0.5) * 0.18,
+          radius: Math.random() * 2.5 + 2,
+          color: colors[Math.floor(Math.random() * colors.length)],
+          alpha: Math.random() * 0.4 + 0.3,
+        })
+      }
     }
+
+    initParticles()
+
+    // ── Re-init particle colors when theme changes ──
+    const themeObserver = new MutationObserver(() => {
+      initParticles()
+    })
+    themeObserver.observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ['data-theme'],
+    })
 
     // ── Sparkles Setup ──
     const sparkleCount = 24
@@ -104,7 +122,7 @@ export default function HeroBackground() {
       })
     }
 
-    // ── Data Flow Pulses (Slower Speed) ──
+    // ── Data Flow Pulses ──
     const pulseCount = 3
     const pulses = []
     for (let i = 0; i < pulseCount; i++) {
@@ -121,7 +139,10 @@ export default function HeroBackground() {
     const render = () => {
       time += 0.01
 
-      // Smooth lerp towards target mouse position
+      // Read live theme colors every frame — instantly reflects theme changes
+      const accentColor  = getThemeColor('--t-accent')
+      const primaryColor = getThemeColor('--t-primary')
+
       mouse.x += (mouse.targetX - mouse.x) * 0.08
       mouse.y += (mouse.targetY - mouse.y) * 0.08
 
@@ -129,74 +150,64 @@ export default function HeroBackground() {
 
       // ── Interactive Mouse Spotlight Glow ──
       if (mouse.active) {
-        const accentColor = getThemeColor('--t-accent') || '#3DD6D0'
-        const primaryColor = getThemeColor('--t-primary') || '#4F9DFF'
+        const safeAccent  = accentColor.startsWith('#')  ? accentColor  : '#3DD6D0'
+        const safePrimary = primaryColor.startsWith('#') ? primaryColor : '#4F9DFF'
         const mouseGlow = ctx.createRadialGradient(
           mouse.x, mouse.y, 0,
           mouse.x, mouse.y, mouse.radius * 1.4
         )
-        // Parse hex to rgba
-        const hexToRgba = (hex, a) => {
-          const r = parseInt(hex.slice(1,3),16)
-          const g = parseInt(hex.slice(3,5),16)
-          const b = parseInt(hex.slice(5,7),16)
-          return `rgba(${r},${g},${b},${a})`
-        }
-        mouseGlow.addColorStop(0, hexToRgba(accentColor.startsWith('#') ? accentColor : '#3DD6D0', 0.18))
-        mouseGlow.addColorStop(0.5, hexToRgba(primaryColor.startsWith('#') ? primaryColor : '#4F9DFF', 0.08))
-        mouseGlow.addColorStop(1, 'rgba(61, 214, 208, 0)')
-
+        mouseGlow.addColorStop(0,   hexToRgba(safeAccent, 0.18))
+        mouseGlow.addColorStop(0.5, hexToRgba(safePrimary, 0.08))
+        mouseGlow.addColorStop(1,   'rgba(0,0,0,0)')
         ctx.fillStyle = mouseGlow
         ctx.beginPath()
         ctx.arc(mouse.x, mouse.y, mouse.radius * 1.4, 0, Math.PI * 2)
         ctx.fill()
       }
 
-      // ── Draw Data Flow Curved Lines & Pulses (Layer 3) ──
+      // ── Data Flow Curved Lines & Pulses ──
       const paths = [
         [
           { x: -50, y: height * 0.2 },
-          { x: width * 0.3, y: height * 0.1 },
-          { x: width * 0.7, y: height * 0.5 },
-          { x: width + 50, y: height * 0.4 },
+          { x: width * 0.3,  y: height * 0.1 },
+          { x: width * 0.7,  y: height * 0.5 },
+          { x: width + 50,   y: height * 0.4 },
         ],
         [
           { x: -50, y: height * 0.6 },
           { x: width * 0.25, y: height * 0.8 },
           { x: width * 0.65, y: height * 0.3 },
-          { x: width + 50, y: height * 0.7 },
+          { x: width + 50,   y: height * 0.7 },
         ],
         [
           { x: -50, y: height * 0.85 },
-          { x: width * 0.4, y: height * 0.75 },
-          { x: width * 0.8, y: height * 0.9 },
-          { x: width + 50, y: height * 0.6 },
+          { x: width * 0.4,  y: height * 0.75 },
+          { x: width * 0.8,  y: height * 0.9 },
+          { x: width + 50,   y: height * 0.6 },
         ],
       ]
 
       paths.forEach((p, idx) => {
-        const lineColor = getThemeColor('--t-accent') || '#3DD6D0'
+        // Dashed flow line in theme accent
         ctx.beginPath()
         ctx.moveTo(p[0].x, p[0].y)
         ctx.bezierCurveTo(p[1].x, p[1].y, p[2].x, p[2].y, p[3].x, p[3].y)
-        ctx.strokeStyle = `${lineColor}25`
+        ctx.strokeStyle = `${accentColor}25`
         ctx.lineWidth = 1.5
         ctx.setLineDash([6, 12])
         ctx.lineDashOffset = -time * 5
         ctx.stroke()
-        ctx.setLineDash([]) // reset
+        ctx.setLineDash([])
 
-        // Draw traveling glowing pulse packet
+        // Traveling pulse packet — themed primary & accent
         const pulse = pulses[idx]
         if (pulse) {
           pulse.progress = (pulse.progress + pulse.speed) % 1
           const t = pulse.progress
 
-          // Bezier point calculation
           const cx1 = 3 * (p[1].x - p[0].x)
           const bx1 = 3 * (p[2].x - p[1].x) - cx1
           const ax1 = p[3].x - p[0].x - cx1 - bx1
-
           const cy1 = 3 * (p[1].y - p[0].y)
           const by1 = 3 * (p[2].y - p[1].y) - cy1
           const ay1 = p[3].y - p[0].y - cy1 - by1
@@ -204,10 +215,13 @@ export default function HeroBackground() {
           const px = ax1 * Math.pow(t, 3) + bx1 * Math.pow(t, 2) + cx1 * t + p[0].x
           const py = ay1 * Math.pow(t, 3) + by1 * Math.pow(t, 2) + cy1 * t + p[0].y
 
+          const safePrimary = primaryColor.startsWith('#') ? primaryColor : '#4F9DFF'
+          const safeAccent  = accentColor.startsWith('#')  ? accentColor  : '#3DD6D0'
+
           const grad = ctx.createRadialGradient(px, py, 0, px, py, 14)
-          grad.addColorStop(0, 'rgba(79, 157, 255, 0.7)')
-          grad.addColorStop(0.5, 'rgba(61, 214, 208, 0.35)')
-          grad.addColorStop(1, 'rgba(61, 214, 208, 0)')
+          grad.addColorStop(0,   hexToRgba(safePrimary, 0.7))
+          grad.addColorStop(0.5, hexToRgba(safeAccent,  0.35))
+          grad.addColorStop(1,   'rgba(0,0,0,0)')
 
           ctx.fillStyle = grad
           ctx.beginPath()
@@ -221,21 +235,17 @@ export default function HeroBackground() {
         }
       })
 
-      // ── Draw Particles & Interconnections (Layer 1) ──
+      // ── Draw Particles & Interconnections ──
       for (let i = 0; i < particles.length; i++) {
         const p = particles[i]
 
-        // Floating movement
         p.x += p.vx
         p.y += p.vy
-
-        // Bounce off canvas bounds
-        if (p.x < 0 || p.x > width) p.vx *= -1
+        if (p.x < 0 || p.x > width)  p.vx *= -1
         if (p.y < 0 || p.y > height) p.vy *= -1
 
-        // Mouse interaction: Gentle repulsion & magnetic pull
-        const dx = p.x - mouse.x
-        const dy = p.y - mouse.y
+        const dx   = p.x - mouse.x
+        const dy   = p.y - mouse.y
         const dist = Math.sqrt(dx * dx + dy * dy)
 
         if (dist < mouse.radius) {
@@ -243,18 +253,18 @@ export default function HeroBackground() {
           p.x += (dx / dist) * force * 2.2
           p.y += (dy / dist) * force * 2.2
 
-          // Connect cursor to nearby nodes with a glowing line
+          // Cursor → node line in theme accent color
           ctx.beginPath()
           ctx.moveTo(mouse.x, mouse.y)
           ctx.lineTo(p.x, p.y)
-          ctx.strokeStyle = '#3DD6D0'
+          ctx.strokeStyle = accentColor
           ctx.globalAlpha = (1 - dist / mouse.radius) * 0.45
           ctx.lineWidth = 1.2
           ctx.stroke()
           ctx.globalAlpha = 1
         }
 
-        // Draw particle node
+        // Particle node
         ctx.beginPath()
         ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2)
         ctx.fillStyle = p.color
@@ -265,11 +275,11 @@ export default function HeroBackground() {
         ctx.shadowBlur = 0
         ctx.globalAlpha = 1
 
-        // Draw inter-node connecting network lines
+        // Inter-node network lines in theme accent
         for (let j = i + 1; j < particles.length; j++) {
-          const p2 = particles[j]
-          const ldx = p.x - p2.x
-          const ldy = p.y - p2.y
+          const p2   = particles[j]
+          const ldx  = p.x - p2.x
+          const ldy  = p.y - p2.y
           const ldist = Math.sqrt(ldx * ldx + ldy * ldy)
 
           if (ldist < 135) {
@@ -277,7 +287,7 @@ export default function HeroBackground() {
             ctx.beginPath()
             ctx.moveTo(p.x, p.y)
             ctx.lineTo(p2.x, p2.y)
-            ctx.strokeStyle = getThemeColor('--t-accent')
+            ctx.strokeStyle = accentColor
             ctx.globalAlpha = lineAlpha
             ctx.lineWidth = 0.9
             ctx.stroke()
@@ -286,7 +296,7 @@ export default function HeroBackground() {
         }
       }
 
-      // ── Draw Sparkles (Layer 4) ──
+      // ── Draw Sparkles ──
       sparkles.forEach((s) => {
         if (s.growing) {
           s.alpha += s.speed
@@ -302,13 +312,12 @@ export default function HeroBackground() {
 
         ctx.save()
         ctx.globalAlpha = s.alpha * 0.65
-        ctx.fillStyle = getThemeColor('--t-primary')
+        ctx.fillStyle = primaryColor
         ctx.beginPath()
         ctx.arc(s.x, s.y, s.size, 0, Math.PI * 2)
         ctx.fill()
 
-        // Tiny cross star sheen
-        ctx.strokeStyle = getThemeColor('--t-accent') + 'B0'
+        ctx.strokeStyle = accentColor + 'B0'
         ctx.lineWidth = 0.6
         ctx.beginPath()
         ctx.moveTo(s.x - s.size * 2.2, s.y)
@@ -328,6 +337,7 @@ export default function HeroBackground() {
       cancelAnimationFrame(animationFrameId)
       window.removeEventListener('resize', handleResize)
       window.removeEventListener('mousemove', handleMouseMove)
+      themeObserver.disconnect()
     }
   }, [])
 
@@ -365,7 +375,7 @@ export default function HeroBackground() {
         }}
       />
 
-      {/* HTML5 Canvas for Interactive Particle Network, Mouse Spotlight, & Data Lines */}
+      {/* HTML5 Canvas for Interactive Particle Network, Mouse Spotlight & Data Lines */}
       <canvas ref={canvasRef} className="absolute inset-0 block w-full h-full" />
     </div>
   )
