@@ -15,19 +15,33 @@ export const HERO_FOOTER_THEMES = {
     gradientBg: 'linear-gradient(135deg, #dbeafe 0%, #93c5fd 100%)',
     dotColor: '#1D61E7',
   },
-  royal: {
-    id: 'royal',
-    name: 'Royal Indigo',
-    description: 'Classy & Rich Royal Violet',
-    gradientBg: 'linear-gradient(135deg, #ede9fe 0%, #c4b5fd 100%)',
-    dotColor: '#5850EC',
+  thinker: {
+    id: 'thinker',
+    name: 'Thinker Light',
+    description: 'Teal, Rose & Warm Neutrals',
+    gradientBg: 'linear-gradient(135deg, #e8f3f3 0%, #DA7B93 100%)',
+    dotColor: '#376E6F',
   },
-  amber: {
-    id: 'amber',
-    name: 'Sunset Gold',
-    description: 'Crisp Orange, Gold & Midnight Black',
-    gradientBg: 'linear-gradient(135deg, #ffedd5 0%, #f97316 100%)',
-    dotColor: '#EA580C',
+  dreamy: {
+    id: 'dreamy',
+    name: 'Dreamy Skies',
+    description: 'Sky Blue, Lavender & Deep Slate',
+    gradientBg: 'linear-gradient(135deg, #A0D2EB 0%, #D0BDF4 100%)',
+    dotColor: '#A0D2EB',
+  },
+  amberteal: {
+    id: 'amberteal',
+    name: 'Amber Teal',
+    description: 'Warm Orange, Deep Teal & Navy',
+    gradientBg: 'linear-gradient(135deg, #FA991C 0%, #1C768F 100%)',
+    dotColor: '#FA991C',
+  },
+  darkcrimson: {
+    id: 'darkcrimson',
+    name: 'Crimson Light',
+    description: 'Hot Pink & Rose on Warm White',
+    gradientBg: 'linear-gradient(135deg, #FDF4F6 0%, #EB1750 100%)',
+    dotColor: '#EB1750',
   },
 }
 
