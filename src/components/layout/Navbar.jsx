@@ -3,6 +3,7 @@ import { Link, useLocation } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Menu, X, ChevronDown } from 'lucide-react'
 import { navLinks } from '../../data/navigation'
+import NavbarBackground from './NavbarBackground'
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false)
@@ -43,8 +44,11 @@ export default function Navbar() {
       animate={{ y: 0 }}
       transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
     >
+      {/* ── Floating hospital icons — canvas background ── */}
+      <NavbarBackground />
+
       {/* ── Top bar ── */}
-      <div className="site-wrapper flex justify-between items-center h-14 sm:h-16 md:h-20 2xl:h-24">
+      <div className="site-wrapper flex justify-between items-center h-14 sm:h-16 md:h-20 2xl:h-24 relative" style={{ zIndex: 1 }}>
 
         {/* Logo */}
         <Link to="/" className="flex items-center gap-1.5 shrink-0">
@@ -234,16 +238,21 @@ export default function Navbar() {
                             e.stopPropagation()
                             setMobileModulesOpen(!mobileModulesOpen)
                           }}
-                          className="p-3 hover:bg-[#00685e]/10 rounded-r-xl cursor-pointer"
+                          className="p-3 rounded-r-xl cursor-pointer"
+                          style={{ background: 'transparent' }}
                           aria-label="Toggle sub-modules list"
                         >
-                          <ChevronDown size={18} className={`transition-transform duration-200 text-[#00685e] ${mobileModulesOpen ? 'rotate-180' : ''}`} />
+                          <ChevronDown
+                            size={18}
+                            style={{ color: 'var(--t-primary)' }}
+                            className={`transition-transform duration-200 ${mobileModulesOpen ? 'rotate-180' : ''}`}
+                          />
                         </button>
                       </div>
 
                       {/* Mobile Sub-Links accordion */}
                       {mobileModulesOpen && (
-                        <div className="pl-3 pr-1 py-1 space-y-1.5 border-l-2 border-[#00685e]/30 ml-3">
+                        <div className="pl-3 pr-1 py-1 space-y-1.5 border-l-2 ml-3" style={{ borderColor: 'var(--t-active-border)' }}>
                           {link.children.map((child) => (
                             <Link
                               key={child.path}
