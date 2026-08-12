@@ -14,6 +14,7 @@ const Laboratory = lazy(() => import('../pages/Laboratory/Laboratory'))
 const About = lazy(() => import('../pages/About/About'))
 const Pricing = lazy(() => import('../pages/Pricing/Pricing'))
 const Contact = lazy(() => import('../pages/Contact/Contact'))
+const ABDM = lazy(() => import('../pages/ABDM/ABDM'))
 
 const router = createBrowserRouter([
   {
@@ -33,6 +34,8 @@ const router = createBrowserRouter([
       { path: '/ipd', element: <Suspense fallback={<Loader />}><IPD /></Suspense> },
       { path: '/modules/laboratory', element: <Suspense fallback={<Loader />}><Laboratory /></Suspense> },
       { path: '/laboratory', element: <Suspense fallback={<Loader />}><Laboratory /></Suspense> },
+      { path: '/abdm-integration', element: <Suspense fallback={<Loader />}><ABDM /></Suspense> },
+      { path: '/modules/abdm', element: <Suspense fallback={<Loader />}><ABDM /></Suspense> },
       { path: '/about', element: <Suspense fallback={<Loader />}><About /></Suspense> },
       { path: '/pricing', element: <Suspense fallback={<Loader />}><Pricing /></Suspense> },
       { path: '/contact', element: <Suspense fallback={<Loader />}><Contact /></Suspense> },

@@ -19,7 +19,7 @@ export default function FAQ() {
         />
 
         <motion.div
-          className="max-w-3xl mx-auto space-y-3"
+          className="w-full space-y-3 px-3 sm:px-4 md:px-6"
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, margin: '-50px' }}

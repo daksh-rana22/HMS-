@@ -12,6 +12,7 @@ const moduleLinks = [
 const mainLinks = [
   { name: 'Home', path: '/' },
   { name: 'All Modules', path: '/modules' },
+  { name: 'ABDM Integration', path: '/abdm-integration' },
   { name: 'About Us', path: '/about' },
   { name: 'Pricing', path: '/pricing' },
   { name: 'Contact Us', path: '/contact' },
