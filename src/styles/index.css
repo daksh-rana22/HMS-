@@ -39,39 +39,40 @@
   --t-active-border: rgba(0, 104, 94, 0.30);
 }
 
-/* ── Oceanic Blue (Enterprise Blue & Navy) ── */
+/* ── Oceanic Turquoise & Aquamarine (Teal, Cerulean & Aquamarine Green) ── */
 [data-theme="oceanic"],
 [data-hero-theme="oceanic"] {
-    --t-primary: #1D61E7;
-    --t-primary-dark: #154EC2;
-    --t-primary-mid: #2563EB;
-    --t-accent: #3B82F6;
-    --t-accent-light: #60A5FA;
-    --t-bg: #F4F7FE;
-    --t-bg-light: #EEF2FF;
+    --t-primary: #0D9488;
+    --t-primary-dark: #0F766E;
+    --t-primary-mid: #14B8A6;
+    --t-accent: #2563EB;
+    --t-accent-light: #10B981;
+    --t-bg: #F0FDFA;
+    --t-bg-light: #CCFBF1;
     --t-surface: #FFFFFF;
     --t-surface-low: #F8FAFC;
-    --t-surface-mid: #EFF6FF;
-    --t-surface-high: #DBEAFE;
-    --t-border: #DCE6F5;
+    --t-surface-mid: #E0F2FE;
+    --t-surface-high: #99F6E4;
+    --t-border: #99F6E4;
     --t-border-light: #E2E8F0;
     --t-text: #0F172A;
-    --t-text-secondary: #334155;
-    --t-text-muted: #64748B;
+    --t-text-secondary: #1E293B;
+    --t-text-muted: #475569;
     --t-on-primary: #ffffff;
-    --t-hero-glow: rgba(29, 97, 231, 0.15);
-    --t-card-hover-glow: rgba(29, 97, 231, 0.12);
-    --t-nav-bg: rgba(255, 255, 255, 0.92);
-    --t-nav-border: rgba(220, 230, 245, 0.60);
-    --t-module-bg: linear-gradient(135deg, #EFF6FF 0%, #DBEAFE 100%);
-    --t-gradient-text: linear-gradient(135deg, #1D61E7 0%, #3B82F6 100%);
-    --t-btn-shadow: rgba(29, 97, 231, 0.28);
-    --t-scrollbar: rgba(29, 97, 231, 0.35);
-    --t-scrollbar-hover: rgba(29, 97, 231, 0.70);
-    --t-dropdown-shadow: rgba(29, 97, 231, 0.18);
-    --t-active-bg: rgba(219, 234, 254, 0.60);
-    --t-active-border: rgba(29, 97, 231, 0.30);
-    --t-footer-bg: #061325;
+    --t-hero-glow: rgba(13, 148, 136, 0.22);
+    --t-card-hover-glow: rgba(37, 99, 235, 0.16);
+    --t-nav-bg: rgba(255, 255, 255, 0.94);
+    --t-nav-border: rgba(153, 246, 228, 0.60);
+    --t-module-bg: linear-gradient(135deg, #F0FDFA 0%, #E0F2FE 50%, #DCFCE7 100%);
+    --t-gradient-text: linear-gradient(135deg, #0D9488 0%, #2563EB 50%, #059669 100%);
+    --t-btn-shadow: rgba(13, 148, 136, 0.32);
+    --t-scrollbar: rgba(13, 148, 136, 0.40);
+    --t-scrollbar-hover: rgba(13, 148, 136, 0.75);
+    --t-dropdown-shadow: rgba(13, 148, 136, 0.22);
+    --t-mobile-bg: #F0FDFA;
+    --t-active-bg: rgba(204, 251, 241, 0.70);
+    --t-active-border: rgba(13, 148, 136, 0.40);
+    --t-footer-bg: #062024;
   }
 
   /* ── Thinker Light (Teal, Rose & Warm Neutrals) ── */
@@ -288,6 +289,78 @@
     --t-active-bg: rgba(33, 124, 163, 0.12);
     --t-active-border: rgba(33, 124, 163, 0.40);
     --t-footer-bg: #0D1F2D;
+  }
+
+  /* ── Burgundy & Teal (Crimson Maroon, Peacock Teal & Champagne Gold) ── */
+  [data-theme="burgundyteal"],
+  [data-hero-theme="burgundyteal"] {
+    --t-primary: #225762;
+    --t-primary-dark: #163C44;
+    --t-primary-mid: #3B8B9B;
+    --t-accent: #7A1C28;
+    --t-accent-light: #C9A882;
+    --t-bg: #FAF7F2;
+    --t-bg-light: #F3ECE2;
+    --t-surface: #FFFFFF;
+    --t-surface-low: #FAF7F2;
+    --t-surface-mid: #EAF2F4;
+    --t-surface-high: #D3E4E8;
+    --t-border: #C4D8DC;
+    --t-border-light: #E8E2D8;
+    --t-text: #1A282C;
+    --t-text-secondary: #2C3E44;
+    --t-text-muted: #5C727A;
+    --t-on-primary: #ffffff;
+    --t-hero-glow: rgba(34, 87, 98, 0.20);
+    --t-card-hover-glow: rgba(122, 28, 40, 0.16);
+    --t-nav-bg: rgba(250, 247, 242, 0.94);
+    --t-nav-border: rgba(196, 216, 220, 0.50);
+    --t-module-bg: linear-gradient(135deg, #EAF2F4 0%, #F5EAEB 50%, #F3ECE2 100%);
+    --t-gradient-text: linear-gradient(135deg, #225762 0%, #7A1C28 50%, #3B8B9B 100%);
+    --t-btn-shadow: rgba(34, 87, 98, 0.30);
+    --t-scrollbar: rgba(34, 87, 98, 0.40);
+    --t-scrollbar-hover: rgba(34, 87, 98, 0.75);
+    --t-dropdown-shadow: rgba(34, 87, 98, 0.22);
+    --t-mobile-bg: #FAF7F2;
+    --t-active-bg: rgba(234, 242, 244, 0.80);
+    --t-active-border: rgba(34, 87, 98, 0.40);
+    --t-footer-bg: #121C1F;
+  }
+
+  /* ── Royal Navy & Gold (Midnight Navy, Sapphire & Metallic Gold) ── */
+  [data-theme="navygold"],
+  [data-hero-theme="navygold"] {
+    --t-primary: #1B2B48;
+    --t-primary-dark: #111A2E;
+    --t-primary-mid: #283C66;
+    --t-accent: #B58E58;
+    --t-accent-light: #D8C6AC;
+    --t-bg: #FAF8F5;
+    --t-bg-light: #F3EFE9;
+    --t-surface: #FFFFFF;
+    --t-surface-low: #FAF8F5;
+    --t-surface-mid: #EAEFF6;
+    --t-surface-high: #D2DEEE;
+    --t-border: #C8D6E5;
+    --t-border-light: #EAE4DA;
+    --t-text: #111A2E;
+    --t-text-secondary: #233354;
+    --t-text-muted: #526484;
+    --t-on-primary: #ffffff;
+    --t-hero-glow: rgba(27, 43, 72, 0.20);
+    --t-card-hover-glow: rgba(181, 142, 88, 0.20);
+    --t-nav-bg: rgba(250, 248, 245, 0.94);
+    --t-nav-border: rgba(200, 214, 229, 0.55);
+    --t-module-bg: linear-gradient(135deg, #EAEFF6 0%, #F5EFE6 50%, #FAF8F5 100%);
+    --t-gradient-text: linear-gradient(135deg, #111A2E 0%, #1B2B48 40%, #B58E58 100%);
+    --t-btn-shadow: rgba(27, 43, 72, 0.32);
+    --t-scrollbar: rgba(27, 43, 72, 0.40);
+    --t-scrollbar-hover: rgba(27, 43, 72, 0.75);
+    --t-dropdown-shadow: rgba(27, 43, 72, 0.22);
+    --t-mobile-bg: #FAF8F5;
+    --t-active-bg: rgba(234, 239, 246, 0.85);
+    --t-active-border: rgba(27, 43, 72, 0.40);
+    --t-footer-bg: #0B1220;
   }
 
 

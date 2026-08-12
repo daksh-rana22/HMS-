@@ -10,10 +10,10 @@ export const HERO_FOOTER_THEMES = {
   },
   oceanic: {
     id: 'oceanic',
-    name: 'Oceanic Blue',
-    description: 'Vibrant Enterprise Blue',
-    gradientBg: 'linear-gradient(135deg, #dbeafe 0%, #93c5fd 100%)',
-    dotColor: '#1D61E7',
+    name: 'Turquoise & Aquamarine',
+    description: 'Teal, Cerulean & Aquamarine Green',
+    gradientBg: 'linear-gradient(135deg, #0D9488 0%, #2563EB 50%, #10B981 100%)',
+    dotColor: '#0D9488',
   },
   thinker: {
     id: 'thinker',
@@ -56,6 +56,20 @@ export const HERO_FOOTER_THEMES = {
     description: 'Cerulean Blue & Mustard on Soft Sky',
     gradientBg: 'linear-gradient(135deg, #EEF6FB 0%, #CCE4F2 35%, #217CA3 70%, #E29930 100%)',
     dotColor: '#217CA3',
+  },
+  burgundyteal: {
+    id: 'burgundyteal',
+    name: 'Burgundy & Teal',
+    description: 'Crimson, Peacock Teal & Champagne',
+    gradientBg: 'linear-gradient(135deg, #7A1C28 0%, #225762 50%, #C9A882 100%)',
+    dotColor: '#7A1C28',
+  },
+  navygold: {
+    id: 'navygold',
+    name: 'Royal Navy & Gold',
+    description: 'Midnight Navy & Metallic Gold',
+    gradientBg: 'linear-gradient(135deg, #111A2E 0%, #1B2B48 50%, #B58E58 100%)',
+    dotColor: '#1B2B48',
   },
 }
 
