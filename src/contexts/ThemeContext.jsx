@@ -33,8 +33,8 @@ export const HERO_FOOTER_THEMES = {
     id: 'amberteal',
     name: 'Amber Teal',
     description: 'Warm Orange, Deep Teal & Navy',
-    gradientBg: 'linear-gradient(135deg, #FA991C 0%, #1C768F 100%)',
-    dotColor: '#FA991C',
+    gradientBg: 'linear-gradient(135deg, #C96B12 0%, #E07F28 50%, #1C768F 100%)',
+    dotColor: '#C96B12',
   },
   darkcrimson: {
     id: 'darkcrimson',
@@ -42,6 +42,20 @@ export const HERO_FOOTER_THEMES = {
     description: 'Hot Pink & Rose on Warm White',
     gradientBg: 'linear-gradient(135deg, #FDF4F6 0%, #EB1750 100%)',
     dotColor: '#EB1750',
+  },
+  embers: {
+    id: 'embers',
+    name: 'Embers',
+    description: 'Deep Indigo, Mauve, Coral & Peach',
+    gradientBg: 'linear-gradient(135deg, #41436A 0%, #984063 40%, #F64668 75%, #FE9677 100%)',
+    dotColor: '#FE9677',
+  },
+  cerulean: {
+    id: 'cerulean',
+    name: 'Cerulean',
+    description: 'Cerulean Blue & Mustard on Soft Sky',
+    gradientBg: 'linear-gradient(135deg, #EEF6FB 0%, #CCE4F2 35%, #217CA3 70%, #E29930 100%)',
+    dotColor: '#217CA3',
   },
 }
 
