@@ -467,40 +467,73 @@
     /* ── SITE LAYOUT CONTAINER ── */
     .site-wrapper {
       width: 100%;
-      max-width: 1400px;
+      max-width: 100%;
       margin-left: auto;
       margin-right: auto;
-      padding-left: 16px;
-      padding-right: 16px;
+      padding-left: 12px;
+      padding-right: 12px;
+    }
+
+    @media (min-width: 480px) {
+      .site-wrapper {
+        padding-left: 16px;
+        padding-right: 16px;
+      }
     }
 
     @media (min-width: 640px) {
       .site-wrapper {
+        max-width: 640px;
         padding-left: 20px;
         padding-right: 20px;
       }
     }
 
+    @media (min-width: 768px) {
+      .site-wrapper {
+        max-width: 768px;
+        padding-left: 24px;
+        padding-right: 24px;
+      }
+    }
+
     @media (min-width: 1024px) {
       .site-wrapper {
+        max-width: 1024px;
+        padding-left: 28px;
+        padding-right: 28px;
+      }
+    }
+
+    @media (min-width: 1280px) {
+      .site-wrapper {
+        max-width: 1280px;
         padding-left: 32px;
         padding-right: 32px;
       }
     }
 
+    @media (min-width: 1440px) {
+      .site-wrapper {
+        max-width: 1400px;
+        padding-left: 36px;
+        padding-right: 36px;
+      }
+    }
+
     @media (min-width: 1920px) {
       .site-wrapper {
-        max-width: 1600px;
-        padding-left: 40px;
-        padding-right: 40px;
+        max-width: 1680px;
+        padding-left: 48px;
+        padding-right: 48px;
       }
     }
 
     @media (min-width: 2560px) {
       .site-wrapper {
-        max-width: 2000px;
-        padding-left: 56px;
-        padding-right: 56px;
+        max-width: 2200px;
+        padding-left: 64px;
+        padding-right: 64px;
       }
     }
 

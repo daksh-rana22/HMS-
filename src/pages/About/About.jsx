@@ -70,7 +70,7 @@ const aboutFaqs = [
 ]
 
 export default function About() {
-  const [openFaq, setOpenFaq] = useState(0)
+  const [openFaq, setOpenFaq] = useState(null)
   return (
     <motion.div {...pageTransition}>
 
@@ -245,87 +245,78 @@ export default function About() {
       </section>
 
       {/* ── Q&A Section ── */}
-      <section className="pt-10 sm:pt-14 pb-2 sm:pb-4">
-        <div className="site-wrapper">
-          <div className="text-center mb-8 sm:mb-12">
-            <div
-              className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#afecde] text-[#326c62] text-xs font-semibold mb-3 shadow-xs"
-              style={{ fontFamily: "'Inter', sans-serif" }}
-            >
-              <span className="material-symbols-outlined text-base">help_outline</span>
-              <span>Questions & Answers</span>
-            </div>
-            <h2
-              className="heading-hero text-[#121d1f] mb-3"
-              style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}
-            >
-              Frequently Asked Questions (Q&A)
-            </h2>
-            <p
-              className="text-description text-[#3d4947] max-w-2xl mx-auto"
-              style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}
-            >
-              Find detailed answers to common queries regarding implementation, data security, system integrations, and multi-branch management.
-            </p>
-          </div>
+      <section className="py-8 sm:py-12 site-wrapper">
+        <div className="text-center max-w-4xl mx-auto mb-8 space-y-3">
+          <span
+            className="text-xs font-extrabold uppercase tracking-widest px-3.5 py-1 rounded-full border inline-block"
+            style={{
+              background: 'color-mix(in srgb, var(--t-primary, #00685e) 10%, transparent)',
+              borderColor: 'color-mix(in srgb, var(--t-primary, #00685e) 25%, transparent)',
+              color: 'var(--t-primary, #00685e)',
+            }}
+          >
+            ABOUT MEDCARE HMS FAQ
+          </span>
+          <h2
+            className="text-2xl sm:text-3xl lg:text-4xl font-extrabold"
+            style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", color: 'var(--t-text, #121d1f)' }}
+          >
+            Frequently Asked Questions (Q&A)
+          </h2>
+          <p
+            className="text-xs sm:text-sm"
+            style={{ color: 'var(--t-text-secondary, #3d4947)' }}
+          >
+            Find detailed answers to common queries regarding implementation, data security, system integrations, and multi-branch management.
+          </p>
+        </div>
 
-          <div className="space-y-3 w-full">
-            {aboutFaqs.map((faq, index) => {
-              const isOpen = openFaq === index
-              return (
-                <motion.div
-                  key={index}
-                  initial={{ opacity: 0, y: 15 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.4, delay: index * 0.04 }}
-                  className={`rounded-2xl border transition-all duration-300 overflow-hidden ${
-                    isOpen
-                      ? 'bg-white border-[#00685e] shadow-lg ring-2 ring-[#00685e]/15'
-                      : 'bg-white/90 border-[#bcc9c6]/50 hover:border-[#00685e]/40 shadow-xs'
-                  }`}
+        <div className="w-full space-y-3 px-3 sm:px-4 md:px-6">
+          {aboutFaqs.map((faq, idx) => {
+            const isOpen = openFaq === idx
+            return (
+              <div
+                key={idx}
+                className="rounded-2xl border overflow-hidden transition-all shadow-xs"
+                style={{
+                  background: 'var(--t-surface, #fff)',
+                  borderColor: isOpen ? 'var(--t-primary, #00685e)' : 'var(--t-border-light, #bcc9c6)',
+                }}
+              >
+                <button
+                  type="button"
+                  onClick={() => setOpenFaq(isOpen ? null : idx)}
+                  className="w-full p-5 text-left flex items-center justify-between gap-4 font-bold text-xs sm:text-sm cursor-pointer"
+                  style={{ color: 'var(--t-text, #121d1f)', fontFamily: "'Plus Jakarta Sans', sans-serif" }}
                 >
-                  <button
-                    type="button"
-                    onClick={() => setOpenFaq(isOpen ? -1 : index)}
-                    className="w-full p-4 sm:p-5 text-left flex items-center justify-between gap-4 cursor-pointer select-none"
+                  <span>{faq.question}</span>
+                  <span
+                    className="material-symbols-outlined text-lg transition-transform duration-200"
+                    style={{ transform: isOpen ? 'rotate(180deg)' : 'none', color: 'var(--t-primary, #00685e)' }}
                   >
-                    <span
-                      className="text-sm sm:text-base font-bold text-[#121d1f] flex items-center gap-2.5"
-                      style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}
+                    keyboard_arrow_down
+                  </span>
+                </button>
+                <AnimatePresence>
+                  {isOpen && (
+                    <motion.div
+                      initial={{ height: 0, opacity: 0 }}
+                      animate={{ height: 'auto', opacity: 1 }}
+                      exit={{ height: 0, opacity: 0 }}
+                      transition={{ duration: 0.25 }}
+                      className="px-5 pb-5 text-xs sm:text-sm leading-relaxed border-t pt-3"
+                      style={{
+                        color: 'var(--t-text-secondary, #3d4947)',
+                        borderColor: 'color-mix(in srgb, var(--t-border-light, #bcc9c6) 60%, transparent)',
+                      }}
                     >
-                      <span className="w-7 h-7 rounded-xl bg-[#effcfe] text-[#00685e] font-extrabold text-xs flex items-center justify-center shrink-0 border border-[#00685e]/20">
-                        Q{index + 1}
-                      </span>
-                      {faq.question}
-                    </span>
-                    <span
-                      className={`w-7 h-7 rounded-full flex items-center justify-center shrink-0 transition-transform duration-300 ${
-                        isOpen ? 'bg-[#00685e] text-white rotate-180' : 'bg-[#eaf6f8] text-[#00685e]'
-                      }`}
-                    >
-                      <span className="material-symbols-outlined text-base">expand_more</span>
-                    </span>
-                  </button>
-
-                  <AnimatePresence initial={false}>
-                    {isOpen && (
-                      <motion.div
-                        initial={{ height: 0, opacity: 0 }}
-                        animate={{ height: 'auto', opacity: 1 }}
-                        exit={{ height: 0, opacity: 0 }}
-                        transition={{ duration: 0.25, ease: 'easeOut' }}
-                        className="px-4 sm:px-5 pb-5 pt-1 text-xs sm:text-sm text-[#3d4947] leading-relaxed border-t border-[#bcc9c6]/20 bg-[#effcfe]/30"
-                        style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}
-                      >
-                        <div className="pl-9">{faq.answer}</div>
-                      </motion.div>
-                    )}
-                  </AnimatePresence>
-                </motion.div>
-              )
-            })}
-          </div>
+                      {faq.answer}
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </div>
+            )
+          })}
         </div>
       </section>
 

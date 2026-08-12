@@ -1,0 +1,121 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 800" width="100%" height="100%">
+  <defs>
+    <!-- Radial Dotted Particle Background -->
+    <pattern id="dotPattern" x="0" y="0" width="24" height="24" patternUnits="userSpaceOnUse">
+      <circle cx="3" cy="3" r="1.5" fill="#1C768F" opacity="0.18"/>
+      <circle cx="15" cy="15" r="1.2" fill="#217CA3" opacity="0.14"/>
+    </pattern>
+
+    <!-- Gradients for Lotus Leaves -->
+    <linearGradient id="leafTop" x1="0%" y1="100%" x2="0%" y2="0%">
+      <stop offset="0%" stop-color="#4CAF50"/>
+      <stop offset="100%" stop-color="#8BC34A"/>
+    </linearGradient>
+    <linearGradient id="leafMidLeft" x1="100%" y1="100%" x2="0%" y2="0%">
+      <stop offset="0%" stop-color="#1B5E20"/>
+      <stop offset="100%" stop-color="#2E7D32"/>
+    </linearGradient>
+    <linearGradient id="leafMidRight" x1="0%" y1="100%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#1B5E20"/>
+      <stop offset="100%" stop-color="#2E7D32"/>
+    </linearGradient>
+    <linearGradient id="leafBottomLeft" x1="100%" y1="100%" x2="0%" y2="0%">
+      <stop offset="0%" stop-color="#004D40"/>
+      <stop offset="100%" stop-color="#00695C"/>
+    </linearGradient>
+    <linearGradient id="leafBottomRight" x1="0%" y1="100%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#004D40"/>
+      <stop offset="100%" stop-color="#00695C"/>
+    </linearGradient>
+
+    <!-- Red Person Emblem Gradient -->
+    <linearGradient id="redPerson" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#EF5350"/>
+      <stop offset="100%" stop-color="#C62828"/>
+    </linearGradient>
+  </defs>
+
+  <g transform="translate(400, 360)">
+
+    <!-- ── Dotted Background Radial Grid ── -->
+    <g opacity="0.28">
+      <circle cx="0" cy="-30" r="350" fill="none" stroke="#217CA3" stroke-width="1.5" stroke-dasharray="2 12" />
+      <circle cx="0" cy="-30" r="300" fill="none" stroke="#217CA3" stroke-width="2" stroke-dasharray="3 14" />
+      <circle cx="0" cy="-30" r="250" fill="none" stroke="#1C768F" stroke-width="1.5" stroke-dasharray="2 10" />
+      <circle cx="0" cy="-30" r="200" fill="none" stroke="#1C768F" stroke-width="2" stroke-dasharray="4 16" />
+    </g>
+
+    <!-- ── Concentric Black Radar Arcs (3 Sets of 3 Arcs) ── -->
+    <g stroke="#1A202C" fill="none" stroke-linecap="round">
+      
+      <!-- OUTER RING (R = 210) -->
+      <!-- Top Arc -->
+      <path d="M -168 -156 A 210 210 0 0 1 168 -156" stroke-width="8" />
+      <!-- Left Arc -->
+      <path d="M -206 -42 A 210 210 0 0 0 -185 100" stroke-width="8" />
+      <!-- Right Arc -->
+      <path d="M 185 100 A 210 210 0 0 0 206 -42" stroke-width="8" />
+
+      <!-- MIDDLE RING (R = 175) -->
+      <!-- Top Arc -->
+      <path d="M -140 -130 A 175 175 0 0 1 140 -130" stroke-width="7.5" />
+      <!-- Left Arc -->
+      <path d="M -172 -35 A 175 175 0 0 0 -154 83" stroke-width="7.5" />
+      <!-- Right Arc -->
+      <path d="M 154 83 A 175 175 0 0 0 172 -35" stroke-width="7.5" />
+
+      <!-- INNER RING (R = 140) -->
+      <!-- Top Arc -->
+      <path d="M -112 -104 A 140 140 0 0 1 112 -104" stroke-width="7" />
+      <!-- Left Arc -->
+      <path d="M -138 -28 A 140 140 0 0 0 -123 66" stroke-width="7" />
+      <!-- Right Arc -->
+      <path d="M 123 66 A 140 140 0 0 0 138 -28" stroke-width="7" />
+    </g>
+
+    <!-- ── CENTER EMBLEM: LOTUS LEAVES & RED PERSON ── -->
+    <g transform="translate(0, -45)">
+      <!-- Top Center Leaf -->
+      <path d="M 0 -85 C 22 -50 22 -15 0 12 C -22 -15 -22 -50 0 -85 Z" fill="url(#leafTop)" />
+
+      <!-- Middle Left Leaf -->
+      <path d="M 0 12 C -30 -12 -65 -30 -82 -18 C -70 -52 -35 -58 0 12 Z" fill="url(#leafMidLeft)" />
+      <!-- Middle Right Leaf -->
+      <path d="M 0 12 C 30 -12 65 -30 82 -18 C 70 -52 35 -58 0 12 Z" fill="url(#leafMidRight)" />
+
+      <!-- Bottom Left Leaf -->
+      <path d="M 0 12 C -42 2 -75 -2 -88 18 C -70 40 -32 30 0 12 Z" fill="url(#leafBottomLeft)" />
+      <!-- Bottom Right Leaf -->
+      <path d="M 0 12 C 42 2 75 -2 88 18 C 70 40 32 30 0 12 Z" fill="url(#leafBottomRight)" />
+
+      <!-- ── Red Person Figure ── -->
+      <!-- Head Circle -->
+      <circle cx="0" cy="14" r="12" fill="url(#redPerson)" />
+
+      <!-- Upper Arms / Torso Arc -->
+      <path d="M -28 40 C -18 24 18 24 28 40 C 32 45 22 54 0 54 C -22 54 -32 45 -28 40 Z" fill="url(#redPerson)" />
+      
+      <!-- Lower Folded Legs Base -->
+      <path d="M -38 56 C -22 45 22 45 38 56 C 44 62 26 75 0 75 C -26 75 -44 62 -38 56 Z" fill="url(#redPerson)" />
+    </g>
+
+    <!-- ── TYPOGRAPHY BELOW EMBLEM (CLEANLY SEPARATED) ── -->
+    <g transform="translate(0, 115)">
+      <!-- Line 1: Ayushman Bharat -->
+      <text x="0" y="0" text-anchor="middle" font-family="'Plus Jakarta Sans', 'Inter', -apple-system, sans-serif" font-weight="600" font-size="22" fill="#1C2B36" letter-spacing="0.5">
+        Ayushman Bharat
+      </text>
+
+      <!-- Line 2: Digital Mission -->
+      <text x="0" y="36" text-anchor="middle" font-family="'Plus Jakarta Sans', 'Inter', -apple-system, sans-serif" font-weight="900" font-size="34" fill="#D32F2F" letter-spacing="0.2">
+        Digital Mission
+      </text>
+
+      <!-- Line 3: Building Digital Health Ecosystem -->
+      <text x="0" y="64" text-anchor="middle" font-family="'Plus Jakarta Sans', 'Inter', -apple-system, sans-serif" font-weight="700" font-size="15" fill="#1565C0" letter-spacing="0.8">
+        Building Digital Health Ecosystem
+      </text>
+    </g>
+
+  </g>
+</svg>

@@ -4,6 +4,7 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { pageTransition } from '../../utils/animations'
 import { testimonials } from '../../data/testimonials'
 import HeroBackground from '../../components/common/HeroBackground'
+import ABDMIntegration from '../../components/sections/ABDMIntegration'
 
 const heroSlides = [
   { id: 1, title: 'Clinical Dashboard', img: '/images/hero_slide_1.png', tag: 'Live Clinical OPD & Emergency' },
@@ -748,6 +749,9 @@ export default function Home() {
         </div>
       </section>
 
+      {/* ── ABDM & ABHA INTEGRATION ── */}
+      <ABDMIntegration />
+
       {/* ── 7. REVIEWS & TESTIMONIALS GRID ── */}
       <section className="py-12 sm:py-16 lg:py-20 site-wrapper space-y-10 sm:space-y-12">
         {/* Section Title */}
@@ -794,6 +798,7 @@ export default function Home() {
           ))}
         </div>
       </section>
+
 
       {/* ── 8. CALL TO ACTION BANNER (DYNAMIC THEME) ── */}
       <section className="py-6 sm:py-10 lg:py-12 site-wrapper">

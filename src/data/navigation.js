@@ -10,8 +10,10 @@ export const navLinks = [
       { name: 'IPD', path: '/modules/ipd', icon: 'bed', desc: 'Nurse dashboard, provisional estimates & ward billing' },
       { name: 'Billing & Accounts', path: '/modules/billing-accounts', icon: 'payments', desc: 'Invoicing, TPA claims, Doctor payouts & GST ledgers' },
       { name: 'Laboratory', path: '/modules/laboratory', icon: 'science', desc: 'Patient investigation requests & test verification' },
+      { name: 'ABDM Integration', path: '/abdm-integration', icon: 'verified_user', desc: 'ABDM & ABHA digital health ecosystem integration' },
     ]
   },
+  { name: 'ABDM Integration', path: '/abdm-integration' },
   { name: 'About Us', path: '/about' },
   { name: 'Pricing', path: '/pricing' },
   { name: 'Contact Us', path: '/contact' },
