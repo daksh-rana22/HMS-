@@ -38,150 +38,105 @@ export default function Footer() {
         {/* Compact Grid */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 py-8 sm:py-10 lg:py-12">
 
-          {/* Brand Column */}
-          <div className="lg:col-span-4 space-y-3">
+          {/* Brand Info — Left Column */}
+          <div className="lg:col-span-4 space-y-3 sm:space-y-4">
             <Link to="/" className="inline-flex items-center gap-1.5">
               <span
-                className="material-symbols-outlined text-xl sm:text-2xl"
-                style={{ fontVariationSettings: "'FILL' 1", color: 'var(--t-accent-light, #85f5e6)' }}
+                className="w-7 h-7 sm:w-8 sm:h-8 rounded-lg flex items-center justify-center font-black text-white text-xs sm:text-sm"
+                style={{ background: 'var(--t-primary, #00685e)' }}
               >
-                medical_services
+                +
               </span>
-              <span
-                className="text-lg sm:text-xl font-bold text-white tracking-tight"
-                style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}
-              >
-                MedCare HMS
+              <span className="font-extrabold text-base sm:text-lg tracking-tight text-white" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
+                MedCare<span style={{ color: 'var(--t-primary-mid, #008378)' }}>HMS</span>
               </span>
             </Link>
-            <p style={{ fontSize: '12px', color: 'color-mix(in srgb, var(--t-accent, #67d9ca) 40%, #999)', lineHeight: '1.6', maxWidth: '28rem' }}>
-              Unified healthcare management platform for modern hospitals, OPD/IPD workflows, labs, and billing automation.
+
+            <p className="text-xs sm:text-sm leading-relaxed max-w-sm" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
+              Enterprise Hospital Management System empowering modern medical centers across India with ABDM & ABHA integration, clinical EMR, and real-time revenue intelligence.
             </p>
-            <div className="flex items-center gap-3 pt-1">
-              {['public', 'mail', 'phone'].map((icon) => (
-                <Link
-                  key={icon}
-                  to="/contact"
-                  className="w-8 h-8 rounded-full flex items-center justify-center transition-all"
-                  style={{
-                    background: 'color-mix(in srgb, var(--t-primary, #00685e) 30%, #1a1a1a)',
-                    color: 'var(--t-accent-light, #85f5e6)',
-                  }}
-                  onMouseEnter={e => {
-                    e.currentTarget.style.background = 'var(--t-primary, #00685e)'
-                    e.currentTarget.style.color = 'white'
-                  }}
-                  onMouseLeave={e => {
-                    e.currentTarget.style.background = 'color-mix(in srgb, var(--t-primary, #00685e) 30%, #1a1a1a)'
-                    e.currentTarget.style.color = 'var(--t-accent-light, #85f5e6)'
-                  }}
-                >
-                  <span className="material-symbols-outlined text-base">{icon}</span>
-                </Link>
-              ))}
+
+            <div className="flex items-center gap-2 pt-1 text-[11px] font-bold" style={{ color: 'var(--t-primary-mid, #008378)' }}>
+              <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+              <span>ABDM &amp; NHA Milestone 1, 2 &amp; 3 Certified</span>
             </div>
           </div>
 
-          {/* Links Grid */}
-          <div className="lg:col-span-8 grid grid-cols-2 sm:grid-cols-3 gap-6">
+          {/* Modules Navigation Column */}
+          <div className="lg:col-span-3 space-y-3">
+            <h4 className="text-xs sm:text-sm font-extrabold uppercase tracking-wider text-white" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
+              HMS Core Modules
+            </h4>
+            <ul className="space-y-1.5 text-xs sm:text-sm">
+              {moduleLinks.map((item) => (
+                <li key={item.name}>
+                  <Link
+                    to={item.path}
+                    className="hover:text-white transition-colors duration-200 inline-block py-0.5"
+                    style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}
+                  >
+                    {item.name}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
 
-            {/* System Modules */}
-            <div className="space-y-2.5">
-              <h4
-                className="font-bold text-xs uppercase tracking-wider pb-1.5"
-                style={{
-                  color: 'white',
-                  borderBottom: '1px solid color-mix(in srgb, var(--t-border, #6d7a77) 30%, transparent)',
-                  fontFamily: "'Inter', sans-serif",
-                }}
-              >
-                System Modules
-              </h4>
-              <ul className="space-y-1.5 text-xs">
-                {moduleLinks.map((link) => (
-                  <li key={link.name}>
-                    <Link
-                      to={link.path}
-                      className="py-0.5 inline-block transition-colors"
-                      style={{ color: 'inherit' }}
-                      onMouseEnter={e => { e.currentTarget.style.color = 'var(--t-accent-light, #85f5e6)' }}
-                      onMouseLeave={e => { e.currentTarget.style.color = '' }}
-                    >
-                      {link.name}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
+          {/* Quick Links Column */}
+          <div className="lg:col-span-2 space-y-3">
+            <h4 className="text-xs sm:text-sm font-extrabold uppercase tracking-wider text-white" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
+              Navigation
+            </h4>
+            <ul className="space-y-1.5 text-xs sm:text-sm">
+              {mainLinks.map((item) => (
+                <li key={item.name}>
+                  <Link
+                    to={item.path}
+                    className="hover:text-white transition-colors duration-200 inline-block py-0.5"
+                    style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}
+                  >
+                    {item.name}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Contact & Compliance Column */}
+          <div className="lg:col-span-3 space-y-3">
+            <h4 className="text-xs sm:text-sm font-extrabold uppercase tracking-wider text-white" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
+              Compliance &amp; Support
+            </h4>
+            <ul className="space-y-1.5 text-xs sm:text-sm mb-3">
+              {legalLinks.map((item) => (
+                <li key={item.name}>
+                  <Link
+                    to={item.path}
+                    className="hover:text-white transition-colors duration-200 inline-block py-0.5"
+                    style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}
+                  >
+                    {item.name}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+
+            <div className="pt-2 border-t border-white/10 space-y-1 text-xs">
+              <div className="flex items-center gap-1.5 text-white/80 font-bold">
+                <span className="material-symbols-outlined text-sm" style={{ color: 'var(--t-primary-mid, #008378)' }}>headset_mic</span>
+                <span>24/7 Priority Support Desk</span>
+              </div>
+              <p className="text-[11px] opacity-75">support@medcarehms.in • +91 1800-419-8800</p>
             </div>
-
-            {/* Quick Links */}
-            <div className="space-y-2.5">
-              <h4
-                className="font-bold text-xs uppercase tracking-wider pb-1.5"
-                style={{
-                  color: 'white',
-                  borderBottom: '1px solid color-mix(in srgb, var(--t-border, #6d7a77) 30%, transparent)',
-                  fontFamily: "'Inter', sans-serif",
-                }}
-              >
-                Navigation
-              </h4>
-              <ul className="space-y-1.5 text-xs">
-                {mainLinks.map((link) => (
-                  <li key={link.name}>
-                    <Link
-                      to={link.path}
-                      className="py-0.5 inline-block transition-colors"
-                      style={{ color: 'inherit' }}
-                      onMouseEnter={e => { e.currentTarget.style.color = 'var(--t-accent-light, #85f5e6)' }}
-                      onMouseLeave={e => { e.currentTarget.style.color = '' }}
-                    >
-                      {link.name}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            </div>
-
-            {/* Support & Legal */}
-            <div className="col-span-2 sm:col-span-1 space-y-2.5 pt-2 sm:pt-0">
-              <h4
-                className="font-bold text-xs uppercase tracking-wider pb-1.5"
-                style={{
-                  color: 'white',
-                  borderBottom: '1px solid color-mix(in srgb, var(--t-border, #6d7a77) 30%, transparent)',
-                  fontFamily: "'Inter', sans-serif",
-                }}
-              >
-                Support & Legal
-              </h4>
-              <ul className="space-y-1.5 text-xs flex flex-wrap sm:block gap-x-4 gap-y-1.5">
-                {legalLinks.map((link) => (
-                  <li key={link.name}>
-                    <Link
-                      to={link.path}
-                      className="py-0.5 inline-block transition-colors"
-                      style={{ color: 'inherit' }}
-                      onMouseEnter={e => { e.currentTarget.style.color = 'var(--t-accent-light, #85f5e6)' }}
-                      onMouseLeave={e => { e.currentTarget.style.color = '' }}
-                    >
-                      {link.name}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            </div>
-
           </div>
 
         </div>
 
-        {/* Bottom Bar */}
+        {/* Bottom Legal Copyright Strip */}
         <div
-          className="py-4 flex flex-col sm:flex-row justify-between items-center gap-2.5 text-[11px]"
+          className="border-t py-4 text-xs flex flex-col sm:flex-row items-center justify-between gap-3"
           style={{
-            borderTop: '1px solid color-mix(in srgb, var(--t-border, #6d7a77) 20%, transparent)',
-            color: 'color-mix(in srgb, var(--t-accent, #67d9ca) 35%, #888)',
+            borderColor: 'color-mix(in srgb, var(--t-border, #6d7a77) 20%, transparent)',
           }}
         >
           <p className="text-center sm:text-left" style={{ fontFamily: "'Inter', sans-serif" }}>

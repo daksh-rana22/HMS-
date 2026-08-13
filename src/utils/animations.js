@@ -1,11 +1,12 @@
-// Framer Motion animation variants
+// Framer Motion animation variants — Elevated 1.1s Smooth Motion
 
 export const fadeUp = {
-  hidden: { opacity: 0, y: 30 },
+  hidden: { opacity: 0, y: 44, scale: 0.94 },
   visible: {
     opacity: 1,
     y: 0,
-    transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] },
+    scale: 1,
+    transition: { duration: 1.1, ease: [0.16, 1, 0.3, 1] },
   },
 }
 
@@ -13,43 +14,46 @@ export const fadeIn = {
   hidden: { opacity: 0 },
   visible: {
     opacity: 1,
-    transition: { duration: 0.5, ease: 'easeOut' },
+    transition: { duration: 1.1, ease: [0.16, 1, 0.3, 1] },
   },
 }
 
 export const fadeDown = {
-  hidden: { opacity: 0, y: -20 },
+  hidden: { opacity: 0, y: -44, scale: 0.94 },
   visible: {
     opacity: 1,
     y: 0,
-    transition: { duration: 0.5, ease: [0.22, 1, 0.36, 1] },
+    scale: 1,
+    transition: { duration: 1.1, ease: [0.16, 1, 0.3, 1] },
   },
 }
 
 export const slideLeft = {
-  hidden: { opacity: 0, x: 60 },
+  hidden: { opacity: 0, x: 60, scale: 0.94 },
   visible: {
     opacity: 1,
     x: 0,
-    transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] },
+    scale: 1,
+    transition: { duration: 1.1, ease: [0.16, 1, 0.3, 1] },
   },
 }
 
 export const slideRight = {
-  hidden: { opacity: 0, x: -60 },
+  hidden: { opacity: 0, x: -60, scale: 0.94 },
   visible: {
     opacity: 1,
     x: 0,
-    transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] },
+    scale: 1,
+    transition: { duration: 1.1, ease: [0.16, 1, 0.3, 1] },
   },
 }
 
 export const scaleUp = {
-  hidden: { opacity: 0, scale: 0.9 },
+  hidden: { opacity: 0, scale: 0.92 },
   visible: {
     opacity: 1,
     scale: 1,
-    transition: { duration: 0.5, ease: [0.22, 1, 0.36, 1] },
+    transition: { duration: 1.1, ease: [0.16, 1, 0.3, 1] },
   },
 }
 
@@ -58,7 +62,7 @@ export const staggerContainer = {
   visible: {
     opacity: 1,
     transition: {
-      staggerChildren: 0.1,
+      staggerChildren: 0.22,
       delayChildren: 0.1,
     },
   },
@@ -69,20 +73,20 @@ export const staggerContainerSlow = {
   visible: {
     opacity: 1,
     transition: {
-      staggerChildren: 0.15,
-      delayChildren: 0.2,
+      staggerChildren: 0.28,
+      delayChildren: 0.15,
     },
   },
 }
 
 export const hoverLift = {
   y: -6,
-  transition: { duration: 0.3, ease: 'easeOut' },
+  transition: { duration: 0.4, ease: 'easeOut' },
 }
 
 export const hoverScale = {
   scale: 1.02,
-  transition: { duration: 0.3, ease: 'easeOut' },
+  transition: { duration: 0.4, ease: 'easeOut' },
 }
 
 export const tapScale = {
@@ -90,15 +94,15 @@ export const tapScale = {
 }
 
 export const pageTransition = {
-  initial: { opacity: 0, y: 10 },
+  initial: { opacity: 0, y: 16 },
   animate: {
     opacity: 1,
     y: 0,
-    transition: { duration: 0.4, ease: [0.22, 1, 0.36, 1] },
+    transition: { duration: 0.6, ease: [0.16, 1, 0.3, 1] },
   },
   exit: {
     opacity: 0,
     y: -10,
-    transition: { duration: 0.3, ease: 'easeIn' },
+    transition: { duration: 0.4, ease: 'easeIn' },
   },
 }

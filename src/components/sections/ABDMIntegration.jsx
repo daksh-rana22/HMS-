@@ -2,10 +2,10 @@ import { motion } from 'framer-motion'
 import { Link } from 'react-router-dom'
 
 const fadeUp = {
-  hidden: { opacity: 0, y: 28 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] } },
+  hidden: { opacity: 0, y: 44, scale: 0.94 },
+  visible: { opacity: 1, y: 0, scale: 1, transition: { duration: 1.1, ease: [0.16, 1, 0.3, 1] } },
 }
-const stagger = { hidden: {}, visible: { transition: { staggerChildren: 0.12 } } }
+const stagger = { hidden: {}, visible: { transition: { staggerChildren: 0.22 } } }
 
 const milestones = [
   {
@@ -30,14 +30,14 @@ const milestones = [
     icon: 'cloud_sync',
     title: 'Full ABDM Compliance',
     desc: 'Integration Milestone 3 — End-to-end ABDM ecosystem compliance including HIP/HIU roles, consent management, and digital health records archival.',
-    color: 'var(--t-accent)',
+    color: 'var(--t-primary)',
   },
 ]
 
 export default function ABDMIntegration() {
   return (
     <section
-      className="py-14 sm:py-20 lg:py-24 relative overflow-hidden"
+      className="pt-6 sm:pt-8 lg:pt-10 pb-4 sm:pb-6 lg:pb-8 relative overflow-hidden"
       style={{ background: 'var(--t-bg, #effcfe)' }}
       id="abdm-integration"
     >
@@ -56,7 +56,7 @@ export default function ABDMIntegration() {
       <div className="site-wrapper relative z-10 px-2 sm:px-4 lg:px-6 max-w-[96%] xl:max-w-[1440px]">
 
         {/* ── Section Header with 2 Flanking ABDM Emblem Images ── */}
-        <div className="flex flex-col lg:flex-row items-center justify-between gap-4 lg:gap-3 xl:gap-4 mb-12 sm:mb-16">
+        <div className="flex flex-col lg:flex-row items-center justify-between gap-4 lg:gap-3 xl:gap-4 mb-5 sm:mb-7">
           
           {/* Left Still ABDM Image (Bigger) */}
           <div className="w-full max-w-[260px] sm:max-w-[280px] lg:max-w-[260px] xl:max-w-[320px] shrink-0 order-2 lg:order-1 flex items-center justify-center">
@@ -72,7 +72,7 @@ export default function ABDMIntegration() {
             className="flex-1 max-w-3xl mx-auto text-center space-y-3 sm:space-y-4 order-1 lg:order-2"
             initial="hidden"
             whileInView="visible"
-            viewport={{ once: true }}
+            viewport={{ amount: 0.15 }}
             variants={stagger}
           >
             {/* India flag + ABDM badge */}
@@ -132,8 +132,8 @@ export default function ABDMIntegration() {
             </motion.p>
           </motion.div>
 
-          {/* Right Still ABDM Image (Bigger) */}
-          <div className="w-full max-w-[260px] sm:max-w-[280px] lg:max-w-[260px] xl:max-w-[320px] shrink-0 order-3 flex items-center justify-center">
+          {/* Right Still ABDM Image (Desktop Only to avoid duplicate stacking on mobile) */}
+          <div className="w-full max-w-[260px] sm:max-w-[280px] lg:max-w-[260px] xl:max-w-[320px] shrink-0 order-3 hidden lg:flex items-center justify-center">
             <img
               src="/images/abdm_logo_bg.svg"
               alt="Ayushman Bharat Digital Mission Emblem Right"
@@ -148,7 +148,7 @@ export default function ABDMIntegration() {
           className="mb-10 sm:mb-14 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6"
           initial="hidden"
           whileInView="visible"
-          viewport={{ once: true }}
+          viewport={{ amount: 0.15 }}
           variants={stagger}
         >
           {[
@@ -174,7 +174,7 @@ export default function ABDMIntegration() {
               label: 'AES-256 Encrypted Records',
               desc: 'End-to-end encrypted medical record archival & logging',
               icon: 'lock',
-              color: 'var(--t-accent)',
+              color: 'var(--t-primary)',
             },
           ].map((item) => (
             <motion.div
@@ -216,8 +216,8 @@ export default function ABDMIntegration() {
           style={{ borderColor: 'color-mix(in srgb, var(--t-primary) 20%, transparent)', background: 'var(--t-surface, #fff)' }}
           initial={{ opacity: 0, y: 24 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+          viewport={{ amount: 0.15 }}
+          transition={{ duration: 1.1, ease: [0.16, 1, 0.3, 1] }}
         >
           {/* Gradient header bar */}
           <div
@@ -227,10 +227,8 @@ export default function ABDMIntegration() {
             }}
           >
             <div className="flex items-center gap-3">
-              <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl bg-white/20 backdrop-blur-sm border border-white/30 flex items-center justify-center shrink-0">
-                <span className="material-symbols-outlined text-white text-xl sm:text-2xl" style={{ fontVariationSettings: "'FILL' 1" }}>
-                  health_and_safety
-                </span>
+              <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl bg-white p-1.5 shadow-md flex items-center justify-center shrink-0">
+                <img src="/images/abha_logo.png" alt="Official ABHA Logo" className="w-full h-full object-contain select-none" />
               </div>
               <div>
                 <h3 className="text-white font-extrabold text-base sm:text-lg" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
@@ -303,7 +301,7 @@ export default function ABDMIntegration() {
                 className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6 relative z-10"
                 initial="hidden"
                 whileInView="visible"
-                viewport={{ once: true }}
+                viewport={{ amount: 0.15 }}
                 variants={stagger}
               >
                 {milestones.map((m) => (
@@ -407,7 +405,7 @@ export default function ABDMIntegration() {
           className="grid grid-cols-1 md:grid-cols-2 gap-5 sm:gap-6"
           initial="hidden"
           whileInView="visible"
-          viewport={{ once: true }}
+          viewport={{ amount: 0.15 }}
           variants={stagger}
         >
 
@@ -559,8 +557,8 @@ export default function ABDMIntegration() {
           }}
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6, delay: 0.2 }}
+          viewport={{ amount: 0.15 }}
+          transition={{ duration: 1.1, delay: 0.25, ease: [0.16, 1, 0.3, 1] }}
         >
           <div className="flex items-center gap-3 text-center sm:text-left">
             <span

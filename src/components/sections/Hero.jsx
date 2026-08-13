@@ -3,10 +3,10 @@ import { Link } from 'react-router-dom'
 import HeroBackground from '../common/HeroBackground'
 
 const fadeUp = {
-  hidden: { opacity: 0, y: 24 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] } },
+  hidden: { opacity: 0, y: 44, scale: 0.94 },
+  visible: { opacity: 1, y: 0, scale: 1, transition: { duration: 1.1, ease: [0.16, 1, 0.3, 1] } },
 }
-const stagger = { hidden: {}, visible: { transition: { staggerChildren: 0.1 } } }
+const stagger = { hidden: {}, visible: { transition: { staggerChildren: 0.22 } } }
 
 export default function Hero() {
   return (
