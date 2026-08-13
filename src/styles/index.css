@@ -45,7 +45,7 @@
     --t-primary: #0D9488;
     --t-primary-dark: #0F766E;
     --t-primary-mid: #14B8A6;
-    --t-accent: #2563EB;
+    --t-accent: #0284C7;
     --t-accent-light: #10B981;
     --t-bg: #F0FDFA;
     --t-bg-light: #CCFBF1;
@@ -53,170 +53,170 @@
     --t-surface-low: #F8FAFC;
     --t-surface-mid: #E0F2FE;
     --t-surface-high: #99F6E4;
-    --t-border: #99F6E4;
-    --t-border-light: #E2E8F0;
+    --t-border: #5EEAD4;
+    --t-border-light: #CCFBF1;
     --t-text: #0F172A;
     --t-text-secondary: #1E293B;
     --t-text-muted: #475569;
     --t-on-primary: #ffffff;
-    --t-hero-glow: rgba(13, 148, 136, 0.22);
-    --t-card-hover-glow: rgba(37, 99, 235, 0.16);
-    --t-nav-bg: rgba(255, 255, 255, 0.94);
-    --t-nav-border: rgba(153, 246, 228, 0.60);
+    --t-hero-glow: rgba(13, 148, 136, 0.28);
+    --t-card-hover-glow: rgba(2, 132, 199, 0.22);
+    --t-nav-bg: rgba(240, 253, 250, 0.95);
+    --t-nav-border: rgba(94, 234, 212, 0.50);
     --t-module-bg: linear-gradient(135deg, #F0FDFA 0%, #E0F2FE 50%, #DCFCE7 100%);
-    --t-gradient-text: linear-gradient(135deg, #0D9488 0%, #2563EB 50%, #059669 100%);
-    --t-btn-shadow: rgba(13, 148, 136, 0.32);
-    --t-scrollbar: rgba(13, 148, 136, 0.40);
-    --t-scrollbar-hover: rgba(13, 148, 136, 0.75);
-    --t-dropdown-shadow: rgba(13, 148, 136, 0.22);
+    --t-gradient-text: linear-gradient(135deg, #0D9488 0%, #0284C7 50%, #059669 100%);
+    --t-btn-shadow: rgba(13, 148, 136, 0.40);
+    --t-scrollbar: rgba(13, 148, 136, 0.45);
+    --t-scrollbar-hover: rgba(13, 148, 136, 0.80);
+    --t-dropdown-shadow: rgba(13, 148, 136, 0.28);
     --t-mobile-bg: #F0FDFA;
-    --t-active-bg: rgba(204, 251, 241, 0.70);
-    --t-active-border: rgba(13, 148, 136, 0.40);
+    --t-active-bg: rgba(204, 251, 241, 0.75);
+    --t-active-border: rgba(13, 148, 136, 0.50);
     --t-footer-bg: #062024;
   }
 
-  /* ── Thinker Light (Teal, Rose & Warm Neutrals) ── */
+  /* ── Thinker / Modern Jade & Coral Rose (Jade Teal, Electric Coral Rose & Porcelain) ── */
   [data-theme="thinker"],
   [data-hero-theme="thinker"] {
-    --t-primary: #376E6F;
-    --t-primary-dark: #275253;
-    --t-primary-mid: #478E8F;
-    --t-accent: #DA7B93;
-    --t-accent-light: #EFA6B6;
-    --t-bg: #F9F8F6;
-    --t-bg-light: #F2F0EC;
+    --t-primary: #0F766E;
+    --t-primary-dark: #115E59;
+    --t-primary-mid: #14B8A6;
+    --t-accent: #F43F5E;
+    --t-accent-light: #FB7185;
+    --t-bg: #FAFAF9;
+    --t-bg-light: #F5F5F4;
     --t-surface: #FFFFFF;
-    --t-surface-low: #F6F4F1;
-    --t-surface-mid: #EDE9E3;
-    --t-surface-high: #E3DDD5;
-    --t-border: #D0C8BF;
-    --t-border-light: #E3DDD5;
-    --t-text: #1C2B2B;
-    --t-text-secondary: #2F4454;
-    --t-text-muted: #6B7A82;
+    --t-surface-low: #F5F5F4;
+    --t-surface-mid: #E7E5E4;
+    --t-surface-high: #FECDD3;
+    --t-border: #FB7185;
+    --t-border-light: #FFE4E6;
+    --t-text: #0F172A;
+    --t-text-secondary: #1E293B;
+    --t-text-muted: #475569;
     --t-on-primary: #ffffff;
-    --t-hero-glow: rgba(55, 110, 111, 0.18);
-    --t-card-hover-glow: rgba(55, 110, 111, 0.14);
-    --t-nav-bg: rgba(249, 248, 246, 0.93);
-    --t-nav-border: rgba(208, 200, 191, 0.45);
-    --t-module-bg: linear-gradient(135deg, #e8f3f3 0%, #f5e0e6 100%);
-    --t-gradient-text: linear-gradient(135deg, #376E6F 0%, #DA7B93 60%, #2F4454 100%);
-    --t-btn-shadow: rgba(55, 110, 111, 0.30);
-    --t-scrollbar: rgba(55, 110, 111, 0.35);
-    --t-scrollbar-hover: rgba(55, 110, 111, 0.70);
-    --t-dropdown-shadow: rgba(55, 110, 111, 0.20);
-    --t-mobile-bg: #F9F8F6;
-    --t-active-bg: rgba(232, 243, 243, 0.70);
-    --t-active-border: rgba(55, 110, 111, 0.30);
-    --t-footer-bg: #1C2B2B;
+    --t-hero-glow: rgba(15, 118, 110, 0.28);
+    --t-card-hover-glow: rgba(244, 63, 94, 0.22);
+    --t-nav-bg: rgba(250, 250, 249, 0.95);
+    --t-nav-border: rgba(251, 113, 133, 0.45);
+    --t-module-bg: linear-gradient(135deg, #F0FDFA 0%, #FFF1F2 100%);
+    --t-gradient-text: linear-gradient(135deg, #0F766E 0%, #F43F5E 55%, #9F1239 100%);
+    --t-btn-shadow: rgba(15, 118, 110, 0.40);
+    --t-scrollbar: rgba(15, 118, 110, 0.45);
+    --t-scrollbar-hover: rgba(17, 94, 89, 0.85);
+    --t-dropdown-shadow: rgba(15, 118, 110, 0.25);
+    --t-mobile-bg: #FAFAF9;
+    --t-active-bg: rgba(255, 241, 242, 0.85);
+    --t-active-border: rgba(244, 63, 94, 0.50);
+    --t-footer-bg: #0F172A;
   }
 
-  /* ── Dreamy Skies (Sky Blue, Lavender & Deep Slate) ── */
+  /* ── Dreamy Skies (Vivid Sapphire Blue, Electric Indigo & Ice) ── */
   [data-theme="dreamy"],
   [data-hero-theme="dreamy"] {
-    --t-primary: #4FA8D5;
-    --t-primary-dark: #2E86C1;
-    --t-primary-mid: #5DB8E8;
-    --t-accent: #A78BDB;
-    --t-accent-light: #C3AFF0;
-    --t-bg: #D8E4F2;
-    --t-bg-light: #CCDAED;
-    --t-surface: #EBF1FA;
-    --t-surface-low: #E0EAF6;
-    --t-surface-mid: #CCDAED;
-    --t-surface-high: #BACDE4;
-    --t-border: #9BB5D4;
-    --t-border-light: #B8CEDF;
-    --t-text: #101828;
-    --t-text-secondary: #2E3D56;
-    --t-text-muted: #55667A;
+    --t-primary: #0284C7;
+    --t-primary-dark: #0369A1;
+    --t-primary-mid: #0EA5E9;
+    --t-accent: #6366F1;
+    --t-accent-light: #38BDF8;
+    --t-bg: #F0F9FF;
+    --t-bg-light: #E0F2FE;
+    --t-surface: #FFFFFF;
+    --t-surface-low: #F8FAFC;
+    --t-surface-mid: #E0F2FE;
+    --t-surface-high: #BAE6FD;
+    --t-border: #38BDF8;
+    --t-border-light: #BAE6FD;
+    --t-text: #0F172A;
+    --t-text-secondary: #1E293B;
+    --t-text-muted: #475569;
     --t-on-primary: #ffffff;
-    --t-hero-glow: rgba(79, 168, 213, 0.28);
-    --t-card-hover-glow: rgba(167, 139, 219, 0.22);
-    --t-nav-bg: rgba(216, 228, 242, 0.94);
-    --t-nav-border: rgba(155, 181, 212, 0.50);
-    --t-module-bg: linear-gradient(135deg, #CCDAED 0%, #C3AFF0 100%);
-    --t-gradient-text: linear-gradient(135deg, #2E86C1 0%, #4FA8D5 40%, #A78BDB 100%);
-    --t-btn-shadow: rgba(46, 134, 193, 0.38);
-    --t-scrollbar: rgba(79, 168, 213, 0.50);
-    --t-scrollbar-hover: rgba(46, 134, 193, 0.80);
-    --t-dropdown-shadow: rgba(79, 168, 213, 0.28);
-    --t-mobile-bg: #D8E4F2;
-    --t-active-bg: rgba(79, 168, 213, 0.20);
-    --t-active-border: rgba(79, 168, 213, 0.55);
-    --t-footer-bg: #101828;
+    --t-hero-glow: rgba(2, 132, 199, 0.32);
+    --t-card-hover-glow: rgba(99, 102, 241, 0.25);
+    --t-nav-bg: rgba(240, 249, 255, 0.95);
+    --t-nav-border: rgba(56, 189, 248, 0.50);
+    --t-module-bg: linear-gradient(135deg, #F0F9FF 0%, #E0F2FE 50%, #E0E7FF 100%);
+    --t-gradient-text: linear-gradient(135deg, #0284C7 0%, #0369A1 50%, #4F46E5 100%);
+    --t-btn-shadow: rgba(2, 132, 199, 0.45);
+    --t-scrollbar: rgba(2, 132, 199, 0.50);
+    --t-scrollbar-hover: rgba(3, 105, 161, 0.85);
+    --t-dropdown-shadow: rgba(2, 132, 199, 0.30);
+    --t-mobile-bg: #F0F9FF;
+    --t-active-bg: rgba(224, 242, 254, 0.85);
+    --t-active-border: rgba(2, 132, 199, 0.60);
+    --t-footer-bg: #0F172A;
   }
 
-  /* ── Amber Teal (Deep Amber, Teal & Dark Navy) ── */
+  /* ── Amber Teal (Vivid Sunset Orange, Amber & Ocean Teal) ── */
   [data-theme="amberteal"],
   [data-hero-theme="amberteal"] {
-    --t-primary: #C96B12;
-    --t-primary-dark: #A85608;
-    --t-primary-mid: #E07F28;
-    --t-accent: #1C768F;
-    --t-accent-light: #2A9BB5;
-    --t-bg: #FBF6F0;
-    --t-bg-light: #F5EDE2;
+    --t-primary: #EA580C;
+    --t-primary-dark: #C2410C;
+    --t-primary-mid: #F97316;
+    --t-accent: #0D9488;
+    --t-accent-light: #14B8A6;
+    --t-bg: #FFF7ED;
+    --t-bg-light: #FFEDD5;
     --t-surface: #FFFFFF;
-    --t-surface-low: #FAF3EA;
-    --t-surface-mid: #F2E6D5;
-    --t-surface-high: #E8D5BF;
-    --t-border: #D4BFA0;
-    --t-border-light: #E8D8C4;
-    --t-text: #1C0F05;
-    --t-text-secondary: #3D2810;
-    --t-text-muted: #6B5040;
+    --t-surface-low: #FFF7ED;
+    --t-surface-mid: #FFEDD5;
+    --t-surface-high: #FED7AA;
+    --t-border: #F97316;
+    --t-border-light: #FFEDD5;
+    --t-text: #0F172A;
+    --t-text-secondary: #1E293B;
+    --t-text-muted: #475569;
     --t-on-primary: #ffffff;
-    --t-hero-glow: rgba(201, 107, 18, 0.20);
-    --t-card-hover-glow: rgba(28, 118, 143, 0.18);
-    --t-nav-bg: rgba(251, 246, 240, 0.95);
-    --t-nav-border: rgba(212, 191, 160, 0.45);
-    --t-module-bg: linear-gradient(135deg, #FFF3E0 0%, #D6EFF5 100%);
-    --t-gradient-text: linear-gradient(135deg, #C96B12 0%, #E07F28 40%, #1C768F 80%, #032539 100%);
-    --t-btn-shadow: rgba(201, 107, 18, 0.35);
-    --t-scrollbar: rgba(28, 118, 143, 0.45);
-    --t-scrollbar-hover: rgba(28, 118, 143, 0.80);
-    --t-dropdown-shadow: rgba(201, 107, 18, 0.20);
-    --t-mobile-bg: #FBF6F0;
-    --t-active-bg: rgba(201, 107, 18, 0.10);
-    --t-active-border: rgba(201, 107, 18, 0.38);
-    --t-footer-bg: #1C0F05;
+    --t-hero-glow: rgba(234, 88, 12, 0.32);
+    --t-card-hover-glow: rgba(13, 148, 136, 0.25);
+    --t-nav-bg: rgba(255, 247, 237, 0.95);
+    --t-nav-border: rgba(249, 115, 22, 0.50);
+    --t-module-bg: linear-gradient(135deg, #FFF7ED 0%, #FFEDD5 50%, #CCFBF1 100%);
+    --t-gradient-text: linear-gradient(135deg, #EA580C 0%, #F97316 45%, #0D9488 100%);
+    --t-btn-shadow: rgba(234, 88, 12, 0.45);
+    --t-scrollbar: rgba(234, 88, 12, 0.50);
+    --t-scrollbar-hover: rgba(194, 65, 12, 0.85);
+    --t-dropdown-shadow: rgba(234, 88, 12, 0.30);
+    --t-mobile-bg: #FFF7ED;
+    --t-active-bg: rgba(255, 237, 213, 0.85);
+    --t-active-border: rgba(234, 88, 12, 0.60);
+    --t-footer-bg: #0F172A;
   }
 
-  /* ── Crimson Light (Hot Pink, Rose & Warm Grey) ── */
+  /* ── Electric Amethyst & Cyber Violet (Amethyst Purple, Cyber Magenta & Ice Lavender) ── */
   [data-theme="darkcrimson"],
   [data-hero-theme="darkcrimson"] {
-    --t-primary: #EB1750;
-    --t-primary-dark: #C4103E;
-    --t-primary-mid: #F02563;
-    --t-accent: #CC527A;
-    --t-accent-light: #DD7A97;
-    --t-bg: #FDF4F6;
-    --t-bg-light: #F9ECF0;
+    --t-primary: #8B5CF6;
+    --t-primary-dark: #6D28D9;
+    --t-primary-mid: #A78BFA;
+    --t-accent: #EC4899;
+    --t-accent-light: #F472B6;
+    --t-bg: #F5F3FF;
+    --t-bg-light: #ECE9FE;
     --t-surface: #FFFFFF;
-    --t-surface-low: #FBF0F3;
-    --t-surface-mid: #F5E4E9;
-    --t-surface-high: #EDD5DC;
-    --t-border: #DDB8C2;
-    --t-border-light: #EDD5DC;
-    --t-text: #1A0810;
-    --t-text-secondary: #4A1A28;
-    --t-text-muted: #7A5060;
+    --t-surface-low: #F5F3FF;
+    --t-surface-mid: #ECE9FE;
+    --t-surface-high: #DDD6FE;
+    --t-border: #A78BFA;
+    --t-border-light: #DDD6FE;
+    --t-text: #0F172A;
+    --t-text-secondary: #1E293B;
+    --t-text-muted: #475569;
     --t-on-primary: #ffffff;
-    --t-hero-glow: rgba(235, 23, 80, 0.15);
-    --t-card-hover-glow: rgba(204, 82, 122, 0.16);
-    --t-nav-bg: rgba(253, 244, 246, 0.94);
-    --t-nav-border: rgba(221, 184, 194, 0.45);
-    --t-module-bg: linear-gradient(135deg, #FDF4F6 0%, #F5C6D4 100%);
-    --t-gradient-text: linear-gradient(135deg, #EB1750 0%, #CC527A 55%, #8A3050 100%);
-    --t-btn-shadow: rgba(235, 23, 80, 0.32);
-    --t-scrollbar: rgba(235, 23, 80, 0.40);
-    --t-scrollbar-hover: rgba(235, 23, 80, 0.75);
-    --t-dropdown-shadow: rgba(235, 23, 80, 0.20);
-    --t-mobile-bg: #FDF4F6;
-    --t-active-bg: rgba(235, 23, 80, 0.10);
-    --t-active-border: rgba(235, 23, 80, 0.35);
-    --t-footer-bg: #1A0810;
+    --t-hero-glow: rgba(139, 92, 246, 0.32);
+    --t-card-hover-glow: rgba(236, 72, 153, 0.25);
+    --t-nav-bg: rgba(245, 243, 255, 0.95);
+    --t-nav-border: rgba(167, 139, 250, 0.50);
+    --t-module-bg: linear-gradient(135deg, #F5F3FF 0%, #ECE9FE 50%, #FCE7F3 100%);
+    --t-gradient-text: linear-gradient(135deg, #7C3AED 0%, #8B5CF6 45%, #EC4899 90%);
+    --t-btn-shadow: rgba(139, 92, 246, 0.45);
+    --t-scrollbar: rgba(139, 92, 246, 0.50);
+    --t-scrollbar-hover: rgba(109, 40, 217, 0.85);
+    --t-dropdown-shadow: rgba(139, 92, 246, 0.30);
+    --t-mobile-bg: #F5F3FF;
+    --t-active-bg: rgba(236, 233, 254, 0.85);
+    --t-active-border: rgba(139, 92, 246, 0.60);
+    --t-footer-bg: #0F172A;
   }
 
   /* ── Embers (Deep Indigo, Mauve, Hot Coral & Peach) ── */
@@ -255,40 +255,40 @@
     --t-footer-bg: #41436A;
   }
 
-  /* ── Cerulean (Cerulean Blue, Mustard, Asphalt & Shadow) ── */
+  /* ── Cerulean (Deep Ocean Blue & Golden Amber) ── */
   [data-theme="cerulean"],
   [data-hero-theme="cerulean"] {
-    --t-primary: #217CA3;
-    --t-primary-dark: #175E7E;
-    --t-primary-mid: #2A90BC;
-    --t-accent: #E29930;
-    --t-accent-light: #F0B050;
-    --t-bg: #EEF6FB;
-    --t-bg-light: #E4F0F8;
+    --t-primary: #0369A1;
+    --t-primary-dark: #075985;
+    --t-primary-mid: #0284C7;
+    --t-accent: #D97706;
+    --t-accent-light: #F59E0B;
+    --t-bg: #F0F9FF;
+    --t-bg-light: #E0F2FE;
     --t-surface: #FFFFFF;
-    --t-surface-low: #F2F8FC;
-    --t-surface-mid: #E0EFF8;
-    --t-surface-high: #CCE4F2;
-    --t-border: #A8CCDF;
-    --t-border-light: #C8DFF0;
-    --t-text: #0D1F2D;
-    --t-text-secondary: #1E3D56;
-    --t-text-muted: #4A6878;
+    --t-surface-low: #F8FAFC;
+    --t-surface-mid: #E0F2FE;
+    --t-surface-high: #BAE6FD;
+    --t-border: #0284C7;
+    --t-border-light: #BAE6FD;
+    --t-text: #0C4A6E;
+    --t-text-secondary: #0F172A;
+    --t-text-muted: #334155;
     --t-on-primary: #ffffff;
-    --t-hero-glow: rgba(33, 124, 163, 0.18);
-    --t-card-hover-glow: rgba(226, 153, 48, 0.16);
-    --t-nav-bg: rgba(238, 246, 251, 0.94);
-    --t-nav-border: rgba(168, 204, 223, 0.45);
-    --t-module-bg: linear-gradient(135deg, #E4F0F8 0%, #FFF4DF 100%);
-    --t-gradient-text: linear-gradient(135deg, #217CA3 0%, #2A90BC 40%, #E29930 80%, #F0B050 100%);
-    --t-btn-shadow: rgba(33, 124, 163, 0.32);
-    --t-scrollbar: rgba(33, 124, 163, 0.40);
-    --t-scrollbar-hover: rgba(33, 124, 163, 0.75);
-    --t-dropdown-shadow: rgba(33, 124, 163, 0.18);
-    --t-mobile-bg: #EEF6FB;
-    --t-active-bg: rgba(33, 124, 163, 0.12);
-    --t-active-border: rgba(33, 124, 163, 0.40);
-    --t-footer-bg: #0D1F2D;
+    --t-hero-glow: rgba(3, 105, 161, 0.32);
+    --t-card-hover-glow: rgba(217, 119, 6, 0.25);
+    --t-nav-bg: rgba(240, 249, 255, 0.95);
+    --t-nav-border: rgba(2, 132, 199, 0.55);
+    --t-module-bg: linear-gradient(135deg, #F0F9FF 0%, #E0F2FE 50%, #FEF3C7 100%);
+    --t-gradient-text: linear-gradient(135deg, #0369A1 0%, #0284C7 40%, #D97706 80%, #F59E0B 100%);
+    --t-btn-shadow: rgba(3, 105, 161, 0.42);
+    --t-scrollbar: rgba(3, 105, 161, 0.55);
+    --t-scrollbar-hover: rgba(7, 89, 133, 0.85);
+    --t-dropdown-shadow: rgba(3, 105, 161, 0.30);
+    --t-mobile-bg: #F0F9FF;
+    --t-active-bg: rgba(224, 242, 254, 0.85);
+    --t-active-border: rgba(3, 105, 161, 0.60);
+    --t-footer-bg: #075985;
   }
 
   /* ── Burgundy & Teal (Crimson Maroon, Peacock Teal & Champagne Gold) ── */
@@ -327,40 +327,40 @@
     --t-footer-bg: #121C1F;
   }
 
-  /* ── Royal Navy & Gold (Midnight Navy, Sapphire & Metallic Gold) ── */
+  /* ── Imperial Navy & Liquid Gold (Vivid Royal Indigo, Imperial Navy & Liquid Gold) ── */
   [data-theme="navygold"],
   [data-hero-theme="navygold"] {
-    --t-primary: #1B2B48;
-    --t-primary-dark: #111A2E;
-    --t-primary-mid: #283C66;
-    --t-accent: #B58E58;
-    --t-accent-light: #D8C6AC;
-    --t-bg: #FAF8F5;
-    --t-bg-light: #F3EFE9;
+    --t-primary: #1E3A8A;
+    --t-primary-dark: #172554;
+    --t-primary-mid: #2563EB;
+    --t-accent: #D97706;
+    --t-accent-light: #F59E0B;
+    --t-bg: #F8FAFC;
+    --t-bg-light: #F1F5F9;
     --t-surface: #FFFFFF;
-    --t-surface-low: #FAF8F5;
-    --t-surface-mid: #EAEFF6;
-    --t-surface-high: #D2DEEE;
-    --t-border: #C8D6E5;
-    --t-border-light: #EAE4DA;
-    --t-text: #111A2E;
-    --t-text-secondary: #233354;
-    --t-text-muted: #526484;
+    --t-surface-low: #F8FAFC;
+    --t-surface-mid: #F1F5F9;
+    --t-surface-high: #FEF3C7;
+    --t-border: #F59E0B;
+    --t-border-light: #FEF3C7;
+    --t-text: #0F172A;
+    --t-text-secondary: #1E293B;
+    --t-text-muted: #475569;
     --t-on-primary: #ffffff;
-    --t-hero-glow: rgba(27, 43, 72, 0.20);
-    --t-card-hover-glow: rgba(181, 142, 88, 0.20);
-    --t-nav-bg: rgba(250, 248, 245, 0.94);
-    --t-nav-border: rgba(200, 214, 229, 0.55);
-    --t-module-bg: linear-gradient(135deg, #EAEFF6 0%, #F5EFE6 50%, #FAF8F5 100%);
-    --t-gradient-text: linear-gradient(135deg, #111A2E 0%, #1B2B48 40%, #B58E58 100%);
-    --t-btn-shadow: rgba(27, 43, 72, 0.32);
-    --t-scrollbar: rgba(27, 43, 72, 0.40);
-    --t-scrollbar-hover: rgba(27, 43, 72, 0.75);
-    --t-dropdown-shadow: rgba(27, 43, 72, 0.22);
-    --t-mobile-bg: #FAF8F5;
-    --t-active-bg: rgba(234, 239, 246, 0.85);
-    --t-active-border: rgba(27, 43, 72, 0.40);
-    --t-footer-bg: #0B1220;
+    --t-hero-glow: rgba(30, 58, 138, 0.30);
+    --t-card-hover-glow: rgba(217, 119, 6, 0.25);
+    --t-nav-bg: rgba(248, 250, 252, 0.95);
+    --t-nav-border: rgba(245, 158, 11, 0.50);
+    --t-module-bg: linear-gradient(135deg, #F8FAFC 0%, #EFF6FF 50%, #FEF3C7 100%);
+    --t-gradient-text: linear-gradient(135deg, #1E3A8A 0%, #2563EB 40%, #D97706 80%, #F59E0B 100%);
+    --t-btn-shadow: rgba(30, 58, 138, 0.42);
+    --t-scrollbar: rgba(30, 58, 138, 0.50);
+    --t-scrollbar-hover: rgba(23, 37, 84, 0.85);
+    --t-dropdown-shadow: rgba(30, 58, 138, 0.30);
+    --t-mobile-bg: #F8FAFC;
+    --t-active-bg: rgba(254, 243, 199, 0.85);
+    --t-active-border: rgba(217, 119, 6, 0.60);
+    --t-footer-bg: #0F172A;
   }
 
 

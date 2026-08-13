@@ -44,9 +44,6 @@ export default function Navbar() {
       animate={{ y: 0 }}
       transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
     >
-      {/* ── Floating hospital icons — canvas background ── */}
-      <NavbarBackground />
-
       {/* ── Top bar ── */}
       <div className="site-wrapper flex justify-between items-center h-14 sm:h-16 md:h-20 2xl:h-24 relative" style={{ zIndex: 1 }}>
 

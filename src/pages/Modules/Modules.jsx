@@ -4,10 +4,10 @@ import { motion } from 'framer-motion'
 import { pageTransition } from '../../utils/animations'
 
 const fadeUp = {
-  hidden: { opacity: 0, y: 24 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] } },
+  hidden: { opacity: 0, y: 44, scale: 0.94 },
+  visible: { opacity: 1, y: 0, scale: 1, transition: { duration: 1.1, ease: [0.16, 1, 0.3, 1] } },
 }
-const stagger = { hidden: {}, visible: { transition: { staggerChildren: 0.1 } } }
+const stagger = { hidden: {}, visible: { transition: { staggerChildren: 0.22 } } }
 
 // ── SAMPLE SERVICE ORDERS DATA FOR LABORATORY ──
 const labOrders = [
@@ -2173,7 +2173,7 @@ export default function Modules() {
         {/* ── 6. LABORATORY SHOWCASE ── */}
         <motion.div
           className="card-frosted rounded-2xl sm:rounded-3xl p-5 sm:p-6 2xl:p-10 mb-8 sm:mb-10 2xl:mb-14 shadow-md border border-[#bcc9c6]/40 relative overflow-hidden"
-          initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.1 }} variants={fadeUp}
+          initial="hidden" whileInView="visible" viewport={{ amount: 0.15 }} variants={fadeUp}
         >
           {/* Background Image Overlay - Increased Visibility */}
           <img 
@@ -2285,7 +2285,7 @@ export default function Modules() {
 
         <motion.div
           className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-5 sm:gap-6 2xl:gap-8"
-          initial="hidden" whileInView="visible" viewport={{ once: true }} variants={stagger}>
+          initial="hidden" whileInView="visible" viewport={{ amount: 0.15 }} variants={stagger}>
           {additionalContainers.map((m) => (
             <motion.div key={m.title}
               className="card-frosted rounded-2xl p-6 flex items-start gap-4"
@@ -2308,7 +2308,13 @@ export default function Modules() {
       </main>
 
       {/* CTA Section */}
-      <section className="bg-[#00685e] section-padding text-white">
+      <motion.section
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ amount: 0.15 }}
+        variants={fadeUp}
+        className="bg-[#00685e] section-padding text-white"
+      >
         <div className="site-wrapper text-center">
           <h2 className="heading-hero text-white mb-5 sm:mb-6">Ready to Deploy MedCare HMS?</h2>
           <p className="text-description text-white/80 max-w-2xl 2xl:max-w-3xl mx-auto mb-8 sm:mb-10">
@@ -2321,7 +2327,7 @@ export default function Modules() {
               style={{ fontFamily: "'Inter', sans-serif" }}>Request Demo</Link>
           </div>
         </div>
-      </section>
+      </motion.section>
     </motion.div>
   )
 }

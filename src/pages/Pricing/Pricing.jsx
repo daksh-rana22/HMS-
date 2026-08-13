@@ -4,10 +4,10 @@ import { pageTransition } from '../../utils/animations'
 import { CheckCircle2, XCircle } from 'lucide-react'
 
 const fadeUp = {
-  hidden: { opacity: 0, y: 24 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] } },
+  hidden: { opacity: 0, y: 44, scale: 0.94 },
+  visible: { opacity: 1, y: 0, scale: 1, transition: { duration: 1.1, ease: [0.16, 1, 0.3, 1] } },
 }
-const stagger = { hidden: {}, visible: { transition: { staggerChildren: 0.1 } } }
+const stagger = { hidden: {}, visible: { transition: { staggerChildren: 0.22 } } }
 
 const plans = [
   {
@@ -93,7 +93,7 @@ export default function Pricing() {
         <section className="site-wrapper pb-16 sm:pb-20 2xl:pb-28">
           <motion.div
             className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6 2xl:gap-8 items-stretch"
-            initial="hidden" whileInView="visible" viewport={{ once: true }} variants={stagger}>
+            initial="hidden" whileInView="visible" viewport={{ amount: 0.15 }} variants={stagger}>
             {plans.map((plan) => (
               <motion.div
                 key={plan.tier}
@@ -174,7 +174,7 @@ export default function Pricing() {
           </h2>
           <motion.div
             className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5 2xl:gap-6"
-            initial="hidden" whileInView="visible" viewport={{ once: true }} variants={stagger}>
+            initial="hidden" whileInView="visible" viewport={{ amount: 0.15 }} variants={stagger}>
             {/* Wide security card */}
             <motion.div
               className="sm:col-span-2 p-6 sm:p-8 2xl:p-10 bg-[#eaf6f8] rounded-2xl flex flex-col sm:flex-row items-start sm:items-center gap-5 sm:gap-6"
@@ -208,7 +208,13 @@ export default function Pricing() {
         </section>
 
         {/* ── Dark CTA Bar ── */}
-        <section className="site-wrapper pb-16 sm:pb-20 2xl:pb-28">
+        <motion.section
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ amount: 0.15 }}
+          variants={fadeUp}
+          className="site-wrapper pb-16 sm:pb-20 2xl:pb-28"
+        >
           <div className="bg-[#273234] text-[#effcfe] p-6 sm:p-10 md:p-14 2xl:p-16 rounded-2xl flex flex-col md:flex-row items-start md:items-center justify-between gap-6 md:gap-10">
             <div className="max-w-xl">
               <h2 className="heading-section text-[#effcfe] mb-3 sm:mb-4">
@@ -226,7 +232,7 @@ export default function Pricing() {
                 style={{ fontFamily: "'Inter', sans-serif" }}>See Features</Link>
             </div>
           </div>
-        </section>
+        </motion.section>
 
       </div>
     </motion.div>

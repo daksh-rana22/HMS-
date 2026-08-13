@@ -2,13 +2,14 @@ import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
 import { pageTransition } from '../../utils/animations'
+import ABHAExplanationContainer from '../../components/sections/ABHAExplanationContainer'
 
 const fadeUp = {
-  hidden: { opacity: 0, y: 24 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: [0.22, 1, 0.36, 1] } },
+  hidden: { opacity: 0, y: 44, scale: 0.94 },
+  visible: { opacity: 1, y: 0, scale: 1, transition: { duration: 1.1, ease: [0.16, 1, 0.3, 1] } },
 }
 
-const stagger = { hidden: {}, visible: { transition: { staggerChildren: 0.08 } } }
+const stagger = { hidden: {}, visible: { transition: { staggerChildren: 0.22 } } }
 
 const milestonesData = [
   {
@@ -208,9 +209,9 @@ export default function ABDM() {
   const currentMilestone = milestonesData.find((m) => m.id === activeTab) || milestonesData[0]
 
   return (
-    <motion.div {...pageTransition} className="min-h-screen pt-14 sm:pt-22 lg:pt-28 pb-16" style={{ background: 'var(--t-bg, #effcfe)' }}>
+    <motion.div {...pageTransition} className="min-h-screen pt-16 sm:pt-20 lg:pt-24 pb-12" style={{ background: 'var(--t-bg, #effcfe)' }}>
       {/* ── 1. HERO BANNER ── */}
-      <section className="relative overflow-hidden pt-2 pb-8 sm:py-12 lg:py-14 border-b" style={{ borderColor: 'var(--t-border-light)' }}>
+      <section className="relative overflow-hidden pt-2 pb-6 sm:pb-8 border-b" style={{ borderColor: 'var(--t-border-light)' }}>
         {/* ── ABDM Ambient Glow Background ── */}
         <div
           className="absolute inset-0 pointer-events-none"
@@ -332,7 +333,7 @@ export default function ABDM() {
 
           {/* ── 4 Full-Width Key Capability Cards (Below Hero Row) ── */}
           <motion.div
-            className="mt-6 sm:mt-14 grid grid-cols-2 lg:grid-cols-4 gap-2.5 sm:gap-6"
+            className="mt-4 sm:mt-6 grid grid-cols-2 lg:grid-cols-4 gap-2.5 sm:gap-6"
             initial="hidden"
             animate="visible"
             variants={stagger}
@@ -360,7 +361,7 @@ export default function ABDM() {
                 label: 'AES-256 Encrypted Records',
                 desc: 'End-to-end encrypted medical record archival & logging',
                 icon: 'lock',
-                color: 'var(--t-accent)',
+                color: 'var(--t-primary)',
               },
             ].map((item) => (
               <motion.div
@@ -420,7 +421,13 @@ export default function ABDM() {
         </div>
 
         {/* 4 Core Pillars Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8 sm:mb-10">
+        <motion.div
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ amount: 0.15 }}
+          variants={stagger}
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8 sm:mb-10"
+        >
           {[
             {
               title: 'ABHA Health Account',
@@ -448,14 +455,11 @@ export default function ABDM() {
               tag: 'CONSENT GATEWAY',
               desc: 'A secure consent framework ensuring patient health records are encrypted and shared ONLY after digital patient approval.',
               icon: 'security',
-              color: 'var(--t-accent)',
+              color: 'var(--t-primary)',
             },
           ].map((pillar, idx) => (
             <motion.div
               key={pillar.title}
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true }}
               variants={fadeUp}
               className="p-6 rounded-2xl border bg-white/80 backdrop-blur-sm shadow-sm flex flex-col justify-between space-y-4 hover:shadow-md transition-all"
               style={{
@@ -503,10 +507,14 @@ export default function ABDM() {
               </div>
             </motion.div>
           ))}
-        </div>
+        </motion.div>
 
         {/* Traditional vs ABDM Transformation Card */}
-        <div
+        <motion.div
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ amount: 0.15 }}
+          variants={fadeUp}
           className="rounded-3xl border p-6 sm:p-10 shadow-md overflow-hidden relative"
           style={{
             background: 'var(--t-surface, #fff)',
@@ -587,11 +595,21 @@ export default function ABDM() {
               </ul>
             </div>
           </div>
-        </div>
+        </motion.div>
       </section>
 
+      {/* ── 3. COMPREHENSIVE ABHA EXPLANATION & HEALTH CARD CONTAINER ── */}
+      <ABHAExplanationContainer />
+
       {/* ── 3. INTERACTIVE MILESTONES EXPLORER (M1, M2, M3 DEEP DIVE) ── */}
-      <section id="milestones-explorer" className="py-8 sm:py-12 site-wrapper scroll-mt-24">
+      <motion.section
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ amount: 0.15 }}
+        variants={fadeUp}
+        id="milestones-explorer"
+        className="py-8 sm:py-12 site-wrapper scroll-mt-24"
+      >
         <div className="text-center max-w-4xl mx-auto mb-6 sm:mb-8 space-y-3">
           <span
             className="text-xs font-extrabold uppercase tracking-widest px-3.5 py-1 rounded-full border inline-block"
@@ -783,10 +801,17 @@ export default function ABDM() {
             </div>
           </motion.div>
         </AnimatePresence>
-      </section>
+      </motion.section>
 
       {/* ── 3. SAMPLE DIGITAL ABHA CARD SIMULATOR ── */}
-      <section className="py-8 sm:py-12 border-y relative overflow-hidden" style={{ background: 'color-mix(in srgb, var(--t-surface-mid) 40%, transparent)', borderColor: 'var(--t-border-light)' }}>
+      <motion.section
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ amount: 0.15 }}
+        variants={fadeUp}
+        className="py-8 sm:py-12 border-y relative overflow-hidden"
+        style={{ background: 'color-mix(in srgb, var(--t-surface-mid) 40%, transparent)', borderColor: 'var(--t-border-light)' }}
+      >
         <div className="site-wrapper">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
             
@@ -938,10 +963,16 @@ export default function ABDM() {
 
           </div>
         </div>
-      </section>
+      </motion.section>
 
       {/* ── 4. ABDM ARCHITECTURE COMPONENTS ── */}
-      <section className="py-8 sm:py-12 site-wrapper">
+      <motion.section
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ amount: 0.15 }}
+        variants={fadeUp}
+        className="py-8 sm:py-12 site-wrapper"
+      >
         <div className="text-center max-w-4xl mx-auto mb-8 sm:mb-10 space-y-3">
           <span
             className="text-xs font-extrabold uppercase tracking-widest px-3.5 py-1 rounded-full border inline-block"
@@ -965,9 +996,6 @@ export default function ABDM() {
           {abdmArchitectureComponents.map((comp, idx) => (
             <motion.div
               key={idx}
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true }}
               variants={fadeUp}
               className="p-6 rounded-2xl border bg-white/70 backdrop-blur-sm shadow-sm flex flex-col justify-between space-y-4 hover:shadow-md transition-all"
               style={{
@@ -1016,10 +1044,16 @@ export default function ABDM() {
             </motion.div>
           ))}
         </div>
-      </section>
+      </motion.section>
 
       {/* ── 5. FREQUENTLY ASKED QUESTIONS ── */}
-      <section className="py-8 sm:py-12 site-wrapper">
+      <motion.section
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ amount: 0.15 }}
+        variants={fadeUp}
+        className="py-8 sm:py-12 site-wrapper"
+      >
         <div className="text-center max-w-4xl mx-auto mb-8 space-y-3">
           <span
             className="text-xs font-extrabold uppercase tracking-widest px-3.5 py-1 rounded-full border inline-block"
@@ -1086,7 +1120,7 @@ export default function ABDM() {
             )
           })}
         </div>
-      </section>
+      </motion.section>
 
       {/* ── 6. FINAL CTA BANNER ── */}
       <section className="py-6 sm:py-10 site-wrapper">

@@ -5,6 +5,7 @@ import { pageTransition } from '../../utils/animations'
 import { testimonials } from '../../data/testimonials'
 import HeroBackground from '../../components/common/HeroBackground'
 import ABDMIntegration from '../../components/sections/ABDMIntegration'
+import HMSExplanationContainer from '../../components/sections/HMSExplanationContainer'
 
 const heroSlides = [
   { id: 1, title: 'Clinical Dashboard', img: '/images/hero_slide_1.png', tag: 'Live Clinical OPD & Emergency' },
@@ -15,11 +16,11 @@ const heroSlides = [
 ]
 
 const fadeUp = {
-  hidden: { opacity: 0, y: 24 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] } },
+  hidden: { opacity: 0, y: 44, scale: 0.94 },
+  visible: { opacity: 1, y: 0, scale: 1, transition: { duration: 1.1, ease: [0.16, 1, 0.3, 1] } },
 }
 
-const stagger = { hidden: {}, visible: { transition: { staggerChildren: 0.1 } } }
+const stagger = { hidden: {}, visible: { transition: { staggerChildren: 0.22 } } }
 
 export default function Home() {
   const [currentSlide, setCurrentSlide] = useState(0)
@@ -361,10 +362,18 @@ export default function Home() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-5 sm:gap-8 items-stretch">
           {/* Card 1: Smart Bed & IPD Room Management */}
           <motion.div
-            className="bg-[var(--t-bg-light,#f2fafb)] border border-[var(--t-border,#bcc9c6)]/40 rounded-xl sm:rounded-3xl p-4 sm:p-7 flex flex-col justify-between shadow-sm hover:shadow-md transition-all"
+            className="bg-[var(--t-bg-light,#f2fafb)] border border-[var(--t-border,#bcc9c6)]/40 rounded-xl sm:rounded-3xl p-4 sm:p-7 flex flex-col justify-between shadow-sm hover:shadow-md transition-all relative overflow-hidden group"
             initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp}
           >
-            <div>
+            {/* Content-Matched Background Image Overlay - Clear & Sharp */}
+            <img
+              src="/images/ipd_bg_soft.png"
+              alt="IPD Bed Management background"
+              className="absolute inset-0 w-full h-full object-cover opacity-55 group-hover:opacity-75 transition-all duration-500 pointer-events-none filter saturate-[1.1] contrast-[1.05]"
+            />
+            <div className="absolute inset-0 bg-gradient-to-b from-white/75 via-white/55 to-white/80 pointer-events-none" />
+
+            <div className="relative z-10">
               <div className="w-8 h-8 sm:w-12 sm:h-12 rounded-full bg-[var(--t-surface-high,#afecde)] text-[var(--t-primary,#00685e)] flex items-center justify-center mb-3 sm:mb-6">
                 <span className="material-symbols-outlined text-lg sm:text-2xl">hotel</span>
               </div>
@@ -460,10 +469,18 @@ export default function Home() {
 
           {/* Card 3: Billing, Accounts & Pharmacy */}
           <motion.div
-            className="bg-[var(--t-bg-light,#f2fafb)] border border-[var(--t-border,#bcc9c6)]/40 rounded-xl sm:rounded-3xl p-4 sm:p-7 flex flex-col justify-between shadow-sm hover:shadow-md transition-all"
+            className="bg-[var(--t-bg-light,#f2fafb)] border border-[var(--t-border,#bcc9c6)]/40 rounded-xl sm:rounded-3xl p-4 sm:p-7 flex flex-col justify-between shadow-sm hover:shadow-md transition-all relative overflow-hidden group"
             initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp}
           >
-            <div>
+            {/* Content-Matched Background Image Overlay - Clear & Sharp */}
+            <img
+              src="/images/billing_bg_soft.png"
+              alt="Billing and Pharmacy background"
+              className="absolute inset-0 w-full h-full object-cover opacity-55 group-hover:opacity-75 transition-all duration-500 pointer-events-none filter saturate-[1.1] contrast-[1.05]"
+            />
+            <div className="absolute inset-0 bg-gradient-to-b from-white/75 via-white/55 to-white/80 pointer-events-none" />
+
+            <div className="relative z-10">
               <div className="w-8 h-8 sm:w-12 sm:h-12 rounded-full bg-[var(--t-surface-high,#afecde)] text-[var(--t-primary,#00685e)] flex items-center justify-center mb-3 sm:mb-6">
                 <span className="material-symbols-outlined text-lg sm:text-2xl">receipt_long</span>
               </div>
@@ -545,19 +562,19 @@ export default function Home() {
       {/* ── 5. IMPLEMENTATION IN 3 SIMPLE STEPS ── */}
       <section className="py-12 sm:py-16 lg:py-20 site-wrapper">
         <div className="text-center max-w-3xl mx-auto mb-12 sm:mb-16">
-          <span className="text-xs font-bold uppercase tracking-wider text-[#00685e] mb-2 block">SIMPLE IMPLEMENTATION</span>
-          <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-[#121d1f]" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
+          <span className="text-xs font-bold uppercase tracking-wider text-[var(--t-primary)] mb-2 block">SIMPLE IMPLEMENTATION</span>
+          <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-[var(--t-text)]" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
             Implementation in 3 Simple Steps
           </h2>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 relative items-start">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8 relative items-stretch">
 
           {/* Mobile Vertical Connector Line */}
           <div className="md:hidden absolute left-1/2 top-8 bottom-40 w-0.5 bg-[#bcc9c6]/40 -translate-x-1/2 z-0 pointer-events-none" />
 
           {/* ECG Connector 1 */}
-          <div className="hidden md:block absolute top-7 left-[16.66%] w-[33.33%] z-0 pointer-events-none">
+          <div className="hidden md:block absolute top-12 left-[16.66%] w-[33.33%] z-20 pointer-events-none">
             <svg className="w-full h-10 text-[#00685e]" viewBox="0 0 300 40" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path
                 d="M0 20 H100 L115 8 L125 32 L135 0 L145 40 L155 10 L165 28 L175 20 H300"
@@ -586,7 +603,7 @@ export default function Home() {
           </div>
 
           {/* ECG Connector 2 */}
-          <div className="hidden md:block absolute top-7 left-[50%] w-[33.33%] z-0 pointer-events-none">
+          <div className="hidden md:block absolute top-12 left-[50%] w-[33.33%] z-20 pointer-events-none">
             <svg className="w-full h-10 text-[#00685e]" viewBox="0 0 300 40" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path
                 d="M0 20 H100 L115 8 L125 32 L135 0 L145 40 L155 10 L165 28 L175 20 H300"
@@ -614,146 +631,128 @@ export default function Home() {
             </svg>
           </div>
 
-          {/* Step 1 */}
-          <div className="text-center relative z-10 space-y-3 sm:space-y-4">
-            <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-full bg-[#00685e] text-white text-xl sm:text-2xl font-bold flex items-center justify-center mx-auto shadow-md ring-4 ring-white">
-              1
+          {/* Step 1: Implement */}
+          <motion.div
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ amount: 0.15 }}
+            variants={fadeUp}
+            className="bg-white border border-[#bcc9c6]/50 rounded-3xl shadow-sm hover:shadow-xl transition-all duration-300 relative overflow-hidden group hover:-translate-y-1 text-center z-10 flex flex-col justify-between"
+          >
+            {/* Top Featured Content-Matched Image Header */}
+            <div className="relative h-44 sm:h-48 overflow-hidden">
+              <img
+                src="/images/home_hero_reception.png"
+                alt="Hospital Cloud Setup & Implementation"
+                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-slate-900/80 via-slate-900/30 to-transparent" />
+              <div
+                className="absolute top-4 left-1/2 -translate-x-1/2 w-12 h-12 sm:w-14 sm:h-14 rounded-2xl text-white text-lg sm:text-xl font-bold flex items-center justify-center shadow-lg ring-4 ring-white/90"
+                style={{ background: 'linear-gradient(135deg, var(--t-primary) 0%, var(--t-primary-mid) 100%)' }}
+              >
+                1
+              </div>
+              <div className="absolute bottom-3 left-1/2 -translate-x-1/2 inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full text-[11px] font-extrabold uppercase tracking-wider text-white bg-black/40 backdrop-blur-md border border-white/30">
+                <span className="material-symbols-outlined text-sm text-emerald-400">cloud_upload</span>
+                <span>Cloud Setup</span>
+              </div>
             </div>
-            <h3 className="text-lg sm:text-xl font-bold text-[#121d1f]" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>Implement</h3>
-            <p className="text-xs sm:text-sm text-[#3d4947] leading-relaxed max-w-xs mx-auto">
-              Rapid cloud deployment with personalized configuration based on your hospital's specific workflows.
-            </p>
-          </div>
 
-          {/* Step 2 */}
-          <div className="text-center relative z-10 space-y-3 sm:space-y-4">
-            <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-full bg-[#008378] text-white text-xl sm:text-2xl font-bold flex items-center justify-center mx-auto shadow-md ring-4 ring-white">
-              2
+            {/* Card Text Content */}
+            <div className="p-6 sm:p-7 space-y-2.5 relative z-10">
+              <h3 className="text-lg sm:text-xl font-extrabold text-[#0F172A]" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>Implement</h3>
+              <p className="text-xs sm:text-sm text-[#475569] leading-relaxed max-w-xs mx-auto font-medium">
+                Rapid cloud deployment with personalized configuration based on your hospital's specific workflows.
+              </p>
             </div>
-            <h3 className="text-lg sm:text-xl font-bold text-[#121d1f]" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>Integrate</h3>
-            <p className="text-xs sm:text-sm text-[#3d4947] leading-relaxed max-w-xs mx-auto">
-              Connect your existing systems, diagnostics equipment, legacy data, and third-party platforms seamlessly.
-            </p>
-          </div>
+          </motion.div>
 
-          {/* Step 3 */}
-          <div className="text-center relative z-10 space-y-3 sm:space-y-4">
-            <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-full bg-[#0f172a] text-white text-xl sm:text-2xl font-bold flex items-center justify-center mx-auto shadow-md ring-4 ring-white">
-              3
+          {/* Step 2: Integrate */}
+          <motion.div
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ amount: 0.15 }}
+            variants={fadeUp}
+            className="bg-white border border-[#bcc9c6]/50 rounded-3xl shadow-sm hover:shadow-xl transition-all duration-300 relative overflow-hidden group hover:-translate-y-1 text-center z-10 flex flex-col justify-between"
+          >
+            {/* Top Featured Content-Matched Image Header */}
+            <div className="relative h-44 sm:h-48 overflow-hidden">
+              <img
+                src="/images/lab_opd_orders.png"
+                alt="System Integration & LIS Diagnostics Sync"
+                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-slate-900/80 via-slate-900/30 to-transparent" />
+              <div
+                className="absolute top-4 left-1/2 -translate-x-1/2 w-12 h-12 sm:w-14 sm:h-14 rounded-2xl text-white text-lg sm:text-xl font-bold flex items-center justify-center shadow-lg ring-4 ring-white/90"
+                style={{ background: 'linear-gradient(135deg, var(--t-primary-mid) 0%, var(--t-accent) 100%)' }}
+              >
+                2
+              </div>
+              <div className="absolute bottom-3 left-1/2 -translate-x-1/2 inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full text-[11px] font-extrabold uppercase tracking-wider text-white bg-black/40 backdrop-blur-md border border-white/30">
+                <span className="material-symbols-outlined text-sm text-cyan-400">hub</span>
+                <span>API &amp; LIS Sync</span>
+              </div>
             </div>
-            <h3 className="text-lg sm:text-xl font-bold text-[#121d1f]" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>Empower</h3>
-            <p className="text-xs sm:text-sm text-[#3d4947] leading-relaxed max-w-xs mx-auto">
-              Onboard your staff in days, not months, with our intuitive, user-friendly clinical interface.
-            </p>
-          </div>
+
+            {/* Card Text Content */}
+            <div className="p-6 sm:p-7 space-y-2.5 relative z-10">
+              <h3 className="text-lg sm:text-xl font-extrabold text-[#0F172A]" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>Integrate</h3>
+              <p className="text-xs sm:text-sm text-[#475569] leading-relaxed max-w-xs mx-auto font-medium">
+                Connect your existing systems, diagnostics equipment, legacy data, and third-party platforms seamlessly.
+              </p>
+            </div>
+          </motion.div>
+
+          {/* Step 3: Empower */}
+          <motion.div
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ amount: 0.15 }}
+            variants={fadeUp}
+            className="bg-white border border-[#bcc9c6]/50 rounded-3xl shadow-sm hover:shadow-xl transition-all duration-300 relative overflow-hidden group hover:-translate-y-1 text-center z-10 flex flex-col justify-between"
+          >
+            {/* Top Featured Content-Matched Image Header */}
+            <div className="relative h-44 sm:h-48 overflow-hidden">
+              <img
+                src="/images/home_doctor_tablet.png"
+                alt="Doctor & Nurse Staff Onboarding"
+                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-slate-900/80 via-slate-900/30 to-transparent" />
+              <div
+                className="absolute top-4 left-1/2 -translate-x-1/2 w-12 h-12 sm:w-14 sm:h-14 rounded-2xl text-white text-lg sm:text-xl font-bold flex items-center justify-center shadow-lg ring-4 ring-white/90"
+                style={{ background: 'linear-gradient(135deg, var(--t-primary-dark) 0%, var(--t-primary) 100%)' }}
+              >
+                3
+              </div>
+              <div className="absolute bottom-3 left-1/2 -translate-x-1/2 inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full text-[11px] font-extrabold uppercase tracking-wider text-white bg-black/40 backdrop-blur-md border border-white/30">
+                <span className="material-symbols-outlined text-sm text-sky-400">groups</span>
+                <span>Staff Onboarding</span>
+              </div>
+            </div>
+
+            {/* Card Text Content */}
+            <div className="p-6 sm:p-7 space-y-2.5 relative z-10">
+              <h3 className="text-lg sm:text-xl font-extrabold text-[#0F172A]" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>Empower</h3>
+              <p className="text-xs sm:text-sm text-[#475569] leading-relaxed max-w-xs mx-auto font-medium">
+                Onboard your staff in days, not months, with our intuitive, user-friendly clinical interface.
+              </p>
+            </div>
+          </motion.div>
 
         </div>
       </section>
 
-      {/* ── 6. WHAT IS MEDCARE HMS & HOW TO USE IT ── */}
-      <section className="py-12 sm:py-16 lg:py-20 bg-gradient-to-b from-[#effcfe]/60 to-white border-y border-[#bcc9c6]/30">
-        <div className="site-wrapper space-y-10 sm:space-y-14">
-          {/* Header */}
-          <div className="text-center max-w-3xl mx-auto space-y-3 sm:space-y-4">
-            <span className="text-xs font-bold uppercase tracking-wider text-[#00685e] px-3.5 py-1 rounded-full bg-[#afecde]/60 inline-block">
-              BETTER HEALTHCARE, TOGETHER
-            </span>
-            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-[#121d1f]" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
-              What is MedCare HMS & How to Use It
-            </h2>
-            <p className="text-xs sm:text-sm text-[#3d4947] leading-relaxed">
-              MedCare HMS creates a single digital environment that connects every department & makes healthcare simpler, smarter and more efficient.
-            </p>
-          </div>
-
-          {/* 4 Steps How To Use Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3.5 sm:gap-6">
-
-            {/* Step 1 */}
-            <div className="bg-white border border-[#bcc9c6]/40 p-4 sm:p-6 rounded-2xl shadow-sm hover:shadow-md transition-all space-y-3 flex flex-col justify-between">
-              <div className="space-y-3">
-                <div className="w-10 h-10 rounded-xl bg-[#eaf6f8] text-[#00685e] flex items-center justify-center border border-[#00685e]/20">
-                  <span className="material-symbols-outlined text-xl">person_add</span>
-                </div>
-                <h3 className="text-sm sm:text-base font-bold text-[#121d1f]" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
-                  Patient Registration
-                </h3>
-                <p className="text-[11px] sm:text-xs text-[#3d4947] leading-relaxed">
-                  Quick & easy OPD/IPD registration, generate unique ID & maintain unified patient records.
-                </p>
-              </div>
-              <Link to="/modules" className="pt-2 flex items-center gap-1 text-[11px] font-bold text-[#00685e] hover:gap-2 transition-all">
-                <span>Learn more</span>
-                <span className="material-symbols-outlined text-xs">arrow_forward</span>
-              </Link>
-            </div>
-
-            {/* Step 2 */}
-            <div className="bg-white border border-[#bcc9c6]/40 p-4 sm:p-6 rounded-2xl shadow-sm hover:shadow-md transition-all space-y-3 flex flex-col justify-between">
-              <div className="space-y-3">
-                <div className="w-10 h-10 rounded-xl bg-[#eaf6f8] text-[#00685e] flex items-center justify-center border border-[#00685e]/20">
-                  <span className="material-symbols-outlined text-xl">stethoscope</span>
-                </div>
-                <h3 className="text-sm sm:text-base font-bold text-[#121d1f]" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
-                  Doctor Consultation
-                </h3>
-                <p className="text-[11px] sm:text-xs text-[#3d4947] leading-relaxed">
-                  Digital prescriptions, notes, follow-ups & treatment plans in one secure platform.
-                </p>
-              </div>
-              <Link to="/modules" className="pt-2 flex items-center gap-1 text-[11px] font-bold text-[#00685e] hover:gap-2 transition-all">
-                <span>Learn more</span>
-                <span className="material-symbols-outlined text-xs">arrow_forward</span>
-              </Link>
-            </div>
-
-            {/* Step 3 */}
-            <div className="bg-white border border-[#bcc9c6]/40 p-4 sm:p-6 rounded-2xl shadow-sm hover:shadow-md transition-all space-y-3 flex flex-col justify-between">
-              <div className="space-y-3">
-                <div className="w-10 h-10 rounded-xl bg-[#eaf6f8] text-[#00685e] flex items-center justify-center border border-[#00685e]/20">
-                  <span className="material-symbols-outlined text-xl">hotel</span>
-                </div>
-                <h3 className="text-sm sm:text-base font-bold text-[#121d1f]" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
-                  IPD Care & Ward Module
-                </h3>
-                <p className="text-[11px] sm:text-xs text-[#3d4947] leading-relaxed">
-                  Admit, assign beds, track vitals, manage nursing notes & discharge smoothly.
-                </p>
-              </div>
-              <Link to="/modules" className="pt-2 flex items-center gap-1 text-[11px] font-bold text-[#00685e] hover:gap-2 transition-all">
-                <span>Learn more</span>
-                <span className="material-symbols-outlined text-xs">arrow_forward</span>
-              </Link>
-            </div>
-
-            {/* Step 4 */}
-            <div className="bg-white border border-[#bcc9c6]/40 p-4 sm:p-6 rounded-2xl shadow-sm hover:shadow-md transition-all space-y-3 flex flex-col justify-between">
-              <div className="space-y-3">
-                <div className="w-10 h-10 rounded-xl bg-[#eaf6f8] text-[#00685e] flex items-center justify-center border border-[#00685e]/20">
-                  <span className="material-symbols-outlined text-xl">receipt_long</span>
-                </div>
-                <h3 className="text-sm sm:text-base font-bold text-[#121d1f]" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
-                  Billing & Discharge
-                </h3>
-                <p className="text-[11px] sm:text-xs text-[#3d4947] leading-relaxed">
-                  Automated billing, insurance claims, payments, discharge summary & reports.
-                </p>
-              </div>
-              <Link to="/modules" className="pt-2 flex items-center gap-1 text-[11px] font-bold text-[#00685e] hover:gap-2 transition-all">
-                <span>Learn more</span>
-                <span className="material-symbols-outlined text-xs">arrow_forward</span>
-              </Link>
-            </div>
-
-          </div>
-        </div>
-      </section>
+      {/* ── 6. COMPREHENSIVE HMS EXPLANATION & STAKEHOLDER SHOWCASE ── */}
+      <HMSExplanationContainer />
 
       {/* ── ABDM & ABHA INTEGRATION ── */}
       <ABDMIntegration />
 
       {/* ── 7. REVIEWS & TESTIMONIALS GRID ── */}
-      <section className="py-12 sm:py-16 lg:py-20 site-wrapper space-y-10 sm:space-y-12">
+      <section className="pt-6 sm:pt-8 lg:pt-10 pb-12 sm:pb-16 lg:pb-20 site-wrapper space-y-10 sm:space-y-12">
         {/* Section Title */}
         <div className="text-center max-w-3xl mx-auto space-y-3 sm:space-y-4">
           <span className="text-xs font-bold uppercase tracking-wider text-[#00685e] px-3.5 py-1 rounded-full bg-[#afecde]/60 inline-block">
@@ -768,9 +767,19 @@ export default function Home() {
         </div>
 
         {/* Reviews Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
+        <motion.div
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ amount: 0.15 }}
+          variants={stagger}
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8"
+        >
           {testimonials.slice(0, 6).map((review, idx) => (
-            <div key={idx} className="bg-white border border-[#bcc9c6]/40 p-6 rounded-2xl sm:rounded-3xl shadow-sm hover:shadow-md transition-all flex flex-col justify-between space-y-4">
+            <motion.div
+              key={idx}
+              variants={fadeUp}
+              className="bg-white border border-[#bcc9c6]/40 p-6 rounded-2xl sm:rounded-3xl shadow-sm hover:shadow-md transition-all flex flex-col justify-between space-y-4"
+            >
               <div className="space-y-3">
                 {/* 5 Stars */}
                 <div className="flex items-center gap-1">
@@ -794,14 +803,20 @@ export default function Home() {
                   <div className="text-[10px] sm:text-xs text-[#6d7a77] font-medium">{review.role} • <span className="text-[#00685e]">{review.organization}</span></div>
                 </div>
               </div>
-            </div>
+            </motion.div>
           ))}
-        </div>
+        </motion.div>
       </section>
 
 
       {/* ── 8. CALL TO ACTION BANNER (DYNAMIC THEME) ── */}
-      <section className="py-6 sm:py-10 lg:py-12 site-wrapper">
+      <motion.section
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ amount: 0.15 }}
+        variants={fadeUp}
+        className="py-6 sm:py-10 lg:py-12 site-wrapper"
+      >
         <div
           className="text-white rounded-2xl sm:rounded-3xl p-6 sm:p-10 lg:p-14 text-center shadow-xl relative overflow-hidden"
           style={{ background: 'linear-gradient(135deg, var(--t-primary) 0%, var(--t-primary-mid) 100%)' }}
@@ -842,7 +857,7 @@ export default function Home() {
             </div>
           </div>
         </div>
-      </section>
+      </motion.section>
 
     </motion.div>
   )
