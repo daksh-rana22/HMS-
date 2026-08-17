@@ -1,4 +1,4 @@
-import { useState } from 'react'
+﻿import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { pageTransition } from '../../utils/animations'
 import { Send } from 'lucide-react'
@@ -219,7 +219,7 @@ export default function Contact() {
                   {
                     icon: 'mail',
                     label: 'Support Email',
-                    value: 'hello@medcarehms.com\nsupport@medcarehms.com',
+                    value: 'hello@Omedohms.com\nsupport@Omedohms.com',
                   },
                   {
                     icon: 'phone_iphone',

@@ -1,4 +1,4 @@
-import { useState } from 'react'
+﻿import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Link } from 'react-router-dom'
 
@@ -289,7 +289,7 @@ export default function HMSExplanationContainer() {
               Work Anywhere — Laptop, Tablet & Mobile
             </h3>
             <p className="text-xs sm:text-sm text-[var(--t-text-secondary,#3d4947)] leading-relaxed">
-              MedCare HMS adapts seamlessly to every screen size. From desktop workstations to bedside tablets and handheld smartphones, your hospital stays connected in real time.
+              Omedo HMS adapts seamlessly to every screen size. From desktop workstations to bedside tablets and handheld smartphones, your hospital stays connected in real time.
             </p>
           </div>
 
@@ -488,7 +488,7 @@ export default function HMSExplanationContainer() {
               How HMS Empowers Every Department
             </h3>
             <p className="text-xs sm:text-sm text-[var(--t-text-secondary,#3d4947)]">
-              Select your role below to discover how MedCare HMS optimizes day-to-day operations and improves patient outcomes.
+              Select your role below to discover how Omedo HMS optimizes day-to-day operations and improves patient outcomes.
             </p>
           </div>
 
@@ -586,7 +586,7 @@ export default function HMSExplanationContainer() {
               TRANSFORMATION IMPACT
             </span>
             <h3 className="text-xl sm:text-3xl lg:text-4xl font-extrabold text-[var(--t-text,#121d1f)]" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
-              Traditional Paper Hospital vs. MedCare HMS
+              Traditional Paper Hospital vs. Omedo HMS
             </h3>
             <p className="text-xs sm:text-sm text-[var(--t-text-secondary,#3d4947)]">
               Discover how adopting an integrated HMS elevates hospital performance across every critical benchmark.
@@ -610,7 +610,7 @@ export default function HMSExplanationContainer() {
                     <th className="p-4 sm:p-5 w-1/3 text-[var(--t-accent-light,#85f5e6)]">
                       <div className="flex items-center gap-2">
                         <span className="material-symbols-outlined text-base shrink-0">check_circle</span>
-                        <span>Modern MedCare HMS</span>
+                        <span>Modern Omedo HMS</span>
                       </div>
                     </th>
                   </tr>

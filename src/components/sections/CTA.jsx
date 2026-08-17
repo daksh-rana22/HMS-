@@ -1,4 +1,4 @@
-import { motion } from 'framer-motion'
+﻿import { motion } from 'framer-motion'
 import { Link } from 'react-router-dom'
 
 export default function CTA() {
@@ -28,7 +28,7 @@ export default function CTA() {
               className="text-description"
               style={{ color: 'rgba(255,255,255,0.82)' }}
             >
-              Join over 500 institutions that have upgraded their operations with MedCare HMS.
+              Join over 500 institutions that have upgraded their operations with Omedo HMS.
             </p>
             <div className="flex flex-col sm:flex-row justify-center gap-3 sm:gap-4 pt-2">
               <Link

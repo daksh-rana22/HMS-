@@ -142,7 +142,7 @@ export default function Home() {
                   <motion.div
                     animate={{ scale: [1, 1.05, 1] }}
                     transition={{ duration: 3.5, repeat: Infinity, ease: 'easeInOut' }}
-                    className="relative z-20 w-24 h-24 rounded-full flex flex-col items-center justify-center text-white cursor-pointer group"
+                    className="relative z-20 w-24 h-24 rounded-full flex items-center justify-center cursor-pointer group"
                     style={{
                       background: 'linear-gradient(135deg, var(--t-accent, #67d9ca) 0%, var(--t-primary, #00685e) 50%, var(--t-footer-bg, #061325) 100%)',
                       boxShadow: '0 0 30px var(--t-btn-shadow), 0 0 55px var(--t-hero-glow), inset 0 1px 0 rgba(255,255,255,0.2)',
@@ -150,18 +150,15 @@ export default function Home() {
                     }}
                   >
                     <div className="absolute inset-1.5 rounded-full border border-white/10 pointer-events-none" />
-                    <span className="material-symbols-outlined text-xl group-hover:scale-110 transition-transform duration-300"
-                      style={{ color: 'var(--t-accent-light, #85f5e6)', filter: 'drop-shadow(0 0 8px var(--t-accent-light))' }}>
-                      medical_services
-                    </span>
-                    <span className="font-extrabold text-[11px] tracking-tight mt-0.5 leading-none text-white"
-                      style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", textShadow: '0 1px 4px rgba(0,0,0,0.3)' }}>
-                      MedCare
-                    </span>
-                    <span className="text-[7.5px] font-mono uppercase tracking-[0.18em] mt-0.5 leading-none"
-                      style={{ color: 'var(--t-accent-light, #85f5e6)', filter: 'drop-shadow(0 0 4px var(--t-accent-light))' }}>
-                      HMS CORE
-                    </span>
+                    <img
+                      src="/images/omedo_logo_white.png"
+                      alt="Omedo Software Solutions"
+                      className="h-10 w-auto object-contain group-hover:scale-110 transition-transform duration-300"
+                      style={{
+                        maxWidth: '75px',
+                        filter: 'drop-shadow(0 2px 8px rgba(0,0,0,0.4))',
+                      }}
+                    />
                   </motion.div>
                 </div>
               </div>
@@ -289,7 +286,7 @@ export default function Home() {
                 <motion.div
                   animate={{ scale: [1, 1.05, 1] }}
                   transition={{ duration: 3.5, repeat: Infinity, ease: 'easeInOut' }}
-                  className="relative z-20 w-28 h-28 sm:w-36 sm:h-36 md:w-44 md:h-44 rounded-full flex flex-col items-center justify-center text-white cursor-pointer group"
+                  className="relative z-20 w-28 h-28 sm:w-36 sm:h-36 md:w-44 md:h-44 rounded-full flex items-center justify-center cursor-pointer group"
                   style={{
                     background: 'linear-gradient(135deg, var(--t-accent, #67d9ca) 0%, var(--t-primary, #00685e) 50%, var(--t-footer-bg, #061325) 100%)',
                     boxShadow: '0 0 35px var(--t-btn-shadow), 0 0 65px var(--t-hero-glow), inset 0 1px 0 rgba(255,255,255,0.2)',
@@ -297,19 +294,15 @@ export default function Home() {
                   }}
                 >
                   <div className="absolute inset-1.5 sm:inset-2 rounded-full border border-white/10 pointer-events-none" />
-
-                  <span className="material-symbols-outlined text-2xl sm:text-3xl md:text-4xl group-hover:scale-110 transition-transform duration-300"
-                    style={{ color: 'var(--t-accent-light, #85f5e6)', filter: 'drop-shadow(0 0 8px var(--t-accent-light))' }}>
-                    medical_services
-                  </span>
-                  <span className="font-extrabold text-xs sm:text-sm md:text-[15px] tracking-tight mt-0.5 sm:mt-1 leading-none text-white"
-                    style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", textShadow: '0 1px 4px rgba(0,0,0,0.3)' }}>
-                    MedCare
-                  </span>
-                  <span className="text-[8px] sm:text-[9px] md:text-[10px] font-mono uppercase tracking-[0.2em] mt-0.5 leading-none"
-                    style={{ color: 'var(--t-accent-light, #85f5e6)', filter: 'drop-shadow(0 0 4px var(--t-accent-light))' }}>
-                    HMS CORE
-                  </span>
+                  <img
+                    src="/images/omedo_logo_white.png"
+                    alt="Omedo Software Solutions"
+                    className="h-12 sm:h-16 md:h-20 w-auto object-contain group-hover:scale-110 transition-transform duration-300"
+                    style={{
+                      maxWidth: '115px',
+                      filter: 'drop-shadow(0 2px 10px rgba(0,0,0,0.4))',
+                    }}
+                  />
                 </motion.div>
 
               </div>
@@ -762,7 +755,7 @@ export default function Home() {
             Loved by Doctors, Admins & IT Directors
           </h2>
           <p className="text-xs sm:text-sm text-[#3d4947] leading-relaxed">
-            See how MedCare HMS is transforming hospital operations across clinical management, billing, lab diagnostics, and patient satisfaction.
+            See how Omedo HMS is transforming hospital operations across clinical management, billing, lab diagnostics, and patient satisfaction.
           </p>
         </div>
 

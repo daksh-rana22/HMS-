@@ -1,4 +1,4 @@
-import { motion } from 'framer-motion'
+﻿import { motion } from 'framer-motion'
 import Container from '../ui/Container'
 import SectionTitle from '../ui/SectionTitle'
 import TestimonialCard from '../common/TestimonialCard'
@@ -12,7 +12,7 @@ export default function Testimonials() {
         <SectionTitle
           badge="Testimonials"
           title="What Healthcare Leaders Say"
-          subtitle="Hear from the doctors, administrators, and IT leaders who trust MedFlow to power their healthcare operations."
+          subtitle="Hear from the doctors, administrators, and IT leaders who trust Omedo to power their healthcare operations."
         />
 
         <motion.div

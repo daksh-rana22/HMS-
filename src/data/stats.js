@@ -1,4 +1,4 @@
-import { Building2, UserCheck, Users, ArrowUpCircle } from 'lucide-react'
+﻿import { Building2, UserCheck, Users, ArrowUpCircle } from 'lucide-react'
 
 export const stats = [
   {
@@ -6,7 +6,7 @@ export const stats = [
     value: 500,
     suffix: '+',
     label: 'Hospitals',
-    description: 'Trust MedFlow HMS',
+    description: 'Trust Omedo HMS',
   },
   {
     icon: UserCheck,

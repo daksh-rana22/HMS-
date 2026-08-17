@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+﻿import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import { pageTransition } from '../../utils/animations'
@@ -331,15 +331,15 @@ const itDiseaseMaster = [
 ]
 
 const itUserManagement = [
-  { user: 'admin_sys', role: 'System SuperAdmin', email: 'admin@medcarehms.com', rbac: 'Full Access' },
-  { user: 'dr_avanish', role: 'Consultant Physician', email: 'avanish@medcarehms.com', rbac: 'Doctor Portal' },
-  { user: 'nurse_anjali', role: 'Ward Charge Nurse', email: 'anjali@medcarehms.com', rbac: 'Nurse Portal' },
-  { user: 'cashier_sunil', role: 'Senior Billing Cashier', email: 'sunil@medcarehms.com', rbac: 'Billing Counter' },
-  { user: 'lab_tech_rohan', role: 'Chief LIS Technologist', email: 'rohan@medcarehms.com', rbac: 'Lab Portal' },
+  { user: 'admin_sys', role: 'System SuperAdmin', email: 'admin@Omedohms.com', rbac: 'Full Access' },
+  { user: 'dr_avanish', role: 'Consultant Physician', email: 'avanish@Omedohms.com', rbac: 'Doctor Portal' },
+  { user: 'nurse_anjali', role: 'Ward Charge Nurse', email: 'anjali@Omedohms.com', rbac: 'Nurse Portal' },
+  { user: 'cashier_sunil', role: 'Senior Billing Cashier', email: 'sunil@Omedohms.com', rbac: 'Billing Counter' },
+  { user: 'lab_tech_rohan', role: 'Chief LIS Technologist', email: 'rohan@Omedohms.com', rbac: 'Lab Portal' },
 ]
 
 const itHospitalConfig = {
-  hospitalName: 'MedCare Super Specialty Hospital',
+  hospitalName: 'Omedo Super Specialty Hospital',
   licenseNo: 'HOSP-TX-2026-9812',
   gstin: '27AADC82258M1Z2',
   address: '1278 Health Parkway, Austin, TX 78701',
@@ -679,8 +679,27 @@ export default function Modules() {
                     <div>
                       <h4 className="text-sm font-bold text-[#00685e] mb-2">Appointments Queue</h4>
                       <table className="w-full text-left border-collapse text-[11px]">
-                        <thead><tr className="border-b text-[#00685e]"><th className="py-1">Token</th><th className="py-1">Patient</th><th className="py-1">Status</th></tr></thead>
-                        <tbody>{clinicalAppointments.map((r) => (<tr key={r.token}><td className="py-1 font-bold text-[#00685e]">{r.token}</td><td className="py-1 font-semibold">{r.patient}</td><td className="py-1">• {r.status}</td></tr>))}</tbody>
+                        <thead>
+                          <tr className="border-b border-[#bcc9c6]/30 text-[#00685e] font-bold uppercase">
+                            <th className="py-1 px-1">Token</th>
+                            <th className="py-1 px-1">Patient</th>
+                            <th className="py-1 px-1 whitespace-nowrap">Status</th>
+                          </tr>
+                        </thead>
+                        <tbody className="divide-y divide-[#bcc9c6]/20">
+                          {clinicalAppointments.map((r) => (
+                            <tr key={r.token} className="hover:bg-[#eaf6f8]/50 transition-colors">
+                              <td className="py-1 px-1 font-bold text-[#00685e] whitespace-nowrap">{r.token}</td>
+                              <td className="py-1 px-1 font-semibold text-[#121d1f]">{r.patient}</td>
+                              <td className="py-1 px-1 whitespace-nowrap">
+                                <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-[#afecde] text-[#00685e] font-bold text-[9px] whitespace-nowrap">
+                                  <span className="w-1.5 h-1.5 rounded-full bg-[#00685e] shrink-0" />
+                                  {r.status}
+                                </span>
+                              </td>
+                            </tr>
+                          ))}
+                        </tbody>
                       </table>
                     </div>
                   )}
@@ -805,21 +824,22 @@ export default function Modules() {
                         <table className="w-full text-left border-collapse text-[11px]" style={{ fontFamily: "'Inter', sans-serif" }}>
                           <thead>
                             <tr className="border-b border-[#bcc9c6]/30 text-[#00685e] font-bold uppercase">
-                              <th className="py-1.5 px-1">Invoice</th>
+                              <th className="py-1.5 px-1 whitespace-nowrap">Invoice</th>
                               <th className="py-1.5 px-1">Patient</th>
-                              <th className="py-1.5 px-1">Total Amount</th>
-                              <th className="py-1.5 px-1">Status</th>
+                              <th className="py-1.5 px-1 whitespace-nowrap">Total Amount</th>
+                              <th className="py-1.5 px-1 whitespace-nowrap">Status</th>
                             </tr>
                           </thead>
                           <tbody className="divide-y divide-[#bcc9c6]/20">
                             {clinicalServiceBilling.map((b) => (
                               <tr key={b.invoice} className="hover:bg-[#eaf6f8]/50 transition-colors">
-                                <td className="py-1.5 px-1 font-bold text-[#00685e]">{b.invoice}</td>
+                                <td className="py-1.5 px-1 font-bold text-[#00685e] whitespace-nowrap">{b.invoice}</td>
                                 <td className="py-1.5 px-1 font-semibold text-[#121d1f]">{b.patient}</td>
-                                <td className="py-1.5 px-1 font-bold text-[#008378]">{b.total}</td>
-                                <td className="py-1.5 px-1">
-                                  <span className="px-2 py-0.5 rounded-full bg-[#afecde] text-[#326c62] font-bold text-[9px]">
-                                    • Billed
+                                <td className="py-1.5 px-1 font-bold text-[#008378] whitespace-nowrap">{b.total}</td>
+                                <td className="py-1.5 px-1 whitespace-nowrap">
+                                  <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-[#afecde] text-[#00685e] font-bold text-[9px] whitespace-nowrap">
+                                    <span className="w-1.5 h-1.5 rounded-full bg-[#00685e] shrink-0" />
+                                    Billed
                                   </span>
                                 </td>
                               </tr>
@@ -842,7 +862,10 @@ export default function Modules() {
                           {clinicalWaitingScreen.map((w) => (
                             <div key={w.token} className="p-2.5 bg-[#eaf6f8] rounded-2xl flex items-center justify-between text-[11px]">
                               <div className="font-bold text-[#121d1f]">{w.token} - {w.patient}</div>
-                              <span className="px-2.5 py-0.5 bg-[#afecde] text-[#326c62] rounded-full text-[9px] font-bold">• {w.status}</span>
+                              <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 bg-[#afecde] text-[#00685e] rounded-full text-[9px] font-bold whitespace-nowrap">
+                                <span className="w-1.5 h-1.5 rounded-full bg-[#00685e] shrink-0" />
+                                {w.status}
+                              </span>
                             </div>
                           ))}
                         </div>
@@ -861,21 +884,22 @@ export default function Modules() {
                         <table className="w-full text-left border-collapse text-[11px]" style={{ fontFamily: "'Inter', sans-serif" }}>
                           <thead>
                             <tr className="border-b border-[#bcc9c6]/30 text-[#00685e] font-bold uppercase">
-                              <th className="py-1.5 px-1">Ref ID</th>
+                              <th className="py-1.5 px-1 whitespace-nowrap">Ref ID</th>
                               <th className="py-1.5 px-1">Patient</th>
-                              <th className="py-1.5 px-1">Refund Amount</th>
-                              <th className="py-1.5 px-1">Status</th>
+                              <th className="py-1.5 px-1 whitespace-nowrap">Refund Amount</th>
+                              <th className="py-1.5 px-1 whitespace-nowrap">Status</th>
                             </tr>
                           </thead>
                           <tbody className="divide-y divide-[#bcc9c6]/20">
                             {clinicalRefunds.map((r) => (
                               <tr key={r.ref} className="hover:bg-[#eaf6f8]/50 transition-colors">
-                                <td className="py-1.5 px-1 font-bold text-[#00685e]">{r.ref}</td>
+                                <td className="py-1.5 px-1 font-bold text-[#00685e] whitespace-nowrap">{r.ref}</td>
                                 <td className="py-1.5 px-1 font-semibold text-[#121d1f]">{r.patient}</td>
-                                <td className="py-1.5 px-1 font-bold text-[#008378]">{r.amount}</td>
-                                <td className="py-1.5 px-1">
-                                  <span className="px-2 py-0.5 rounded-full bg-[#afecde] text-[#326c62] font-bold text-[9px]">
-                                    • Processed
+                                <td className="py-1.5 px-1 font-bold text-[#008378] whitespace-nowrap">{r.amount}</td>
+                                <td className="py-1.5 px-1 whitespace-nowrap">
+                                  <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-[#afecde] text-[#00685e] font-bold text-[9px] whitespace-nowrap">
+                                    <span className="w-1.5 h-1.5 rounded-full bg-[#00685e] shrink-0" />
+                                    Processed
                                   </span>
                                 </td>
                               </tr>
@@ -1085,12 +1109,17 @@ export default function Modules() {
                         </h4>
                         <div className="space-y-1.5">
                           {itOpdRooms.map((r) => (
-                            <div key={r.room} className="p-2 bg-[#eaf6f8] rounded-xl flex justify-between text-[11px]">
+                            <div key={r.room} className="p-2 bg-[#eaf6f8] rounded-xl flex items-center justify-between text-[11px]">
                               <div>
                                 <span className="font-bold text-[#121d1f]">🚪 {r.room}</span> ({r.dept})
                                 <div className="text-[10px] text-[#6d7a77]">Assigned: {r.doctor}</div>
                               </div>
-                              <span className="px-2 py-0.5 bg-[#afecde] text-[#326c62] rounded text-[9px] font-bold h-fit">{r.status}</span>
+                              <span className={`inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[9px] font-bold whitespace-nowrap h-fit ${
+                                r.status === 'Available' ? 'bg-emerald-100 text-emerald-700' : 'bg-[#afecde] text-[#00685e]'
+                              }`}>
+                                <span className={`w-1.5 h-1.5 rounded-full shrink-0 ${r.status === 'Available' ? 'bg-emerald-500' : 'bg-[#00685e]'}`} />
+                                {r.status}
+                              </span>
                             </div>
                           ))}
                         </div>
@@ -1175,7 +1204,10 @@ export default function Modules() {
                           {itModuleManagement.map((r) => (
                             <div key={r.module} className="p-2.5 bg-[#eaf6f8] rounded-2xl flex items-center justify-between text-[11px]">
                               <span className="font-semibold text-[#121d1f]">{r.module}</span>
-                              <span className="px-2.5 py-0.5 bg-[#afecde] text-[#326c62] rounded-full text-[9px] font-bold">• {r.status}</span>
+                              <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 bg-[#afecde] text-[#00685e] rounded-full text-[9px] font-bold whitespace-nowrap">
+                                <span className="w-1.5 h-1.5 rounded-full bg-[#00685e] shrink-0" />
+                                {r.status}
+                              </span>
                             </div>
                           ))}
                         </div>
@@ -1325,7 +1357,10 @@ export default function Modules() {
                                 <div className="font-semibold text-[#121d1f]">👩‍⚕️ {r.nurse}</div>
                                 <div className="text-[10px] text-[#6d7a77] mt-0.5">{r.shift} • {r.ward}</div>
                               </div>
-                              <span className="px-2.5 py-0.5 bg-[#afecde] text-[#326c62] rounded-full text-[9px] font-bold">• {r.status}</span>
+                              <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 bg-[#afecde] text-[#00685e] rounded-full text-[9px] font-bold whitespace-nowrap">
+                                <span className="w-1.5 h-1.5 rounded-full bg-[#00685e] shrink-0" />
+                                {r.status}
+                              </span>
                             </div>
                           ))}
                         </div>
@@ -1368,20 +1403,21 @@ export default function Modules() {
                           <thead>
                             <tr className="border-b border-[#bcc9c6]/30 text-[#00685e] font-bold uppercase">
                               <th className="py-1.5 px-1">Referral Doctor</th>
-                              <th className="py-1.5 px-1">Mobile</th>
-                              <th className="py-1.5 px-1">Commission Share</th>
-                              <th className="py-1.5 px-1">Status</th>
+                              <th className="py-1.5 px-1 whitespace-nowrap">Mobile</th>
+                              <th className="py-1.5 px-1 whitespace-nowrap">Commission Share</th>
+                              <th className="py-1.5 px-1 whitespace-nowrap">Status</th>
                             </tr>
                           </thead>
                           <tbody className="divide-y divide-[#bcc9c6]/20">
                             {itReferralDoctor.map((r) => (
                               <tr key={r.doctor} className="hover:bg-[#eaf6f8]/50 transition-colors">
                                 <td className="py-1.5 px-1 font-semibold text-[#121d1f]">👨‍⚕️ {r.doctor}</td>
-                                <td className="py-1.5 px-1 text-[#3d4947]">{r.mobile}</td>
-                                <td className="py-1.5 px-1 font-bold text-[#008378]">{r.share}</td>
-                                <td className="py-1.5 px-1">
-                                  <span className="px-2 py-0.5 rounded-full bg-[#afecde] text-[#326c62] font-bold text-[9px]">
-                                    • {r.status}
+                                <td className="py-1.5 px-1 text-[#3d4947] whitespace-nowrap">{r.mobile}</td>
+                                <td className="py-1.5 px-1 font-bold text-[#008378] whitespace-nowrap">{r.share}</td>
+                                <td className="py-1.5 px-1 whitespace-nowrap">
+                                  <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-[#afecde] text-[#00685e] font-bold text-[9px] whitespace-nowrap">
+                                    <span className="w-1.5 h-1.5 rounded-full bg-[#00685e] shrink-0" />
+                                    {r.status}
                                   </span>
                                 </td>
                               </tr>
@@ -1403,23 +1439,24 @@ export default function Modules() {
                         <table className="w-full text-left border-collapse text-[11px]" style={{ fontFamily: "'Inter', sans-serif" }}>
                           <thead>
                             <tr className="border-b border-[#bcc9c6]/30 text-[#00685e] font-bold uppercase">
-                              <th className="py-1.5 px-1">Code</th>
+                              <th className="py-1.5 px-1 whitespace-nowrap">Code</th>
                               <th className="py-1.5 px-1">Treatment Name</th>
                               <th className="py-1.5 px-1">Department</th>
-                              <th className="py-1.5 px-1">Base Tariff</th>
-                              <th className="py-1.5 px-1">Status</th>
+                              <th className="py-1.5 px-1 whitespace-nowrap">Base Tariff</th>
+                              <th className="py-1.5 px-1 whitespace-nowrap">Status</th>
                             </tr>
                           </thead>
                           <tbody className="divide-y divide-[#bcc9c6]/20">
                             {itTreatmentMaster.map((r) => (
                               <tr key={r.code} className="hover:bg-[#eaf6f8]/50 transition-colors">
-                                <td className="py-1.5 px-1 font-bold text-[#00685e]">• {r.code}</td>
+                                <td className="py-1.5 px-1 font-bold text-[#00685e] whitespace-nowrap">• {r.code}</td>
                                 <td className="py-1.5 px-1 font-semibold text-[#121d1f]">{r.treatment}</td>
                                 <td className="py-1.5 px-1 text-[#3d4947]">{r.dept}</td>
-                                <td className="py-1.5 px-1 font-bold text-[#008378]">{r.baseCost}</td>
-                                <td className="py-1.5 px-1">
-                                  <span className="px-2 py-0.5 rounded-full bg-[#afecde] text-[#326c62] font-bold text-[9px]">
-                                    • Active
+                                <td className="py-1.5 px-1 font-bold text-[#008378] whitespace-nowrap">{r.baseCost}</td>
+                                <td className="py-1.5 px-1 whitespace-nowrap">
+                                  <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-[#afecde] text-[#00685e] font-bold text-[9px] whitespace-nowrap">
+                                    <span className="w-1.5 h-1.5 rounded-full bg-[#00685e] shrink-0" />
+                                    Active
                                   </span>
                                 </td>
                               </tr>
@@ -1442,20 +1479,21 @@ export default function Modules() {
                           <thead>
                             <tr className="border-b border-[#bcc9c6]/30 text-[#00685e] font-bold uppercase">
                               <th className="py-1.5 px-1">Category</th>
-                              <th className="py-1.5 px-1">Max Discount</th>
-                              <th className="py-1.5 px-1">Max Credit Limit</th>
-                              <th className="py-1.5 px-1">Status</th>
+                              <th className="py-1.5 px-1 whitespace-nowrap">Max Discount</th>
+                              <th className="py-1.5 px-1 whitespace-nowrap">Max Credit Limit</th>
+                              <th className="py-1.5 px-1 whitespace-nowrap">Status</th>
                             </tr>
                           </thead>
                           <tbody className="divide-y divide-[#bcc9c6]/20">
                             {itBillingThreshold.map((r) => (
                               <tr key={r.category} className="hover:bg-[#eaf6f8]/50 transition-colors">
                                 <td className="py-1.5 px-1 font-semibold text-[#121d1f]">{r.category}</td>
-                                <td className="py-1.5 px-1 font-bold text-[#00685e]">{r.maxDiscount}</td>
-                                <td className="py-1.5 px-1 font-bold text-[#008378]">{r.maxCredit}</td>
-                                <td className="py-1.5 px-1">
-                                  <span className="px-2 py-0.5 rounded-full bg-[#afecde] text-[#326c62] font-bold text-[9px]">
-                                    • {r.status}
+                                <td className="py-1.5 px-1 font-bold text-[#00685e] whitespace-nowrap">{r.maxDiscount}</td>
+                                <td className="py-1.5 px-1 font-bold text-[#008378] whitespace-nowrap">{r.maxCredit}</td>
+                                <td className="py-1.5 px-1 whitespace-nowrap">
+                                  <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-[#afecde] text-[#00685e] font-bold text-[9px] whitespace-nowrap">
+                                    <span className="w-1.5 h-1.5 rounded-full bg-[#00685e] shrink-0" />
+                                    {r.status}
                                   </span>
                                 </td>
                               </tr>
@@ -1478,20 +1516,21 @@ export default function Modules() {
                           <thead>
                             <tr className="border-b border-[#bcc9c6]/30 text-[#00685e] font-bold uppercase">
                               <th className="py-1.5 px-1">Room Category</th>
-                              <th className="py-1.5 px-1">Hospital Rack Rate</th>
-                              <th className="py-1.5 px-1">TPA Negotiated Cap</th>
-                              <th className="py-1.5 px-1">Empaneled TPA Plan</th>
+                              <th className="py-1.5 px-1 whitespace-nowrap">Hospital Rack Rate</th>
+                              <th className="py-1.5 px-1 whitespace-nowrap">TPA Negotiated Cap</th>
+                              <th className="py-1.5 px-1 whitespace-nowrap">Empaneled TPA Plan</th>
                             </tr>
                           </thead>
                           <tbody className="divide-y divide-[#bcc9c6]/20">
                             {itBedTpa.map((r) => (
                               <tr key={r.roomType} className="hover:bg-[#eaf6f8]/50 transition-colors">
                                 <td className="py-1.5 px-1 font-semibold text-[#121d1f]">{r.roomType}</td>
-                                <td className="py-1.5 px-1 font-bold text-[#6d7a77]">{r.rackRate}</td>
-                                <td className="py-1.5 px-1 font-bold text-[#00685e]">{r.tpaCap}</td>
-                                <td className="py-1.5 px-1">
-                                  <span className="px-2 py-0.5 rounded-full bg-[#afecde] text-[#326c62] font-bold text-[9px]">
-                                    • {r.plan}
+                                <td className="py-1.5 px-1 font-bold text-[#6d7a77] whitespace-nowrap">{r.rackRate}</td>
+                                <td className="py-1.5 px-1 font-bold text-[#00685e] whitespace-nowrap">{r.tpaCap}</td>
+                                <td className="py-1.5 px-1 whitespace-nowrap">
+                                  <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-[#afecde] text-[#00685e] font-bold text-[9px] whitespace-nowrap">
+                                    <span className="w-1.5 h-1.5 rounded-full bg-[#00685e] shrink-0" />
+                                    {r.plan}
                                   </span>
                                 </td>
                               </tr>
@@ -1944,25 +1983,28 @@ export default function Modules() {
                         <table className="w-full text-left text-[10px]">
                           <thead>
                             <tr className="border-b text-[#00685e] font-bold uppercase">
-                              <th className="py-1">Name</th>
-                              <th className="py-1">UHID</th>
-                              <th className="py-1">Ward / Bed</th>
-                              <th className="py-1">Status</th>
+                              <th className="py-1 px-1">Name</th>
+                              <th className="py-1 px-1 whitespace-nowrap">UHID</th>
+                              <th className="py-1 px-1">Ward / Bed</th>
+                              <th className="py-1 px-1 whitespace-nowrap">Status</th>
                             </tr>
                           </thead>
-                          <tbody>
+                          <tbody className="divide-y divide-[#bcc9c6]/20">
                             {[
                               { name: 'Lucifer Yadav', uhid: 'LCI202600464', ward: 'EMERGENCY - E101', status: 'Stable' },
                               { name: 'Suresh sharma', uhid: 'LCI202600453', ward: 'Pvt - bed103', status: 'Stable' },
                               { name: 'Neelam', uhid: 'LCI202600449', ward: 'Pvt - bed102', status: 'Stable' },
                               { name: 'Charu', uhid: 'LCI202600432', ward: 'Gen - 104', status: 'Stable' },
                             ].map((r) => (
-                              <tr key={r.uhid} className="border-b border-[#bcc9c6]/20">
-                                <td className="py-1 font-semibold text-[#121d1f]">{r.name}</td>
-                                <td className="py-1 font-mono text-[#00685e]">{r.uhid}</td>
-                                <td className="py-1 text-[#3d4947]">{r.ward}</td>
-                                <td className="py-1">
-                                  <span className="px-1.5 py-0.5 rounded-full bg-emerald-100 text-emerald-700 font-bold text-[8px]">• {r.status}</span>
+                              <tr key={r.uhid} className="hover:bg-[#eaf6f8]/50 transition-colors">
+                                <td className="py-1 px-1 font-semibold text-[#121d1f]">{r.name}</td>
+                                <td className="py-1 px-1 font-mono text-[#00685e] whitespace-nowrap">{r.uhid}</td>
+                                <td className="py-1 px-1 text-[#3d4947]">{r.ward}</td>
+                                <td className="py-1 px-1 whitespace-nowrap">
+                                  <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-700 font-bold text-[9px] whitespace-nowrap">
+                                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-600 shrink-0" />
+                                    {r.status}
+                                  </span>
                                 </td>
                               </tr>
                             ))}
@@ -2253,18 +2295,23 @@ export default function Modules() {
                       <thead>
                         <tr className="border-b border-[#bcc9c6]/30 text-[#00685e] font-bold uppercase">
                           <th className="py-1.5 px-1">Patient</th>
-                          <th className="py-1.5 px-1">Ordered At</th>
+                          <th className="py-1.5 px-1 whitespace-nowrap">Ordered At</th>
                           <th className="py-1.5 px-1">Doctor</th>
-                          <th className="py-1.5 px-1">Status</th>
+                          <th className="py-1.5 px-1 whitespace-nowrap">Status</th>
                         </tr>
                       </thead>
                       <tbody className="divide-y divide-[#bcc9c6]/20">
                         {labOrders.map((order) => (
-                          <tr key={order.id}>
+                          <tr key={order.id} className="hover:bg-[#eaf6f8]/50 transition-colors">
                             <td className="py-1.5 px-1 font-semibold">{order.name} <div className="text-[9px] text-[#6d7a77]">{order.id}</div></td>
                             <td className="py-1.5 px-1 text-[#3d4947] whitespace-nowrap">{order.date}</td>
                             <td className="py-1.5 px-1 text-[#3d4947]">{order.doctor}</td>
-                            <td className="py-1.5 px-1"><span className="px-2 py-0.5 rounded-full bg-[#afecde] text-[#326c62] font-bold text-[10px]">• {order.status}</span></td>
+                            <td className="py-1.5 px-1 whitespace-nowrap">
+                              <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-[#afecde] text-[#00685e] font-bold text-[9px] whitespace-nowrap">
+                                <span className="w-1.5 h-1.5 rounded-full bg-[#00685e] shrink-0" />
+                                {order.status}
+                              </span>
+                            </td>
                           </tr>
                         ))}
                       </tbody>
@@ -2280,7 +2327,7 @@ export default function Modules() {
         {/* ── ADDITIONAL SPECIALIZED CONTAINERS ── */}
         <div className="mb-10">
           <h2 className="heading-section text-[#121d1f] mb-3">Additional Integrated Services</h2>
-          <p className="text-description text-[#3d4947]">Specialized sub-systems built seamlessly into the core MedCare platform.</p>
+          <p className="text-description text-[#3d4947]">Specialized sub-systems built seamlessly into the core Omedo platform.</p>
         </div>
 
         <motion.div
@@ -2316,7 +2363,7 @@ export default function Modules() {
         className="bg-[#00685e] section-padding text-white"
       >
         <div className="site-wrapper text-center">
-          <h2 className="heading-hero text-white mb-5 sm:mb-6">Ready to Deploy MedCare HMS?</h2>
+          <h2 className="heading-hero text-white mb-5 sm:mb-6">Ready to Deploy Omedo HMS?</h2>
           <p className="text-description text-white/80 max-w-2xl 2xl:max-w-3xl mx-auto mb-8 sm:mb-10">
             Join over 500+ healthcare facilities worldwide using our core modules to deliver superior patient outcomes.
           </p>
