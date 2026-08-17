@@ -1,11 +1,11 @@
-﻿import { Building2, UserCheck, Users, ArrowUpCircle } from 'lucide-react'
+import { Building2, UserCheck, Users, ArrowUpCircle } from 'lucide-react'
 
 export const stats = [
   {
     icon: Building2,
-    value: 500,
-    suffix: '+',
-    label: 'Hospitals',
+    value: 150,
+    suffix: '+ Hospitals / 50+ Clinics',
+    label: 'Healthcare Facilities',
     description: 'Trust Omedo HMS',
   },
   {

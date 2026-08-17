@@ -12,7 +12,6 @@ const ReportsAnalytics = lazy(() => import('../pages/ReportsAnalytics/ReportsAna
 const IPD = lazy(() => import('../pages/IPD/IPD'))
 const Laboratory = lazy(() => import('../pages/Laboratory/Laboratory'))
 const About = lazy(() => import('../pages/About/About'))
-const Pricing = lazy(() => import('../pages/Pricing/Pricing'))
 const Contact = lazy(() => import('../pages/Contact/Contact'))
 const ABDM = lazy(() => import('../pages/ABDM/ABDM'))
 
@@ -37,7 +36,6 @@ const router = createBrowserRouter([
       { path: '/abdm-integration', element: <Suspense fallback={<Loader />}><ABDM /></Suspense> },
       { path: '/modules/abdm', element: <Suspense fallback={<Loader />}><ABDM /></Suspense> },
       { path: '/about', element: <Suspense fallback={<Loader />}><About /></Suspense> },
-      { path: '/pricing', element: <Suspense fallback={<Loader />}><Pricing /></Suspense> },
       { path: '/contact', element: <Suspense fallback={<Loader />}><Contact /></Suspense> },
     ],
   },

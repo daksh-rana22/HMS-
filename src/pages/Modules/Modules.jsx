@@ -1,4 +1,4 @@
-﻿import { useState, useEffect } from 'react'
+import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import { pageTransition } from '../../utils/animations'
@@ -2365,7 +2365,7 @@ export default function Modules() {
         <div className="site-wrapper text-center">
           <h2 className="heading-hero text-white mb-5 sm:mb-6">Ready to Deploy Omedo HMS?</h2>
           <p className="text-description text-white/80 max-w-2xl 2xl:max-w-3xl mx-auto mb-8 sm:mb-10">
-            Join over 500+ healthcare facilities worldwide using our core modules to deliver superior patient outcomes.
+            Join over 150+ Hospitals and 50+ Clinics worldwide using our core modules to deliver superior patient outcomes.
           </p>
           <div className="flex flex-col sm:flex-row justify-center gap-3 sm:gap-4">
             <Link to="/contact" className="bg-white text-[#00685e] px-10 sm:px-12 py-3.5 sm:py-4 rounded-full text-sm 2xl:text-base font-bold shadow-lg hover:bg-[#f0f9f7] active:scale-95 transition-all flex items-center justify-center"

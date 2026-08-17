@@ -1,4 +1,4 @@
-﻿import { useState } from 'react'
+import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { pageTransition } from '../../utils/animations'
 import { Send } from 'lucide-react'
@@ -191,85 +191,162 @@ export default function Contact() {
 
           {/* Sidebar */}
           <motion.div
-            className="lg:col-span-5 flex flex-col justify-between h-full gap-3"
+            className="lg:col-span-5 flex flex-col gap-4"
             initial={{ opacity: 0, x: 30 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.7, delay: 0.1 }}
           >
-            {/* Direct Contact – teal card */}
-            <div className="bg-[#00685e] text-white p-5 sm:p-6 rounded-2xl shadow-lg relative overflow-hidden shrink-0">
-              <div
-                className="absolute -top-10 -right-10 w-40 h-40 rounded-full opacity-20 blur-3xl"
-                style={{ backgroundColor: '#67d9ca' }}
-              />
-              <h2
-                className="text-xl sm:text-2xl font-semibold mb-4 relative z-10"
-                style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}
-              >
-                Direct Contact
-              </h2>
-              <div className="space-y-3.5 relative z-10">
-                {[
-                  {
-                    icon: 'location_on',
-                    label: 'Office Address',
-                    value: '1278 Health Parkway, Suite 400\nMedical District, Austin, TX 78701',
-                  },
-                  {
-                    icon: 'mail',
-                    label: 'Support Email',
-                    value: 'hello@Omedohms.com\nsupport@Omedohms.com',
-                  },
-                  {
-                    icon: 'phone_iphone',
-                    label: 'Phone Number',
-                    value: '+1 (555) 234-5678\nMon-Fri: 8:00 AM – 6:00 PM CST',
-                  },
-                ].map((item) => (
-                  <div key={item.label} className="flex items-start gap-3">
-                    <div className="bg-white/10 p-1.5 rounded-lg shrink-0 mt-0.5">
-                      <span className="material-symbols-outlined text-lg">{item.icon}</span>
+            <div className="bg-white/95 backdrop-blur-xl border border-slate-200/80 p-6 sm:p-8 rounded-3xl shadow-sm space-y-6 relative overflow-hidden">
+              {/* Subtle top accent gradient */}
+              <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-[#00685e] via-[#67d9ca] to-[#00685e]" />
+
+              <div>
+                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-50 text-emerald-800 border border-emerald-200 text-xs font-semibold mb-3">
+                  <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+                  <span>Support Hours: Mon–Sat 9:30 AM – 6:30 PM IST</span>
+                </div>
+                <h2 className="text-2xl font-bold text-slate-900 tracking-tight" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
+                  Direct Contact &amp; Offices
+                </h2>
+                <p className="text-xs sm:text-sm text-slate-500 mt-1 leading-relaxed">
+                  Connect directly with our specialized teams for sales, onboarding, technical assistance, or corporate inquiries.
+                </p>
+              </div>
+
+              <div className="space-y-5 text-xs sm:text-sm">
+                
+                {/* 1. Direct Phone Lines */}
+                <div className="flex items-start gap-3.5">
+                  <div className="w-10 h-10 rounded-2xl bg-teal-50 border border-teal-100 flex items-center justify-center shrink-0 mt-0.5 text-[#00685e]">
+                    <span className="material-symbols-outlined text-xl">call</span>
+                  </div>
+                  <div className="space-y-1.5 flex-1">
+                    <div className="text-[11px] font-bold uppercase tracking-wider text-slate-400">Phone &amp; Sales Hotlines</div>
+                    
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                      <a
+                        href="tel:05224972500"
+                        className="p-2.5 rounded-xl bg-slate-50 hover:bg-teal-50/60 border border-slate-100 hover:border-teal-200 transition-all block group"
+                      >
+                        <span className="text-[10px] uppercase font-bold text-slate-400 block">Landline (Lucknow)</span>
+                        <span className="text-xs font-bold text-slate-800 group-hover:text-[#00685e] transition-colors">0522-4972500</span>
+                      </a>
+                      <a
+                        href="tel:+919873003702"
+                        className="p-2.5 rounded-xl bg-slate-50 hover:bg-teal-50/60 border border-slate-100 hover:border-teal-200 transition-all block group"
+                      >
+                        <span className="text-[10px] uppercase font-bold text-slate-400 block">Direct Mobile</span>
+                        <span className="text-xs font-bold text-slate-800 group-hover:text-[#00685e] transition-colors">+91 9873003702</span>
+                      </a>
                     </div>
-                    <div>
-                      <p className="text-[10px] sm:text-xs opacity-80 uppercase tracking-wider mb-0.5" style={{ fontFamily: "'Inter', sans-serif" }}>
-                        {item.label}
-                      </p>
-                      <p className="text-xs sm:text-sm whitespace-pre-line leading-snug" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
-                        {item.value}
-                      </p>
+
+                    <div className="text-xs bg-slate-50 p-2.5 rounded-xl border border-slate-100 flex flex-wrap items-center justify-between gap-1 text-slate-700">
+                      <span className="text-[11px] font-semibold text-slate-500">Sales Hotlines:</span>
+                      <div className="font-bold text-[#00685e]">
+                        <a href="tel:+916389590600" className="hover:underline">+91 6389 590 600</a>
+                        <span className="text-slate-300 mx-1.5">|</span>
+                        <a href="tel:+916389590700" className="hover:underline">+91 6389 590 700</a>
+                      </div>
                     </div>
                   </div>
-                ))}
-              </div>
-              <div className="mt-4 pt-3 border-t border-white/10 flex gap-4 relative z-10">
-                {['hub', 'share', 'public'].map((icon) => (
-                  <a key={icon} href="#" className="opacity-80 hover:opacity-100 transition-opacity">
-                    <span className="material-symbols-outlined text-xl">{icon}</span>
-                  </a>
-                ))}
-              </div>
-            </div>
-
-            {/* Map placeholder */}
-            <div className="card-frosted flex-1 min-h-[110px] sm:min-h-[130px] rounded-2xl overflow-hidden relative group">
-              <div
-                className="w-full h-full bg-cover bg-center transition-transform duration-700 group-hover:scale-105"
-                style={{
-                  backgroundImage: `url('https://lh3.googleusercontent.com/aida-public/AB6AXuA76cw09jaIL-VHZ9Dq8E0Y_AEue2htqWYuzPQ615mciZmRwBXynlAS41AFPz5EiotFkZ46tTZyIfU83iLjKlnUPMZnDCAh9HhiGPmc5FgQs36bW-nTDqJfRFziU3-S-RaXW0tmUw6O1T9-mUhz7dAZeWQsKfHHb-IQGzsJY51AortjbKMTFX_LFEbIPXilaz6m3SB6jYwMVJeWmRdE0BqifjoIu3Ve0KNFRKd1VCVp5HGVvdhranaV')`,
-                  backgroundSize: 'cover',
-                }}
-              />
-              <div className="absolute inset-0 bg-[#00685e]/10 mix-blend-multiply" />
-              <div className="absolute bottom-3 left-3 right-3 bg-white/90 backdrop-blur-md p-3 rounded-xl flex items-center justify-between border border-[#bcc9c6]/30">
-                <div>
-                  <p className="text-xs font-bold text-[#00685e]" style={{ fontFamily: "'Inter', sans-serif" }}>Austin HQ</p>
-                  <p className="text-[11px] text-[#3d4947]" style={{ fontFamily: "'Inter', sans-serif" }}>Central Medical Center</p>
                 </div>
-                <a href="#" className="text-xs text-[#00685e] font-semibold flex items-center gap-1 hover:underline" style={{ fontFamily: "'Inter', sans-serif" }}>
-                  Get Directions
-                  <span className="material-symbols-outlined text-xs">open_in_new</span>
-                </a>
+
+                <div className="h-[1px] w-full bg-slate-100" />
+
+                {/* 2. Email Inquiries */}
+                <div className="flex items-start gap-3.5">
+                  <div className="w-10 h-10 rounded-2xl bg-teal-50 border border-teal-100 flex items-center justify-center shrink-0 mt-0.5 text-[#00685e]">
+                    <span className="material-symbols-outlined text-xl">mail</span>
+                  </div>
+                  <div className="space-y-1.5 flex-1">
+                    <div className="text-[11px] font-bold uppercase tracking-wider text-slate-400">Email Inquiries</div>
+                    <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
+                      <a
+                        href="mailto:care@reckonsales.com"
+                        className="p-2 rounded-xl bg-slate-50 hover:bg-teal-50/60 border border-slate-100 hover:border-teal-200 transition-all text-center group block"
+                      >
+                        <span className="text-[9px] font-bold text-emerald-700 uppercase block tracking-wider">Support</span>
+                        <span className="text-xs font-bold text-slate-800 group-hover:text-[#00685e] truncate block">care@reckonsales.com</span>
+                      </a>
+                      <a
+                        href="mailto:sales@reckonsales.com"
+                        className="p-2 rounded-xl bg-slate-50 hover:bg-teal-50/60 border border-slate-100 hover:border-teal-200 transition-all text-center group block"
+                      >
+                        <span className="text-[9px] font-bold text-teal-700 uppercase block tracking-wider">Sales</span>
+                        <span className="text-xs font-bold text-slate-800 group-hover:text-[#00685e] truncate block">sales@reckonsales.com</span>
+                      </a>
+                      <a
+                        href="mailto:Info@technohunk.co.in"
+                        className="p-2 rounded-xl bg-slate-50 hover:bg-teal-50/60 border border-slate-100 hover:border-teal-200 transition-all text-center group block"
+                      >
+                        <span className="text-[9px] font-bold text-cyan-700 uppercase block tracking-wider">General</span>
+                        <span className="text-xs font-bold text-slate-800 group-hover:text-[#00685e] truncate block">Info@technohunk.co.in</span>
+                      </a>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="h-[1px] w-full bg-slate-100" />
+
+                {/* 3. Corporate HQ (Lucknow) */}
+                <div className="flex items-start gap-3.5">
+                  <div className="w-10 h-10 rounded-2xl bg-teal-50 border border-teal-100 flex items-center justify-center shrink-0 mt-0.5 text-[#00685e]">
+                    <span className="material-symbols-outlined text-xl">apartment</span>
+                  </div>
+                  <div className="space-y-1 flex-1">
+                    <div className="flex items-center justify-between gap-2">
+                      <div className="text-[11px] font-bold uppercase tracking-wider text-slate-400">Corporate HQ • Lucknow</div>
+                      <a
+                        href="https://maps.google.com/?q=SF-2+New+Medicine+Market+Meer+Jaan+Lane+Naya+Gaon+East+Gautam+Budha+Marg+Lucknow+226018"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-[11px] font-bold text-[#00685e] hover:underline px-2 py-0.5 rounded-md bg-teal-50 hover:bg-teal-100 transition-colors"
+                      >
+                        Directions
+                      </a>
+                    </div>
+                    <div>
+                      <a href="https://reckonsales.in/" target="_blank" rel="noopener noreferrer" className="font-bold text-slate-900 hover:text-[#00685e] hover:underline text-sm">
+                        Reckon Sales Pvt. Ltd.
+                      </a>
+                    </div>
+                    <p className="text-xs text-slate-600 leading-relaxed">
+                      SF-2 New Medicine Market, Meer Jaan Lane, Naya Gaon East, Gautam Budha Marg, Lucknow-226018, Uttar Pradesh, India
+                    </p>
+                  </div>
+                </div>
+
+                <div className="h-[1px] w-full bg-slate-100" />
+
+                {/* 4. Regional Office (Ghaziabad / NCR) */}
+                <div className="flex items-start gap-3.5">
+                  <div className="w-10 h-10 rounded-2xl bg-teal-50 border border-teal-100 flex items-center justify-center shrink-0 mt-0.5 text-[#00685e]">
+                    <span className="material-symbols-outlined text-xl">domain</span>
+                  </div>
+                  <div className="space-y-1 flex-1">
+                    <div className="flex items-center justify-between gap-2">
+                      <div className="text-[11px] font-bold uppercase tracking-wider text-slate-400">Regional Office • NCR</div>
+                      <a
+                        href="https://maps.google.com/?q=H-11+Sector-23+Sanjay+Nagar+Ghaziabad+201002"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-[11px] font-bold text-[#00685e] hover:underline px-2 py-0.5 rounded-md bg-teal-50 hover:bg-teal-100 transition-colors"
+                      >
+                        Directions
+                      </a>
+                    </div>
+                    <div>
+                      <a href="https://www.technohunk.in/" target="_blank" rel="noopener noreferrer" className="font-bold text-slate-900 hover:text-[#00685e] hover:underline text-sm">
+                        Technohunk Info Solutions Pvt Ltd
+                      </a>
+                    </div>
+                    <p className="text-xs text-slate-600 leading-relaxed">
+                      H-11, Sector-23, Sanjay Nagar, Ghaziabad — 201002 (U.P.), India
+                    </p>
+                  </div>
+                </div>
+
               </div>
             </div>
 

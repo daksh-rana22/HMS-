@@ -1,4 +1,4 @@
-﻿import { useState } from 'react'
+import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Link } from 'react-router-dom'
 import { pageTransition } from '../../utils/animations'
@@ -12,7 +12,7 @@ const stagger = { hidden: {}, visible: { transition: { staggerChildren: 0.12 } }
 const stats = [
   { value: '40%', label: 'Efficiency Increase' },
   { value: '12M+', label: 'Patient Records' },
-  { value: '500+', label: 'Hospitals Unified' },
+  { value: '150+ / 50+', label: 'Hospitals & Clinics' },
   { value: '0',    label: 'Data Breaches' },
 ]
 
@@ -84,7 +84,7 @@ export default function About() {
               className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#afecde] text-[#326c62] text-sm mx-auto lg:mx-0"
               style={{ fontFamily: "'Inter', sans-serif" }} variants={fadeUp}>
               <span className="material-symbols-outlined text-base sm:text-lg">verified_user</span>
-              <span className="font-medium text-xs sm:text-sm">Redefining Healthcare Since 2012</span>
+              <span className="font-medium text-xs sm:text-sm">25+ Years of ERP Excellence &amp; Healthcare Innovation</span>
             </motion.div>
 
             <motion.h1 className="heading-hero text-[#121d1f]" variants={fadeUp}>
@@ -118,6 +118,170 @@ export default function About() {
             </div>
 
           </motion.div>
+        </div>
+      </section>
+
+      {/* ── 25+ Years ERP Heritage & Enterprise Expertise Section ── */}
+      <section className="py-12 sm:py-16 lg:py-20 relative overflow-hidden" style={{ background: 'linear-gradient(180deg, color-mix(in srgb, var(--t-bg, #effcfe) 40%, white) 0%, color-mix(in srgb, var(--t-bg, #effcfe) 80%, white) 100%)' }}>
+        <div className="site-wrapper space-y-10 sm:space-y-14">
+          
+          {/* Main Wide 2-Column Grid */}
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 2xl:gap-16 items-center">
+            
+            {/* Left Column: Heading & Highlight Cards */}
+            <motion.div
+              className="lg:col-span-5 space-y-6 text-center lg:text-left flex flex-col items-center lg:items-start"
+              initial={{ opacity: 0, x: -30 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.7 }}
+            >
+              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border shadow-xs"
+                style={{
+                  background: 'color-mix(in srgb, var(--t-primary, #00685e) 10%, white)',
+                  borderColor: 'color-mix(in srgb, var(--t-primary, #00685e) 25%, transparent)',
+                  color: 'var(--t-primary, #00685e)',
+                }}>
+                <span className="material-symbols-outlined text-base sm:text-lg">location_on</span>
+                <span className="font-bold text-xs sm:text-sm tracking-wide">Lucknow, India • 25+ Years Legacy</span>
+              </div>
+
+              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-[#121d1f] leading-[1.15] tracking-tight"
+                style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
+                Engineering Enterprise Software with{' '}
+                <span style={{
+                  background: 'var(--t-gradient-text, linear-gradient(135deg, var(--t-primary, #00685e) 0%, var(--t-accent, #67d9ca) 100%))',
+                  WebkitBackgroundClip: 'text',
+                  WebkitTextFillColor: 'transparent',
+                  backgroundClip: 'text',
+                }}>
+                  Over 25 Years of Excellence
+                </span>
+              </h2>
+
+              <p className="text-sm sm:text-base text-[#3d4947] leading-relaxed"
+                style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
+                From robust multi-location retail &amp; distribution networks to mission-critical hospital ecosystems, we build software engineered for resilience, efficiency, and scale.
+              </p>
+
+              {/* 3 Value Badges */}
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 w-full pt-2">
+                <div className="bg-white/90 backdrop-blur-md p-3.5 rounded-2xl border border-[#bcc9c6]/40 shadow-xs text-left">
+                  <div className="text-2xl font-black text-[#00685e]">25+</div>
+                  <div className="text-[11px] font-semibold text-[#6d7a77] uppercase tracking-wider">Years Experience</div>
+                </div>
+                <div className="bg-white/90 backdrop-blur-md p-3.5 rounded-2xl border border-[#bcc9c6]/40 shadow-xs text-left">
+                  <div className="text-2xl font-black text-[#00685e]">Multi</div>
+                  <div className="text-[11px] font-semibold text-[#6d7a77] uppercase tracking-wider">Location ERP</div>
+                </div>
+                <div className="bg-white/90 backdrop-blur-md p-3.5 rounded-2xl border border-[#bcc9c6]/40 shadow-xs text-left">
+                  <div className="text-2xl font-black text-[#00685e]">Cloud</div>
+                  <div className="text-[11px] font-semibold text-[#6d7a77] uppercase tracking-wider">&amp; Mobile Native</div>
+                </div>
+              </div>
+            </motion.div>
+
+            {/* Right Column: Spacious Executive Story Card */}
+            <motion.div
+              className="lg:col-span-7"
+              initial={{ opacity: 0, x: 30 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.7, delay: 0.15 }}
+            >
+              <div
+                className="w-full bg-white/95 backdrop-blur-xl border border-white p-7 sm:p-10 lg:p-12 rounded-3xl space-y-6 relative overflow-hidden"
+                style={{
+                  boxShadow: '0 20px 60px rgba(0,104,94,0.08), 0 4px 16px rgba(0,0,0,0.04)',
+                }}
+              >
+                {/* Decorative background watermark */}
+                <div className="absolute top-0 right-0 p-6 opacity-[0.03] pointer-events-none select-none">
+                  <span className="material-symbols-outlined" style={{ fontSize: '180px', color: '#00685e' }}>corporate_fare</span>
+                </div>
+
+                {/* Paragraph 1 */}
+                <div className="flex items-start gap-4">
+                  <div className="w-10 h-10 rounded-2xl flex items-center justify-center shrink-0 shadow-sm"
+                    style={{ background: 'color-mix(in srgb, var(--t-primary, #00685e) 12%, white)', color: 'var(--t-primary, #00685e)' }}>
+                    <span className="material-symbols-outlined text-xl">hub</span>
+                  </div>
+                  <div className="space-y-1">
+                    <h3 className="text-base sm:text-lg font-bold text-[#121d1f]" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
+                      Empowering Adaptable Enterprise Workflows
+                    </h3>
+                    <p className="text-sm sm:text-base text-[#3d4947] leading-relaxed text-justify" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
+                      We make <strong className="text-[#00685e] font-bold">ERP software</strong> to make your business more efficient and adaptable. Based out of Lucknow, India, we have industry experience of more than <strong className="text-[#00685e] font-bold">25 years</strong>. With a team of dedicated veterans of the industry, we want to empower your business and make it as seamless as possible.
+                    </p>
+                  </div>
+                </div>
+
+                <div className="h-[1px] w-full bg-gradient-to-r from-transparent via-[#bcc9c6]/40 to-transparent" />
+
+                {/* Paragraph 2 */}
+                <div className="flex items-start gap-4">
+                  <div className="w-10 h-10 rounded-2xl flex items-center justify-center shrink-0 shadow-sm"
+                    style={{ background: 'color-mix(in srgb, var(--t-accent, #67d9ca) 20%, white)', color: 'var(--t-primary, #00685e)' }}>
+                    <span className="material-symbols-outlined text-xl">cloud_sync</span>
+                  </div>
+                  <div className="space-y-1">
+                    <h3 className="text-base sm:text-lg font-bold text-[#121d1f]" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
+                      Multi-Sector Reach &amp; Cloud Dynamism
+                    </h3>
+                    <p className="text-sm sm:text-base text-[#3d4947] leading-relaxed text-justify" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
+                      Our services include ERP solutions for <strong className="text-[#121d1f] font-semibold">Retail, Distribution &amp; Multi-Location businesses</strong> in various sectors like Pharmaceutical, Super Market, FMCG, Auto Parts, Textile, Footwear, and Restaurants. Dynamism is one of the key visions of our company and that is why we have ventured into providing mobile and cloud-based services for our clients.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </motion.div>
+
+          </div>
+
+          {/* Full-Width Industry Sectors Showcase */}
+          <div className="space-y-4 pt-4">
+            <div className="flex items-center justify-between border-b border-[#bcc9c6]/40 pb-3">
+              <div className="flex items-center gap-2">
+                <span className="w-2.5 h-2.5 rounded-full animate-pulse bg-[#00685e]" />
+                <span className="text-xs sm:text-sm font-extrabold uppercase tracking-widest text-[#00685e]" style={{ fontFamily: "'Inter', sans-serif" }}>
+                  Sectors Powered by Our ERP Solutions
+                </span>
+              </div>
+              <span className="text-xs font-semibold text-[#6d7a77] hidden sm:inline">8+ Industry Verticals</span>
+            </div>
+
+            <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-8 gap-3 sm:gap-4">
+              {[
+                { icon: 'medication', label: 'Pharmaceutical', desc: 'Batch & Expiry' },
+                { icon: 'shopping_cart', label: 'Super Market', desc: 'POS & Billing' },
+                { icon: 'inventory_2', label: 'FMCG', desc: 'Distribution' },
+                { icon: 'precision_manufacturing', label: 'Auto Parts', desc: 'Inventory Master' },
+                { icon: 'dry_cleaning', label: 'Textile', desc: 'Variants & SKUs' },
+                { icon: 'roller_skating', label: 'Footwear', desc: 'Barcoding' },
+                { icon: 'restaurant', label: 'Restaurants', desc: 'KOT & Table Mgmt' },
+                { icon: 'local_hospital', label: 'Healthcare', desc: 'HMS & Clinical' },
+              ].map((sector) => (
+                <div
+                  key={sector.label}
+                  className="bg-white/95 backdrop-blur-md border border-[#bcc9c6]/40 p-4 rounded-2xl flex flex-col items-center justify-center gap-2 text-center shadow-xs hover:shadow-lg hover:-translate-y-1.5 hover:border-[#00685e] transition-all duration-300 group cursor-default"
+                >
+                  <div className="w-11 h-11 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform duration-200"
+                    style={{ background: 'color-mix(in srgb, var(--t-primary, #00685e) 10%, white)', color: 'var(--t-primary, #00685e)' }}>
+                    <span className="material-symbols-outlined text-2xl">{sector.icon}</span>
+                  </div>
+                  <div>
+                    <div className="text-xs sm:text-sm font-bold text-[#121d1f]" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
+                      {sector.label}
+                    </div>
+                    <div className="text-[10px] text-[#6d7a77] font-medium mt-0.5">
+                      {sector.desc}
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
         </div>
       </section>
 
