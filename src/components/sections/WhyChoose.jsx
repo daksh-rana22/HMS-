@@ -1,4 +1,4 @@
-﻿import { motion } from 'framer-motion'
+import { motion } from 'framer-motion'
 import { CheckCircle, TrendingUp, Shield, Clock, HeartPulse, Layers } from 'lucide-react'
 import Container from '../ui/Container'
 import SectionTitle from '../ui/SectionTitle'
@@ -131,7 +131,7 @@ export default function WhyChoose() {
                 <span className="gradient-text">Omedo HMS</span>
               </h2>
               <p className="text-gray leading-relaxed mb-8">
-                Join 500+ healthcare facilities that have transformed their operations with our intelligent, comprehensive hospital management platform.
+                Join 150+ Hospitals and 50+ Clinics that have transformed their operations with our intelligent, comprehensive hospital management platform.
               </p>
             </motion.div>
 

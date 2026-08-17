@@ -15,6 +15,5 @@ export const navLinks = [
   },
   { name: 'ABDM Integration', path: '/abdm-integration' },
   { name: 'About Us', path: '/about' },
-  { name: 'Pricing', path: '/pricing' },
   { name: 'Contact Us', path: '/contact' },
 ]

@@ -51,9 +51,9 @@ export default function Navbar() {
         <Link to="/" className="flex items-center shrink-0">
           <img
             src="/images/omedo_logo.png"
-            alt="Omedo Software Solutions Pvt. Ltd"
-            className="h-10 sm:h-12 md:h-14 2xl:h-16 w-auto object-contain"
-            style={{ maxWidth: '200px' }}
+            alt="Omedo - Healthcare. Simplified."
+            className="h-9 sm:h-11 md:h-13 2xl:h-15 w-auto object-contain"
+            style={{ maxWidth: '210px' }}
           />
         </Link>
 
@@ -306,15 +306,15 @@ export default function Navbar() {
                   <span className="material-symbols-outlined text-lg">arrow_forward</span>
                 </Link>
 
-                <div className="flex items-center justify-center gap-4 text-xs font-semibold text-[#6d7a77] pt-2">
-                  <a href="tel:+15552345678" className="flex items-center gap-1 hover:text-[#00685e]">
-                    <span className="material-symbols-outlined text-sm text-[#00685e]">call</span>
-                    +1(555) 234-5678
+                <div className="flex flex-wrap items-center justify-center gap-3 text-xs font-semibold text-[#6d7a77] pt-2">
+                  <a href="mailto:care@reckonsales.com" className="flex items-center gap-1 hover:text-[#00685e]">
+                    <span className="material-symbols-outlined text-sm text-[#00685e]">mail</span>
+                    care@reckonsales.com
                   </a>
                   <span>•</span>
-                  <a href="mailto:support@Omedo.com" className="flex items-center gap-1 hover:text-[#00685e]">
-                    <span className="material-symbols-outlined text-sm text-[#00685e]">mail</span>
-                    Support
+                  <a href="tel:+919873003702" className="flex items-center gap-1 hover:text-[#00685e]">
+                    <span className="material-symbols-outlined text-sm text-[#00685e]">call</span>
+                    +91 9873003702
                   </a>
                 </div>
               </motion.div>

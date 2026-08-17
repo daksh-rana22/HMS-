@@ -51,7 +51,7 @@ export default function Home() {
               {/* Badge */}
               <motion.div variants={fadeUp} className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-[var(--t-primary,#00685e)]/30 bg-white/90 backdrop-blur-sm shadow-[0_2px_20px_var(--t-btn-shadow,rgba(0,180,162,0.15))]">
                 <span className="flex w-2 h-2 rounded-full bg-[var(--t-primary,#00685e)] animate-pulse" />
-                <span className="text-[11px] sm:text-xs font-semibold text-[var(--t-primary,#00685e)] tracking-wide">Trusted by 500+ Hospitals Globally</span>
+                <span className="text-[11px] sm:text-xs font-semibold text-[var(--t-primary,#00685e)] tracking-wide">Trusted by 150+ Hospitals &amp; 50+ Clinics</span>
               </motion.div>
 
               {/* Headline */}
@@ -152,10 +152,10 @@ export default function Home() {
                     <div className="absolute inset-1.5 rounded-full border border-white/10 pointer-events-none" />
                     <img
                       src="/images/omedo_logo_white.png"
-                      alt="Omedo Software Solutions"
-                      className="h-10 w-auto object-contain group-hover:scale-110 transition-transform duration-300"
+                      alt="Omedo - Healthcare. Simplified."
+                      className="h-8 sm:h-9 w-auto object-contain group-hover:scale-110 transition-transform duration-300 px-1"
                       style={{
-                        maxWidth: '75px',
+                        maxWidth: '80px',
                         filter: 'drop-shadow(0 2px 8px rgba(0,0,0,0.4))',
                       }}
                     />
@@ -296,10 +296,10 @@ export default function Home() {
                   <div className="absolute inset-1.5 sm:inset-2 rounded-full border border-white/10 pointer-events-none" />
                   <img
                     src="/images/omedo_logo_white.png"
-                    alt="Omedo Software Solutions"
-                    className="h-12 sm:h-16 md:h-20 w-auto object-contain group-hover:scale-110 transition-transform duration-300"
+                    alt="Omedo - Healthcare. Simplified."
+                    className="h-10 sm:h-14 md:h-16 w-auto object-contain group-hover:scale-110 transition-transform duration-300 px-1.5"
                     style={{
-                      maxWidth: '115px',
+                      maxWidth: '120px',
                       filter: 'drop-shadow(0 2px 10px rgba(0,0,0,0.4))',
                     }}
                   />
@@ -314,7 +314,7 @@ export default function Home() {
 
       {/* ── 2. TRUSTED LOGOS BANNER ── */}
       <section
-        className="py-5 sm:py-7 lg:py-8 border-y shadow-inner relative overflow-hidden"
+        className="py-6 sm:py-8 border-y shadow-inner relative overflow-hidden"
         style={{
           background: 'linear-gradient(90deg, color-mix(in srgb, var(--t-primary) 95%, black) 0%, color-mix(in srgb, var(--t-primary-mid) 85%, black) 50%, color-mix(in srgb, var(--t-primary) 95%, black) 100%)',
           borderColor: 'color-mix(in srgb, var(--t-primary) 50%, transparent)',
@@ -324,19 +324,28 @@ export default function Home() {
           style={{ background: 'radial-gradient(circle at center, color-mix(in srgb, var(--t-accent) 15%, transparent) 0%, transparent 70%)' }} />
         <div className="site-wrapper text-center relative z-10">
           <p
-            className="text-[10px] sm:text-[11px] font-extrabold uppercase tracking-[0.2em] mb-4 sm:mb-6 text-white/90"
-            style={{ textShadow: '0 0 10px rgba(255,255,255,0.4)' }}
+            className="text-[10px] sm:text-xs font-extrabold uppercase tracking-[0.2em] mb-4 sm:mb-5 text-white/90"
+            style={{ textShadow: '0 0 10px rgba(255,255,255,0.4)', fontFamily: "'Plus Jakarta Sans', sans-serif" }}
           >
             TRUSTED BY LEADING INSTITUTIONS
           </p>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-8 items-center justify-items-center">
-            {[{ icon: 'public', name: 'CITY GENERAL' }, { icon: 'local_hospital', name: 'APEX CARE' }, { icon: 'corporate_fare', name: 'UNITY MED' }, { icon: 'stethoscope', name: 'GLOBAL CLINIC' }].map(({ icon, name }) => (
-              <div key={name} className="flex items-center gap-2.5 font-bold text-white/90 hover:text-white text-xs sm:text-sm lg:text-base transition-colors duration-200 group">
+          <div className="flex flex-wrap items-center justify-center gap-8 sm:gap-16 md:gap-24">
+            {[
+              { icon: 'stethoscope', name: 'Clinics - 50+' },
+              { icon: 'local_hospital', name: 'Hospitals - 150+' },
+            ].map(({ icon, name }) => (
+              <div
+                key={name}
+                className="flex items-center gap-3 font-bold text-white text-base sm:text-lg lg:text-xl tracking-wide transition-colors duration-200 group"
+                style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}
+              >
                 <span
-                  className="material-symbols-outlined group-hover:scale-110 transition-transform duration-200 text-white"
+                  className="material-symbols-outlined group-hover:scale-110 transition-transform duration-200 text-white text-2xl sm:text-3xl"
                   style={{ filter: 'drop-shadow(0 0 6px rgba(255,255,255,0.6))' }}
-                >{icon}</span>
-                {name}
+                >
+                  {icon}
+                </span>
+                <span>{name}</span>
               </div>
             ))}
           </div>
@@ -535,7 +544,7 @@ export default function Home() {
             {[
               { value: '40%', label: 'Efficiency Gain', icon: 'bar_chart' },
               { value: '99.9%', label: 'System Uptime', icon: 'shield' },
-              { value: '500+', label: 'Hospitals Worldwide', icon: 'domain' },
+              { value: '150+ / 50+', label: 'Hospitals & Clinics', icon: 'domain' },
               { value: '15M+', label: 'Patients Records Managed', icon: 'groups' },
             ].map(({ value, label, icon }) => (
               <div key={label} className="flex items-center justify-center gap-3 px-3 py-2">
