@@ -1,4 +1,4 @@
-import { useState } from 'react'
+﻿import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Link } from 'react-router-dom'
 
@@ -45,7 +45,7 @@ const abhaPillars = [
     icon: 'qr_code_scanner',
     badge: 'ZERO OPD QUEUES',
     color: 'var(--t-primary)',
-    desc: 'Patients scan the NHA QR code displayed at hospital registration desks using their ABHA app. Demographic details are instantly pushed into MedCare HMS, completing OPD check-in in 10 seconds.',
+    desc: 'Patients scan the NHA QR code displayed at hospital registration desks using their ABHA app. Demographic details are instantly pushed into Omedo HMS, completing OPD check-in in 10 seconds.',
     highlights: [
       'Eliminates manual registration form filling and spelling errors',
       'Reduces OPD queue waiting times by up to 70%',
@@ -274,7 +274,7 @@ export default function ABHAExplanationContainer() {
               How ABHA ID is Created in 3 Steps
             </h3>
             <p className="text-xs sm:text-sm text-[var(--t-text-secondary,#3d4947)]">
-              MedCare HMS enables OPD receptionists to generate patient ABHA cards directly during registration.
+              Omedo HMS enables OPD receptionists to generate patient ABHA cards directly during registration.
             </p>
           </div>
 

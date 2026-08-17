@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+﻿import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
 import { pageTransition } from '../../utils/animations'
@@ -147,11 +147,11 @@ const abdmFaqs = [
   },
   {
     q: 'What is the difference between ABHA Number, ABHA Address, and Hospital UHID?',
-    a: 'ABHA Number is a unique 14-digit national identifier (e.g., 91-4829-1048-5729) linked to Aadhaar or Mobile for citizen identification across India. ABHA Address is a virtual handle (e.g., patientname@abdm) used in Personal Health Record (PHR) mobile applications to receive, approve, and route clinical health data. Hospital UHID is your internal Unique Health Identification number. MedCare HMS automatically performs dual-binding—mapping your hospital’s internal UHID directly to the patient’s ABHA ID so existing hospital billing, EMR, and OPD workflows remain completely undisturbed.',
+    a: 'ABHA Number is a unique 14-digit national identifier (e.g., 91-4829-1048-5729) linked to Aadhaar or Mobile for citizen identification across India. ABHA Address is a virtual handle (e.g., patientname@abdm) used in Personal Health Record (PHR) mobile applications to receive, approve, and route clinical health data. Hospital UHID is your internal Unique Health Identification number. Omedo HMS automatically performs dual-binding—mapping your hospital’s internal UHID directly to the patient’s ABHA ID so existing hospital billing, EMR, and OPD workflows remain completely undisturbed.',
   },
   {
-    q: 'What are ABDM Milestones M1, M2, and M3, and how does MedCare HMS implement them?',
-    a: 'Milestone 1 (M1 - Health ID Creation & Verification) enables instant creation of ABHA numbers via Aadhaar/Mobile OTP and links ABHA to OPD/IPD registrations. Milestone 2 (M2 - Health Information Provider / HIP) converts prescriptions, diagnostic reports, lab test results, and discharge summaries into standardized FHIR R4 JSON bundles and pushes them to the ABDM gateway upon patient consent. Milestone 3 (M3 - Health Information User / HIU) allows authorized hospital clinicians to dispatch digital consent requests to patient PHR apps and view historical medical records from other hospitals. MedCare HMS is fully certified and production-ready for all three milestones.',
+    q: 'What are ABDM Milestones M1, M2, and M3, and how does Omedo HMS implement them?',
+    a: 'Milestone 1 (M1 - Health ID Creation & Verification) enables instant creation of ABHA numbers via Aadhaar/Mobile OTP and links ABHA to OPD/IPD registrations. Milestone 2 (M2 - Health Information Provider / HIP) converts prescriptions, diagnostic reports, lab test results, and discharge summaries into standardized FHIR R4 JSON bundles and pushes them to the ABDM gateway upon patient consent. Milestone 3 (M3 - Health Information User / HIU) allows authorized hospital clinicians to dispatch digital consent requests to patient PHR apps and view historical medical records from other hospitals. Omedo HMS is fully certified and production-ready for all three milestones.',
   },
   {
     q: 'How does the Consent Manager (HIP/HIU) framework protect patient privacy?',
@@ -159,11 +159,11 @@ const abdmFaqs = [
   },
   {
     q: 'What is Scan & Share (Express OPD Check-in) and how does it reduce hospital queues?',
-    a: 'Scan & Share allows patients arriving at hospital OPD counters to scan a designated NHA QR code displayed at registration desks using their ABHA or Aarogya Setu app. The patient’s verified demographic details (Name, Age, Gender, Address, ABHA ID) are instantly transmitted to MedCare HMS, auto-filling the OPD registration form in less than 10 seconds. This eliminates manual data entry errors, reduces OPD queue waiting times by up to 70%, and dramatically boosts daily patient throughput.',
+    a: 'Scan & Share allows patients arriving at hospital OPD counters to scan a designated NHA QR code displayed at registration desks using their ABHA or Aarogya Setu app. The patient’s verified demographic details (Name, Age, Gender, Address, ABHA ID) are instantly transmitted to Omedo HMS, auto-filling the OPD registration form in less than 10 seconds. This eliminates manual data entry errors, reduces OPD queue waiting times by up to 70%, and dramatically boosts daily patient throughput.',
   },
   {
     q: 'What FHIR R4 clinical data types are supported for electronic health record exchange?',
-    a: 'MedCare HMS natively formats and validates clinical records according to the National Resource Center for EHR Standards (NRCeS) FHIR R4 profiles. Supported health document types include OPD Prescriptions, Diagnostic & Radiology Reports, Pathology Lab Results, Immunization Records, Discharge Summaries, and Clinical Consultation Notes. All data bundles are serialized into standard JSON/XML FHIR resources before encrypted transmission over the ABDM Gateway.',
+    a: 'Omedo HMS natively formats and validates clinical records according to the National Resource Center for EHR Standards (NRCeS) FHIR R4 profiles. Supported health document types include OPD Prescriptions, Diagnostic & Radiology Reports, Pathology Lab Results, Immunization Records, Discharge Summaries, and Clinical Consultation Notes. All data bundles are serialized into standard JSON/XML FHIR resources before encrypted transmission over the ABDM Gateway.',
   },
   {
     q: 'How does ABDM integration accelerate Insurance, TPA, and Cashless Claim Settlements?',
@@ -171,23 +171,23 @@ const abdmFaqs = [
   },
   {
     q: 'Is patient health data stored centrally on NHA/Government servers?',
-    a: 'No. ABDM follows a federated, decentralized architecture. The NHA gateway does NOT store any clinical records or medical histories on central government servers. Health records reside safely within your hospital’s secure MedCare HMS database. The ABDM Gateway acts purely as a secure routing and consent switchboard that facilitates encrypted peer-to-peer data transfer directly between the source hospital (HIP) and requesting doctor (HIU) only when explicit digital consent is active.',
+    a: 'No. ABDM follows a federated, decentralized architecture. The NHA gateway does NOT store any clinical records or medical histories on central government servers. Health records reside safely within your hospital’s secure Omedo HMS database. The ABDM Gateway acts purely as a secure routing and consent switchboard that facilitates encrypted peer-to-peer data transfer directly between the source hospital (HIP) and requesting doctor (HIU) only when explicit digital consent is active.',
   },
   {
     q: 'What security standards are implemented to protect health data in transit and at rest?',
-    a: 'MedCare HMS implements military-grade security protocols for ABDM operations: Data at Rest is protected with AES-256 bit encryption for all patient medical records, lab reports, and cryptographic keys. Data in Transit uses TLS 1.3 encryption and Diffie-Hellman Key Exchange (ECDH) for peer-to-peer payload transfers. API Authentication utilizes OAuth 2.0 with JSON Web Tokens (JWT) for secure communication with NHA Sandbox and Production gateways, ensuring full adherence to ISO 27001, HIPAA, and DPDP Act guidelines.',
+    a: 'Omedo HMS implements military-grade security protocols for ABDM operations: Data at Rest is protected with AES-256 bit encryption for all patient medical records, lab reports, and cryptographic keys. Data in Transit uses TLS 1.3 encryption and Diffie-Hellman Key Exchange (ECDH) for peer-to-peer payload transfers. API Authentication utilizes OAuth 2.0 with JSON Web Tokens (JWT) for secure communication with NHA Sandbox and Production gateways, ensuring full adherence to ISO 27001, HIPAA, and DPDP Act guidelines.',
   },
   {
     q: 'How long does it take for a hospital to complete ABDM integration and onboarding?',
-    a: 'With MedCare HMS, complete ABDM onboarding typically takes 3 to 7 business days. Our dedicated technical onboarding team manages the entire end-to-end process: registering your facility on the Health Facility Registry (HFR), verifying doctors on the Healthcare Professionals Registry (HPR), executing NHA Sandbox testing suite milestones (M1, M2, M3), and issuing your NHA Production Production Keys with zero downtime to ongoing hospital operations.',
+    a: 'With Omedo HMS, complete ABDM onboarding typically takes 3 to 7 business days. Our dedicated technical onboarding team manages the entire end-to-end process: registering your facility on the Health Facility Registry (HFR), verifying doctors on the Healthcare Professionals Registry (HPR), executing NHA Sandbox testing suite milestones (M1, M2, M3), and issuing your NHA Production Production Keys with zero downtime to ongoing hospital operations.',
   },
   {
     q: 'What happens if the internet connection or NHA Gateway goes down during OPD hours?',
-    a: 'MedCare HMS features an intelligent Offline Fallback Mode. If internet connectivity drops or NHA servers experience temporary maintenance, hospital registration, consultation, billing, and clinical workflows continue operating uninterrupted in offline mode using local UHID generation. Once connectivity is restored, MedCare HMS automatically queues and synchronizes pending ABHA linkages and FHIR document signatures in the background.',
+    a: 'Omedo HMS features an intelligent Offline Fallback Mode. If internet connectivity drops or NHA servers experience temporary maintenance, hospital registration, consultation, billing, and clinical workflows continue operating uninterrupted in offline mode using local UHID generation. Once connectivity is restored, Omedo HMS automatically queues and synchronizes pending ABHA linkages and FHIR document signatures in the background.',
   },
   {
     q: 'Can doctors sign digital prescriptions and medical records using ABDM e-Sign?',
-    a: 'Yes. MedCare HMS supports Digital Signature Certificate (DSC) and Aadhaar-based e-Sign integration for doctors registered on the Healthcare Professionals Registry (HPR). Every prescription and discharge summary generated in MedCare HMS is cryptographically signed by the treating physician, ensuring legal validity under the Information Technology Act and NHA guidelines.',
+    a: 'Yes. Omedo HMS supports Digital Signature Certificate (DSC) and Aadhaar-based e-Sign integration for doctors registered on the Healthcare Professionals Registry (HPR). Every prescription and discharge summary generated in Omedo HMS is cryptographically signed by the treating physician, ensuring legal validity under the Information Technology Act and NHA guidelines.',
   },
 ]
 
@@ -283,7 +283,7 @@ export default function ABDM() {
                   animate="visible"
                   variants={fadeUp}
                 >
-                  Empower your hospital with India’s Ayushman Bharat Digital Mission. Enable digital health identity creation, consent-driven record sharing, and certified M1, M2 &amp; M3 milestone compliance directly within MedCare HMS.
+                  Empower your hospital with India’s Ayushman Bharat Digital Mission. Enable digital health identity creation, consent-driven record sharing, and certified M1, M2 &amp; M3 milestone compliance directly within Omedo HMS.
                 </motion.p>
 
                 {/* CTAs (Side-by-side row on mobile) */}
@@ -573,7 +573,7 @@ export default function ABDM() {
             >
               <div className="flex items-center gap-2 font-extrabold text-sm uppercase tracking-wide" style={{ color: 'var(--t-primary)' }}>
                 <span className="material-symbols-outlined text-lg" style={{ fontVariationSettings: "'FILL' 1" }}>check_circle</span>
-                ABDM Enabled with MedCare HMS
+                ABDM Enabled with Omedo HMS
               </div>
               <ul className="space-y-2.5 text-xs text-[var(--t-text-secondary)]">
                 <li className="flex items-start gap-2">
@@ -847,7 +847,7 @@ export default function ABDM() {
                   Digital ABHA Health Card Generation
                 </h2>
                 <p className="text-xs sm:text-sm leading-relaxed" style={{ color: 'var(--t-text-secondary)' }}>
-                  MedCare HMS automatically renders a standardized, scannable Digital ABHA Card for every registered patient. Patients can store it digitally on their smartphones or receive a printed physical card during admission.
+                  Omedo HMS automatically renders a standardized, scannable Digital ABHA Card for every registered patient. Patients can store it digitally on their smartphones or receive a printed physical card during admission.
                 </p>
 
                 <div className="space-y-3 pt-2">
@@ -988,7 +988,7 @@ export default function ABDM() {
             Core Pillars of ABDM Ecosystem
           </h2>
           <p className="text-xs sm:text-sm" style={{ color: 'var(--t-text-secondary)' }}>
-            MedCare HMS seamlessly connects your hospital to all four key building blocks established by the National Health Authority.
+            Omedo HMS seamlessly connects your hospital to all four key building blocks established by the National Health Authority.
           </p>
         </div>
 

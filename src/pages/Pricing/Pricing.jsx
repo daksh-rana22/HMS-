@@ -1,4 +1,4 @@
-import { motion } from 'framer-motion'
+﻿import { motion } from 'framer-motion'
 import { Link } from 'react-router-dom'
 import { pageTransition } from '../../utils/animations'
 import { CheckCircle2, XCircle } from 'lucide-react'
@@ -221,7 +221,7 @@ export default function Pricing() {
                 Ready to modernize your healthcare system?
               </h2>
               <p className="text-sm sm:text-base 2xl:text-lg text-[#bcc9c6]" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
-                Join over 1,200 medical facilities that trust MedCare HMS for their daily operations.
+                Join over 1,200 medical facilities that trust Omedo HMS for their daily operations.
                 No implementation fees, no hidden costs.
               </p>
             </div>

@@ -48,19 +48,13 @@ export default function Navbar() {
       <div className="site-wrapper flex justify-between items-center h-14 sm:h-16 md:h-20 2xl:h-24 relative" style={{ zIndex: 1 }}>
 
         {/* Logo */}
-        <Link to="/" className="flex items-center gap-1.5 shrink-0">
-          <span
-            className="material-symbols-outlined text-xl sm:text-2xl md:text-3xl 2xl:text-4xl"
-            style={{ fontVariationSettings: "'FILL' 1", color: 'var(--t-primary, #00685e)' }}
-          >
-            medical_services
-          </span>
-          <span
-            className="text-base sm:text-lg md:text-2xl 2xl:text-3xl font-bold"
-            style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", color: 'var(--t-primary, #00685e)' }}
-          >
-            MedCare HMS
-          </span>
+        <Link to="/" className="flex items-center shrink-0">
+          <img
+            src="/images/omedo_logo.png"
+            alt="Omedo Software Solutions Pvt. Ltd"
+            className="h-10 sm:h-12 md:h-14 2xl:h-16 w-auto object-contain"
+            style={{ maxWidth: '200px' }}
+          />
         </Link>
 
         {/* Desktop Nav — hidden on mobile, shown md+ */}
@@ -318,7 +312,7 @@ export default function Navbar() {
                     +1(555) 234-5678
                   </a>
                   <span>•</span>
-                  <a href="mailto:support@medcare.com" className="flex items-center gap-1 hover:text-[#00685e]">
+                  <a href="mailto:support@Omedo.com" className="flex items-center gap-1 hover:text-[#00685e]">
                     <span className="material-symbols-outlined text-sm text-[#00685e]">mail</span>
                     Support
                   </a>

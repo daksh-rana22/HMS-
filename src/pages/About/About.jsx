@@ -1,4 +1,4 @@
-import { useState } from 'react'
+﻿import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Link } from 'react-router-dom'
 import { pageTransition } from '../../utils/animations'
@@ -18,19 +18,19 @@ const stats = [
 
 const aboutFaqs = [
   {
-    question: 'How long does it take to implement MedCare HMS in our hospital?',
+    question: 'How long does it take to implement Omedo HMS in our hospital?',
     answer:
       'Typical deployment takes 2 to 4 weeks for single-facility hospitals. Our dedicated onboarding team handles full data migration, module configuration, and hands-on staff training with zero downtime.',
   },
   {
-    question: 'Is MedCare HMS HIPAA compliant and secure for patient data?',
+    question: 'Is Omedo HMS HIPAA compliant and secure for patient data?',
     answer:
       'Yes, 100%. We employ bank-grade 256-bit encryption, role-based access control (RBAC), automatic daily encrypted backups, and full HIPAA audit logging.',
   },
   {
-    question: 'Can MedCare HMS integrate with our existing lab machines and pharmacy POS?',
+    question: 'Can Omedo HMS integrate with our existing lab machines and pharmacy POS?',
     answer:
-      'Absolutely. MedCare HMS supports REST APIs and HL7/FHIR healthcare standards for seamless integration with laboratory equipment, RIS/PACS imaging, pharmacy POS hardware, and Tally accounting.',
+      'Absolutely. Omedo HMS supports REST APIs and HL7/FHIR healthcare standards for seamless integration with laboratory equipment, RIS/PACS imaging, pharmacy POS hardware, and Tally accounting.',
   },
   {
     question: 'What kind of customer support and training is provided?',
@@ -43,9 +43,9 @@ const aboutFaqs = [
       'Yes! Simply fill out the contact form or reach out to our team, and we will organize a customized walk-through tailored to your hospital’s specific specialty workflows.',
   },
   {
-    question: 'Does MedCare HMS support multi-branch hospital chains and centralized reporting?',
+    question: 'Does Omedo HMS support multi-branch hospital chains and centralized reporting?',
     answer:
-      'Yes. MedCare HMS offers centralized cloud administration allowing hospital groups to manage multiple branches, consolidate financial analytics, share doctor schedules, and track inventory across locations seamlessly.',
+      'Yes. Omedo HMS offers centralized cloud administration allowing hospital groups to manage multiple branches, consolidate financial analytics, share doctor schedules, and track inventory across locations seamlessly.',
   },
   {
     question: 'How are automated backups and cloud uptime handled?',
@@ -65,7 +65,7 @@ const aboutFaqs = [
   {
     question: 'Is there a patient portal or mobile access for doctors on duty?',
     answer:
-      'Yes! MedCare HMS includes a responsive web portal and mobile-friendly interface for doctors to review IPD rounds, approve lab reports, and check patient vitals anytime, anywhere.',
+      'Yes! Omedo HMS includes a responsive web portal and mobile-friendly interface for doctors to review IPD rounds, approve lab reports, and check patient vitals anytime, anywhere.',
   },
 ]
 
@@ -94,7 +94,7 @@ export default function About() {
             </motion.h1>
 
             <motion.p className="text-description text-[#3d4947] max-w-xl mx-auto lg:mx-0" variants={fadeUp}>
-              At MedCare HMS, we believe that medical professionals shouldn't be bogged down by
+              At Omedo HMS, we believe that medical professionals shouldn't be bogged down by
               inefficient systems. We build the digital infrastructure that lets healers focus on
               what matters: patients.
             </motion.p>
@@ -255,7 +255,7 @@ export default function About() {
               color: 'var(--t-primary, #00685e)',
             }}
           >
-            ABOUT MEDCARE HMS FAQ
+            ABOUT Omedo HMS FAQ
           </span>
           <h2
             className="text-2xl sm:text-3xl lg:text-4xl font-extrabold"
@@ -332,7 +332,7 @@ export default function About() {
             </div>
             <h2 className="heading-hero text-[#121d1f] mb-5">Ready to Modernize Your Care?</h2>
             <p className="text-description text-[#3d4947] max-w-2xl mx-auto mb-8 sm:mb-10">
-              Join thousands of medical facilities that trust MedCare HMS to handle their operations,
+              Join thousands of medical facilities that trust Omedo HMS to handle their operations,
               allowing them to focus entirely on patient recovery.
             </p>
             <div className="flex flex-col sm:flex-row flex-wrap justify-center gap-3 sm:gap-4">

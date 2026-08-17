@@ -1,4 +1,4 @@
-import { useState } from 'react'
+﻿import { useState } from 'react'
 import { motion } from 'framer-motion'
 import Container from '../ui/Container'
 import SectionTitle from '../ui/SectionTitle'
@@ -15,7 +15,7 @@ export default function FAQ() {
         <SectionTitle
           badge="FAQ"
           title="Frequently Asked Questions"
-          subtitle="Find answers to common questions about MedFlow HMS."
+          subtitle="Find answers to common questions about Omedo HMS."
         />
 
         <motion.div

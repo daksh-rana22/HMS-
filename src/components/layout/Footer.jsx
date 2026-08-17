@@ -40,16 +40,13 @@ export default function Footer() {
 
           {/* Brand Info — Left Column */}
           <div className="lg:col-span-4 space-y-3 sm:space-y-4">
-            <Link to="/" className="inline-flex items-center gap-1.5">
-              <span
-                className="w-7 h-7 sm:w-8 sm:h-8 rounded-lg flex items-center justify-center font-black text-white text-xs sm:text-sm"
-                style={{ background: 'var(--t-primary, #00685e)' }}
-              >
-                +
-              </span>
-              <span className="font-extrabold text-base sm:text-lg tracking-tight text-white" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
-                MedCare<span style={{ color: 'var(--t-primary-mid, #008378)' }}>HMS</span>
-              </span>
+            <Link to="/" className="inline-flex items-center">
+              <img
+                src="/images/omedo_logo_white.png"
+                alt="Omedo Software Solutions Pvt. Ltd"
+                className="h-10 sm:h-12 w-auto object-contain"
+                style={{ maxWidth: '180px' }}
+              />
             </Link>
 
             <p className="text-xs sm:text-sm leading-relaxed max-w-sm" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
@@ -126,7 +123,7 @@ export default function Footer() {
                 <span className="material-symbols-outlined text-sm" style={{ color: 'var(--t-primary-mid, #008378)' }}>headset_mic</span>
                 <span>24/7 Priority Support Desk</span>
               </div>
-              <p className="text-[11px] opacity-75">support@medcarehms.in • +91 1800-419-8800</p>
+              <p className="text-[11px] opacity-75">support@Omedohms.in • +91 1800-419-8800</p>
             </div>
           </div>
 
@@ -140,7 +137,7 @@ export default function Footer() {
           }}
         >
           <p className="text-center sm:text-left" style={{ fontFamily: "'Inter', sans-serif" }}>
-            © {new Date().getFullYear()} MedCare Health Systems. All rights reserved.
+            © {new Date().getFullYear()} Omedo Health Systems. All rights reserved.
           </p>
           <div className="flex flex-wrap justify-center items-center gap-2 sm:gap-3 text-center">
             <span>HIPAA Compliant</span>

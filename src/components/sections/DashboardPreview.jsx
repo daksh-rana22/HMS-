@@ -1,4 +1,4 @@
-import { useState } from 'react'
+﻿import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { ChevronLeft, ChevronRight, Monitor } from 'lucide-react'
 import Container from '../ui/Container'
@@ -39,7 +39,7 @@ export default function DashboardPreview() {
       <Container>
         <SectionTitle
           badge="Dashboard Preview"
-          title="See MedFlow HMS in Action"
+          title="See Omedo HMS in Action"
           subtitle="Explore the intuitive interfaces that make hospital management effortless."
         />
 
@@ -61,7 +61,7 @@ export default function DashboardPreview() {
               </div>
               <div className="flex-1 mx-4">
                 <div className="h-7 bg-white rounded-lg max-w-sm mx-auto flex items-center justify-center border border-border/40">
-                  <span className="text-xs text-gray-light">app.medflow.com/{screenshots[current].title.toLowerCase().replace(/\s+/g, '-')}</span>
+                  <span className="text-xs text-gray-light">app.Omedo.com/{screenshots[current].title.toLowerCase().replace(/\s+/g, '-')}</span>
                 </div>
               </div>
             </div>

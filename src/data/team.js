@@ -1,26 +1,26 @@
-export const team = [
+﻿export const team = [
   {
     name: 'Dr. Alexander Wright',
     role: 'CEO & Co-Founder',
-    bio: 'Former hospital administrator with 20+ years in healthcare management. Founded MedFlow to bridge the gap between technology and patient care.',
+    bio: 'Former hospital administrator with 20+ years in healthcare management. Founded Omedo to bridge the gap between technology and patient care.',
     avatar: 'AW',
   },
   {
     name: 'Priya Mehta',
     role: 'CTO & Co-Founder',
-    bio: 'Ex-Google engineer specializing in cloud infrastructure and healthcare IT systems. Leads the technical vision and architecture of MedFlow.',
+    bio: 'Ex-Google engineer specializing in cloud infrastructure and healthcare IT systems. Leads the technical vision and architecture of Omedo.',
     avatar: 'PM',
   },
   {
     name: 'Dr. James O\'Brien',
     role: 'Chief Medical Advisor',
-    bio: 'Board-certified physician and health informatics expert. Ensures MedFlow meets the real-world clinical needs of healthcare professionals.',
+    bio: 'Board-certified physician and health informatics expert. Ensures Omedo meets the real-world clinical needs of healthcare professionals.',
     avatar: 'JO',
   },
   {
     name: 'Sarah Kim',
     role: 'VP of Product',
-    bio: 'Product leader with a decade of experience at leading health-tech companies. Drives MedFlow\'s product roadmap and user experience strategy.',
+    bio: 'Product leader with a decade of experience at leading health-tech companies. Drives Omedo\'s product roadmap and user experience strategy.',
     avatar: 'SK',
   },
   {
@@ -32,7 +32,7 @@ export const team = [
   {
     name: 'Maria Rodriguez',
     role: 'Head of Customer Success',
-    bio: 'Healthcare operations specialist focused on ensuring every MedFlow client achieves maximum value from their implementation.',
+    bio: 'Healthcare operations specialist focused on ensuring every Omedo client achieves maximum value from their implementation.',
     avatar: 'MR',
   },
 ]

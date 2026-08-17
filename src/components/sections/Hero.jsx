@@ -107,9 +107,14 @@ export default function Hero() {
                   <div className="w-3 h-3 rounded-full bg-red-400" />
                   <div className="w-3 h-3 rounded-full bg-amber-400" />
                   <div className="w-3 h-3 rounded-full bg-emerald-400" />
-                  <span className="text-xs font-bold ml-2 tracking-wide flex items-center gap-1.5" style={{ color: 'var(--t-text)' }}>
-                    <span className="w-2 h-2 rounded-full animate-ping" style={{ background: 'var(--t-accent)' }} />
-                    MedCare Enterprise Live Hub
+                  <span className="flex items-center gap-1.5 ml-1">
+                    <span className="w-2 h-2 rounded-full animate-ping shrink-0" style={{ background: 'var(--t-accent)' }} />
+                    <img
+                      src="/images/omedo_logo.png"
+                      alt="Omedo Software Solutions Pvt. Ltd"
+                      className="h-6 w-auto object-contain"
+                      style={{ maxWidth: '110px' }}
+                    />
                   </span>
                 </div>
                 <div className="hidden sm:flex items-center gap-2 text-[11px] font-semibold px-2.5 py-1 rounded-full"
