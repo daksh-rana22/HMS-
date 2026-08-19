@@ -9,27 +9,68 @@ const fadeUp = {
 }
 const stagger = { hidden: {}, visible: { transition: { staggerChildren: 0.1 } } }
 
+// Base URL for the contact API — set VITE_API_URL in your .env file.
+// Development:  VITE_API_URL=http://localhost:5000
+// Production:   VITE_API_URL=https://your-backend-domain.com
+const API_BASE = import.meta.env.VITE_API_URL || 'http://localhost:5000'
+
 export default function Contact() {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
     facility: '',
     message: '',
+    // Honeypot — hidden from real users, bots fill this automatically.
+    // The backend silently rejects any submission where this field is non-empty.
+    website: '',
   })
   const [sending, setSending] = useState(false)
   const [sent, setSent] = useState(false)
+  const [error, setError] = useState(null)
 
   const handleChange = (e) => setFormData({ ...formData, [e.target.name]: e.target.value })
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault()
+
+    // Prevent double-submit while a request is already in-flight
+    if (sending) return
+
     setSending(true)
-    setTimeout(() => {
+    setError(null)
+
+    try {
+      const response = await fetch(`${API_BASE}/api/contact`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name: formData.name,
+          email: formData.email,
+          facility: formData.facility,
+          message: formData.message,
+          website: formData.website, // honeypot
+        }),
+      })
+
+      const data = await response.json()
+
+      if (response.ok && data.success) {
+        // ✅ Success — clear the form and show confirmation
+        setSent(true)
+        setFormData({ name: '', email: '', facility: '', message: '', website: '' })
+        setTimeout(() => setSent(false), 5000)
+      } else {
+        // ❌ Server returned a validation or business-logic error
+        setError(
+          data.message || 'Something went wrong. Please try again or contact us directly.'
+        )
+      }
+    } catch {
+      // ❌ Network error — keep form data so the user can retry
+      setError('Something went wrong. Please try again or contact us directly.')
+    } finally {
       setSending(false)
-      setSent(true)
-      setFormData({ name: '', email: '', facility: '', message: '' })
-      setTimeout(() => setSent(false), 3000)
-    }, 1500)
+    }
   }
 
   return (
@@ -77,6 +118,22 @@ export default function Contact() {
                   Send us a Message
                 </h2>
                 <form onSubmit={handleSubmit} className="space-y-5 sm:space-y-6">
+
+                  {/* ── Honeypot field — hidden from real users, traps bots ── */}
+                  {/* aria-hidden prevents screen readers from reading it       */}
+                  <div aria-hidden="true" style={{ display: 'none' }}>
+                    <label htmlFor="website">Leave this field empty</label>
+                    <input
+                      id="website"
+                      name="website"
+                      type="text"
+                      value={formData.website}
+                      onChange={handleChange}
+                      tabIndex={-1}
+                      autoComplete="off"
+                    />
+                  </div>
+
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-5 sm:gap-6">
                     <div className="space-y-1">
                       <label
@@ -131,6 +188,7 @@ export default function Contact() {
                       name="facility"
                       type="text"
                       placeholder="St. Mary's General Hospital"
+                      required
                       value={formData.facility}
                       onChange={handleChange}
                       className="form-input"
@@ -157,13 +215,57 @@ export default function Contact() {
                     />
                   </div>
 
+                  {/* ── Success banner ── */}
+                  <AnimatePresence>
+                    {sent && (
+                      <motion.div
+                        key="success-banner"
+                        initial={{ opacity: 0, y: -8 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, y: -8 }}
+                        transition={{ duration: 0.35 }}
+                        className="flex items-start gap-3 rounded-xl border border-emerald-200 bg-emerald-50 px-4 py-3.5"
+                        role="status"
+                        aria-live="polite"
+                      >
+                        <span className="material-symbols-outlined text-emerald-600 text-xl mt-0.5">check_circle</span>
+                        <p className="text-sm text-emerald-800 font-medium" style={{ fontFamily: "'Inter', sans-serif" }}>
+                          Thank you! Your message has been sent successfully. We'll get back to you soon.
+                        </p>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+
+                  {/* ── Error banner ── */}
+                  <AnimatePresence>
+                    {error && (
+                      <motion.div
+                        key="error-banner"
+                        initial={{ opacity: 0, y: -8 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, y: -8 }}
+                        transition={{ duration: 0.35 }}
+                        className="flex items-start gap-3 rounded-xl border border-red-200 bg-red-50 px-4 py-3.5"
+                        role="alert"
+                        aria-live="assertive"
+                      >
+                        <span className="material-symbols-outlined text-red-500 text-xl mt-0.5">error</span>
+                        <p className="text-sm text-red-700 font-medium" style={{ fontFamily: "'Inter', sans-serif" }}>
+                          {error}
+                        </p>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+
                   <button
                     type="submit"
-                    disabled={sending}
+                    disabled={sending || sent}
                     className={`w-full sm:w-auto inline-flex items-center justify-center gap-2 px-8 py-3.5 min-h-[48px] rounded-full text-xs sm:text-sm font-bold shadow-md active:scale-95 transition-all duration-200 ${
                       sent
-                        ? 'bg-[#2d685e] text-white'
-                        : 'bg-[#00685e] text-white hover:bg-[#008378]'
+                        ? 'bg-[#2d685e] text-white cursor-default'
+                        : sending
+                          ? 'bg-[#00685e] text-white opacity-75 cursor-not-allowed'
+                          : 'bg-[#00685e] text-white hover:bg-[#008378]'
                     }`}
                     style={{ fontFamily: "'Inter', sans-serif" }}
                   >
