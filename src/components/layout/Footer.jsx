@@ -56,10 +56,7 @@ export default function Footer() {
             {/* Offices */}
             <div className="pt-2 space-y-2 text-xs text-slate-400 leading-relaxed border-t border-white/10">
               <div>
-                <span className="font-semibold text-white">Lucknow Corporate HQ:</span> <a href="https://reckonsales.in/" target="_blank" rel="noopener noreferrer" className="text-cyan-300 hover:underline font-semibold">Reckon Sales Pvt. Ltd.</a>, SF-2 New Medicine Market, Meer Jaan Lane, Naya Gaon East, Gautam Budha Marg, Lucknow-226018, UP
-              </div>
-              <div>
-                <span className="font-semibold text-white">Ghaziabad Office:</span> <a href="https://www.technohunk.in/" target="_blank" rel="noopener noreferrer" className="text-cyan-300 hover:underline font-semibold">Technohunk Info Solutions Pvt Ltd</a>, H-11, Sector-23, Sanjay Nagar, Ghaziabad — 201002, UP
+                <span className="font-semibold text-white">Corporate Office:</span> <span className="text-cyan-300 font-semibold">OMEDO Software Solutions Pvt Ltd</span>, H-11, Sector-23, Sanjay Nagar, Ghaziabad — 201002, Uttar Pradesh, India
               </div>
             </div>
           </div>
@@ -112,13 +109,7 @@ export default function Footer() {
 
             <div className="space-y-2.5 text-xs text-slate-300 leading-relaxed">
               <div>
-                <span className="text-slate-400 block text-[11px] font-medium">Direct Lines:</span>
-                <a href="tel:05224972500" className="hover:text-white block font-semibold text-white">Landline: 0522-4972500</a>
-                <a href="tel:+919873003702" className="hover:text-white block font-semibold text-white">Mobile: +91 9873003702</a>
-              </div>
-
-              <div>
-                <span className="text-slate-400 block text-[11px] font-medium">Sales Hotlines:</span>
+                <span className="text-slate-400 block text-[11px] font-medium">Contact Hotlines:</span>
                 <span className="font-semibold text-emerald-400">
                   <a href="tel:+916389590600" className="hover:underline">+91 6389 590 600</a> | <a href="tel:+916389590700" className="hover:underline">+91 6389 590 700</a>
                 </span>
@@ -127,14 +118,14 @@ export default function Footer() {
               <div>
                 <span className="text-slate-400 block text-[11px] font-medium">Email Inquiries:</span>
                 <div className="space-y-0.5">
-                  <div>Support: <a href="mailto:care@reckonsales.com" className="text-cyan-300 hover:underline">care@reckonsales.com</a></div>
-                  <div>Sales: <a href="mailto:sales@reckonsales.com" className="text-cyan-300 hover:underline">sales@reckonsales.com</a></div>
-                  <div>General: <a href="mailto:Info@technohunk.co.in" className="text-cyan-300 hover:underline">Info@technohunk.co.in</a></div>
+                  <div>Support: <a href="mailto:sales@omedosoftware.com" className="text-cyan-300 hover:underline">sales@omedosoftware.com</a></div>
+                  <div>Sales: <a href="mailto:sales@omedosoftware.com" className="text-cyan-300 hover:underline">sales@omedosoftware.com</a></div>
                 </div>
               </div>
 
-              <div className="text-[11px] text-slate-400 pt-1">
-                Helpdesk Hours: Mon–Sat 9:30 AM – 6:30 PM IST
+              <div className="text-[11px] text-slate-400 pt-1 space-y-0.5">
+                <div>Helpline: Mon–Sat 9:00 AM – 9:00 PM IST</div>
+                <div>Sunday: 10:00 AM – 6:00 PM IST</div>
               </div>
             </div>
           </div>
@@ -147,7 +138,7 @@ export default function Footer() {
           style={{ fontFamily: "'Inter', sans-serif" }}
         >
           <p className="text-center sm:text-left">
-            © {new Date().getFullYear()} <a href="https://reckonsales.in/" target="_blank" rel="noopener noreferrer" className="text-slate-200 font-semibold hover:underline">Reckon Sales Pvt. Ltd.</a> (Omedo). All rights reserved.
+            © {new Date().getFullYear()} <span className="text-slate-200 font-semibold">OMEDO Software Solutions Pvt Ltd</span>. All rights reserved.
           </p>
           <div className="flex flex-wrap justify-center items-center gap-2 sm:gap-3 text-[11px] text-slate-400">
             <span>HIPAA Compliant</span>

@@ -72,6 +72,19 @@ const billingVouchers = [
   { name: 'Miscellaneous Invoice', code: 'VT004', prefix: 'INV/SVC', lastNo: '57', fy: '26-27', type: 'SALES', status: 'Active' },
 ]
 
+const billingServiceTypes = [
+  { code: 'SCA09', name: 'ADV', module: 'IPD', dept: '—', status: 'Active' },
+  { code: 'BED', name: 'Bed Charges', module: 'IPD', dept: 'General', status: 'Active' },
+  { code: 'SCA01', name: 'Consultations', module: 'Clinical', dept: '—', status: 'Active' },
+  { code: 'SCA06', name: 'Investigation', module: 'Radiology', dept: 'Radiology', status: 'Active' },
+  { code: 'SCA07', name: 'Investigation', module: 'Clinical', dept: 'Cardiology', status: 'Active' },
+  { code: 'SC011', name: 'IPD SERVICE', module: 'IPD', dept: 'General', status: 'Active' },
+  { code: 'SC002', name: 'Laboratory', module: 'Laboratory', dept: 'Pathology', status: 'Active' },
+  { code: 'SC004', name: 'OPD Consultation', module: 'OPD', dept: 'Microbiology', status: 'Active' },
+  { code: 'PHARM', name: 'Pharmacy', module: 'Pharmacy', dept: 'General', status: 'Active' },
+  { code: 'SC008', name: 'Procedure', module: 'IPD', dept: 'Cardiology', status: 'Active' },
+]
+
 // ── SAMPLE CLINICAL DATA ──
 const clinicalDashboardData = { opdToday: 142, ipdAdmitted: 38, todayRevenue: '₹2,84,500', activeDoctors: 12 }
 
@@ -243,6 +256,14 @@ const reportCancelledBills = [
 
 const reportBillRegister = { totalInvoices: 142, grossRevenue: '₹3,44,500', taxCollected: '₹31,005' }
 
+const reportServiceBilling = [
+  { bill: 'INV/SVC/26-27/116', patient: 'Anuj Agarwal (25Y/M)', type: 'Procedure', services: 'ICU Consultancy', billedBy: 'Shivam Sharma', gross: '₹393', net: '₹393', cash: '₹393' },
+  { bill: 'INV/SVC/26-27/111', patient: 'raghav chadda (M)', type: 'Procedure', services: 'Bed Charge, CT Scan Brain', billedBy: 'Avanish Dubey', gross: '₹1,000', net: '₹1,000', cash: '₹1,000' },
+  { bill: 'INV/SVC/26-27/110', patient: 'Alpha Agarwal (54Y/M)', type: 'Procedure', services: 'CBC Test, ICU Consult', billedBy: 'Avanish Dubey', gross: '₹895', net: '₹895', cash: '₹895' },
+  { bill: 'INV/SVC/26-27/109', patient: 'Aman Santoshi (25Y/M)', type: 'Procedure', services: 'Kidney Function Test', billedBy: 'Saurabh Vis', gross: '₹640', net: '₹640', cash: '₹640' },
+  { bill: 'INV/SVC/26-27/108', patient: 'Aman Santoshi (25Y/M)', type: 'Procedure', services: 'Kidney Function Test', billedBy: 'Saurabh Vis', gross: '₹640', net: '₹640', cash: '₹640' },
+]
+
 // ── SAMPLE IT ADMINISTRATION DATA FOR ALL 18 SUB-MODULES (FROM USER SCREENSHOT) ──
 const itDashboardData = { activeUsers: 64, systemUptime: '99.99%', encryptedBackups: 'Completed Today', activeModules: 18 }
 
@@ -395,6 +416,36 @@ const ipdAdmissions = [
   { id: 'IPD-2026-1031', patient: 'Anita Gupta', ward: 'A/C Room', bed: 'AC-07', doctor: 'Dr. Sunita Rao', dept: 'Gynecology', status: 'Admitted' },
 ]
 
+const ipdAdmissionRequests = [
+  { name: 'Mukund Kandelwal (M-30)', uhid: 'PAT202600643', doctor: 'Dr. Avanish Dubey', dept: 'Oncology', type: 'Chemotherapy', date: '19 Aug 2026' },
+  { name: 'Mohar Singh (M-34Y)', uhid: 'PAT202600630', doctor: 'Dr. Avanish Dubey', dept: 'Oncology', type: 'Chemotherapy', date: '18 Aug 2026' },
+  { name: 'Raju Paswan (F-24Y)', uhid: 'PAT202600626', doctor: 'Dr. Avanish Dubey', dept: 'Oncology', type: 'Bone Marrow Aspiration', date: '18 Aug 2026' },
+  { name: 'Hardik Singh (F-50Y)', uhid: 'PAT202600632', doctor: 'Dr. Avanish Dubey', dept: 'Oncology', type: 'Immunotherapy', date: '18 Aug 2026' },
+  { name: 'Rahul Sinha (M-30Y)', uhid: 'PAT202600607', doctor: 'Dr. Avanish Dubey', dept: 'Oncology', type: 'Bone Marrow Aspiration', date: '17 Aug 2026' },
+]
+
+const ipdAdmittedPatientsLive = [
+  { name: 'Abha Devi (M-98Y)', uhid: 'PAT202600698', admissionId: 'IPD-202600333', ward: 'Saurabhs Ward (SB-105)', doctor: 'Dr. Avanish Dubey', dept: 'Oncology', status: 'ADMITTED' },
+  { name: 'Joker (M-45Y)', uhid: 'PAT202600622', admissionId: 'IPD-202600332', ward: 'Saurabhs Ward (SB-105)', doctor: 'Dr. Avanish Dubey', dept: 'Oncology', status: 'ADMITTED' },
+  { name: 'ANONYMOUS (M-24Y)', uhid: 'PAT202600697', admissionId: 'IPD-202600331', ward: 'general ward (t1)', doctor: 'Dr. Diwak user', dept: 'Cardiology', status: 'ADMITTED' },
+  { name: 'Suresh (F-24Y)', uhid: 'PAT202600696', admissionId: 'IPD-202600330', ward: 'ICU (BG-101)', doctor: 'Dr. John Doe', dept: 'Pediatrics', status: 'ADMITTED' },
+  { name: 'Astha Kumari (F-23Y)', uhid: 'PAT202600695', admissionId: 'IPD-202600329', ward: 'xyz-private (BT-307)', doctor: 'Dr. Diwak user', dept: 'Cardiology', status: 'ADMITTED' },
+]
+
+const ipdDischargePatientsData = [
+  { name: 'Abhijit Bhattacharya (M-29Y)', uhid: 'PAT202600671', admissionId: 'IPD-202600316', dischargeInfo: '20/08/2026 • EXPIRED', doctor: 'Dr. Narsingh Tripathi', dept: 'Blood Bank', docStatus: 'Pending' },
+  { name: 'Rameshwar Lal (M-62Y)', uhid: 'PAT202600655', admissionId: 'IPD-202600310', dischargeInfo: '19/08/2026 • NORMAL', doctor: 'Dr. Avanish Dubey', dept: 'Oncology', docStatus: 'Completed' },
+  { name: 'Pooja Verma (F-38Y)', uhid: 'PAT202600648', admissionId: 'IPD-202600298', dischargeInfo: '19/08/2026 • LAMA', doctor: 'Dr. Rajesh Sharma', dept: 'Orthopedics', docStatus: 'Completed' },
+]
+
+const ipdChemoRadiationData = [
+  { name: 'Abha Devi (M-98Y)', uhid: 'PAT202600698', admissionId: 'IPD-202600333', ward: 'Saurabhs Ward (SB-105)', doctor: 'Dr. Avanish Dubey', status: 'ADMITTED' },
+  { name: 'Joker (M-45Y)', uhid: 'PAT202600622', admissionId: 'IPD-202600332', ward: 'Saurabhs Ward (SB-105)', doctor: 'Dr. Avanish Dubey', status: 'ADMITTED' },
+  { name: 'IPD Patient Three (M-36Y)', uhid: 'PAT202600679', admissionId: 'IPD-202600324', ward: 'Saurabhs Ward (SB-104)', doctor: 'Dr. Avanish Dubey', status: 'DISCHARGE_IN_PROGRESS' },
+  { name: 'IPD Patient Two (M-78Y)', uhid: 'PAT202600678', admissionId: 'IPD-202600323', ward: 'Saurabhs Ward (SB-103)', doctor: 'Dr. Avanish Dubey', status: 'DISCHARGE_IN_PROGRESS' },
+  { name: 'Faisal Malik (M-999Y)', uhid: 'PAT202600645', admissionId: 'IPD-202600302', ward: 'ICU (B-201)', doctor: 'Dr. Avanish Dubey', status: 'ADMITTED' },
+]
+
 const ipdBedMatrix = [
   { ward: 'General Ward', total: 40, occupied: 34, available: 6, icu: false },
   { ward: 'Semi Deluxe', total: 20, occupied: 16, available: 4, icu: false },
@@ -448,12 +499,13 @@ export default function Modules() {
   const [clinicalActiveTab, setClinicalActiveTab] = useState(0)
   const [reportsActiveTab, setReportsActiveTab] = useState(0)
   const [ipdActiveTab, setIpdActiveTab] = useState(0)
+  const [labActiveTab, setLabActiveTab] = useState(0)
   
   // Auto-rotating state for IT Administration (0 to 18 - ALL 19 FIELDS FROM USER SCREENSHOT!)
   const [itActiveTab, setItActiveTab] = useState(0)
 
   useEffect(() => {
-    const timer = setInterval(() => setBillingActiveTab((prev) => (prev + 1) % 6), 5000)
+    const timer = setInterval(() => setBillingActiveTab((prev) => (prev + 1) % 7), 5000)
     return () => clearInterval(timer)
   }, [billingActiveTab])
 
@@ -463,7 +515,7 @@ export default function Modules() {
   }, [clinicalActiveTab])
 
   useEffect(() => {
-    const timer = setInterval(() => setReportsActiveTab((prev) => (prev + 1) % 12), 5000)
+    const timer = setInterval(() => setReportsActiveTab((prev) => (prev + 1) % 13), 5000)
     return () => clearInterval(timer)
   }, [reportsActiveTab])
 
@@ -472,6 +524,16 @@ export default function Modules() {
     return () => clearInterval(timer)
   }, [itActiveTab])
 
+  useEffect(() => {
+    const timer = setInterval(() => setLabActiveTab((prev) => (prev + 1) % 2), 5000)
+    return () => clearInterval(timer)
+  }, [labActiveTab])
+
+  const labTabs = [
+    { id: 0, key: 'orders', label: 'Investigation Orders', icon: 'science' },
+    { id: 1, key: 'walkin', label: 'Walk-In Billing', icon: 'receipt_long' },
+  ]
+
   const billingTabs = [
     { id: 0, key: 'groups', label: 'Account Groups', icon: 'folder' },
     { id: 1, key: 'ledger', label: 'Ledger Master', icon: 'menu_book' },
@@ -479,6 +541,7 @@ export default function Modules() {
     { id: 3, key: 'gst', label: '% GST Master', icon: 'percent' },
     { id: 4, key: 'vouchertype', label: 'Voucher Type Master', icon: 'receipt' },
     { id: 5, key: 'voucher', label: 'Voucher Master', icon: 'confirmation_number' },
+    { id: 6, key: 'servicetype', label: 'Service Type Master', icon: 'category' },
   ]
 
   const clinicalTabs = [
@@ -498,13 +561,18 @@ export default function Modules() {
   ]
 
   useEffect(() => {
-    const timer = setInterval(() => setIpdActiveTab((prev) => (prev + 1) % 2), 5000)
+    const timer = setInterval(() => setIpdActiveTab((prev) => (prev + 1) % 7), 5000)
     return () => clearInterval(timer)
   }, [ipdActiveTab])
 
   const ipdTabs = [
     { id: 0, key: 'nursedashboard', label: 'Nurse Dashboard' },
-    { id: 1, key: 'accounting', label: 'Accounting' },
+    { id: 1, key: 'admissionrequest', label: 'Admission Request' },
+    { id: 2, key: 'accounting', label: 'Accounting' },
+    { id: 3, key: 'admittedpatient', label: 'Admitted Patient' },
+    { id: 4, key: 'dischargepatients', label: 'Discharge Patients' },
+    { id: 5, key: 'ipdadmission', label: 'IPD Admission' },
+    { id: 6, key: 'chemoradiation', label: 'Chemo and Radiation' },
   ]
 
   const reportsTabs = [
@@ -520,6 +588,7 @@ export default function Modules() {
     { id: 9, key: 'discountrpt', label: 'Discount Report', icon: 'sell' },
     { id: 10, key: 'cancelbills', label: 'Cancelled Bills', icon: 'cancel' },
     { id: 11, key: 'billreg', label: 'Bill Register', icon: 'auto_stories' },
+    { id: 12, key: 'servicebilling', label: 'Service Billing Report', icon: 'receipt_long' },
   ]
 
   // ALL 19 IT ADMINISTRATION SUB-MODULE FIELDS FROM USER SCREENSHOT
@@ -1585,7 +1654,7 @@ export default function Modules() {
                     <span className="material-symbols-outlined text-[#00685e] text-2xl 2xl:text-3xl">analytics</span>
                   </div>
                   <span className="inline-flex items-center px-2.5 py-1 2xl:px-3.5 2xl:py-1.5 rounded-full bg-[#afecde] text-[#326c62] text-[11px] 2xl:text-xs font-semibold">
-                    12 Business Intelligence Reports
+                    13 Business Intelligence Reports
                   </span>
                 </div>
 
@@ -1596,7 +1665,7 @@ export default function Modules() {
                 </p>
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 2xl:gap-3 mb-4 2xl:mb-6">
-                  {['Doctor Consultation Performance', 'OPD Registration & Appt Summaries', 'Userwise & Department Collections', 'Billwise & Payment Mode Analytics', 'Due Amount & Refund Tracking', 'Discount & Cancelled Bills Audit', 'Automated PDF / Excel Export', 'Real-Time KPI Dashboards'].map((feat) => (
+                  {['Doctor Consultation Performance', 'OPD Registration & Appt Summaries', 'Userwise & Department Collections', 'Billwise & Payment Mode Analytics', 'Due Amount & Refund Tracking', 'Discount & Cancelled Bills Audit', 'Service Billing & Procedure Report', 'Automated PDF / Excel Export'].map((feat) => (
                     <div key={feat} className="flex items-center gap-1.5 2xl:gap-2 text-xs 2xl:text-sm text-[#121d1f] font-medium">
                       <span className="material-symbols-outlined text-[#00685e] text-sm 2xl:text-base">check_circle</span>
                       {feat}
@@ -1614,8 +1683,8 @@ export default function Modules() {
 
             <div className="lg:col-span-7 bg-white/95 backdrop-blur-sm rounded-2xl border border-[#bcc9c6]/40 shadow-sm overflow-hidden flex flex-col justify-between min-h-[420px] sm:h-[400px] 2xl:h-[480px] 3xl:h-[500px] relative z-10">
               <div className="bg-[#effcfe] px-4 py-3 border-b border-[#bcc9c6]/30 flex flex-wrap items-center justify-between gap-2 text-xs shrink-0">
-                <div className="flex items-center gap-2 font-bold text-[#00685e]">Reports Master (12 Sub-Modules)</div>
-                <div className="text-[10px] text-[#6d7a77]">Auto-changes 5s (12 views)</div>
+                <div className="flex items-center gap-2 font-bold text-[#00685e]">Reports Master (13 Sub-Modules)</div>
+                <div className="text-[10px] text-[#6d7a77]">Auto-changes 5s (13 views)</div>
               </div>
 
               <div className="flex flex-col sm:flex-row flex-1 overflow-hidden">
@@ -1838,6 +1907,62 @@ export default function Modules() {
                     </div>
                   )}
 
+                  {/* FIELD 12: SERVICE BILLING REPORT */}
+                  {reportsActiveTab === 12 && (
+                    <div className="flex-1 flex flex-col justify-between text-xs">
+                      <div>
+                        <div className="flex items-center justify-between mb-2">
+                          <h4 className="text-sm font-bold text-[#00685e] flex items-center gap-1">
+                            <span className="material-symbols-outlined text-base">receipt_long</span> Service Billing Report
+                          </h4>
+                          <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-[#afecde] text-[#326c62]">22 Bills</span>
+                        </div>
+
+                        {/* Top KPI row */}
+                        <div className="grid grid-cols-3 gap-1.5 mb-2">
+                          <div className="bg-[#eaf6f8] p-1.5 rounded-xl text-center">
+                            <div className="text-[9px] text-[#6d7a77] uppercase font-bold">Total Bills</div>
+                            <div className="text-xs font-extrabold text-[#121d1f]">22</div>
+                          </div>
+                          <div className="bg-[#eaf6f8] p-1.5 rounded-xl text-center">
+                            <div className="text-[9px] text-[#6d7a77] uppercase font-bold">Bill Amount</div>
+                            <div className="text-xs font-extrabold text-[#00685e]">₹19,942</div>
+                          </div>
+                          <div className="bg-emerald-50 p-1.5 rounded-xl text-center border border-emerald-200">
+                            <div className="text-[9px] text-emerald-700 uppercase font-bold">Cash Recd</div>
+                            <div className="text-xs font-extrabold text-emerald-800">₹21,192</div>
+                          </div>
+                        </div>
+
+                        {/* Table */}
+                        <table className="w-full text-left border-collapse text-[10px]">
+                          <thead>
+                            <tr className="border-b text-[#00685e] font-bold">
+                              <th className="py-1 px-1">Bill / Patient</th>
+                              <th className="py-1 px-1">Service</th>
+                              <th className="py-1 px-1">Billed By</th>
+                              <th className="py-1 px-1">Net</th>
+                            </tr>
+                          </thead>
+                          <tbody className="divide-y divide-[#bcc9c6]/20">
+                            {reportServiceBilling.slice(0, 4).map((r) => (
+                              <tr key={r.bill} className="hover:bg-[#eaf6f8]/50 transition-colors">
+                                <td className="py-1 px-1">
+                                  <div className="font-bold text-[#00685e]">{r.bill.replace('INV/SVC/', '')}</div>
+                                  <div className="text-[9px] text-[#121d1f] font-semibold truncate max-w-[110px]">{r.patient}</div>
+                                </td>
+                                <td className="py-1 px-1 text-[#3d4947] truncate max-w-[115px]">{r.services}</td>
+                                <td className="py-1 px-1 text-[#6d7a77]">{r.billedBy}</td>
+                                <td className="py-1 px-1 font-bold text-[#008378]">{r.net}</td>
+                              </tr>
+                            ))}
+                          </tbody>
+                        </table>
+                      </div>
+                      <div className="text-[10px] text-[#6d7a77]">Multi-parameter filters: Date, Type, Ref Doctor, User</div>
+                    </div>
+                  )}
+
                   <div className="flex items-center justify-center gap-1 pt-2 border-t border-[#bcc9c6]/20 shrink-0">
                     {reportsTabs.map((t) => (
                       <button key={t.id} onClick={() => setReportsActiveTab(t.id)}
@@ -1884,13 +2009,13 @@ export default function Modules() {
 
                 {/* Feature Pills */}
                 <div className="flex flex-wrap gap-2 mb-4 2xl:mb-6">
-                  {['Visual Bed Matrix', 'Nurse Dashboard', 'IPD Accounting', 'Discharge Summary', 'Ward Management', 'OT Scheduling'].map((feat) => (
+                  {['Nurse Dashboard', 'Admission Request', 'IPD Accounting', 'Admitted Patient', 'Discharge Patients', 'IPD Admission', 'Chemo & Radiation'].map((feat) => (
                     <span key={feat} className="px-2.5 py-1 rounded-full bg-[#eaf6f8] border border-[#00685e]/20 text-[#00685e] text-[10px] font-bold">{feat}</span>
                   ))}
                 </div>
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 2xl:gap-3 mb-4 2xl:mb-6">
-                  {['IPD Admission & Bed Allocation', 'Nurse & Doctor Duty Dashboard', 'Ward Bed Availability Matrix', 'Patient Treatment Chart', 'IPD Advance & Billing Ledger', 'TPA & Insurance IPD Claims', 'Discharge Summary Builder', 'OT & Surgical Scheduling'].map((feat) => (
+                  {['Nurse & Ward Duty Dashboard', 'Admission Request Queue & Triage', 'IPD Advance & Provisional Ledger', 'Live Bed Matrix & Admitted Census', 'Discharge & Mortality Tracking', 'IPD Admission Desk & UHID Search', 'Chemo & Radiation Therapy Cycles', 'TPA & Insurance Inpatient Claims'].map((feat) => (
                     <div key={feat} className="flex items-center gap-1.5 2xl:gap-2 text-xs 2xl:text-sm text-[#121d1f] font-medium" style={{ fontFamily: "'Inter', sans-serif" }}>
                       <span className="material-symbols-outlined text-[#00685e] text-sm 2xl:text-base">check_circle</span>
                       {feat}
@@ -1917,10 +2042,10 @@ export default function Modules() {
               <div className="bg-[#effcfe] px-4 py-3 border-b border-[#bcc9c6]/30 flex flex-wrap items-center justify-between gap-2 text-xs shrink-0" style={{ fontFamily: "'Inter', sans-serif" }}>
                 <div className="flex items-center gap-2">
                   <span className="material-symbols-outlined text-sm text-[#00685e]">bed</span>
-                  <span className="font-bold text-[#00685e]">IPD — Inpatient Management (2 Views)</span>
+                  <span className="font-bold text-[#00685e]">IPD — Inpatient Management (7 Views)</span>
                 </div>
                 <div className="flex items-center gap-1.5">
-                  <span className="text-[10px] text-[#6d7a77]">Auto-changes 5s (2 views)</span>
+                  <span className="text-[10px] text-[#6d7a77]">Auto-changes 5s (7 views)</span>
                   <span className="w-2 h-2 rounded-full bg-[#00685e] animate-pulse"></span>
                 </div>
               </div>
@@ -1944,7 +2069,7 @@ export default function Modules() {
                 {/* Main Content */}
                 <div className="flex-1 p-3 overflow-x-auto overflow-y-auto flex flex-col justify-between">
 
-                  {/* NURSE DASHBOARD */}
+                  {/* 1. NURSE DASHBOARD */}
                   {ipdActiveTab === 0 && (
                     <div className="flex-1 flex flex-col justify-between">
                       <div>
@@ -2015,8 +2140,63 @@ export default function Modules() {
                     </div>
                   )}
 
-                  {/* ACCOUNTING */}
+                  {/* 2. ADMISSION REQUEST */}
                   {ipdActiveTab === 1 && (
+                    <div className="flex-1 flex flex-col justify-between">
+                      <div>
+                        <div className="flex items-center justify-between mb-2">
+                          <h4 className="text-sm font-bold text-[#00685e] flex items-center gap-1">
+                            <span className="material-symbols-outlined text-base">assignment</span> Admission Request
+                          </h4>
+                          <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-[#afecde] text-[#326c62]">14 Aug - 20 Aug 2026</span>
+                        </div>
+
+                        {/* Search & Filter Bar Preview */}
+                        <div className="mb-2 flex items-center justify-between gap-2 p-1.5 bg-[#eaf6f8] rounded-xl text-[10px] border border-[#00685e]/15">
+                          <span className="text-[#3d4947] flex items-center gap-1">
+                            <span className="material-symbols-outlined text-xs text-[#00685e]">search</span> Search by patient name, UHID or mobile...
+                          </span>
+                          <span className="text-[9px] font-bold bg-[#00685e] text-white px-2 py-0.5 rounded-md">Queue (5 Entries)</span>
+                        </div>
+
+                        {/* Admission Request Table */}
+                        <table className="w-full text-left text-[10px]">
+                          <thead>
+                            <tr className="border-b text-[#00685e] font-bold uppercase">
+                              <th className="py-1 px-1">Patient Details</th>
+                              <th className="py-1 px-1">Recommended By</th>
+                              <th className="py-1 px-1">Treatment Type</th>
+                              <th className="py-1 px-1 whitespace-nowrap">Visit Date</th>
+                            </tr>
+                          </thead>
+                          <tbody className="divide-y divide-[#bcc9c6]/20">
+                            {ipdAdmissionRequests.slice(0, 4).map((r) => (
+                              <tr key={r.uhid} className="hover:bg-[#eaf6f8]/50 transition-colors">
+                                <td className="py-1 px-1">
+                                  <div className="font-semibold text-[#121d1f]">{r.name}</div>
+                                  <div className="font-mono text-[9px] text-[#00685e]">{r.uhid}</div>
+                                </td>
+                                <td className="py-1 px-1 text-[#3d4947]">
+                                  <div className="font-medium text-[#121d1f]">{r.doctor}</div>
+                                  <div className="text-[9px] text-[#6d7a77]">{r.dept}</div>
+                                </td>
+                                <td className="py-1 px-1">
+                                  <span className="inline-block px-1.5 py-0.5 rounded bg-blue-50 text-blue-700 font-bold text-[9px] border border-blue-200">
+                                    {r.type}
+                                  </span>
+                                </td>
+                                <td className="py-1 px-1 text-[#3d4947] whitespace-nowrap font-medium">{r.date}</td>
+                              </tr>
+                            ))}
+                          </tbody>
+                        </table>
+                      </div>
+                      <div className="text-[10px] text-[#6d7a77] mt-1">Inpatient Admission Request Queue & Triage</div>
+                    </div>
+                  )}
+
+                  {/* 3. ACCOUNTING */}
+                  {ipdActiveTab === 2 && (
                     <div className="flex-1 flex flex-col justify-between">
                       <div>
                         <div className="flex items-center justify-between mb-2">
@@ -2057,6 +2237,239 @@ export default function Modules() {
                         </div>
                       </div>
                       <div className="text-[10px] text-[#6d7a77] mt-2">Inpatient Financial & Billing Sub-Modules</div>
+                    </div>
+                  )}
+
+                  {/* 4. ADMITTED PATIENT */}
+                  {ipdActiveTab === 3 && (
+                    <div className="flex-1 flex flex-col justify-between">
+                      <div>
+                        <div className="flex items-center justify-between mb-2">
+                          <h4 className="text-sm font-bold text-[#00685e] flex items-center gap-1">
+                            <span className="material-symbols-outlined text-base">bed</span> Admitted Patients
+                          </h4>
+                          <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-[#afecde] text-[#326c62]">299 Currently Admitted</span>
+                        </div>
+
+                        {/* Top Bed Census Cards */}
+                        <div className="grid grid-cols-4 gap-1.5 mb-2.5">
+                          <div className="bg-[#eaf6f8] p-1.5 rounded-xl border border-[#00685e]/20 text-center">
+                            <div className="text-[9px] font-bold text-[#6d7a77]">TOTAL BEDS</div>
+                            <div className="text-sm font-extrabold text-[#00685e]">337</div>
+                            <div className="text-[8px] text-[#008378]">Avail: 178 • Occ: 157</div>
+                          </div>
+                          <div className="bg-[#eaf6f8] p-1.5 rounded-xl border border-[#00685e]/20 text-center">
+                            <div className="text-[9px] font-bold text-[#6d7a77]">ADMITTED</div>
+                            <div className="text-sm font-extrabold text-[#008378]">298</div>
+                            <div className="text-[8px] text-[#6d7a77]">Today: +11</div>
+                          </div>
+                          <div className="bg-red-50 p-1.5 rounded-xl border border-red-200 text-center">
+                            <div className="text-[9px] font-bold text-red-600">EMERGENCY</div>
+                            <div className="text-sm font-extrabold text-red-700">45</div>
+                            <div className="text-[8px] text-red-500">Needs attention</div>
+                          </div>
+                          <div className="bg-amber-50 p-1.5 rounded-xl border border-amber-200 text-center">
+                            <div className="text-[9px] font-bold text-amber-700">DISCHARGES</div>
+                            <div className="text-sm font-extrabold text-amber-800">32</div>
+                            <div className="text-[8px] text-amber-600">Today: 1</div>
+                          </div>
+                        </div>
+
+                        {/* Patient Table */}
+                        <table className="w-full text-left text-[10px]">
+                          <thead>
+                            <tr className="border-b text-[#00685e] font-bold uppercase">
+                              <th className="py-1 px-1">Patient</th>
+                              <th className="py-1 px-1 whitespace-nowrap">Admission</th>
+                              <th className="py-1 px-1">Ward / Bed</th>
+                              <th className="py-1 px-1 whitespace-nowrap">Status</th>
+                            </tr>
+                          </thead>
+                          <tbody className="divide-y divide-[#bcc9c6]/20">
+                            {ipdAdmittedPatientsLive.slice(0, 4).map((r) => (
+                              <tr key={r.uhid} className="hover:bg-[#eaf6f8]/50 transition-colors">
+                                <td className="py-1 px-1 font-semibold text-[#121d1f]">
+                                  {r.name}
+                                  <div className="font-mono text-[9px] text-[#6d7a77]">{r.uhid}</div>
+                                </td>
+                                <td className="py-1 px-1 font-mono text-[#00685e] whitespace-nowrap">{r.admissionId}</td>
+                                <td className="py-1 px-1 text-[#3d4947]">{r.ward}</td>
+                                <td className="py-1 px-1 whitespace-nowrap">
+                                  <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-700 font-bold text-[9px] whitespace-nowrap">
+                                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-600 shrink-0" />
+                                    {r.status}
+                                  </span>
+                                </td>
+                              </tr>
+                            ))}
+                          </tbody>
+                        </table>
+                      </div>
+                      <div className="text-[10px] text-[#6d7a77] mt-1">Live Admitted Patient Registry &amp; Ward Allocations</div>
+                    </div>
+                  )}
+
+                  {/* 5. DISCHARGE PATIENTS */}
+                  {ipdActiveTab === 4 && (
+                    <div className="flex-1 flex flex-col justify-between">
+                      <div>
+                        <div className="flex items-center justify-between mb-2">
+                          <h4 className="text-sm font-bold text-[#00685e] flex items-center gap-1">
+                            <span className="material-symbols-outlined text-base">logout</span> Discharge Patients
+                          </h4>
+                          <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-[#afecde] text-[#326c62]">1 Discharge Record</span>
+                        </div>
+
+                        {/* Top Discharge Metrics */}
+                        <div className="grid grid-cols-4 gap-1.5 mb-2.5">
+                          <div className="bg-blue-50 p-1.5 rounded-xl border border-blue-200 text-center">
+                            <div className="text-[9px] font-bold text-blue-600">DISCHARGES TODAY</div>
+                            <div className="text-sm font-extrabold text-blue-700">1</div>
+                            <div className="text-[8px] text-blue-500">Completed today</div>
+                          </div>
+                          <div className="bg-red-50 p-1.5 rounded-xl border border-red-200 text-center">
+                            <div className="text-[9px] font-bold text-red-600">TOTAL DISCHARGES</div>
+                            <div className="text-sm font-extrabold text-red-700">32</div>
+                            <div className="text-[8px] text-red-500">Overall count</div>
+                          </div>
+                          <div className="bg-slate-100 p-1.5 rounded-xl border border-slate-300 text-center">
+                            <div className="text-[9px] font-bold text-slate-700">DEATH PATIENTS</div>
+                            <div className="text-sm font-extrabold text-slate-800">12</div>
+                            <div className="text-[8px] text-slate-600">Expired discharges</div>
+                          </div>
+                          <div className="bg-emerald-50 p-1.5 rounded-xl border border-emerald-200 text-center">
+                            <div className="text-[9px] font-bold text-emerald-600">ADMITTED PATIENTS</div>
+                            <div className="text-sm font-extrabold text-emerald-700">298</div>
+                            <div className="text-[8px] text-emerald-500">Today: +11</div>
+                          </div>
+                        </div>
+
+                        {/* Discharge Table */}
+                        <table className="w-full text-left text-[10px]">
+                          <thead>
+                            <tr className="border-b text-[#00685e] font-bold uppercase">
+                              <th className="py-1 px-1">Patient</th>
+                              <th className="py-1 px-1 whitespace-nowrap">Admission</th>
+                              <th className="py-1 px-1">Discharge Info</th>
+                              <th className="py-1 px-1">Doctor</th>
+                            </tr>
+                          </thead>
+                          <tbody className="divide-y divide-[#bcc9c6]/20">
+                            {ipdDischargePatientsData.map((r) => (
+                              <tr key={r.uhid} className="hover:bg-[#eaf6f8]/50 transition-colors">
+                                <td className="py-1 px-1">
+                                  <div className="font-semibold text-[#121d1f]">{r.name}</div>
+                                  <div className="font-mono text-[9px] text-[#00685e]">{r.uhid}</div>
+                                </td>
+                                <td className="py-1 px-1 font-mono text-[#00685e] whitespace-nowrap">{r.admissionId}</td>
+                                <td className="py-1 px-1">
+                                  <span className="inline-block px-1.5 py-0.5 rounded bg-slate-100 text-slate-700 font-bold text-[9px] border border-slate-300">
+                                    {r.dischargeInfo}
+                                  </span>
+                                </td>
+                                <td className="py-1 px-1 text-[#3d4947] font-medium">{r.doctor}</td>
+                              </tr>
+                            ))}
+                          </tbody>
+                        </table>
+                      </div>
+                      <div className="text-[10px] text-[#6d7a77] mt-1">Discharge Registry, Death Tracking &amp; Medical Clearance</div>
+                    </div>
+                  )}
+
+                  {/* 6. IPD ADMISSION */}
+                  {ipdActiveTab === 5 && (
+                    <div className="flex-1 flex flex-col justify-between">
+                      <div>
+                        <div className="flex items-center justify-between mb-2">
+                          <h4 className="text-sm font-bold text-[#00685e] flex items-center gap-1">
+                            <span className="material-symbols-outlined text-base">person_add</span> IPD Admission Desk
+                          </h4>
+                          <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-[#afecde] text-[#326c62]">New Patient Registry</span>
+                        </div>
+
+                        {/* Search Patient Box */}
+                        <div className="p-2 bg-[#eaf6f8] rounded-xl border border-[#00685e]/20 mb-2">
+                          <div className="text-[10px] font-bold text-[#00685e] mb-1 flex items-center justify-between">
+                            <span>FIND PATIENT</span>
+                            <span className="text-[9px] text-[#00685e] bg-white px-2 py-0.5 rounded-full border border-[#00685e]/30 font-bold">+ Add New Patient</span>
+                          </div>
+                          <div className="p-1.5 bg-white rounded-lg border border-[#bcc9c6]/40 text-[10px] text-[#6d7a77] flex items-center gap-1">
+                            <span className="material-symbols-outlined text-xs text-[#00685e]">search</span> Search by name, UHID, or phone number...
+                          </div>
+                        </div>
+
+                        {/* Configuration Grid */}
+                        <div className="grid grid-cols-2 gap-2 text-[10px]">
+                          <div className="p-2 bg-white rounded-xl border border-[#bcc9c6]/40">
+                            <div className="text-[9px] font-bold text-[#00685e] uppercase">Medical Team</div>
+                            <div className="mt-1 font-semibold text-[#121d1f]">Dr. Avanish Dubey</div>
+                            <div className="text-[9px] text-[#6d7a77]">Department: Oncology</div>
+                          </div>
+                          <div className="p-2 bg-white rounded-xl border border-[#bcc9c6]/40">
+                            <div className="text-[9px] font-bold text-[#00685e] uppercase">Treatment Package</div>
+                            <div className="mt-1 font-semibold text-[#121d1f]">Chemotherapy Daycare</div>
+                            <div className="text-[9px] text-emerald-700 font-bold">Advance Deposit: ₹25,000</div>
+                          </div>
+                        </div>
+                      </div>
+                      <div className="text-[10px] text-[#6d7a77] mt-1">Direct Inpatient Admission &amp; Package Billing Enrollment</div>
+                    </div>
+                  )}
+
+                  {/* 7. CHEMO AND RADIATION */}
+                  {ipdActiveTab === 6 && (
+                    <div className="flex-1 flex flex-col justify-between">
+                      <div>
+                        <div className="flex items-center justify-between mb-2">
+                          <h4 className="text-sm font-bold text-[#00685e] flex items-center gap-1">
+                            <span className="material-symbols-outlined text-base">biotech</span> Chemo and Radiology Patients
+                          </h4>
+                          <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-[#afecde] text-[#326c62]">50 Patients • Oncology</span>
+                        </div>
+
+                        {/* Filter Tabs */}
+                        <div className="flex items-center gap-1.5 mb-2">
+                          <span className="px-2 py-0.5 rounded-md bg-[#00685e] text-white font-bold text-[9px]">ALL</span>
+                          <span className="px-2 py-0.5 rounded-md bg-[#eaf6f8] text-[#00685e] font-semibold text-[9px] border border-[#00685e]/20">CHEMO</span>
+                          <span className="px-2 py-0.5 rounded-md bg-[#eaf6f8] text-[#00685e] font-semibold text-[9px] border border-[#00685e]/20">RADIATION</span>
+                        </div>
+
+                        {/* Chemo Patient Table */}
+                        <table className="w-full text-left text-[10px]">
+                          <thead>
+                            <tr className="border-b text-[#00685e] font-bold uppercase">
+                              <th className="py-1 px-1">Patient</th>
+                              <th className="py-1 px-1 whitespace-nowrap">Admission</th>
+                              <th className="py-1 px-1">Ward / Bed</th>
+                              <th className="py-1 px-1 whitespace-nowrap">Status</th>
+                            </tr>
+                          </thead>
+                          <tbody className="divide-y divide-[#bcc9c6]/20">
+                            {ipdChemoRadiationData.slice(0, 4).map((r) => (
+                              <tr key={r.uhid} className="hover:bg-[#eaf6f8]/50 transition-colors">
+                                <td className="py-1 px-1">
+                                  <div className="font-semibold text-[#121d1f]">{r.name}</div>
+                                  <div className="font-mono text-[9px] text-[#00685e]">{r.uhid}</div>
+                                </td>
+                                <td className="py-1 px-1 font-mono text-[#00685e] whitespace-nowrap">{r.admissionId}</td>
+                                <td className="py-1 px-1 text-[#3d4947]">{r.ward}</td>
+                                <td className="py-1 px-1 whitespace-nowrap">
+                                  <span className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-full font-bold text-[9px] whitespace-nowrap ${
+                                    r.status === 'ADMITTED' ? 'bg-emerald-100 text-emerald-700' : 'bg-amber-100 text-amber-700'
+                                  }`}>
+                                    <span className={`w-1.5 h-1.5 rounded-full shrink-0 ${
+                                      r.status === 'ADMITTED' ? 'bg-emerald-600' : 'bg-amber-600'
+                                    }`} />
+                                    {r.status}
+                                  </span>
+                                </td>
+                              </tr>
+                            ))}
+                          </tbody>
+                        </table>
+                      </div>
+                      <div className="text-[10px] text-[#6d7a77] mt-1">Specialized Oncology Daycare &amp; Inpatient Radiotherapy Tracker</div>
                     </div>
                   )}
 
@@ -2104,8 +2517,14 @@ export default function Modules() {
                   Comprehensive financial management including invoicing, insurance claims, ledger master, GST & vouchers.
                 </p>
 
+                <div className="flex flex-wrap gap-2 mb-4 2xl:mb-6">
+                  {['Account Groups', 'Ledger Master', 'Service Master', 'GST Slabs', 'Voucher Types', 'Vouchers', 'Service Type Master'].map((feat) => (
+                    <span key={feat} className="px-2.5 py-1 rounded-full bg-[#eaf6f8] border border-[#00685e]/20 text-[#00685e] text-[10px] font-bold">{feat}</span>
+                  ))}
+                </div>
+
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 2xl:gap-3 mb-4 2xl:mb-6">
-                  {['Insurance Claims Engine', 'Multi-currency POS Billing', 'Automated Tariff Lists', 'Revenue Cycle Analytics', 'Account Groups & Ledgers', 'GST & Voucher Masters'].map((feat) => (
+                  {['Insurance Claims Engine', 'Multi-currency POS Billing', 'Automated Tariff Lists', 'Revenue Cycle Analytics', 'Account Groups & Ledgers', 'GST & Voucher Masters', 'Service Type Master & Module Sync'].map((feat) => (
                     <div key={feat} className="flex items-center gap-1.5 2xl:gap-2 text-xs 2xl:text-sm text-[#121d1f] font-medium">
                       <span className="material-symbols-outlined text-[#00685e] text-sm 2xl:text-base">check_circle</span>
                       {feat}
@@ -2123,8 +2542,14 @@ export default function Modules() {
 
             <div className="lg:col-span-7 bg-white/95 backdrop-blur-sm rounded-2xl border border-[#bcc9c6]/40 shadow-sm overflow-hidden flex flex-col justify-between min-h-[420px] sm:h-[400px] 2xl:h-[480px] 3xl:h-[500px] relative z-10">
               <div className="bg-[#effcfe] px-4 py-3 border-b border-[#bcc9c6]/30 flex flex-wrap items-center justify-between gap-2 text-xs shrink-0">
-                <div className="flex items-center gap-2 font-bold text-[#00685e]">Billing & Accounts Master</div>
-                <div className="text-[10px] text-[#6d7a77]">Auto-changes 5s (6 views)</div>
+                <div className="flex items-center gap-2 font-bold text-[#00685e]">
+                  <span className="material-symbols-outlined text-base">receipt_long</span>
+                  <span>Billing & Accounts Master (7 Views)</span>
+                </div>
+                <div className="flex items-center gap-1.5">
+                  <span className="text-[10px] text-[#6d7a77]">Auto-changes 5s (7 views)</span>
+                  <span className="w-2 h-2 rounded-full bg-[#00685e] animate-pulse"></span>
+                </div>
               </div>
 
               <div className="flex flex-col sm:flex-row flex-1 overflow-hidden">
@@ -2200,6 +2625,47 @@ export default function Modules() {
                     </div>
                   )}
 
+                  {billingActiveTab === 6 && (
+                    <div>
+                      <div className="flex items-center justify-between mb-2">
+                        <h4 className="text-sm font-bold text-[#121d1f] flex items-center gap-1">
+                          <span className="material-symbols-outlined text-base text-[#00685e]">category</span> Service Type Master
+                        </h4>
+                        <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-[#afecde] text-[#326c62]">12 Types</span>
+                      </div>
+                      <table className="w-full text-left border-collapse text-[10px]">
+                        <thead>
+                          <tr className="border-b text-[#00685e] font-bold">
+                            <th className="py-1 px-1">Code</th>
+                            <th className="py-1 px-1">Name</th>
+                            <th className="py-1 px-1">Module</th>
+                            <th className="py-1 px-1">Department</th>
+                            <th className="py-1 px-1">Status</th>
+                          </tr>
+                        </thead>
+                        <tbody className="divide-y divide-[#bcc9c6]/20">
+                          {billingServiceTypes.slice(0, 5).map((r) => (
+                            <tr key={r.code + r.name} className="hover:bg-[#eaf6f8]/50 transition-colors">
+                              <td className="py-1 px-1 font-bold text-[#00685e]">
+                                <span className="inline-block w-1.5 h-1.5 rounded-full bg-[#00685e] mr-1" />
+                                {r.code}
+                              </td>
+                              <td className="py-1 px-1 font-semibold text-[#121d1f]">{r.name}</td>
+                              <td className="py-1 px-1 text-[#3d4947]">{r.module}</td>
+                              <td className="py-1 px-1 text-[#6d7a77]">{r.dept}</td>
+                              <td className="py-1 px-1">
+                                <span className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded-full bg-emerald-100 text-emerald-700 font-bold text-[9px]">
+                                  <span className="w-1 h-1 rounded-full bg-emerald-600" />
+                                  {r.status}
+                                </span>
+                              </td>
+                            </tr>
+                          ))}
+                        </tbody>
+                      </table>
+                    </div>
+                  )}
+
                   <div className="flex items-center justify-center gap-1.5 pt-2 border-t border-[#bcc9c6]/20 shrink-0">
                     {billingTabs.map((t) => (
                       <button key={t.id} onClick={() => setBillingActiveTab(t.id)}
@@ -2243,8 +2709,15 @@ export default function Modules() {
                   Streamline lab operations with automated test ordering, sample tracking, result management, and seamless clinical integration.
                 </p>
 
+                {/* Feature Pills */}
+                <div className="flex flex-wrap gap-2 mb-4 2xl:mb-6">
+                  {['Investigation Orders', 'Walk-In Billing', 'Sample Barcode Sync', 'STAT Priority Triage', 'Payment Modes POS', 'HL7 & LIS Sync'].map((feat) => (
+                    <span key={feat} className="px-2.5 py-1 rounded-full bg-[#eaf6f8] border border-[#00685e]/20 text-[#00685e] text-[10px] font-bold">{feat}</span>
+                  ))}
+                </div>
+
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 2xl:gap-3 mb-4 2xl:mb-6">
-                  {['Automated Sample Tracking', 'HL7 & LIS Integration', 'Abnormal Result Flagging', 'Barcoded Specimen Management', 'OPD Lab Orders Sync', 'Instant PDF Report Generation'].map((feat) => (
+                  {['Automated Sample Barcode Tracking', 'Walk-In Investigation Counter POS', 'STAT & Urgent Priority Flagging', 'Doctor Order & Status Real-Time Sync', 'Multi-Payment Settlement (Cash/Online)', 'Instant PDF Report Generation'].map((feat) => (
                     <div key={feat} className="flex items-center gap-1.5 2xl:gap-2 text-xs 2xl:text-sm text-[#121d1f] font-medium">
                       <span className="material-symbols-outlined text-[#00685e] text-sm 2xl:text-base">check_circle</span>
                       {feat}
@@ -2263,59 +2736,118 @@ export default function Modules() {
             <div className="lg:col-span-7 bg-white/95 backdrop-blur-sm rounded-2xl border border-[#bcc9c6]/40 shadow-sm overflow-hidden flex flex-col justify-between min-h-[420px] sm:h-[400px] 2xl:h-[480px] 3xl:h-[500px] relative z-10">
               <div className="bg-[#effcfe] px-4 py-3 border-b border-[#bcc9c6]/30 flex flex-wrap items-center justify-between gap-2 text-xs text-[#3d4947] shrink-0">
                 <div className="flex items-center gap-2">
-                  <span className="material-symbols-outlined text-sm text-[#00685e]">home</span>
-                  <span>Home &gt; Reception &gt;</span>
-                  <span className="font-bold text-[#00685e]">Service Orders</span>
+                  <span className="material-symbols-outlined text-sm text-[#00685e]">biotech</span>
+                  <span className="font-bold text-[#00685e]">Laboratory Diagnostics (2 Views)</span>
                 </div>
-                <div className="flex items-center gap-2">
-                  <span className="px-2.5 py-1 bg-white border border-[#bcc9c6]/30 rounded-lg text-[11px] font-semibold text-[#00685e]">📅 Select Date</span>
+                <div className="flex items-center gap-1.5">
+                  <span className="text-[10px] text-[#6d7a77]">Auto-changes 5s (2 views)</span>
+                  <span className="w-2 h-2 rounded-full bg-[#00685e] animate-pulse"></span>
                 </div>
               </div>
 
               <div className="flex flex-col sm:flex-row flex-1 overflow-hidden">
-                <div className="w-full sm:w-44 bg-[#008378] text-white p-2.5 sm:p-3 flex flex-row sm:flex-col overflow-x-auto sm:overflow-y-auto no-scrollbar sm:custom-scrollbar gap-1 shrink-0 text-xs">
-                  <div className="flex items-center gap-2 p-2 bg-[#00685e] rounded-lg font-bold">
-                    <span className="material-symbols-outlined text-sm">biotech</span>
-                    <span>Laboratory</span>
-                  </div>
-                  <div className="pl-6 py-1 text-[#afecde] font-semibold">↳ OPD Lab Orders</div>
-                  <div className="flex items-center gap-2 p-2 hover:bg-white/10 rounded-lg opacity-80">Billing & Accounts</div>
-                  <div className="flex items-center gap-2 p-2 hover:bg-white/10 rounded-lg opacity-80">Clinical</div>
-                  <div className="flex items-center gap-2 p-2 hover:bg-white/10 rounded-lg opacity-80">Reports</div>
+                <div className="w-full sm:w-48 bg-[#008378] text-white p-2 sm:p-2.5 flex flex-row sm:flex-col overflow-x-auto sm:overflow-y-auto no-scrollbar sm:custom-scrollbar gap-1 shrink-0 text-xs">
+                  <div className="font-bold text-white/70 text-[9px] uppercase tracking-wider mb-1 px-2 hidden sm:block">Laboratory</div>
+                  {labTabs.map((tab) => (
+                    <button key={tab.id} onClick={() => setLabActiveTab(tab.id)}
+                      className={`w-full flex items-center justify-between p-1.5 px-2 rounded-lg text-left transition-all ${
+                        labActiveTab === tab.id ? 'bg-[#00685e] text-white font-bold' : 'hover:bg-white/10 text-white/90'
+                      }`}>
+                      <span className="truncate text-[11px]">{tab.label}</span>
+                    </button>
+                  ))}
                 </div>
 
                 <div className="flex-1 p-3 overflow-x-auto overflow-y-auto flex flex-col justify-between">
-                  <div>
-                    <div className="flex items-center justify-between mb-2">
-                      <h4 className="text-sm font-bold text-[#121d1f]">Service Orders</h4>
-                      <span className="px-2 py-0.5 bg-[#afecde] text-[#326c62] rounded text-[10px] font-bold">LIVE SYNC</span>
-                    </div>
+                  {/* VIEW 0: INVESTIGATION ORDERS */}
+                  {labActiveTab === 0 && (
+                    <div>
+                      <div className="flex items-center justify-between mb-2">
+                        <h4 className="text-sm font-bold text-[#121d1f] flex items-center gap-1">
+                          <span className="material-symbols-outlined text-base text-[#00685e]">science</span> Investigation Orders
+                        </h4>
+                        <span className="px-2 py-0.5 bg-[#afecde] text-[#326c62] rounded text-[10px] font-bold">LIVE SYNC</span>
+                      </div>
 
-                    <table className="w-full text-left border-collapse text-[11px]">
-                      <thead>
-                        <tr className="border-b border-[#bcc9c6]/30 text-[#00685e] font-bold uppercase">
-                          <th className="py-1.5 px-1">Patient</th>
-                          <th className="py-1.5 px-1 whitespace-nowrap">Ordered At</th>
-                          <th className="py-1.5 px-1">Doctor</th>
-                          <th className="py-1.5 px-1 whitespace-nowrap">Status</th>
-                        </tr>
-                      </thead>
-                      <tbody className="divide-y divide-[#bcc9c6]/20">
-                        {labOrders.map((order) => (
-                          <tr key={order.id} className="hover:bg-[#eaf6f8]/50 transition-colors">
-                            <td className="py-1.5 px-1 font-semibold">{order.name} <div className="text-[9px] text-[#6d7a77]">{order.id}</div></td>
-                            <td className="py-1.5 px-1 text-[#3d4947] whitespace-nowrap">{order.date}</td>
-                            <td className="py-1.5 px-1 text-[#3d4947]">{order.doctor}</td>
-                            <td className="py-1.5 px-1 whitespace-nowrap">
-                              <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-[#afecde] text-[#00685e] font-bold text-[9px] whitespace-nowrap">
-                                <span className="w-1.5 h-1.5 rounded-full bg-[#00685e] shrink-0" />
-                                {order.status}
-                              </span>
-                            </td>
+                      <table className="w-full text-left border-collapse text-[11px]">
+                        <thead>
+                          <tr className="border-b border-[#bcc9c6]/30 text-[#00685e] font-bold uppercase">
+                            <th className="py-1.5 px-1">Patient</th>
+                            <th className="py-1.5 px-1 whitespace-nowrap">Ordered At</th>
+                            <th className="py-1.5 px-1">Doctor</th>
+                            <th className="py-1.5 px-1 whitespace-nowrap">Status</th>
                           </tr>
-                        ))}
-                      </tbody>
-                    </table>
+                        </thead>
+                        <tbody className="divide-y divide-[#bcc9c6]/20">
+                          {labOrders.map((order) => (
+                            <tr key={order.id} className="hover:bg-[#eaf6f8]/50 transition-colors">
+                              <td className="py-1.5 px-1 font-semibold">{order.name} <div className="text-[9px] text-[#6d7a77]">{order.id}</div></td>
+                              <td className="py-1.5 px-1 text-[#3d4947] whitespace-nowrap">{order.date}</td>
+                              <td className="py-1.5 px-1 text-[#3d4947]">{order.doctor}</td>
+                              <td className="py-1.5 px-1 whitespace-nowrap">
+                                <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-[#afecde] text-[#00685e] font-bold text-[9px] whitespace-nowrap">
+                                  <span className="w-1.5 h-1.5 rounded-full bg-[#00685e] shrink-0" />
+                                  {order.status}
+                                </span>
+                              </td>
+                            </tr>
+                          ))}
+                        </tbody>
+                      </table>
+                    </div>
+                  )}
+
+                  {/* VIEW 1: WALK-IN INVESTIGATION BILLING */}
+                  {labActiveTab === 1 && (
+                    <div>
+                      <div className="flex items-center justify-between mb-2">
+                        <h4 className="text-sm font-bold text-[#121d1f] flex items-center gap-1">
+                          <span className="material-symbols-outlined text-base text-[#00685e]">receipt_long</span> Walk-In Investigation Billing
+                        </h4>
+                        <span className="px-2 py-0.5 bg-[#afecde] text-[#326c62] rounded text-[10px] font-bold">POS READY</span>
+                      </div>
+
+                      {/* Patient Search Bar */}
+                      <div className="p-2 bg-[#eaf6f8] rounded-xl border border-[#00685e]/20 mb-2">
+                        <div className="text-[9px] font-bold text-[#00685e] uppercase mb-1 flex items-center justify-between">
+                          <span>Patient Information</span>
+                          <span className="text-[8px] bg-white text-[#00685e] px-1.5 py-0.5 rounded border border-[#00685e]/30 font-bold">+ Add New Patient</span>
+                        </div>
+                        <div className="p-1 bg-white rounded-lg border border-[#bcc9c6]/40 text-[10px] text-[#6d7a77] flex items-center gap-1">
+                          <span className="material-symbols-outlined text-xs text-[#00685e]">search</span> Search by Name, ID, or Phone...
+                        </div>
+                      </div>
+
+                      {/* Investigation Selection & Summary Grid */}
+                      <div className="grid grid-cols-2 gap-2 text-[10px]">
+                        <div className="p-2 bg-white rounded-xl border border-[#bcc9c6]/40 space-y-1">
+                          <div className="font-bold text-[#00685e] text-[9px] uppercase">Investigation Selection</div>
+                          <div className="p-1 bg-[#f8fdfe] rounded border text-[#3d4947] flex justify-between">
+                            <span>Priority: <strong>Routine</strong></span>
+                            <span className="text-emerald-700 font-bold">+ Add to Bill</span>
+                          </div>
+                          <div className="text-[9px] text-[#6d7a77]">Service Type: Pathology • Complete Hemogram</div>
+                        </div>
+                        <div className="p-2 bg-white rounded-xl border border-[#bcc9c6]/40 space-y-1">
+                          <div className="font-bold text-[#00685e] text-[9px] uppercase">Payment Summary</div>
+                          <div className="flex justify-between text-[9px]">
+                            <span>Grand Total:</span>
+                            <span className="font-bold text-[#00685e]">₹850.00</span>
+                          </div>
+                          <div className="flex gap-1 pt-0.5">
+                            <span className="px-2 py-0.5 rounded bg-emerald-50 text-emerald-700 font-bold text-[8px] border border-emerald-200">CASH</span>
+                            <span className="px-2 py-0.5 rounded bg-blue-50 text-blue-700 font-bold text-[8px] border border-blue-200">ONLINE</span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  )}
+
+                  <div className="flex items-center justify-center gap-1.5 pt-2 border-t border-[#bcc9c6]/20 shrink-0">
+                    {labTabs.map((t) => (
+                      <button key={t.id} onClick={() => setLabActiveTab(t.id)}
+                        className={`h-1.5 rounded-full transition-all ${labActiveTab === t.id ? 'w-6 bg-[#00685e]' : 'w-2 bg-[#bcc9c6]'}`} />
+                    ))}
                   </div>
                 </div>
               </div>

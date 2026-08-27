@@ -307,14 +307,14 @@ export default function Navbar() {
                 </Link>
 
                 <div className="flex flex-wrap items-center justify-center gap-3 text-xs font-semibold text-[#6d7a77] pt-2">
-                  <a href="mailto:care@reckonsales.com" className="flex items-center gap-1 hover:text-[#00685e]">
+                  <a href="mailto:sales@omedosoftware.com" className="flex items-center gap-1 hover:text-[#00685e]">
                     <span className="material-symbols-outlined text-sm text-[#00685e]">mail</span>
-                    care@reckonsales.com
+                    sales@omedosoftware.com
                   </a>
                   <span>•</span>
-                  <a href="tel:+919873003702" className="flex items-center gap-1 hover:text-[#00685e]">
+                  <a href="tel:+916389590600" className="flex items-center gap-1 hover:text-[#00685e]">
                     <span className="material-symbols-outlined text-sm text-[#00685e]">call</span>
-                    +91 9873003702
+                    +91 6389 590 600
                   </a>
                 </div>
               </motion.div>

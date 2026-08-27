@@ -212,6 +212,22 @@ export const reportsTopics = [
       'Paginated bill register navigation with customizable date range filters and data export tools',
     ],
   },
+  {
+    id: '13',
+    title: 'Service Billing Report',
+    subtitle: 'Service-wise billing & procedure audit — total bill counts, net revenue after discounts, cash/online collection splits & procedure itemization',
+    img: '/images/reports_master_13.png',
+    tags: [
+      { text: 'SERVICE REVENUE', color: 'bg-teal-100 text-teal-700 border-teal-200' },
+      { text: 'PROCEDURE AUDIT', color: 'bg-[#afecde]/60 text-[#00685e] border-[#00685e]/30' },
+    ],
+    items: [
+      'Top-level service metrics displaying Total Bills (22), Net Bill Amount (₹19,942), Cash Collections (₹21,192), Online Payments, and Unpaid Credit',
+      'Itemized procedure and service tracking (ICU Consultancy, CT Scan Brain, CBC Test, Kidney Function Test, Bed Charges)',
+      'Detailed billing ledger linking invoice numbers (INV/SVC/26-27/xxx), patient names, age/gender, attending doctors, and billing clerks',
+      'Advanced multi-parameter filters covering Date Range, Billing Type, Referring Doctor, and User attribution with one-click data export',
+    ],
+  },
 ]
 
 export default function ReportsAnalytics() {

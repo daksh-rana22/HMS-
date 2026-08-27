@@ -14,7 +14,7 @@ const stagger = { hidden: {}, visible: { transition: { staggerChildren: 0.08 } }
 const labSubFeatures = [
   {
     id: 'opd-lab-orders',
-    name: 'OPD Lab Orders',
+    name: 'Investigation Orders',
     icon: 'science',
     img: '/images/lab_opd_orders.png',
     tag: 'INVESTIGATION REQUESTS',
@@ -27,13 +27,27 @@ const labSubFeatures = [
       'Date range picker and patient search by name or UHID number',
     ],
   },
+  {
+    id: 'walkin-billing',
+    name: 'Walk-In Investigation Billing',
+    icon: 'receipt_long',
+    img: '/images/lab_walkin_billing.png',
+    tag: 'DIAGNOSTIC POS BILLING',
+    subtitle: 'Direct walk-in patient billing — priority selection, service & investigation mapping, split payments & instant invoice generation',
+    items: [
+      'Fast patient identification search by Name, ID, or Phone with seamless "+ Add New Patient" creation',
+      'Investigation selection with priority triage (Routine, Urgent, STAT) and optional clinical notes recording',
+      'Cascading service type and investigation dropdown mapping with "+ Add to Bill" itemization',
+      'Real-time payment summary with net amounts, discounts, balance due calculations, and split payment options (Cash, Online)',
+    ],
+  },
 ]
 
 // ── LABORATORY TOPICS DATA ──
 const labTopics = [
   {
     id: '01',
-    title: 'Patient Investigation Requests — OPD Lab Orders',
+    title: 'Investigation Orders',
     subtitle: 'Streamlined outpatient diagnostic ordering, sample collection status tracking & laboratory report verification',
     img: '/images/lab_opd_orders.png',
     tags: [
@@ -46,6 +60,22 @@ const labTopics = [
       'Color-coded status badges for PAID, COLLECTED, and CANCELLED investigation orders',
       'Doctor-wise test ordering tracking (Cardiology, Neurology, Anesthesiology) with direct order timestamps',
       'Instant action buttons for sample barcode generation, test result entry, report viewing, and order cancellation',
+    ],
+  },
+  {
+    id: '02',
+    title: 'Walk-In Investigation Billing',
+    subtitle: 'Direct counter diagnostic billing — patient identification, priority triage, test package mapping, discounts & payment settlement',
+    img: '/images/lab_walkin_billing.png',
+    tags: [
+      { text: 'WALK-IN BILLING', color: 'bg-indigo-100 text-indigo-700 border-indigo-200' },
+      { text: 'DIAGNOSTIC POS', color: 'bg-[#afecde]/60 text-[#00685e] border-[#00685e]/30' },
+    ],
+    items: [
+      'Instant patient lookup by name, UHID, or phone number with direct "+ Add New Patient" registration shortcut',
+      'Priority triage selection (Routine, Urgent, STAT) with clinician diagnosis notes attachment',
+      'Dynamic service type and test catalog selector with real-time tariff lookup and itemized test basket',
+      'Flexible cashier desk settlements with discount controls, Cash / Online payment modes, and one-click bill generation',
     ],
   },
 ]
@@ -65,11 +95,6 @@ export default function Laboratory() {
     const currentTopic = labTopics.find(t => t.id === activeTopicId) || labTopics[0]
     let displayImg = currentTopic?.img
     let displayTitle = currentTopic?.title
-
-    if (currentTopic.id === '01') {
-      displayImg = currentSubFeature.img
-      displayTitle = `Laboratory — ${currentSubFeature.name}`
-    }
 
     return (
       <div className="bg-white rounded-2xl shadow-xl border border-[#bcc9c6]/50 overflow-hidden text-[#121d1f] w-full transition-all p-2 sm:p-3">

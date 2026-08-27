@@ -176,7 +176,7 @@ const clinicalTopics = [
     id: '11',
     title: 'Waiting Screen',
     subtitle: 'Public OPD queue TV display monitor, automated token calling & consultation room locator display',
-    img: '/images/home_hero_reception.png',
+    img: '/images/clinical_master_11.png',
     tags: [
       { text: 'TOKEN DISPLAY', color: 'bg-teal-100 text-teal-700 border-teal-200' },
       { text: 'QUEUE TV', color: 'bg-[#afecde]/60 text-[#00685e] border-[#00685e]/30' },

@@ -306,7 +306,7 @@ export default function Contact() {
               <div>
                 <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-50 text-emerald-800 border border-emerald-200 text-xs font-semibold mb-3">
                   <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
-                  <span>Support Hours: Mon–Sat 9:30 AM – 6:30 PM IST</span>
+                  <span>Helpline: Mon–Sat 9:00 AM – 9:00 PM | Sun 10:00 AM – 6:00 PM IST</span>
                 </div>
                 <h2 className="text-2xl font-bold text-slate-900 tracking-tight" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
                   Direct Contact &amp; Offices
@@ -318,38 +318,28 @@ export default function Contact() {
 
               <div className="space-y-5 text-xs sm:text-sm">
                 
-                {/* 1. Direct Phone Lines */}
+                {/* 1. Contact Hotlines */}
                 <div className="flex items-start gap-3.5">
                   <div className="w-10 h-10 rounded-2xl bg-teal-50 border border-teal-100 flex items-center justify-center shrink-0 mt-0.5 text-[#00685e]">
                     <span className="material-symbols-outlined text-xl">call</span>
                   </div>
                   <div className="space-y-1.5 flex-1">
-                    <div className="text-[11px] font-bold uppercase tracking-wider text-slate-400">Phone &amp; Sales Hotlines</div>
-                    
+                    <div className="text-[11px] font-bold uppercase tracking-wider text-slate-400">Contact Hotlines</div>
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
                       <a
-                        href="tel:05224972500"
+                        href="tel:+916389590600"
                         className="p-2.5 rounded-xl bg-slate-50 hover:bg-teal-50/60 border border-slate-100 hover:border-teal-200 transition-all block group"
                       >
-                        <span className="text-[10px] uppercase font-bold text-slate-400 block">Landline (Lucknow)</span>
-                        <span className="text-xs font-bold text-slate-800 group-hover:text-[#00685e] transition-colors">0522-4972500</span>
+                        <span className="text-[10px] uppercase font-bold text-slate-400 block">Hotline 1</span>
+                        <span className="text-xs font-bold text-slate-800 group-hover:text-[#00685e] transition-colors">+91 6389 590 600</span>
                       </a>
                       <a
-                        href="tel:+919873003702"
+                        href="tel:+916389590700"
                         className="p-2.5 rounded-xl bg-slate-50 hover:bg-teal-50/60 border border-slate-100 hover:border-teal-200 transition-all block group"
                       >
-                        <span className="text-[10px] uppercase font-bold text-slate-400 block">Direct Mobile</span>
-                        <span className="text-xs font-bold text-slate-800 group-hover:text-[#00685e] transition-colors">+91 9873003702</span>
+                        <span className="text-[10px] uppercase font-bold text-slate-400 block">Hotline 2</span>
+                        <span className="text-xs font-bold text-slate-800 group-hover:text-[#00685e] transition-colors">+91 6389 590 700</span>
                       </a>
-                    </div>
-
-                    <div className="text-xs bg-slate-50 p-2.5 rounded-xl border border-slate-100 flex flex-wrap items-center justify-between gap-1 text-slate-700">
-                      <span className="text-[11px] font-semibold text-slate-500">Sales Hotlines:</span>
-                      <div className="font-bold text-[#00685e]">
-                        <a href="tel:+916389590600" className="hover:underline">+91 6389 590 600</a>
-                        <span className="text-slate-300 mx-1.5">|</span>
-                        <a href="tel:+916389590700" className="hover:underline">+91 6389 590 700</a>
-                      </div>
                     </div>
                   </div>
                 </div>
@@ -363,27 +353,20 @@ export default function Contact() {
                   </div>
                   <div className="space-y-1.5 flex-1">
                     <div className="text-[11px] font-bold uppercase tracking-wider text-slate-400">Email Inquiries</div>
-                    <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
                       <a
-                        href="mailto:care@reckonsales.com"
-                        className="p-2 rounded-xl bg-slate-50 hover:bg-teal-50/60 border border-slate-100 hover:border-teal-200 transition-all text-center group block"
+                        href="mailto:sales@omedosoftware.com"
+                        className="p-2.5 rounded-xl bg-slate-50 hover:bg-teal-50/60 border border-slate-100 hover:border-teal-200 transition-all text-center group block"
                       >
                         <span className="text-[9px] font-bold text-emerald-700 uppercase block tracking-wider">Support</span>
-                        <span className="text-xs font-bold text-slate-800 group-hover:text-[#00685e] truncate block">care@reckonsales.com</span>
+                        <span className="text-xs font-bold text-slate-800 group-hover:text-[#00685e] truncate block">sales@omedosoftware.com</span>
                       </a>
                       <a
-                        href="mailto:sales@reckonsales.com"
-                        className="p-2 rounded-xl bg-slate-50 hover:bg-teal-50/60 border border-slate-100 hover:border-teal-200 transition-all text-center group block"
+                        href="mailto:sales@omedosoftware.com"
+                        className="p-2.5 rounded-xl bg-slate-50 hover:bg-teal-50/60 border border-slate-100 hover:border-teal-200 transition-all text-center group block"
                       >
                         <span className="text-[9px] font-bold text-teal-700 uppercase block tracking-wider">Sales</span>
-                        <span className="text-xs font-bold text-slate-800 group-hover:text-[#00685e] truncate block">sales@reckonsales.com</span>
-                      </a>
-                      <a
-                        href="mailto:Info@technohunk.co.in"
-                        className="p-2 rounded-xl bg-slate-50 hover:bg-teal-50/60 border border-slate-100 hover:border-teal-200 transition-all text-center group block"
-                      >
-                        <span className="text-[9px] font-bold text-cyan-700 uppercase block tracking-wider">General</span>
-                        <span className="text-xs font-bold text-slate-800 group-hover:text-[#00685e] truncate block">Info@technohunk.co.in</span>
+                        <span className="text-xs font-bold text-slate-800 group-hover:text-[#00685e] truncate block">sales@omedosoftware.com</span>
                       </a>
                     </div>
                   </div>
@@ -391,44 +374,14 @@ export default function Contact() {
 
                 <div className="h-[1px] w-full bg-slate-100" />
 
-                {/* 3. Corporate HQ (Lucknow) */}
+                {/* 3. Corporate Office (Ghaziabad) */}
                 <div className="flex items-start gap-3.5">
                   <div className="w-10 h-10 rounded-2xl bg-teal-50 border border-teal-100 flex items-center justify-center shrink-0 mt-0.5 text-[#00685e]">
                     <span className="material-symbols-outlined text-xl">apartment</span>
                   </div>
                   <div className="space-y-1 flex-1">
                     <div className="flex items-center justify-between gap-2">
-                      <div className="text-[11px] font-bold uppercase tracking-wider text-slate-400">Corporate HQ • Lucknow</div>
-                      <a
-                        href="https://maps.google.com/?q=SF-2+New+Medicine+Market+Meer+Jaan+Lane+Naya+Gaon+East+Gautam+Budha+Marg+Lucknow+226018"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="text-[11px] font-bold text-[#00685e] hover:underline px-2 py-0.5 rounded-md bg-teal-50 hover:bg-teal-100 transition-colors"
-                      >
-                        Directions
-                      </a>
-                    </div>
-                    <div>
-                      <a href="https://reckonsales.in/" target="_blank" rel="noopener noreferrer" className="font-bold text-slate-900 hover:text-[#00685e] hover:underline text-sm">
-                        Reckon Sales Pvt. Ltd.
-                      </a>
-                    </div>
-                    <p className="text-xs text-slate-600 leading-relaxed">
-                      SF-2 New Medicine Market, Meer Jaan Lane, Naya Gaon East, Gautam Budha Marg, Lucknow-226018, Uttar Pradesh, India
-                    </p>
-                  </div>
-                </div>
-
-                <div className="h-[1px] w-full bg-slate-100" />
-
-                {/* 4. Regional Office (Ghaziabad / NCR) */}
-                <div className="flex items-start gap-3.5">
-                  <div className="w-10 h-10 rounded-2xl bg-teal-50 border border-teal-100 flex items-center justify-center shrink-0 mt-0.5 text-[#00685e]">
-                    <span className="material-symbols-outlined text-xl">domain</span>
-                  </div>
-                  <div className="space-y-1 flex-1">
-                    <div className="flex items-center justify-between gap-2">
-                      <div className="text-[11px] font-bold uppercase tracking-wider text-slate-400">Regional Office • NCR</div>
+                      <div className="text-[11px] font-bold uppercase tracking-wider text-slate-400">Corporate Office • Ghaziabad</div>
                       <a
                         href="https://maps.google.com/?q=H-11+Sector-23+Sanjay+Nagar+Ghaziabad+201002"
                         target="_blank"
@@ -439,12 +392,12 @@ export default function Contact() {
                       </a>
                     </div>
                     <div>
-                      <a href="https://www.technohunk.in/" target="_blank" rel="noopener noreferrer" className="font-bold text-slate-900 hover:text-[#00685e] hover:underline text-sm">
-                        Technohunk Info Solutions Pvt Ltd
-                      </a>
+                      <span className="font-bold text-slate-900 text-sm">
+                        OMEDO Software Solutions Pvt Ltd
+                      </span>
                     </div>
                     <p className="text-xs text-slate-600 leading-relaxed">
-                      H-11, Sector-23, Sanjay Nagar, Ghaziabad — 201002 (U.P.), India
+                      H-11, Sector-23, Sanjay Nagar, Ghaziabad — 201002, Uttar Pradesh, India
                     </p>
                   </div>
                 </div>

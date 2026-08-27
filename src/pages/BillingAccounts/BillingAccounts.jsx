@@ -108,6 +108,22 @@ const billingTopics = [
       'Complete transaction audit trails with one-click Tally Prime export integration',
     ],
   },
+  {
+    id: '07',
+    title: 'Service Type Master',
+    subtitle: 'Hospital service categorization directory — service codes, department mapping, module associations & active status controls',
+    img: '/images/billing_master_07.png',
+    tags: [
+      { text: 'SERVICE TYPES', color: 'bg-teal-100 text-teal-700 border-teal-200' },
+      { text: 'MASTER CONFIG', color: 'bg-[#afecde]/60 text-[#00685e] border-[#00685e]/30' },
+    ],
+    items: [
+      'Standardized service codes (SCA09, BED, SCA01, SCA06, SC011, SC002, PHARM, SC008) across clinical and administrative workflows',
+      'Multi-module mapping linking billable services directly to IPD, OPD, Clinical, Radiology, Laboratory, and Pharmacy',
+      'Department-level categorization across Cardiology, Pathology, Microbiology, General, and Radiology wings',
+      'Real-time status filtering (Active/Inactive) with instant search by code, name, and clinical department',
+    ],
+  },
 ]
 
 export default function BillingAccounts() {

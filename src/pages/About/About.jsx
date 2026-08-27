@@ -143,7 +143,7 @@ export default function About() {
                   color: 'var(--t-primary, #00685e)',
                 }}>
                 <span className="material-symbols-outlined text-base sm:text-lg">location_on</span>
-                <span className="font-bold text-xs sm:text-sm tracking-wide">Lucknow, India • 25+ Years Legacy</span>
+                <span className="font-bold text-xs sm:text-sm tracking-wide">Ghaziabad, India • Enterprise Legacy</span>
               </div>
 
               <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-[#121d1f] leading-[1.15] tracking-tight"
@@ -211,7 +211,7 @@ export default function About() {
                       Empowering Adaptable Enterprise Workflows
                     </h3>
                     <p className="text-sm sm:text-base text-[#3d4947] leading-relaxed text-justify" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
-                      We make <strong className="text-[#00685e] font-bold">ERP software</strong> to make your business more efficient and adaptable. Based out of Lucknow, India, we have industry experience of more than <strong className="text-[#00685e] font-bold">25 years</strong>. With a team of dedicated veterans of the industry, we want to empower your business and make it as seamless as possible.
+                      We make <strong className="text-[#00685e] font-bold">ERP software</strong> to make your business more efficient and adaptable. Based out of Ghaziabad (NCR), India, we have industry experience of more than <strong className="text-[#00685e] font-bold">25 years</strong>. With a team of dedicated veterans of the industry, we want to empower your business and make it as seamless as possible.
                     </p>
                   </div>
                 </div>

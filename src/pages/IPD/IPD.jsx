@@ -92,7 +92,7 @@ const ipdAccountingSubFeatures = [
   },
 ]
 
-// ── IPD MODULE TOPICS DATA ──
+// ── IPD MODULE TOPICS DATA (Matching 7 Master Sub-Modules) ──
 const ipdTopics = [
   {
     id: '01',
@@ -112,7 +112,23 @@ const ipdTopics = [
   },
   {
     id: '02',
-    title: 'IPD Accounting',
+    title: 'Admission Request',
+    subtitle: 'Manage and track IPD admission requests — doctor recommendations, oncology & medical treatment types, visit dates & admission conversion',
+    img: '/images/ipd_admission_request.png',
+    tags: [
+      { text: 'ADMISSION QUEUE', color: 'bg-indigo-100 text-indigo-700 border-indigo-200' },
+      { text: 'DOCTOR REFERRAL', color: 'bg-cyan-100 text-cyan-700 border-cyan-200' },
+    ],
+    items: [
+      'Inpatient admission request tracking with patient UHID, name, age, and gender demographics',
+      'Consultant referral logging linking attending oncologists, surgeons, and physicians',
+      'Treatment type classification covering Chemotherapy, Bone Marrow Aspiration, Immunotherapy & surgeries',
+      'Configurable date range filters, quick search by patient/UHID/mobile, and direct action shortcuts',
+    ],
+  },
+  {
+    id: '03',
+    title: 'Accounting',
     subtitle: 'Complete inpatient financial suite — dashboard metrics, advance deposits, provisional billing, package schemes, estimates & final tax invoices',
     img: '/images/ipd_acct_dashboard.png',
     tags: [
@@ -124,6 +140,70 @@ const ipdTopics = [
       'Advance deposit collection with receipt printing, payment mode splits, and deposit threshold alerts',
       'Provisional billing and package billing with scheme coverage (PMJAY/TPA) for covered vs non-covered items',
       'Final Tax Invoice printing with itemized breakdown, advances ledger reconciliation, and zero balance settlement',
+    ],
+  },
+  {
+    id: '04',
+    title: 'Admitted Patient',
+    subtitle: 'Real-time admitted inpatient directory — live census metrics, ward/bed assignments, radiation tracking & discharge progress',
+    img: '/images/ipd_admitted_patients.png',
+    tags: [
+      { text: 'ACTIVE CENSUS', color: 'bg-emerald-100 text-emerald-700 border-emerald-200' },
+      { text: 'LIVE BED STATUS', color: 'bg-[#afecde]/60 text-[#00685e] border-[#00685e]/30' },
+    ],
+    items: [
+      'Live inpatient census cards showing Total Beds (337), Admitted (298), Emergency (45), and Discharges (32)',
+      'Departmental filter tabs for All Patients, In Radiation, Admitted, and Discharge in Progress',
+      'Inpatient registry tracking admission ID (IPD-YYYYMMDD), assigned ward/bed, attending doctor, and active status',
+      'Direct patient action controls for viewing clinical notes, running provisional charges, and initiating discharge',
+    ],
+  },
+  {
+    id: '05',
+    title: 'Discharge Patients',
+    subtitle: 'Inpatient discharge registry & records — daily discharge counts, mortality/death tracking, documentation status & summary reports',
+    img: '/images/ipd_discharge_patients.png',
+    tags: [
+      { text: 'DISCHARGE DESK', color: 'bg-rose-100 text-rose-700 border-rose-200' },
+      { text: 'CLEARANCE & SUMMARY', color: 'bg-orange-100 text-orange-700 border-orange-200' },
+    ],
+    items: [
+      'Daily discharge analytics showing Discharges Today, Total Discharges, Death Patients (Expired), and Active Admissions',
+      'Multi-parameter filter controls by Discharge Type (Normal, LAMA, Expired, Transferred) and Documentation Status',
+      'Discharge ledger detailing patient UHID, admission number, discharge date/time, attending physician, and status',
+      'Quick action buttons for viewing and printing discharge summaries, death reports, and financial settlements',
+    ],
+  },
+  {
+    id: '06',
+    title: 'IPD Admission',
+    subtitle: 'New inpatient admission desk — patient identification, doctor & department selection, treatment packages & initial deposit',
+    img: '/images/ipd_admission.png',
+    tags: [
+      { text: 'PATIENT IDENTIFICATION', color: 'bg-blue-100 text-blue-700 border-blue-200' },
+      { text: 'DOCTOR ASSIGNMENT', color: 'bg-purple-100 text-purple-700 border-purple-200' },
+    ],
+    items: [
+      'Smart patient identification search by name, UHID, or phone number with direct "Add New Patient" shortcut',
+      'Medical team assignment with attending doctor selection and automated clinical department auto-fill',
+      'Treatment configuration selecting treatment type and customized hospital treatment packages',
+      'Admission details recording (referred by, initial diagnosis, reason for admission) and advance payment summary',
+    ],
+  },
+  {
+    id: '07',
+    title: 'Chemo and Radiation',
+    subtitle: 'Dedicated oncology patient tracking — specialized chemotherapy & radiology ward monitoring, treatment cycles & patient status',
+    img: '/images/ipd_chemo_radiation.png',
+    tags: [
+      { text: 'ONCOLOGY CARE', color: 'bg-teal-100 text-teal-700 border-teal-200' },
+      { text: 'CHEMO & RADIOLOGY', color: 'bg-[#afecde]/60 text-[#00685e] border-[#00685e]/30' },
+    ],
+    items: [
+      'Specialized oncology department census tracking active chemotherapy and radiation therapy patients',
+      'Quick category tabs filtering All, Chemo, and Radiation patients with real-time patient count',
+      'Detailed patient directory linking IPD admission number, specialized oncology bed/ward, and attending oncologist',
+      'Live treatment status tracking (Admitted, Discharge in Progress) with direct clinical observation access',
     ],
   },
 ]
@@ -144,7 +224,7 @@ export default function IPD() {
     let displayImg = currentTopic?.img
     let displayTitle = currentTopic?.title
 
-    if (currentTopic.id === '02') {
+    if (currentTopic.id === '03' || currentTopic.title === 'Accounting' || currentTopic.title === 'IPD Accounting') {
       displayImg = currentSubFeature.img
       displayTitle = `IPD Accounting — ${currentSubFeature.name}`
     }
@@ -297,7 +377,7 @@ export default function IPD() {
                           transition={{ duration: 0.25 }}
                           className="px-6 pb-6 pt-2 border-t border-[#bcc9c6]/20 bg-[#effcfe]/30 rounded-b-3xl space-y-3"
                         >
-                          {topic.id === '02' ? (
+                          {topic.id === '03' || topic.title === 'Accounting' ? (
                             <div className="space-y-3 pt-1">
                               <div className="text-xs font-bold text-[#00685e] flex items-center justify-between border-b border-[#bcc9c6]/30 pb-2">
                                 <span>Select IPD Accounting Sub-Feature (6 Options):</span>
@@ -335,7 +415,7 @@ export default function IPD() {
                           ) : null}
 
                           <ul className="space-y-3 pt-2 text-xs sm:text-sm text-[#3d4947]">
-                            {(topic.id === '02' ? currentSubFeature.items : topic.items).map((item, idx) => (
+                            {((topic.id === '03' || topic.title === 'Accounting') ? currentSubFeature.items : topic.items).map((item, idx) => (
                               <li key={idx} className="flex items-start gap-2.5">
                                 <span className="material-symbols-outlined text-base sm:text-lg text-[#00685e] shrink-0 mt-0.5">check_circle</span>
                                 <span className="leading-snug">{item}</span>
