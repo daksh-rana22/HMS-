@@ -148,23 +148,6 @@ export default function HeroBackground() {
 
       ctx.clearRect(0, 0, width, height)
 
-      // ── Interactive Mouse Spotlight Glow ──
-      if (mouse.active) {
-        const safeAccent  = accentColor.startsWith('#')  ? accentColor  : '#3DD6D0'
-        const safePrimary = primaryColor.startsWith('#') ? primaryColor : '#4F9DFF'
-        const mouseGlow = ctx.createRadialGradient(
-          mouse.x, mouse.y, 0,
-          mouse.x, mouse.y, mouse.radius * 1.4
-        )
-        mouseGlow.addColorStop(0,   hexToRgba(safeAccent, 0.18))
-        mouseGlow.addColorStop(0.5, hexToRgba(safePrimary, 0.08))
-        mouseGlow.addColorStop(1,   'rgba(0,0,0,0)')
-        ctx.fillStyle = mouseGlow
-        ctx.beginPath()
-        ctx.arc(mouse.x, mouse.y, mouse.radius * 1.4, 0, Math.PI * 2)
-        ctx.fill()
-      }
-
       // ── Data Flow Curved Lines & Pulses ──
       const paths = [
         [
