@@ -1,4 +1,4 @@
-# Omedo - Hospital Management System (HMS)
+# OMEDO - Hospital Management System
 
 Modern, responsive Hospital Management System frontend and backend built with React, Vite, and Node.js.
 

@@ -13,7 +13,7 @@ const benefits = [
   {
     icon: Shield,
     title: 'Enterprise-Grade Security',
-    description: 'Military-grade encryption, HIPAA compliance, and regular security audits protect sensitive patient data.',
+    description: 'Multi-layer encryption, granular role-based permissions, and strict audit logging protect sensitive patient data.',
   },
   {
     icon: Clock,
@@ -124,11 +124,11 @@ export default function WhyChoose() {
           >
             <motion.div variants={fadeUp}>
               <span className="inline-block px-4 py-1.5 text-sm font-semibold text-primary bg-primary/5 border border-primary/10 rounded-full mb-4">
-                Why Omedo
+                Why OMEDO
               </span>
               <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-text tracking-tight leading-tight mb-4">
                 Why Leading Hospitals Choose{' '}
-                <span className="gradient-text">Omedo HMS</span>
+                <span className="gradient-text">OMEDO</span>
               </h2>
               <p className="text-gray leading-relaxed mb-8">
                 Join 150+ Hospitals and 50+ Clinics that have transformed their operations with our intelligent, comprehensive hospital management platform.

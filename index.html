@@ -1,11 +1,21 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" data-theme="dreamy" data-hero-theme="dreamy">
   <head>
     <meta charset="UTF-8" />
     <link rel="icon" type="image/png" href="/favicon.png" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="Omedo HMS — Complete Hospital Management System for Modern Healthcare. Streamline operations, improve patient care, and drive growth." />
+    <meta name="description" content="OMEDO — Best Hospital Management Software in India! Streamline operations, improve patient care, and drive growth." />
+    <script>
+      (function() {
+        try {
+          var saved = localStorage.getItem('hms-hero-theme');
+          var theme = saved && saved !== 'default' ? saved : 'dreamy';
+          document.documentElement.setAttribute('data-hero-theme', theme);
+          document.documentElement.setAttribute('data-theme', theme);
+        } catch (e) {}
+      })();
+    </script>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
@@ -18,7 +28,7 @@
         line-height: 1;
       }
     </style>
-    <title>Omedo HMS | Hospital Management System</title>
+    <title>OMEDO — Best Hospital Management Software in India!</title>
   </head>
   <body>
     <div id="root"></div>

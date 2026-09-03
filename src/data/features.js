@@ -22,9 +22,9 @@ export const features = [
   },
   {
     icon: Shield,
-    title: 'HIPAA Compliant',
+    title: 'Enterprise Security',
     description:
-      'Enterprise-grade security with end-to-end encryption ensures full compliance with healthcare data regulations.',
+      'Multi-layer encryption, granular role-based permissions, and comprehensive audit trails built into every layer.',
   },
   {
     icon: Clock,
@@ -60,7 +60,7 @@ export const features = [
     icon: Smartphone,
     title: 'Mobile Ready',
     description:
-      'Access the full HMS suite from any device — desktop, tablet, or smartphone — anytime, anywhere.',
+      'Access the full OMEDO suite from any device — desktop, tablet, or smartphone — anytime, anywhere.',
   },
   {
     icon: Cloud,

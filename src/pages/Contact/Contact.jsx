@@ -17,8 +17,10 @@ const API_BASE = import.meta.env.VITE_API_URL || 'http://localhost:5000'
 export default function Contact() {
   const [formData, setFormData] = useState({
     name: '',
+    mobile: '',
     email: '',
     facility: '',
+    location: '',
     message: '',
     // Honeypot — hidden from real users, bots fill this automatically.
     // The backend silently rejects any submission where this field is non-empty.
@@ -45,8 +47,10 @@ export default function Contact() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           name: formData.name,
+          mobile: formData.mobile,
           email: formData.email,
           facility: formData.facility,
+          location: formData.location,
           message: formData.message,
           website: formData.website, // honeypot
         }),
@@ -57,7 +61,7 @@ export default function Contact() {
       if (response.ok && data.success) {
         // ✅ Success — clear the form and show confirmation
         setSent(true)
-        setFormData({ name: '', email: '', facility: '', message: '', website: '' })
+        setFormData({ name: '', mobile: '', email: '', facility: '', location: '', message: '', website: '' })
         setTimeout(() => setSent(false), 5000)
       } else {
         // ❌ Server returned a validation or business-logic error
@@ -115,7 +119,7 @@ export default function Contact() {
                   className="text-xl sm:text-2xl font-semibold text-[#121d1f] mb-5 sm:mb-6"
                   style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}
                 >
-                  Send us a Message
+                  Talk to Us About OMEDO
                 </h2>
                 <form onSubmit={handleSubmit} className="space-y-5 sm:space-y-6">
 
@@ -134,6 +138,7 @@ export default function Contact() {
                     />
                   </div>
 
+                  {/* 1. Name* & 2. Mobile* */}
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-5 sm:gap-6">
                     <div className="space-y-1">
                       <label
@@ -141,7 +146,7 @@ export default function Contact() {
                         htmlFor="name"
                         style={{ fontFamily: "'Inter', sans-serif" }}
                       >
-                        Full Name
+                        Name <span className="text-red-500 font-bold">*</span>
                       </label>
                       <input
                         id="name"
@@ -157,44 +162,87 @@ export default function Contact() {
                     <div className="space-y-1">
                       <label
                         className="text-xs sm:text-sm font-medium text-[#3d4947] ml-1"
-                        htmlFor="email"
+                        htmlFor="mobile"
                         style={{ fontFamily: "'Inter', sans-serif" }}
                       >
-                        Email Address
+                        Mobile <span className="text-red-500 font-bold">*</span>
                       </label>
                       <input
-                        id="email"
-                        name="email"
-                        type="email"
-                        placeholder="sarah.j@clinic.com"
+                        id="mobile"
+                        name="mobile"
+                        type="tel"
+                        placeholder="+91 98*** *****"
                         required
-                        value={formData.email}
+                        value={formData.mobile}
                         onChange={handleChange}
                         className="form-input"
                       />
                     </div>
                   </div>
 
+                  {/* 3. Email & 4. Hospital / Clinic Name* */}
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-5 sm:gap-6">
+                    <div className="space-y-1">
+                      <label
+                        className="text-xs sm:text-sm font-medium text-[#3d4947] ml-1"
+                        htmlFor="email"
+                        style={{ fontFamily: "'Inter', sans-serif" }}
+                      >
+                        Email
+                      </label>
+                      <input
+                        id="email"
+                        name="email"
+                        type="email"
+                        placeholder="sarah.j@clinic.com"
+                        value={formData.email}
+                        onChange={handleChange}
+                        className="form-input"
+                      />
+                    </div>
+                    <div className="space-y-1">
+                      <label
+                        className="text-xs sm:text-sm font-medium text-[#3d4947] ml-1"
+                        htmlFor="facility"
+                        style={{ fontFamily: "'Inter', sans-serif" }}
+                      >
+                        Hospital / Clinic Name <span className="text-red-500 font-bold">*</span>
+                      </label>
+                      <input
+                        id="facility"
+                        name="facility"
+                        type="text"
+                        placeholder="St. Mary's General Hospital"
+                        required
+                        value={formData.facility}
+                        onChange={handleChange}
+                        className="form-input"
+                      />
+                    </div>
+                  </div>
+
+                  {/* 5. Location* */}
                   <div className="space-y-1">
                     <label
                       className="text-xs sm:text-sm font-medium text-[#3d4947] ml-1"
-                      htmlFor="facility"
+                      htmlFor="location"
                       style={{ fontFamily: "'Inter', sans-serif" }}
                     >
-                      Healthcare Facility Name
+                      Location <span className="text-red-500 font-bold">*</span>
                     </label>
                     <input
-                      id="facility"
-                      name="facility"
+                      id="location"
+                      name="location"
                       type="text"
-                      placeholder="St. Mary's General Hospital"
+                      placeholder="City, State (e.g. Mumbai, Maharashtra)"
                       required
-                      value={formData.facility}
+                      value={formData.location}
                       onChange={handleChange}
                       className="form-input"
                     />
                   </div>
 
+                  {/* 6. Message */}
                   <div className="space-y-1">
                     <label
                       className="text-xs sm:text-sm font-medium text-[#3d4947] ml-1"
@@ -207,8 +255,7 @@ export default function Contact() {
                       id="message"
                       name="message"
                       rows={4}
-                      placeholder="How can we help your medical practice today?"
-                      required
+                      placeholder="Tell us what you're looking for..."
                       value={formData.message}
                       onChange={handleChange}
                       className="form-input resize-none"
@@ -230,7 +277,7 @@ export default function Contact() {
                       >
                         <span className="material-symbols-outlined text-emerald-600 text-xl mt-0.5">check_circle</span>
                         <p className="text-sm text-emerald-800 font-medium" style={{ fontFamily: "'Inter', sans-serif" }}>
-                          Thank you! Your message has been sent successfully. We'll get back to you soon.
+                          Thank you! Your enquiry has been sent successfully. Our team will contact you shortly.
                         </p>
                       </motion.div>
                     )}
@@ -257,35 +304,41 @@ export default function Contact() {
                     )}
                   </AnimatePresence>
 
-                  <button
-                    type="submit"
-                    disabled={sending || sent}
-                    className={`w-full sm:w-auto inline-flex items-center justify-center gap-2 px-8 py-3.5 min-h-[48px] rounded-full text-xs sm:text-sm font-bold shadow-md active:scale-95 transition-all duration-200 ${
-                      sent
-                        ? 'bg-[#2d685e] text-white cursor-default'
-                        : sending
-                          ? 'bg-[#00685e] text-white opacity-75 cursor-not-allowed'
-                          : 'bg-[#00685e] text-white hover:bg-[#008378]'
-                    }`}
-                    style={{ fontFamily: "'Inter', sans-serif" }}
-                  >
-                    {sending ? (
-                      <>
-                        <span className="material-symbols-outlined animate-spin text-lg">progress_activity</span>
-                        Sending...
-                      </>
-                    ) : sent ? (
-                      <>
-                        <span className="material-symbols-outlined text-lg">check_circle</span>
-                        Message Sent!
-                      </>
-                    ) : (
-                      <>
-                        Send Message
-                        <Send size={16} />
-                      </>
-                    )}
-                  </button>
+                  <div className="space-y-3 pt-1">
+                    <button
+                      type="submit"
+                      disabled={sending || sent}
+                      className={`w-full sm:w-auto inline-flex items-center justify-center gap-2 px-8 py-3.5 min-h-[48px] rounded-full text-xs sm:text-sm font-bold shadow-md active:scale-95 transition-all duration-200 ${
+                        sent
+                          ? 'bg-[#2d685e] text-white cursor-default'
+                          : sending
+                            ? 'bg-[#00685e] text-white opacity-75 cursor-not-allowed'
+                            : 'bg-[#00685e] text-white hover:bg-[#008378]'
+                      }`}
+                      style={{ fontFamily: "'Inter', sans-serif" }}
+                    >
+                      {sending ? (
+                        <>
+                          <span className="material-symbols-outlined animate-spin text-lg">progress_activity</span>
+                          Submitting Request...
+                        </>
+                      ) : sent ? (
+                        <>
+                          <span className="material-symbols-outlined text-lg">check_circle</span>
+                          Request Submitted!
+                        </>
+                      ) : (
+                        <>
+                          Request a Demo
+                          <Send size={16} />
+                        </>
+                      )}
+                    </button>
+                    <p className="text-xs text-[#52605e] flex items-center gap-1.5 ml-0.5" style={{ fontFamily: "'Inter', sans-serif" }}>
+                      <span className="material-symbols-outlined text-sm text-[#00685e]">schedule</span>
+                      Our team will get back to you within 1 business day.
+                    </p>
+                  </div>
                 </form>
               </div>
             </div>
@@ -306,7 +359,7 @@ export default function Contact() {
               <div>
                 <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-50 text-emerald-800 border border-emerald-200 text-xs font-semibold mb-3">
                   <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
-                  <span>Helpline: Mon–Sat 9:00 AM – 9:00 PM | Sun 10:00 AM – 6:00 PM IST</span>
+                  <span>Online Support 24*7</span>
                 </div>
                 <h2 className="text-2xl font-bold text-slate-900 tracking-tight" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
                   Direct Contact &amp; Offices
@@ -318,35 +371,7 @@ export default function Contact() {
 
               <div className="space-y-5 text-xs sm:text-sm">
                 
-                {/* 1. Contact Hotlines */}
-                <div className="flex items-start gap-3.5">
-                  <div className="w-10 h-10 rounded-2xl bg-teal-50 border border-teal-100 flex items-center justify-center shrink-0 mt-0.5 text-[#00685e]">
-                    <span className="material-symbols-outlined text-xl">call</span>
-                  </div>
-                  <div className="space-y-1.5 flex-1">
-                    <div className="text-[11px] font-bold uppercase tracking-wider text-slate-400">Contact Hotlines</div>
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
-                      <a
-                        href="tel:+916389590600"
-                        className="p-2.5 rounded-xl bg-slate-50 hover:bg-teal-50/60 border border-slate-100 hover:border-teal-200 transition-all block group"
-                      >
-                        <span className="text-[10px] uppercase font-bold text-slate-400 block">Hotline 1</span>
-                        <span className="text-xs font-bold text-slate-800 group-hover:text-[#00685e] transition-colors">+91 6389 590 600</span>
-                      </a>
-                      <a
-                        href="tel:+916389590700"
-                        className="p-2.5 rounded-xl bg-slate-50 hover:bg-teal-50/60 border border-slate-100 hover:border-teal-200 transition-all block group"
-                      >
-                        <span className="text-[10px] uppercase font-bold text-slate-400 block">Hotline 2</span>
-                        <span className="text-xs font-bold text-slate-800 group-hover:text-[#00685e] transition-colors">+91 6389 590 700</span>
-                      </a>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="h-[1px] w-full bg-slate-100" />
-
-                {/* 2. Email Inquiries */}
+                {/* 1. Email Inquiries */}
                 <div className="flex items-start gap-3.5">
                   <div className="w-10 h-10 rounded-2xl bg-teal-50 border border-teal-100 flex items-center justify-center shrink-0 mt-0.5 text-[#00685e]">
                     <span className="material-symbols-outlined text-xl">mail</span>
@@ -355,18 +380,18 @@ export default function Contact() {
                     <div className="text-[11px] font-bold uppercase tracking-wider text-slate-400">Email Inquiries</div>
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
                       <a
-                        href="mailto:sales@omedosoftware.com"
+                        href="mailto:support@omedosoft.com"
                         className="p-2.5 rounded-xl bg-slate-50 hover:bg-teal-50/60 border border-slate-100 hover:border-teal-200 transition-all text-center group block"
                       >
                         <span className="text-[9px] font-bold text-emerald-700 uppercase block tracking-wider">Support</span>
-                        <span className="text-xs font-bold text-slate-800 group-hover:text-[#00685e] truncate block">sales@omedosoftware.com</span>
+                        <span className="text-xs font-bold text-slate-800 group-hover:text-[#00685e] truncate block">support@omedosoft.com</span>
                       </a>
                       <a
-                        href="mailto:sales@omedosoftware.com"
+                        href="mailto:sales@omedosoft.com"
                         className="p-2.5 rounded-xl bg-slate-50 hover:bg-teal-50/60 border border-slate-100 hover:border-teal-200 transition-all text-center group block"
                       >
                         <span className="text-[9px] font-bold text-teal-700 uppercase block tracking-wider">Sales</span>
-                        <span className="text-xs font-bold text-slate-800 group-hover:text-[#00685e] truncate block">sales@omedosoftware.com</span>
+                        <span className="text-xs font-bold text-slate-800 group-hover:text-[#00685e] truncate block">sales@omedosoft.com</span>
                       </a>
                     </div>
                   </div>
@@ -379,9 +404,9 @@ export default function Contact() {
                   <div className="w-10 h-10 rounded-2xl bg-teal-50 border border-teal-100 flex items-center justify-center shrink-0 mt-0.5 text-[#00685e]">
                     <span className="material-symbols-outlined text-xl">apartment</span>
                   </div>
-                  <div className="space-y-1 flex-1">
+                  <div className="space-y-0.5 flex-1">
                     <div className="flex items-center justify-between gap-2">
-                      <div className="text-[11px] font-bold uppercase tracking-wider text-slate-400">Corporate Office • Ghaziabad</div>
+                      <div className="text-[11px] font-bold uppercase tracking-wider text-slate-400">Corporate Office</div>
                       <a
                         href="https://maps.google.com/?q=H-11+Sector-23+Sanjay+Nagar+Ghaziabad+201002"
                         target="_blank"
@@ -393,7 +418,7 @@ export default function Contact() {
                     </div>
                     <div>
                       <span className="font-bold text-slate-900 text-sm">
-                        OMEDO Software Solutions Pvt Ltd
+                        OMEDO Software Solutions Pvt Ltd.
                       </span>
                     </div>
                     <p className="text-xs text-slate-600 leading-relaxed">

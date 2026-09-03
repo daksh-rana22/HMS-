@@ -45,15 +45,15 @@ export default function Navbar() {
       transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
     >
       {/* ── Top bar ── */}
-      <div className="site-wrapper flex justify-between items-center h-14 sm:h-16 md:h-20 2xl:h-24 relative" style={{ zIndex: 1 }}>
+      <div className="site-wrapper flex justify-between items-center h-16 sm:h-18 md:h-21 2xl:h-24 relative" style={{ zIndex: 1 }}>
 
         {/* Logo */}
-        <Link to="/" className="flex items-center shrink-0">
+        <Link to="/" className="flex items-center shrink-0 py-1">
           <img
             src="/images/omedo_logo.png"
-            alt="Omedo - Healthcare. Simplified."
-            className="h-9 sm:h-11 md:h-13 2xl:h-15 w-auto object-contain"
-            style={{ maxWidth: '210px' }}
+            alt="OMEDO - Best Hospital Management Software in India!"
+            className="h-11 sm:h-13 md:h-15 lg:h-17 2xl:h-19 w-auto object-contain transition-transform duration-200 hover:scale-[1.02]"
+            style={{ maxWidth: '265px' }}
           />
         </Link>
 
@@ -188,7 +188,7 @@ export default function Navbar() {
       <AnimatePresence>
         {isOpen && (
           <motion.div
-            className="md:hidden fixed left-0 right-0 top-14 bottom-0 h-[calc(100dvh-3.5rem)] backdrop-blur-2xl z-40 overflow-y-auto flex flex-col justify-between shadow-2xl"
+            className="md:hidden fixed left-0 right-0 top-16 bottom-0 h-[calc(100dvh-4rem)] backdrop-blur-2xl z-40 overflow-y-auto flex flex-col justify-between shadow-2xl"
             style={{ background: 'var(--t-mobile-bg, #effcfe)', borderTop: '1px solid var(--t-border-light)' }}
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
@@ -307,15 +307,20 @@ export default function Navbar() {
                 </Link>
 
                 <div className="flex flex-wrap items-center justify-center gap-3 text-xs font-semibold text-[#6d7a77] pt-2">
-                  <a href="mailto:sales@omedosoftware.com" className="flex items-center gap-1 hover:text-[#00685e]">
+                  <a href="mailto:support@omedosoft.com" className="flex items-center gap-1 hover:text-[#00685e]">
                     <span className="material-symbols-outlined text-sm text-[#00685e]">mail</span>
-                    sales@omedosoftware.com
+                    support@omedosoft.com
                   </a>
                   <span>•</span>
-                  <a href="tel:+916389590600" className="flex items-center gap-1 hover:text-[#00685e]">
-                    <span className="material-symbols-outlined text-sm text-[#00685e]">call</span>
-                    +91 6389 590 600
+                  <a href="mailto:sales@omedosoft.com" className="flex items-center gap-1 hover:text-[#00685e]">
+                    <span className="material-symbols-outlined text-sm text-[#00685e]">mail</span>
+                    sales@omedosoft.com
                   </a>
+                  <span>•</span>
+                  <span className="flex items-center gap-1 text-emerald-600 font-bold">
+                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
+                    Online Support 24*7
+                  </span>
                 </div>
               </motion.div>
             </div>

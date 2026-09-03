@@ -6,6 +6,7 @@ import { testimonials } from '../../data/testimonials'
 import HeroBackground from '../../components/common/HeroBackground'
 import ABDMIntegration from '../../components/sections/ABDMIntegration'
 import HMSExplanationContainer from '../../components/sections/HMSExplanationContainer'
+import ProductsShowcase from '../../components/sections/ProductsShowcase'
 
 const heroSlides = [
   { id: 1, title: 'Clinical Dashboard', img: '/images/hero_slide_1.png', tag: 'Live Clinical OPD & Emergency' },
@@ -60,7 +61,7 @@ export default function Home() {
                 <span className="text-[var(--t-text,#121d1f)]">Healthcare with</span><br />
                 <span className="relative inline-block">
                   <span className="bg-clip-text text-transparent" style={{ backgroundImage: 'var(--t-gradient-text, linear-gradient(135deg, #00685e 0%, #2d685e 100%))' }}>
-                    Intelligent HMS
+                    Intelligent OMEDO
                   </span>
                 </span>
               </motion.h1>
@@ -142,23 +143,23 @@ export default function Home() {
                   <motion.div
                     animate={{ scale: [1, 1.05, 1] }}
                     transition={{ duration: 3.5, repeat: Infinity, ease: 'easeInOut' }}
-                    className="relative z-20 w-24 h-24 rounded-full flex items-center justify-center cursor-pointer group"
+                    className="relative z-20 w-24 h-24 rounded-full flex items-center justify-center cursor-pointer group p-2.5"
                     style={{
                       background: 'linear-gradient(135deg, var(--t-accent, #67d9ca) 0%, var(--t-primary, #00685e) 50%, var(--t-footer-bg, #061325) 100%)',
-                      boxShadow: '0 0 30px var(--t-btn-shadow), 0 0 55px var(--t-hero-glow), inset 0 1px 0 rgba(255,255,255,0.2)',
+                      boxShadow: '0 0 30px var(--t-btn-shadow), 0 0 55px var(--t-hero-glow), inset 0 1px 0 rgba(255,255,255,0.25)',
                       border: '2.5px solid rgba(255,255,255,0.9)',
                     }}
                   >
-                    <div className="absolute inset-1.5 rounded-full border border-white/10 pointer-events-none" />
-                    <img
-                      src="/images/omedo_logo_white.png"
-                      alt="Omedo - Healthcare. Simplified."
-                      className="h-8 sm:h-9 w-auto object-contain group-hover:scale-110 transition-transform duration-300 px-1"
-                      style={{
-                        maxWidth: '80px',
-                        filter: 'drop-shadow(0 2px 8px rgba(0,0,0,0.4))',
-                      }}
-                    />
+                    <div className="w-full h-full rounded-full bg-white/95 backdrop-blur-md flex items-center justify-center shadow-inner p-2 group-hover:bg-white transition-colors">
+                      <img
+                        src="/images/omedo_emblem.png"
+                        alt="OMEDO Emblem"
+                        className="w-full h-full object-contain group-hover:scale-110 transition-transform duration-300"
+                        style={{
+                          filter: 'drop-shadow(0 2px 6px rgba(0,104,94,0.25))',
+                        }}
+                      />
+                    </div>
                   </motion.div>
                 </div>
               </div>
@@ -286,23 +287,23 @@ export default function Home() {
                 <motion.div
                   animate={{ scale: [1, 1.05, 1] }}
                   transition={{ duration: 3.5, repeat: Infinity, ease: 'easeInOut' }}
-                  className="relative z-20 w-28 h-28 sm:w-36 sm:h-36 md:w-44 md:h-44 rounded-full flex items-center justify-center cursor-pointer group"
+                  className="relative z-20 w-28 h-28 sm:w-36 sm:h-36 md:w-44 md:h-44 rounded-full flex items-center justify-center cursor-pointer group p-3 sm:p-4"
                   style={{
                     background: 'linear-gradient(135deg, var(--t-accent, #67d9ca) 0%, var(--t-primary, #00685e) 50%, var(--t-footer-bg, #061325) 100%)',
-                    boxShadow: '0 0 35px var(--t-btn-shadow), 0 0 65px var(--t-hero-glow), inset 0 1px 0 rgba(255,255,255,0.2)',
-                    border: '3px solid rgba(255,255,255,0.9)',
+                    boxShadow: '0 0 35px var(--t-btn-shadow), 0 0 65px var(--t-hero-glow), inset 0 1px 0 rgba(255,255,255,0.3)',
+                    border: '3.5px solid rgba(255,255,255,0.9)',
                   }}
                 >
-                  <div className="absolute inset-1.5 sm:inset-2 rounded-full border border-white/10 pointer-events-none" />
-                  <img
-                    src="/images/omedo_logo_white.png"
-                    alt="Omedo - Healthcare. Simplified."
-                    className="h-10 sm:h-14 md:h-16 w-auto object-contain group-hover:scale-110 transition-transform duration-300 px-1.5"
-                    style={{
-                      maxWidth: '120px',
-                      filter: 'drop-shadow(0 2px 10px rgba(0,0,0,0.4))',
-                    }}
-                  />
+                  <div className="w-full h-full rounded-full bg-white/95 backdrop-blur-md flex items-center justify-center shadow-inner p-3 sm:p-4 md:p-5 group-hover:bg-white transition-colors">
+                    <img
+                      src="/images/omedo_emblem.png"
+                      alt="OMEDO Emblem"
+                      className="w-full h-full object-contain group-hover:scale-110 transition-transform duration-300"
+                      style={{
+                        filter: 'drop-shadow(0 4px 12px rgba(0,104,94,0.25))',
+                      }}
+                    />
+                  </div>
                 </motion.div>
 
               </div>
@@ -352,10 +353,13 @@ export default function Home() {
         </div>
       </section>
 
+      {/* ── 2. PRODUCTS SHOWCASE (CLINIC & HMS SUITES) ── */}
+      <ProductsShowcase />
+
       {/* ── 3. CORE ADVANTAGES SECTION (HOSPITAL OPERATIONS) ── */}
       <section className="py-12 sm:py-16 lg:py-20 site-wrapper">
         <div className="text-center max-w-3xl mx-auto mb-10 sm:mb-14">
-          <span className="text-xs font-bold uppercase tracking-wider text-[var(--t-primary)] mb-2 block">Comprehensive HMS Modules</span>
+          <span className="text-xs font-bold uppercase tracking-wider text-[var(--t-primary)] mb-2 block">Comprehensive OMEDO Modules</span>
           <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-[var(--t-text)]" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
             Complete Hospital Operation & Patient Management
           </h2>
@@ -764,7 +768,7 @@ export default function Home() {
             Loved by Doctors, Admins & IT Directors
           </h2>
           <p className="text-xs sm:text-sm text-[#3d4947] leading-relaxed">
-            See how Omedo HMS is transforming hospital operations across clinical management, billing, lab diagnostics, and patient satisfaction.
+            See how OMEDO is transforming hospital operations across clinical management, billing, lab diagnostics, and patient satisfaction.
           </p>
         </div>
 

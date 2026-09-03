@@ -1,5 +1,5 @@
-import { useState } from 'react'
-import { Link } from 'react-router-dom'
+import { useState, useEffect } from 'react'
+import { Link, useSearchParams, useLocation } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
 import { pageTransition } from '../../utils/animations'
 
@@ -223,8 +223,47 @@ const clinicalTopics = [
 ]
 
 export default function ClinicalManagement() {
+  const [searchParams] = useSearchParams()
+  const location = useLocation()
   const [activeTopicId, setActiveTopicId] = useState('01')
   const [fullScreenImg, setFullScreenImg] = useState(null)
+
+  useEffect(() => {
+    const rawParam = (
+      searchParams.get('module') || 
+      searchParams.get('topic') || 
+      searchParams.get('tab') || 
+      location.hash.replace('#', '') || 
+      ''
+    ).toLowerCase().trim()
+
+    if (!rawParam) return
+
+    let matchedId = '01'
+    if (rawParam === '03' || rawParam === 'appointment' || rawParam === 'appointments') matchedId = '03'
+    else if (rawParam === '01' || rawParam === 'dashboard') matchedId = '01'
+    else if (rawParam === '02' || rawParam === 'patient' || rawParam === 'patients') matchedId = '02'
+    else if (rawParam === '04' || rawParam === 'collection' || rawParam === 'collections') matchedId = '04'
+    else if (rawParam === '05' || rawParam === 'emergency') matchedId = '05'
+    else if (rawParam === '06' || rawParam === 'opd') matchedId = '06'
+    else if (rawParam === '07' || rawParam === 'ipd' || rawParam === 'ipd-admission') matchedId = '07'
+    else if (rawParam === '08' || rawParam === 'nurse' || rawParam === 'nurse-dashboard') matchedId = '08'
+    else if (rawParam === '09' || rawParam === 'doctor' || rawParam === 'doctor-dashboard') matchedId = '09'
+    else if (rawParam === '10' || rawParam === 'service-billing' || rawParam === 'billing') matchedId = '10'
+    else if (rawParam === '11' || rawParam === 'waiting' || rawParam === 'waiting-screen') matchedId = '11'
+    else if (rawParam === '12' || rawParam === 'cancel' || rawParam === 'refunds') matchedId = '12'
+    else if (rawParam === '13' || rawParam === 'rapid' || rawParam === 'rapid-consultation') matchedId = '13'
+
+    setActiveTopicId(matchedId)
+
+    // Smooth scroll to the target topic element
+    setTimeout(() => {
+      const el = document.getElementById(`clinical-topic-${matchedId}`)
+      if (el) {
+        el.scrollIntoView({ behavior: 'smooth', block: 'center' })
+      }
+    }, 150)
+  }, [searchParams, location.hash])
 
   const handleTopicSelect = (id) => {
     setActiveTopicId(prevId => prevId === id ? null : id)
@@ -265,7 +304,7 @@ export default function ClinicalManagement() {
           <motion.div initial="hidden" animate="visible" variants={stagger} className="space-y-4">
             <motion.div variants={fadeUp} className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#afecde]/80 text-[#00685e] text-xs sm:text-sm font-bold shadow-xs">
               <span className="material-symbols-outlined text-base">clinical_notes</span>
-              HMS Core Sub-Module • Clinical Suite
+              OMEDO Core Sub-Module • Clinical Suite
             </motion.div>
 
             <motion.h1 variants={fadeUp} className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-[#121d1f] tracking-tight leading-tight" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
@@ -309,7 +348,7 @@ export default function ClinicalManagement() {
             const isActive = activeTopicId === topic.id
 
             return (
-              <div key={topic.id} className="relative grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-14 items-center">
+              <div key={topic.id} id={`clinical-topic-${topic.id}`} className="relative grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-14 items-center scroll-mt-28">
                 
                 {/* Central Timeline Node Circle (Desktop) */}
                 <div 
@@ -432,7 +471,7 @@ export default function ClinicalManagement() {
         <div className="flex justify-center pt-16 pb-4">
           <div className="bg-[#afecde]/90 backdrop-blur-md text-[#00685e] border border-[#00685e]/40 px-7 py-3 rounded-full text-xs sm:text-sm font-mono font-bold flex items-center gap-2.5 shadow-xl">
             <span className="w-3 h-3 rounded-full bg-[#00685e] animate-pulse" />
-            <span>NABH COMPLIANT &amp; ICD-10 READY CLINICAL SUITE</span>
+            <span>CLINICAL QUALITY &amp; ICD-10 READY SUITE</span>
           </div>
         </div>
 
@@ -447,8 +486,8 @@ export default function ClinicalManagement() {
               <div className="text-xs sm:text-sm text-white/80 font-medium">Rapid Consult Prescription</div>
             </div>
             <div className="space-y-1">
-              <div className="text-2xl sm:text-4xl font-extrabold text-[#85f5e6]">100%</div>
-              <div className="text-xs sm:text-sm text-white/80 font-medium">ICD-10 & EMR Digitized</div>
+              <div className="text-2xl sm:text-4xl font-extrabold text-[#85f5e6]">Complete</div>
+              <div className="text-xs sm:text-sm text-white/80 font-medium">ICD-10 & EMR Digitization</div>
             </div>
             <div className="space-y-1">
               <div className="text-2xl sm:text-4xl font-extrabold text-[#85f5e6]">99.4%</div>

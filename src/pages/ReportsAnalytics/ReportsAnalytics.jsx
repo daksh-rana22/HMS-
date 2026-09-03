@@ -273,7 +273,7 @@ export default function ReportsAnalytics() {
           <motion.div initial="hidden" animate="visible" variants={stagger} className="space-y-4">
             <motion.div variants={fadeUp} className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#afecde]/80 text-[#00685e] text-xs sm:text-sm font-bold shadow-xs">
               <span className="material-symbols-outlined text-base">analytics</span>
-              HMS Core Sub-Module • Reports & Analytical Intelligence
+              OMEDO Core Sub-Module • Reports & Analytical Intelligence
             </motion.div>
 
             <motion.h1 variants={fadeUp} className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-[#121d1f] tracking-tight leading-tight" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
@@ -448,7 +448,7 @@ export default function ReportsAnalytics() {
         <div className="flex justify-center pt-16 pb-4">
           <div className="bg-[#afecde]/90 backdrop-blur-md text-[#00685e] border border-[#00685e]/40 px-7 py-3 rounded-full text-xs sm:text-sm font-mono font-bold flex items-center gap-2.5 shadow-xl">
             <span className="w-3 h-3 rounded-full bg-[#00685e] animate-pulse" />
-            <span>12 REPORT &amp; ANALYTICAL SUB-MODULES READY FOR NABH AUDIT</span>
+            <span>12 REPORT &amp; ANALYTICAL SUB-MODULES READY FOR QUALITY AUDITS</span>
           </div>
         </div>
 
@@ -463,7 +463,7 @@ export default function ReportsAnalytics() {
               <div className="text-xs sm:text-sm text-white/80 font-medium">Analytical Sub-Modules</div>
             </div>
             <div className="space-y-1">
-              <div className="text-2xl sm:text-4xl font-extrabold text-[#85f5e6]">100%</div>
+              <div className="text-2xl sm:text-4xl font-extrabold text-[#85f5e6]">Accurate</div>
               <div className="text-xs sm:text-sm text-white/80 font-medium">Financial & Audit Reconciliation</div>
             </div>
             <div className="space-y-1">

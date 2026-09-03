@@ -1,7 +1,7 @@
 {
   "name": "omedo-hms-contact-backend",
   "version": "1.0.0",
-  "description": "Express backend for Omedo HMS contact form — handles SMTP email delivery securely.",
+  "description": "Express backend for OMEDO contact form — handles SMTP email delivery securely.",
   "type": "module",
   "main": "server.js",
   "scripts": {

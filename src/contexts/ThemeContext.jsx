@@ -1,12 +1,12 @@
 import { createContext, useContext, useState, useEffect } from 'react'
 
 export const HERO_FOOTER_THEMES = {
-  default: {
-    id: 'default',
-    name: 'Clinical Teal & Emerald',
-    description: 'Original Enterprise Medical Green',
-    gradientBg: 'linear-gradient(135deg, #00685e 0%, #0284c7 50%, #059669 100%)',
-    dotColor: '#00685e',
+  dreamy: {
+    id: 'dreamy',
+    name: 'Dreamy Skies',
+    description: 'Electric Sky Blue & Lavender Violet',
+    gradientBg: 'linear-gradient(135deg, #0284C7 0%, #6366F1 50%, #8B5CF6 100%)',
+    dotColor: '#0284C7',
   },
   oceanic: {
     id: 'oceanic',
@@ -21,13 +21,6 @@ export const HERO_FOOTER_THEMES = {
     description: 'Vivid Jade Teal, Electric Coral & Porcelain',
     gradientBg: 'linear-gradient(135deg, #0F766E 0%, #F43F5E 100%)',
     dotColor: '#0F766E',
-  },
-  dreamy: {
-    id: 'dreamy',
-    name: 'Dreamy Skies',
-    description: 'Electric Sky Blue & Lavender Violet',
-    gradientBg: 'linear-gradient(135deg, #0284C7 0%, #6366F1 50%, #8B5CF6 100%)',
-    dotColor: '#0284C7',
   },
   amberteal: {
     id: 'amberteal',
@@ -71,17 +64,32 @@ export const HERO_FOOTER_THEMES = {
     gradientBg: 'linear-gradient(135deg, #1E3A8A 0%, #2563EB 50%, #D97706 100%)',
     dotColor: '#1E3A8A',
   },
+  clinical: {
+    id: 'clinical',
+    name: 'Clinical Teal & Emerald',
+    description: 'Original Enterprise Medical Green',
+    gradientBg: 'linear-gradient(135deg, #00685e 0%, #0284c7 50%, #059669 100%)',
+    dotColor: '#00685e',
+  },
 }
 
 const ThemeContext = createContext(null)
 
 export function ThemeProvider({ children }) {
   const [heroTheme, setHeroTheme] = useState(() => {
-    return localStorage.getItem('hms-hero-theme') || 'default'
+    try {
+      const saved = localStorage.getItem('hms-hero-theme')
+      if (saved && saved !== 'default' && HERO_FOOTER_THEMES[saved]) {
+        return saved
+      }
+    } catch (e) {}
+    return 'dreamy'
   })
 
   useEffect(() => {
-    localStorage.setItem('hms-hero-theme', heroTheme)
+    try {
+      localStorage.setItem('hms-hero-theme', heroTheme)
+    } catch (e) {}
     document.documentElement.setAttribute('data-hero-theme', heroTheme)
     document.documentElement.setAttribute('data-theme', heroTheme)
   }, [heroTheme])

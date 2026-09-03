@@ -13,7 +13,7 @@ const milestones = [
     label: 'Milestone 1',
     icon: 'person_add',
     title: 'ABHA Creation & Linking',
-    desc: 'Integration Milestone 1 — Support for patient ABHA (Ayushman Bharat Health Account) identity creation and linking within the HMS registration workflow.',
+    desc: 'Integration Milestone 1 — Support for patient ABHA (Ayushman Bharat Health Account) identity creation and linking within the OMEDO registration workflow.',
     color: 'var(--t-primary)',
   },
   {
@@ -351,7 +351,7 @@ export default function ABDMIntegration() {
                           }}
                         >
                           <span className="material-symbols-outlined text-[10px]">verified</span>
-                          ABDM Certified
+                          ABDM Enabled
                         </span>
                       </div>
                     </div>
@@ -572,7 +572,7 @@ export default function ABDMIntegration() {
                 Ready to integrate ABDM with your hospital?
               </p>
               <p className="text-[11px] sm:text-xs" style={{ color: 'var(--t-text-muted)' }}>
-                Our team guides you through full ABDM onboarding and certification.
+                Our team guides you through full ABDM onboarding and integration.
               </p>
             </div>
           </div>

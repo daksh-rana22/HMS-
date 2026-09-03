@@ -6,17 +6,19 @@ const moduleLinks = [
   { name: 'Reports & Analytics', path: '/modules/reports' },
   { name: 'IPD Care', path: '/modules/ipd' },
   { name: 'Billing & Accounts', path: '/modules/billing-accounts' },
-  { name: 'Laboratory', path: '/modules/laboratory' },
+  { name: 'Laboratory Management', path: '/modules/laboratory' },
+  { name: 'ABDM Integration', path: '/abdm-integration' },
 ]
 
 const mainLinks = [
   { name: 'Home', path: '/' },
+  { name: 'Products', path: '/products' },
   { name: 'All Modules', path: '/modules' },
-  { name: 'ABDM Integration', path: '/abdm-integration' },
   { name: 'About Us', path: '/about' },
   { name: 'Contact Us', path: '/contact' },
-  { name: 'Privacy Policy', path: '/contact' },
-  { name: 'Terms of Service', path: '/contact' },
+  { name: 'Terms & Conditions', path: '/terms' },
+  { name: 'Privacy Policy', path: '/privacy' },
+  { name: 'Refund & Cancellation', path: '/refund' },
 ]
 
 export default function Footer() {
@@ -35,12 +37,12 @@ export default function Footer() {
 
           {/* 1. Brand & Offices (4 cols) */}
           <div className="lg:col-span-4 space-y-4">
-            <Link to="/" className="inline-block">
+            <Link to="/" className="inline-block bg-white p-2 sm:p-2.5 rounded-2xl shadow-lg border border-white/20 hover:scale-[1.02] transition-all">
               <img
-                src="/images/omedo_logo_white.png"
-                alt="Omedo - Healthcare. Simplified."
-                className="h-10 sm:h-11 w-auto object-contain"
-                style={{ maxWidth: '190px' }}
+                src="/WhatsApp Image 2026-08-27 at 4.19.32 PM.jpeg"
+                alt="OMEDO - Best Hospital Management Software in India!"
+                className="h-12 sm:h-14 w-auto object-contain rounded-xl"
+                style={{ maxWidth: '180px' }}
               />
             </Link>
 
@@ -50,21 +52,21 @@ export default function Footer() {
 
             <div className="flex items-center gap-2 text-xs font-semibold text-emerald-400">
               <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-              <span>ABDM &amp; NHA Milestone 1, 2 &amp; 3 Certified</span>
+              <span>ABDM &amp; NHA Milestone 1, 2 &amp; 3 Integration Ready</span>
             </div>
 
-            {/* Offices */}
-            <div className="pt-2 space-y-2 text-xs text-slate-400 leading-relaxed border-t border-white/10">
-              <div>
-                <span className="font-semibold text-white">Corporate Office:</span> <span className="text-cyan-300 font-semibold">OMEDO Software Solutions Pvt Ltd</span>, H-11, Sector-23, Sanjay Nagar, Ghaziabad — 201002, Uttar Pradesh, India
-              </div>
+            {/* Corporate Office */}
+            <div className="pt-2.5 text-xs leading-relaxed border-t border-white/10 space-y-0.5">
+              <div className="font-semibold text-white">Corporate Office</div>
+              <div className="text-cyan-300 font-semibold">OMEDO Software Solutions Pvt Ltd.</div>
+              <div className="text-slate-300">H-11, Sector-23, Sanjay Nagar, Ghaziabad — 201002, Uttar Pradesh, India</div>
             </div>
           </div>
 
-          {/* 2. HMS Core Modules (3 cols) */}
+          {/* 2. OMEDO Core Modules (3 cols) */}
           <div className="lg:col-span-3 space-y-3">
             <h4 className="text-xs font-bold uppercase tracking-wider text-white" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
-              HMS Core Modules
+              OMEDO Core Modules
             </h4>
             <ul className="space-y-2 text-xs sm:text-sm">
               {moduleLinks.map((item) => (
@@ -109,23 +111,18 @@ export default function Footer() {
 
             <div className="space-y-2.5 text-xs text-slate-300 leading-relaxed">
               <div>
-                <span className="text-slate-400 block text-[11px] font-medium">Contact Hotlines:</span>
-                <span className="font-semibold text-emerald-400">
-                  <a href="tel:+916389590600" className="hover:underline">+91 6389 590 600</a> | <a href="tel:+916389590700" className="hover:underline">+91 6389 590 700</a>
-                </span>
-              </div>
-
-              <div>
                 <span className="text-slate-400 block text-[11px] font-medium">Email Inquiries:</span>
                 <div className="space-y-0.5">
-                  <div>Support: <a href="mailto:sales@omedosoftware.com" className="text-cyan-300 hover:underline">sales@omedosoftware.com</a></div>
-                  <div>Sales: <a href="mailto:sales@omedosoftware.com" className="text-cyan-300 hover:underline">sales@omedosoftware.com</a></div>
+                  <div>Support: <a href="mailto:support@omedosoft.com" className="text-cyan-300 hover:underline">support@omedosoft.com</a></div>
+                  <div>Sales: <a href="mailto:sales@omedosoft.com" className="text-cyan-300 hover:underline">sales@omedosoft.com</a></div>
                 </div>
               </div>
 
-              <div className="text-[11px] text-slate-400 pt-1 space-y-0.5">
-                <div>Helpline: Mon–Sat 9:00 AM – 9:00 PM IST</div>
-                <div>Sunday: 10:00 AM – 6:00 PM IST</div>
+              <div className="text-[11px] text-slate-400 pt-1">
+                <div className="text-emerald-400 font-semibold flex items-center gap-1.5">
+                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+                  <span>Online Support 24*7</span>
+                </div>
               </div>
             </div>
           </div>
@@ -141,13 +138,17 @@ export default function Footer() {
             © {new Date().getFullYear()} <span className="text-slate-200 font-semibold">OMEDO Software Solutions Pvt Ltd</span>. All rights reserved.
           </p>
           <div className="flex flex-wrap justify-center items-center gap-2 sm:gap-3 text-[11px] text-slate-400">
-            <span>HIPAA Compliant</span>
+            <Link to="/terms" className="hover:text-slate-200 transition-colors uppercase tracking-wider font-medium hover:underline">
+              TERMS &amp; CONDITIONS
+            </Link>
             <span>•</span>
-            <span>GDPR Certified</span>
+            <Link to="/privacy" className="hover:text-slate-200 transition-colors uppercase tracking-wider font-medium hover:underline">
+              PRIVACY POLICY
+            </Link>
             <span>•</span>
-            <span>ISO 27001</span>
-            <span>•</span>
-            <span>ABDM Certified</span>
+            <Link to="/refund" className="hover:text-slate-200 transition-colors uppercase tracking-wider font-medium hover:underline">
+              REFUND &amp; CANCELLATION POLICY
+            </Link>
           </div>
         </div>
 

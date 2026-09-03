@@ -1,10 +1,10 @@
-﻿export const testimonials = [
+export const testimonials = [
   {
     name: 'Dr. Sarah Chen',
     role: 'Chief Medical Officer',
     organization: 'Metro General Hospital',
     content:
-      'Omedo HMS has revolutionized how we manage patient care. The intuitive interface reduced our administrative workload by 40%, letting our staff focus on what matters most — patient outcomes.',
+      'OMEDO has revolutionized how we manage patient care. The intuitive interface reduced our administrative workload by 40%, letting our staff focus on what matters most — patient outcomes.',
     rating: 5,
     avatar: 'SC',
   },
@@ -13,7 +13,7 @@
     role: 'Hospital Administrator',
     organization: 'Apollo Healthcare Network',
     content:
-      'Implementing Omedo across our 12-hospital network was seamless. The centralized reporting and real-time analytics give us unprecedented visibility into operations across all facilities.',
+      'Implementing OMEDO across our 12-hospital network was seamless. The centralized reporting and real-time analytics give us unprecedented visibility into operations across all facilities.',
     rating: 5,
     avatar: 'RK',
   },
@@ -49,7 +49,7 @@
     role: 'IT Director',
     organization: 'Sunrise Medical Group',
     content:
-      'From a technical standpoint, Omedo is impressive. Cloud-native architecture, robust API, role-based access control, and 99.99% uptime — exactly what healthcare IT demands.',
+      'From a technical standpoint, OMEDO is impressive. Cloud-native architecture, robust API, role-based access control, and 99.99% uptime — exactly what healthcare IT demands.',
     rating: 5,
     avatar: 'JA',
   },
@@ -58,7 +58,7 @@
     role: 'Managing Director',
     organization: 'Apex Super Specialty Hospital',
     content:
-      'Omedo HMS replaced 4 fragmented legacy systems. OPD queues move 60% faster and patient check-in times dropped from 15 minutes to under 2 minutes.',
+      'OMEDO replaced 4 fragmented legacy systems. OPD queues move 60% faster and patient check-in times dropped from 15 minutes to under 2 minutes.',
     rating: 5,
     avatar: 'VM',
   },
@@ -67,7 +67,7 @@
     role: 'Head of Emergency & Critical Care',
     organization: 'CarePlus Multi-Specialty',
     content:
-      'In emergency situations, quick access to patient history and instant lab ordering is life-saving. Omedo delivers zero-lag performance when every second counts.',
+      'In emergency situations, quick access to patient history and instant lab ordering is life-saving. OMEDO delivers zero-lag performance when every second counts.',
     rating: 5,
     avatar: 'AD',
   },

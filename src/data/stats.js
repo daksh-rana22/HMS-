@@ -6,7 +6,7 @@ export const stats = [
     value: 150,
     suffix: '+ Hospitals / 50+ Clinics',
     label: 'Healthcare Facilities',
-    description: 'Trust Omedo HMS',
+    description: 'Trust OMEDO',
   },
   {
     icon: UserCheck,

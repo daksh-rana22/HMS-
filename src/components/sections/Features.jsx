@@ -27,7 +27,7 @@ const features = [
     iconColorVar: 'var(--t-bg)',
     title: 'Uncompromising Security',
     description:
-      'HIPAA and GDPR compliant data storage. We employ bank-level encryption and multi-factor authentication to ensure sensitive patient data remains confidential.',
+      'Enterprise-grade secure data storage. We employ multi-layer encryption, role-based access controls, and strict authentication to ensure sensitive patient data remains confidential.',
     items: ['End-to-end Data Encryption', 'Regular Security Audits'],
   },
 ]

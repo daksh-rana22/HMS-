@@ -11,7 +11,7 @@ export default function ModulesOverview() {
       <Container>
         <SectionTitle
           badge="Modules"
-          title="Comprehensive HMS Modules"
+          title="Comprehensive OMEDO Modules"
           subtitle="Six powerful, integrated modules designed to manage every aspect of your hospital operations with precision and efficiency."
         />
 

@@ -1,6 +1,6 @@
 /**
- * Omedo HMS — Contact Form Backend
- * ─────────────────────────────────
+ * OMEDO — Contact Form Backend
+ * ─────────────────────────────
  * Receives form submissions from the frontend, validates and sanitises
  * the input, then sends a professional email to the owner via SMTP.
  *
@@ -148,24 +148,34 @@ transporter.verify((err) => {
 const contactValidationRules = [
   body('name')
     .trim()
-    .notEmpty().withMessage('Full Name is required.')
-    .isLength({ max: 120 }).withMessage('Full Name must be 120 characters or fewer.'),
+    .notEmpty().withMessage('Name is required.')
+    .isLength({ max: 120 }).withMessage('Name must be 120 characters or fewer.'),
+
+  body('mobile')
+    .trim()
+    .notEmpty().withMessage('Mobile number is required.')
+    .isLength({ min: 7, max: 25 }).withMessage('Please enter a valid mobile number.'),
 
   body('email')
+    .optional({ checkFalsy: true })
     .trim()
-    .notEmpty().withMessage('Email Address is required.')
-    .isEmail().withMessage('Email Address must be a valid email.')
+    .isEmail().withMessage('Please enter a valid email address.')
     .isLength({ max: 254 }).withMessage('Email Address is too long.'),
 
   body('facility')
     .trim()
-    .notEmpty().withMessage('Healthcare Facility Name is required.')
-    .isLength({ max: 200 }).withMessage('Healthcare Facility Name must be 200 characters or fewer.'),
+    .notEmpty().withMessage('Hospital / Clinic Name is required.')
+    .isLength({ max: 200 }).withMessage('Hospital / Clinic Name must be 200 characters or fewer.'),
+
+  body('location')
+    .trim()
+    .notEmpty().withMessage('Location is required.')
+    .isLength({ max: 200 }).withMessage('Location must be 200 characters or fewer.'),
 
   body('message')
+    .optional({ checkFalsy: true })
     .trim()
-    .notEmpty().withMessage('Message is required.')
-    .isLength({ min: 10, max: 5000 }).withMessage('Message must be between 10 and 5000 characters.'),
+    .isLength({ max: 5000 }).withMessage('Message must be 5000 characters or fewer.'),
 
   // Honeypot — must be empty (bots fill it, real users never see it)
   body('website')
@@ -180,20 +190,16 @@ const contactValidationRules = [
 
 // ─── Email Builder ────────────────────────────────────────────────────────────
 
-function buildEmailHTML({ name, email, facility, message }) {
-  const safe = {
-    name: validator.escape(name),
-    email: validator.escape(email),
-    facility: validator.escape(facility),
-    message: validator.escape(message).replace(/\n/g, '<br/>'),
-  };
+function buildEmailHTML({ name, mobile, email, facility, location, message }) {
+  const safeMessage = message ? validator.escape(message).replace(/\n/g, '<br/>') : '<em>No message provided</em>';
+  const displayEmail = email ? `<a href="mailto:${email}" style="color:#008378;text-decoration:none;font-weight:500;">${email}</a>` : '<span style="color:#888;">Not provided</span>';
 
   return `<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width,initial-scale=1"/>
-  <title>New Contact Enquiry</title>
+  <title>New Enquiry — Talk to Us About OMEDO</title>
 </head>
 <body style="margin:0;padding:0;background:#f0fafb;font-family:'Segoe UI',Arial,sans-serif;">
   <table width="100%" cellpadding="0" cellspacing="0" style="background:#f0fafb;padding:40px 16px;">
@@ -205,10 +211,10 @@ function buildEmailHTML({ name, email, facility, message }) {
           <tr>
             <td style="background:linear-gradient(135deg,#00685e 0%,#009e8f 100%);padding:32px 40px;">
               <h1 style="margin:0;color:#ffffff;font-size:22px;font-weight:700;letter-spacing:-0.3px;">
-                New Contact Enquiry
+                New Enquiry — Talk to Us About OMEDO
               </h1>
               <p style="margin:6px 0 0;color:#b2f0ea;font-size:13px;">
-                Received via the Omedo HMS website contact form
+                Received via the OMEDO website enquiry form
               </p>
             </td>
           </tr>
@@ -217,82 +223,82 @@ function buildEmailHTML({ name, email, facility, message }) {
           <tr>
             <td style="padding:36px 40px;">
               <table width="100%" cellpadding="0" cellspacing="0">
-
-                <!-- Full Name -->
                 <tr>
-                  <td style="padding-bottom:20px;">
-                    <p style="margin:0 0 4px;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.8px;color:#00685e;">
-                      Full Name
-                    </p>
-                    <p style="margin:0;font-size:16px;color:#121d1f;font-weight:600;">
-                      ${safe.name}
+                  <td>
+                    <p style="margin:0 0 24px;font-size:15px;line-height:24px;color:#2c3e3c;">
+                      A new enquiry has been submitted through the website. Details are provided below:
                     </p>
                   </td>
                 </tr>
 
-                <!-- Email Address -->
+                <!-- Details Box -->
                 <tr>
-                  <td style="padding-bottom:20px;">
-                    <p style="margin:0 0 4px;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.8px;color:#00685e;">
-                      Email Address
-                    </p>
-                    <p style="margin:0;font-size:16px;color:#121d1f;">
-                      <a href="mailto:${safe.email}" style="color:#00685e;text-decoration:none;font-weight:600;">
-                        ${safe.email}
-                      </a>
-                    </p>
+                  <td>
+                    <table width="100%" cellpadding="0" cellspacing="0" style="background:#f0fafb;border-radius:8px;border:1px solid #d4eff1;margin-bottom:24px;">
+                      <tr>
+                        <td style="padding:14px 20px;border-bottom:1px solid #e0f4f6;width:38%;font-size:13px;font-weight:600;color:#00685e;">
+                          Name
+                        </td>
+                        <td style="padding:14px 20px;border-bottom:1px solid #e0f4f6;font-size:14px;color:#1a2e2b;font-weight:600;">
+                          ${name}
+                        </td>
+                      </tr>
+                      <tr>
+                        <td style="padding:14px 20px;border-bottom:1px solid #e0f4f6;font-size:13px;font-weight:600;color:#00685e;">
+                          Mobile
+                        </td>
+                        <td style="padding:14px 20px;border-bottom:1px solid #e0f4f6;font-size:14px;color:#1a2e2b;font-weight:600;">
+                          <a href="tel:${mobile}" style="color:#008378;text-decoration:none;">${mobile}</a>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td style="padding:14px 20px;border-bottom:1px solid #e0f4f6;font-size:13px;font-weight:600;color:#00685e;">
+                          Email
+                        </td>
+                        <td style="padding:14px 20px;border-bottom:1px solid #e0f4f6;font-size:14px;color:#1a2e2b;">
+                          ${displayEmail}
+                        </td>
+                      </tr>
+                      <tr>
+                        <td style="padding:14px 20px;border-bottom:1px solid #e0f4f6;font-size:13px;font-weight:600;color:#00685e;">
+                          Hospital / Clinic Name
+                        </td>
+                        <td style="padding:14px 20px;border-bottom:1px solid #e0f4f6;font-size:14px;color:#1a2e2b;font-weight:600;">
+                          ${facility}
+                        </td>
+                      </tr>
+                      <tr>
+                        <td style="padding:14px 20px;font-size:13px;font-weight:600;color:#00685e;">
+                          Location
+                        </td>
+                        <td style="padding:14px 20px;font-size:14px;color:#1a2e2b;font-weight:600;">
+                          ${location}
+                        </td>
+                      </tr>
+                    </table>
                   </td>
                 </tr>
 
-                <!-- Healthcare Facility -->
+                <!-- Message Box -->
                 <tr>
-                  <td style="padding-bottom:20px;">
-                    <p style="margin:0 0 4px;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.8px;color:#00685e;">
-                      Healthcare Facility
+                  <td>
+                    <p style="margin:0 0 8px;font-size:13px;font-weight:600;color:#00685e;text-transform:uppercase;letter-spacing:0.5px;">
+                      Message / Requirements
                     </p>
-                    <p style="margin:0;font-size:16px;color:#121d1f;font-weight:600;">
-                      ${safe.facility}
-                    </p>
-                  </td>
-                </tr>
-
-                <!-- Divider -->
-                <tr>
-                  <td style="padding-bottom:20px;">
-                    <div style="height:1px;background:linear-gradient(90deg,#e0f7f5,#00685e22,#e0f7f5);"></div>
-                  </td>
-                </tr>
-
-                <!-- Message -->
-                <tr>
-                  <td style="padding-bottom:24px;">
-                    <p style="margin:0 0 8px;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.8px;color:#00685e;">
-                      Message
-                    </p>
-                    <div style="background:#f8fffe;border-left:3px solid #00685e;border-radius:0 8px 8px 0;padding:16px 20px;font-size:15px;color:#3d4947;line-height:1.7;">
-                      ${safe.message}
+                    <div style="background:#fafefe;border-left:4px solid #008378;border-radius:0 8px 8px 0;padding:16px 20px;margin-bottom:28px;font-size:14px;line-height:22px;color:#2c3e3c;white-space:pre-wrap;word-break:break-word;">
+                      ${safeMessage}
                     </div>
                   </td>
                 </tr>
 
-                <!-- Divider -->
+                <!-- Quick Action Buttons -->
                 <tr>
-                  <td style="padding-bottom:20px;">
-                    <div style="height:1px;background:linear-gradient(90deg,#e0f7f5,#00685e22,#e0f7f5);"></div>
-                  </td>
-                </tr>
-
-                <!-- Website -->
-                <tr>
-                  <td>
-                    <p style="margin:0 0 4px;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.8px;color:#00685e;">
-                      Website
-                    </p>
-                    <p style="margin:0;font-size:14px;">
-                      <a href="${WEBSITE_URL}" style="color:#00685e;text-decoration:none;">
-                        ${WEBSITE_URL}
-                      </a>
-                    </p>
+                  <td align="center" style="padding-bottom:8px;">
+                    <a href="tel:${mobile}"
+                       style="display:inline-block;background:linear-gradient(135deg,#00685e 0%,#009e8f 100%);color:#ffffff;font-size:14px;font-weight:600;text-decoration:none;padding:12px 28px;border-radius:24px;letter-spacing:0.2px;box-shadow:0 4px 12px rgba(0,104,94,0.25);margin-right:10px;">
+                      Call ${name} (${mobile})
+                    </a>
+                    ${email ? `<a href="mailto:${email}?subject=Re:%20OMEDO%20Enquiry%20—%20${encodeURIComponent(facility)}" style="display:inline-block;background:#f0fafb;color:#00685e;border:1px solid #b2f0ea;font-size:14px;font-weight:600;text-decoration:none;padding:12px 24px;border-radius:24px;">Email</a>` : ''}
                   </td>
                 </tr>
 
@@ -300,22 +306,12 @@ function buildEmailHTML({ name, email, facility, message }) {
             </td>
           </tr>
 
-          <!-- Reply CTA -->
-          <tr>
-            <td style="padding:0 40px 32px;">
-              <a href="mailto:${safe.email}"
-                 style="display:inline-block;background:#00685e;color:#ffffff;text-decoration:none;font-size:14px;font-weight:700;padding:12px 28px;border-radius:50px;letter-spacing:0.2px;">
-                Reply to ${safe.name}
-              </a>
-            </td>
-          </tr>
-
           <!-- Footer -->
           <tr>
             <td style="background:#f0fafb;padding:20px 40px;border-top:1px solid #e0f7f5;">
               <p style="margin:0;font-size:12px;color:#7a9a97;text-align:center;">
-                This email was generated automatically by the Omedo HMS website contact form.<br/>
-                Do not reply to this automated message — use the button above instead.
+                This email was generated automatically by the OMEDO website enquiry form.<br/>
+                Do not reply to this automated message — use the buttons above instead.
               </p>
             </td>
           </tr>
@@ -328,25 +324,26 @@ function buildEmailHTML({ name, email, facility, message }) {
 </html>`;
 }
 
-function buildEmailText({ name, email, facility, message }) {
+function buildEmailText({ name, mobile, email, facility, location, message }) {
   return [
-    'NEW CONTACT ENQUIRY — OMEDO HMS',
+    'NEW ENQUIRY — TALK TO US ABOUT OMEDO',
     '='.repeat(50),
     '',
-    `Full Name:            ${name}`,
-    `Email Address:        ${email}`,
-    `Healthcare Facility:  ${facility}`,
+    `Name:                   ${name}`,
+    `Mobile:                 ${mobile}`,
+    `Email:                  ${email || 'Not provided'}`,
+    `Hospital / Clinic Name: ${facility}`,
+    `Location:               ${location}`,
     '',
-    'Message:',
+    'Message / Requirements:',
     '-'.repeat(50),
-    message,
+    message || 'No message provided',
     '-'.repeat(50),
     '',
     `Website: ${WEBSITE_URL}`,
     '',
     '='.repeat(50),
-    'This email was generated automatically by the Omedo HMS website contact form.',
-    'Reply directly to this email to contact the visitor.',
+    'This email was generated automatically by the OMEDO website enquiry form.',
   ].join('\n');
 }
 
@@ -354,7 +351,7 @@ function buildEmailText({ name, email, facility, message }) {
 
 // Health probe — for deployment platforms (Render, Railway, Fly.io, etc.)
 app.get('/health', (_req, res) => {
-  res.status(200).json({ status: 'ok', service: 'omedo-hms-contact-backend' });
+  res.status(200).json({ status: 'ok', service: 'omedo-contact-backend' });
 });
 
 // Contact form endpoint
@@ -383,22 +380,29 @@ app.post(
 
     // ── 3. Extract and normalise inputs
     const name = validator.escape(req.body.name.trim());
-    const email = validator.normalizeEmail(req.body.email.trim()) || req.body.email.trim();
+    const mobile = validator.escape(req.body.mobile.trim());
+    const email = req.body.email && req.body.email.trim() ? (validator.normalizeEmail(req.body.email.trim()) || req.body.email.trim()) : '';
     const facility = validator.escape(req.body.facility.trim());
-    const message = req.body.message.trim(); // escape happens inside buildEmailHTML
+    const location = validator.escape(req.body.location.trim());
+    const message = req.body.message ? req.body.message.trim() : '';
 
     // ── 4. Send email
     try {
-      await transporter.sendMail({
-        from: `"Omedo HMS Website" <${SMTP_USER}>`,
+      const mailOptions = {
+        from: `"OMEDO Website" <${SMTP_USER}>`,
         to: OWNER_EMAIL,
-        replyTo: `"${name}" <${email}>`,
-        subject: `New Website Enquiry — ${facility}`,
-        text: buildEmailText({ name, email, facility, message }),
-        html: buildEmailHTML({ name, email, facility, message }),
-      });
+        subject: `New Enquiry from ${name} — ${facility} (${location})`,
+        text: buildEmailText({ name, mobile, email, facility, location, message }),
+        html: buildEmailHTML({ name, mobile, email, facility, location, message }),
+      };
 
-      console.log(`[CONTACT] Email sent | Facility: "${facility}" | From: ${email}`);
+      if (email) {
+        mailOptions.replyTo = `"${name}" <${email}>`;
+      }
+
+      await transporter.sendMail(mailOptions);
+
+      console.log(`[CONTACT] Enquiry sent | Facility: "${facility}" (${location}) | Contact: ${name} (${mobile})`);
 
       return res.status(200).json({
         success: true,
@@ -435,7 +439,7 @@ app.use((err, _req, res, _next) => {
 // ─── Start ───────────────────────────────────────────────────────────────────
 
 app.listen(PORT, () => {
-  console.log(`[SERVER] Omedo HMS contact backend running on port ${PORT}`);
+  console.log(`[SERVER] OMEDO contact backend running on port ${PORT}`);
   console.log(`[SERVER] Allowed origin: ${FRONTEND_URL}`);
   console.log(`[SERVER] Environment: ${process.env.NODE_ENV || 'development'}`);
 });

@@ -169,7 +169,7 @@ export default function BillingAccounts() {
           <motion.div initial="hidden" animate="visible" variants={stagger} className="space-y-4">
             <motion.div variants={fadeUp} className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#afecde]/80 text-[#00685e] text-xs sm:text-sm font-bold shadow-xs">
               <span className="material-symbols-outlined text-base">payments</span>
-              HMS Core Sub-Module • Financial Engine
+              OMEDO Core Sub-Module • Financial Engine
             </motion.div>
 
             <motion.h1 variants={fadeUp} className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-[#121d1f] tracking-tight leading-tight" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
@@ -346,8 +346,8 @@ export default function BillingAccounts() {
         <div className="bg-gradient-to-r from-[#00685e] to-[#004d46] rounded-3xl p-6 sm:p-10 text-white shadow-xl">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
             <div className="space-y-1">
-              <div className="text-2xl sm:text-4xl font-extrabold text-[#85f5e6]">100%</div>
-              <div className="text-xs sm:text-sm text-white/80 font-medium">GST & Tax Compliant</div>
+              <div className="text-2xl sm:text-4xl font-extrabold text-[#85f5e6]">Verified</div>
+              <div className="text-xs sm:text-sm text-white/80 font-medium">GST &amp; Tax Compliance</div>
             </div>
             <div className="space-y-1">
               <div className="text-2xl sm:text-4xl font-extrabold text-[#85f5e6]">₹8.59 Cr</div>

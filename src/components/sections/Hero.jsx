@@ -111,8 +111,8 @@ export default function Hero() {
                     <span className="w-2 h-2 rounded-full animate-ping shrink-0" style={{ background: 'var(--t-accent)' }} />
                     <img
                       src="/images/omedo_logo.png"
-                      alt="Omedo - Healthcare. Simplified."
-                      className="h-5 sm:h-6 w-auto object-contain"
+                      alt="OMEDO - Best Hospital Management Software in India!"
+                      className="h-6 sm:h-7 w-auto object-contain"
                       style={{ maxWidth: '120px' }}
                     />
                   </span>
@@ -120,7 +120,7 @@ export default function Hero() {
                 <div className="hidden sm:flex items-center gap-2 text-[11px] font-semibold px-2.5 py-1 rounded-full"
                   style={{ color: 'var(--t-primary)', background: 'color-mix(in srgb, var(--t-accent) 15%, white)', border: '1px solid color-mix(in srgb, var(--t-accent) 30%, transparent)' }}>
                   <span className="material-symbols-outlined text-xs">shield</span>
-                  System 100% Operational
+                  System Live &amp; Operational
                 </div>
               </div>
 

@@ -1,4 +1,4 @@
-﻿import { useState } from 'react'
+import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Link } from 'react-router-dom'
 
@@ -45,7 +45,7 @@ const abhaPillars = [
     icon: 'qr_code_scanner',
     badge: 'ZERO OPD QUEUES',
     color: 'var(--t-primary)',
-    desc: 'Patients scan the NHA QR code displayed at hospital registration desks using their ABHA app. Demographic details are instantly pushed into Omedo HMS, completing OPD check-in in 10 seconds.',
+    desc: 'Patients scan the NHA QR code displayed at hospital registration desks using their ABHA app. Demographic details are instantly pushed into OMEDO, completing OPD check-in in 10 seconds.',
     highlights: [
       'Eliminates manual registration form filling and spelling errors',
       'Reduces OPD queue waiting times by up to 70%',
@@ -58,13 +58,13 @@ const abhaPillars = [
     title: 'Consent-First Health Vault',
     subtitle: 'Patient-Owned Data Vault & Privacy',
     icon: 'verified_user',
-    badge: '100% PRIVACY CONTROL',
+    badge: 'CONSENT-DRIVEN PRIVACY',
     color: 'var(--t-primary-mid)',
     desc: 'Medical data is never shared without explicit patient authorization. Doctors send digital consent requests, and patients approve or reject requests directly from their smartphone PHR app.',
     highlights: [
       'Strict time-bound consent (e.g., 24-hour access during emergency visits)',
       'Granular data type selection (e.g., share lab reports only, not past Rx)',
-      'Compliant with India’s Digital Personal Data Protection (DPDP) Act',
+      'Aligned with India’s Digital Personal Data Protection (DPDP) guidelines',
       'AES-256 bit encrypted peer-to-peer data transfer with zero central server storage'
     ]
   }
@@ -169,7 +169,7 @@ export default function ABHAExplanationContainer() {
 
               <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full text-xs font-bold bg-white border border-[var(--t-border)]/40 shadow-sm text-[var(--t-primary)]">
                 <span className="material-symbols-outlined text-base">verified</span>
-                NHA Certified Digital Health Emblem
+                Official NHA Digital Health Architecture
               </div>
             </div>
 
@@ -274,7 +274,7 @@ export default function ABHAExplanationContainer() {
               How ABHA ID is Created in 3 Steps
             </h3>
             <p className="text-xs sm:text-sm text-[var(--t-text-secondary,#3d4947)]">
-              Omedo HMS enables OPD receptionists to generate patient ABHA cards directly during registration.
+              OMEDO enables OPD receptionists to generate patient ABHA cards directly during registration.
             </p>
           </div>
 
@@ -304,8 +304,8 @@ export default function ABHAExplanationContainer() {
                 </p>
 
                 <div className="pt-2 border-t border-[var(--t-border)]/30 flex items-center justify-center gap-1 text-[11px] font-bold text-[var(--t-primary)]">
-                  <span>NHA Verified</span>
-                  <span className="material-symbols-outlined text-xs">verified</span>
+                  <span>ABDM Enabled</span>
+                  <span className="material-symbols-outlined text-xs">check_circle</span>
                 </div>
               </motion.div>
             ))}

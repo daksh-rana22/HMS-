@@ -352,15 +352,15 @@ const itDiseaseMaster = [
 ]
 
 const itUserManagement = [
-  { user: 'admin_sys', role: 'System SuperAdmin', email: 'admin@Omedohms.com', rbac: 'Full Access' },
-  { user: 'dr_avanish', role: 'Consultant Physician', email: 'avanish@Omedohms.com', rbac: 'Doctor Portal' },
-  { user: 'nurse_anjali', role: 'Ward Charge Nurse', email: 'anjali@Omedohms.com', rbac: 'Nurse Portal' },
-  { user: 'cashier_sunil', role: 'Senior Billing Cashier', email: 'sunil@Omedohms.com', rbac: 'Billing Counter' },
-  { user: 'lab_tech_rohan', role: 'Chief LIS Technologist', email: 'rohan@Omedohms.com', rbac: 'Lab Portal' },
+  { user: 'admin_sys', role: 'System SuperAdmin', email: 'admin@omedo.com', rbac: 'Full Access' },
+  { user: 'dr_avanish', role: 'Consultant Physician', email: 'avanish@omedo.com', rbac: 'Doctor Portal' },
+  { user: 'nurse_anjali', role: 'Ward Charge Nurse', email: 'anjali@omedo.com', rbac: 'Nurse Portal' },
+  { user: 'cashier_sunil', role: 'Senior Billing Cashier', email: 'sunil@omedo.com', rbac: 'Billing Counter' },
+  { user: 'lab_tech_rohan', role: 'Chief LIS Technologist', email: 'rohan@omedo.com', rbac: 'Lab Portal' },
 ]
 
 const itHospitalConfig = {
-  hospitalName: 'Omedo Super Specialty Hospital',
+  hospitalName: 'OMEDO Super Specialty Hospital',
   licenseNo: 'HOSP-TX-2026-9812',
   gstin: '27AADC82258M1Z2',
   address: '1278 Health Parkway, Austin, TX 78701',
@@ -2699,7 +2699,7 @@ export default function Modules() {
                     <span className="material-symbols-outlined text-[#00685e] text-2xl 2xl:text-3xl">biotech</span>
                   </div>
                   <span className="inline-flex items-center px-2.5 py-1 2xl:px-3.5 2xl:py-1.5 rounded-full bg-[#afecde] text-[#326c62] text-[11px] 2xl:text-xs font-semibold">
-                    ISO 15189 Compliant
+                    Standardized Lab Workflows
                   </span>
                 </div>
 
@@ -2859,7 +2859,7 @@ export default function Modules() {
         {/* ── ADDITIONAL SPECIALIZED CONTAINERS ── */}
         <div className="mb-10">
           <h2 className="heading-section text-[#121d1f] mb-3">Additional Integrated Services</h2>
-          <p className="text-description text-[#3d4947]">Specialized sub-systems built seamlessly into the core Omedo platform.</p>
+          <p className="text-description text-[#3d4947]">Specialized sub-systems built seamlessly into the core OMEDO platform.</p>
         </div>
 
         <motion.div
@@ -2895,7 +2895,7 @@ export default function Modules() {
         className="bg-[#00685e] section-padding text-white"
       >
         <div className="site-wrapper text-center">
-          <h2 className="heading-hero text-white mb-5 sm:mb-6">Ready to Deploy Omedo HMS?</h2>
+          <h2 className="heading-hero text-white mb-5 sm:mb-6">Ready to Deploy OMEDO?</h2>
           <p className="text-description text-white/80 max-w-2xl 2xl:max-w-3xl mx-auto mb-8 sm:mb-10">
             Join over 150+ Hospitals and 50+ Clinics worldwide using our core modules to deliver superior patient outcomes.
           </p>

@@ -127,7 +127,7 @@ export default function Laboratory() {
           <motion.div initial="hidden" animate="visible" variants={stagger} className="space-y-4">
             <motion.div variants={fadeUp} className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#afecde]/80 text-[#00685e] text-xs sm:text-sm font-bold shadow-xs">
               <span className="material-symbols-outlined text-base">science</span>
-              HMS Core Sub-Module • Laboratory Diagnostics
+              OMEDO Core Sub-Module • Laboratory Diagnostics
             </motion.div>
 
             <motion.h1 variants={fadeUp} className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-[#121d1f] tracking-tight leading-tight" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
@@ -348,7 +348,7 @@ export default function Laboratory() {
               <div className="text-xs sm:text-sm text-white/80 font-medium">STAT Turnaround Time</div>
             </div>
             <div className="space-y-1">
-              <div className="text-2xl sm:text-4xl font-extrabold text-[#85f5e6]">100%</div>
+              <div className="text-2xl sm:text-4xl font-extrabold text-[#85f5e6]">End-to-End</div>
               <div className="text-xs sm:text-sm text-white/80 font-medium">Barcode Sample Tracking</div>
             </div>
             <div className="space-y-1">

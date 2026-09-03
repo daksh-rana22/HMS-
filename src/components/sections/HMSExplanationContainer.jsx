@@ -1,4 +1,4 @@
-﻿import { useState } from 'react'
+import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Link } from 'react-router-dom'
 
@@ -27,14 +27,14 @@ const stakeholderViews = [
     id: 'admins',
     label: 'Hospital Administrators',
     icon: 'manage_accounts',
-    badge: '100% Operational Transparency',
+    badge: 'Operational Transparency',
     color: 'var(--t-primary-mid, #008378)',
     heading: 'Complete Oversight & Multi-Branch Governance',
     desc: 'Streamline hospital operations, monitor real-time bed census, schedule doctor shifts, and audit department performance across all branches.',
     highlights: [
       { title: 'Real-Time Bed Census', text: 'Live occupancy maps for ICU, Private, and General wards with instant bed turn-around tracking.' },
       { title: 'Staff Roster & Attendance', text: 'Automated shift management, doctor duty schedules, and nursing assignments.' },
-      { title: 'Role-Based Security', text: 'Granular access controls guaranteeing patient data privacy and HIPAA/NDHM compliance.' },
+      { title: 'Role-Based Security', text: 'Granular access controls ensuring patient data privacy and ABDM alignment.' },
       { title: 'Executive Analytics', text: 'Live BI dashboards detailing bed utilization, OPD throughput, and department revenues.' }
     ]
   },
@@ -57,7 +57,7 @@ const stakeholderViews = [
     id: 'labs',
     label: 'Labs & Pharmacy',
     icon: 'science',
-    badge: '100% Barcode Traceability',
+    badge: 'End-to-End Barcode Traceability',
     color: '#0284c7',
     heading: 'Smart LIS Diagnostics & Inventory Control',
     desc: 'Automate lab sample processing, integrate automated biochemistry analyzers, and manage pharmacy drug stocks with batch expiry alerts.',
@@ -155,7 +155,7 @@ const comparisonData = [
   {
     feature: 'Hospital Invoicing & Revenue',
     manual: 'Unrecorded procedures & frequent billing leakages',
-    hms: '100% automated itemized billing & cashless insurance sync',
+    hms: 'Automated itemized billing & cashless insurance sync',
   },
   {
     feature: 'Lab & Diagnostics',
@@ -239,25 +239,25 @@ export default function HMSExplanationContainer() {
             <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-[var(--t-primary)]/30 bg-white shadow-sm">
               <span className="w-2 h-2 rounded-full bg-[var(--t-primary)] animate-ping" />
               <span className="text-xs font-bold tracking-wider text-[var(--t-primary)] uppercase">
-                INTELLIGENT HOSPITAL MANAGEMENT SYSTEM (HMS)
+                INTELLIGENT HEALTHCARE PLATFORM (OMEDO HMS)
               </span>
             </div>
 
             <h2 className="text-2xl sm:text-4xl lg:text-5xl font-extrabold text-[var(--t-text,#121d1f)] tracking-tight leading-tight" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
-              What is an <span className="bg-clip-text text-transparent" style={{ backgroundImage: 'var(--t-gradient-text, linear-gradient(135deg, #00685e 0%, #2d685e 100%))' }}>HMS</span> & Why Does Every Modern Hospital Need One?
+              What is <span className="bg-clip-text text-transparent" style={{ backgroundImage: 'var(--t-gradient-text, linear-gradient(135deg, #00685e 0%, #2d685e 100%))' }}>OMEDO</span> & Why Does Every Modern Hospital Need It?
             </h2>
 
             <p className="text-xs sm:text-base text-[var(--t-text-secondary,#3d4947)] leading-relaxed max-w-3xl mx-auto">
-              A <strong>Hospital Management System (HMS)</strong> is an enterprise digital ecosystem that integrates clinical workflows, patient electronic medical records (EMR), laboratory diagnostics, pharmacy inventory, and revenue cycle management into a single, unified platform. It eliminates manual paperwork, speeds up patient care, prevents revenue loss, and enforces strict national healthcare compliance.
+              <strong>OMEDO (Hospital Management System)</strong> is an enterprise digital ecosystem that integrates clinical workflows, patient electronic medical records (EMR), laboratory diagnostics, pharmacy inventory, and revenue cycle management into a single, unified platform. It eliminates manual paperwork, speeds up patient care, prevents revenue loss, and enforces strict national healthcare compliance.
             </p>
 
             {/* Quick Stat Pill Grid inside Banner */}
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4 pt-4 text-left">
               {[
-                { title: 'Zero Paperwork', label: '100% Digital EMR & Rx', icon: 'description' },
+                { title: 'Zero Paperwork', label: 'Digital EMR & Rx', icon: 'description' },
                 { title: '60% Faster Discharge', label: 'Automated IPD Invoicing', icon: 'speed' },
                 { title: 'Zero Billing Leakage', label: 'Audited Cashless Claims', icon: 'verified' },
-                { title: 'ABDM Compliant', label: 'Instant ABHA ID Creation', icon: 'verified_user' },
+                { title: 'ABDM Ready', label: 'Instant ABHA ID Creation', icon: 'verified_user' },
               ].map(({ title, label, icon }) => (
                 <div key={title} className="bg-white/90 backdrop-blur-md p-3 sm:p-4 rounded-2xl border border-[var(--t-border)]/40 shadow-sm flex items-start gap-2.5">
                   <div className="w-8 h-8 rounded-xl bg-[var(--t-primary)]/10 text-[var(--t-primary)] flex items-center justify-center shrink-0">
@@ -289,7 +289,7 @@ export default function HMSExplanationContainer() {
               Work Anywhere — Laptop, Tablet & Mobile
             </h3>
             <p className="text-xs sm:text-sm text-[var(--t-text-secondary,#3d4947)] leading-relaxed">
-              Omedo HMS adapts seamlessly to every screen size. From desktop workstations to bedside tablets and handheld smartphones, your hospital stays connected in real time.
+              OMEDO adapts seamlessly to every screen size. From desktop workstations to bedside tablets and handheld smartphones, your hospital stays connected in real time.
             </p>
           </div>
 
@@ -485,10 +485,10 @@ export default function HMSExplanationContainer() {
               STAKEHOLDER CENTRIC DESIGN
             </span>
             <h3 className="text-xl sm:text-3xl lg:text-4xl font-extrabold text-[var(--t-text,#121d1f)]" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
-              How HMS Empowers Every Department
+              How OMEDO Empowers Every Department
             </h3>
             <p className="text-xs sm:text-sm text-[var(--t-text-secondary,#3d4947)]">
-              Select your role below to discover how Omedo HMS optimizes day-to-day operations and improves patient outcomes.
+              Select your role below to discover how OMEDO optimizes day-to-day operations and improves patient outcomes.
             </p>
           </div>
 
@@ -586,10 +586,10 @@ export default function HMSExplanationContainer() {
               TRANSFORMATION IMPACT
             </span>
             <h3 className="text-xl sm:text-3xl lg:text-4xl font-extrabold text-[var(--t-text,#121d1f)]" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
-              Traditional Paper Hospital vs. Omedo HMS
+              Traditional Paper Hospital vs. OMEDO
             </h3>
             <p className="text-xs sm:text-sm text-[var(--t-text-secondary,#3d4947)]">
-              Discover how adopting an integrated HMS elevates hospital performance across every critical benchmark.
+              Discover how adopting OMEDO elevates hospital performance across every critical benchmark.
             </p>
           </div>
 
@@ -610,7 +610,7 @@ export default function HMSExplanationContainer() {
                     <th className="p-4 sm:p-5 w-1/3 text-[var(--t-accent-light,#85f5e6)]">
                       <div className="flex items-center gap-2">
                         <span className="material-symbols-outlined text-base shrink-0">check_circle</span>
-                        <span>Modern Omedo HMS</span>
+                        <span>Modern OMEDO</span>
                       </div>
                     </th>
                   </tr>
@@ -648,10 +648,10 @@ export default function HMSExplanationContainer() {
               SEAMLESS DATA FLOW
             </span>
             <h3 className="text-xl sm:text-3xl lg:text-4xl font-extrabold text-[var(--t-text,#121d1f)]" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
-              How Patient Data Flows Through HMS
+              How Patient Data Flows Through OMEDO
             </h3>
             <p className="text-xs sm:text-sm text-[var(--t-text-secondary,#3d4947)]">
-              From initial registration to final billing, HMS links every clinical touchpoint in real time.
+              From initial registration to final billing, OMEDO links every clinical touchpoint in real time.
             </p>
           </div>
 
