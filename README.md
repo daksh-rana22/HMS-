@@ -1,15 +1,14 @@
 # OMEDO - Hospital Management System
 
-Modern, responsive Hospital Management System frontend and backend built with React, Vite, and Node.js.
+Modern, responsive Hospital Management System website built with React, Vite, and Tailwind CSS.
 
 ## Features
-- **Interactive Modules**: Inpatient, Outpatient, Pharmacy, Laboratory, Radiology, Billing, and more.
-- **Analytics & Reports**: Comprehensive healthcare data tracking and visualizations.
-- **Contact & Enquiry Form**: Integrated customer inquiry and support pipelines.
+- **Interactive Modules**: Clinical Management, IT Administration, Reports & Analytics, IPD Care, Billing & Accounts, Laboratory, and ABDM Integration.
+- **ABDM & ABHA Integration Showcase**: Comprehensive documentation and workflow previews.
+- **Contact & Enquiry Form**: Streamlined hospital demo and inquiry request forms.
 
 ## Tech Stack
-- **Frontend**: React, Vite, Tailwind CSS / Vanilla CSS, Lucide Icons
-- **Backend**: Node.js, Express, MongoDB
+- **Frontend**: React 19, Vite, Tailwind CSS, Framer Motion, Lucide Icons
 
 ## Getting Started
 
@@ -17,15 +16,13 @@ Modern, responsive Hospital Management System frontend and backend built with Re
 - Node.js (v18+)
 - npm or yarn
 
-### Frontend Setup
+### Setup & Run
 ```bash
 npm install
 npm run dev
 ```
 
-### Backend Setup
+### Production Build
 ```bash
-cd backend
-npm install
-npm start
+npm run build
 ```

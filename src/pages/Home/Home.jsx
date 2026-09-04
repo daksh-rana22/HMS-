@@ -39,24 +39,24 @@ export default function Home() {
   return (
     <motion.div {...pageTransition} className="min-h-screen" style={{ background: 'var(--t-bg, #effcfe)' }}>
       {/* ── 1. HERO SECTION ── */}
-      <section className="relative overflow-hidden pt-20 sm:pt-28 md:pt-32 pb-3 sm:pb-6 lg:pb-8">
+      <section className="relative overflow-hidden pt-16 sm:pt-20 md:pt-24 lg:pt-28 pb-8 sm:pb-10 lg:pb-12">
         {/* Animated Enterprise Healthcare SaaS Hero Background */}
         <HeroBackground />
 
         <div className="site-wrapper relative z-10">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 xl:gap-16 items-center">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 xl:gap-12 items-center">
 
             {/* ── Left Content Column ── */}
-            <motion.div className="lg:col-span-5 space-y-5 sm:space-y-6 text-center lg:text-left flex flex-col items-center lg:items-start" initial="hidden" animate="visible" variants={stagger}>
+            <motion.div className="lg:col-span-5 space-y-4 sm:space-y-5 text-center lg:text-left flex flex-col items-center lg:items-start" initial="hidden" animate="visible" variants={stagger}>
 
               {/* Badge */}
-              <motion.div variants={fadeUp} className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-[var(--t-primary,#00685e)]/30 bg-white/90 backdrop-blur-sm shadow-[0_2px_20px_var(--t-btn-shadow,rgba(0,180,162,0.15))]">
+              <motion.div variants={fadeUp} className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-[var(--t-primary,#00685e)]/30 bg-white/90 backdrop-blur-sm shadow-[0_2px_16px_var(--t-btn-shadow,rgba(0,180,162,0.12))]">
                 <span className="flex w-2 h-2 rounded-full bg-[var(--t-primary,#00685e)] animate-pulse" />
                 <span className="text-[11px] sm:text-xs font-semibold text-[var(--t-primary,#00685e)] tracking-wide">Trusted by 150+ Hospitals &amp; 50+ Clinics</span>
               </motion.div>
 
               {/* Headline */}
-              <motion.h1 variants={fadeUp} className="text-3xl sm:text-4xl lg:text-[2.75rem] xl:text-5xl font-extrabold leading-[1.12] tracking-tight text-center lg:text-left" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
+              <motion.h1 variants={fadeUp} className="text-2xl sm:text-4xl lg:text-[2.65rem] xl:text-[3.1rem] font-black leading-[1.12] tracking-tight text-center lg:text-left" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
                 <span className="text-[var(--t-text,#121d1f)]">Transforming</span><br />
                 <span className="text-[var(--t-text,#121d1f)]">Healthcare with</span><br />
                 <span className="relative inline-block">
@@ -67,72 +67,101 @@ export default function Home() {
               </motion.h1>
 
               {/* Subtext */}
-              <motion.p variants={fadeUp} className="text-sm text-[var(--t-text-secondary,#3d4947)] leading-relaxed max-w-md mx-auto lg:mx-0">
-                A unified Hospital Management System built for modern healthcare — reduce admin burden, streamline patient workflows, and make data-driven decisions at scale.
+              <motion.p variants={fadeUp} className="text-xs sm:text-sm lg:text-[15px] text-[var(--t-text-secondary,#3d4947)] leading-relaxed max-w-md mx-auto lg:mx-0">
+                A unified Hospital Management System built for modern healthcare — reduce admin burden, streamline patient workflows, ensure ABDM compliance, and make data-driven decisions at scale.
               </motion.p>
 
               {/* ── Mobile Orbital Graphic (Positioned above CTA buttons on phone view) ── */}
-              <div className="block lg:hidden w-full py-2">
-                <div className="relative w-full max-w-[290px] xs:max-w-[320px] mx-auto aspect-square flex items-center justify-center select-none">
+              <div className="block lg:hidden w-full py-3">
+                <div className="relative w-full max-w-[260px] xs:max-w-[290px] sm:max-w-[320px] mx-auto aspect-square flex items-center justify-center select-none">
                   {/* Layered ambient glows */}
                   <div className="absolute inset-0 rounded-full pointer-events-none"
                     style={{ background: 'radial-gradient(circle, var(--t-hero-glow, rgba(0,203,183,0.22)) 0%, transparent 70%)' }} />
 
-                  {/* Outer orbit ring */}
+                  {/* Ring 3: Outer orbit ring (Clockwise - 45s) */}
                   <motion.div
                     animate={{ rotate: 360 }}
-                    transition={{ duration: 30, repeat: Infinity, ease: 'linear' }}
-                    className="absolute w-[90%] h-[90%] rounded-full pointer-events-none"
+                    transition={{ duration: 45, repeat: Infinity, ease: 'linear' }}
+                    className="absolute w-[96%] h-[96%] rounded-full pointer-events-none"
                     style={{
                       border: '1.5px dashed var(--t-primary, #00685e)',
-                      opacity: 0.4,
-                      filter: 'drop-shadow(0 0 12px var(--t-btn-shadow))',
+                      opacity: 0.45,
+                      filter: 'drop-shadow(0 0 10px var(--t-btn-shadow))',
                     }}
                   >
                     {[
-                      { label: 'Clinical EMR', icon: 'stethoscope', pos: 'top-[-10px] left-1/2 -translate-x-1/2' },
-                      { label: 'Lab LIS', icon: 'science', pos: 'bottom-[-10px] left-1/2 -translate-x-1/2' },
-                      { label: 'Billing & GST', icon: 'receipt_long', pos: 'top-1/2 right-[-6px] -translate-y-1/2' },
-                      { label: 'IPD Wards', icon: 'bed', pos: 'top-1/2 left-[-6px] -translate-y-1/2' },
+                      { label: 'Reports & Analytics', icon: 'analytics', pos: 'top-[-9px] left-1/2 -translate-x-1/2' },
+                      { label: 'ABDM Integration', icon: 'verified_user', pos: 'bottom-[-9px] left-1/2 -translate-x-1/2' },
+                      { label: 'Billing & GST', icon: 'receipt_long', pos: 'top-1/2 right-[-5px] -translate-y-1/2' },
+                      { label: 'IPD & Bed Mgmt', icon: 'bed', pos: 'top-1/2 left-[-5px] -translate-y-1/2' },
                     ].map(({ label, icon, pos }) => (
                       <motion.div
                         key={label}
                         animate={{ rotate: -360 }}
-                        transition={{ duration: 30, repeat: Infinity, ease: 'linear' }}
+                        transition={{ duration: 45, repeat: Infinity, ease: 'linear' }}
                         className={`absolute ${pos}`}
                       >
-                        <div className="flex items-center gap-1 bg-white/95 backdrop-blur-md px-2 py-0.5 rounded-full text-[8.5px] font-bold whitespace-nowrap shadow-sm border border-[var(--t-border)]"
+                        <div className="flex items-center gap-1 bg-white/95 backdrop-blur-md px-1.5 py-0.5 rounded-full text-[7px] xs:text-[7.5px] font-bold whitespace-nowrap shadow-sm border border-[var(--t-border)]"
                           style={{ color: 'var(--t-text, #121d1f)' }}>
-                          <span className="material-symbols-outlined text-[10px]" style={{ color: 'var(--t-primary, #00685e)' }}>{icon}</span>
+                          <span className="material-symbols-outlined text-[8.5px] xs:text-[9.5px]" style={{ color: 'var(--t-primary, #00685e)' }}>{icon}</span>
                           {label}
                         </div>
                       </motion.div>
                     ))}
                   </motion.div>
 
-                  {/* Inner orbit ring */}
+                  {/* Ring 2: Middle orbit ring (Clockwise - 35s) */}
                   <motion.div
                     animate={{ rotate: 360 }}
-                    transition={{ duration: 30, repeat: Infinity, ease: 'linear' }}
-                    className="absolute w-[60%] h-[60%] rounded-full pointer-events-none"
+                    transition={{ duration: 35, repeat: Infinity, ease: 'linear' }}
+                    className="absolute w-[72%] h-[72%] rounded-full pointer-events-none"
+                    style={{
+                      border: '1.2px dashed color-mix(in srgb, var(--t-primary) 65%, var(--t-accent))',
+                      opacity: 0.38,
+                    }}
+                  >
+                    {[
+                      { label: 'Clinical EMR', icon: 'stethoscope', pos: 'top-[6%] right-[6%]' },
+                      { label: 'Laboratory LIS', icon: 'science', pos: 'bottom-[6%] left-[6%]' },
+                    ].map(({ label, icon, pos }) => (
+                      <motion.div
+                        key={label}
+                        animate={{ rotate: -360 }}
+                        transition={{ duration: 35, repeat: Infinity, ease: 'linear' }}
+                        className={`absolute ${pos}`}
+                      >
+                        <div className="flex items-center gap-1 bg-white/95 backdrop-blur-md px-1.5 py-0.5 rounded-full text-[7px] xs:text-[7.5px] font-bold whitespace-nowrap shadow-sm border border-[var(--t-border)]"
+                          style={{ color: 'var(--t-text, #121d1f)' }}>
+                          <span className="material-symbols-outlined text-[8.5px] xs:text-[9.5px]" style={{ color: 'var(--t-primary, #00685e)' }}>{icon}</span>
+                          {label}
+                        </div>
+                      </motion.div>
+                    ))}
+                  </motion.div>
+
+                  {/* Ring 1: Inner orbit ring (Clockwise - 25s) */}
+                  <motion.div
+                    animate={{ rotate: 360 }}
+                    transition={{ duration: 25, repeat: Infinity, ease: 'linear' }}
+                    className="absolute w-[48%] h-[48%] rounded-full pointer-events-none"
                     style={{
                       border: '1px solid var(--t-primary, #00685e)',
                       opacity: 0.3,
                     }}
                   >
                     {[
-                      { label: 'IT Admin', icon: 'manage_accounts', pos: 'top-[-8px] right-1/4' },
-                      { label: 'Pharmacy', icon: 'medication', pos: 'bottom-[-8px] left-1/4' },
+                      { label: 'IT Admin', icon: 'manage_accounts', pos: 'top-[-7px] left-1/4' },
+                      { label: 'Pharmacy', icon: 'medication', pos: 'bottom-[-7px] right-1/4' },
                     ].map(({ label, icon, pos }) => (
                       <motion.div
                         key={label}
                         animate={{ rotate: -360 }}
-                        transition={{ duration: 30, repeat: Infinity, ease: 'linear' }}
+                        transition={{ duration: 25, repeat: Infinity, ease: 'linear' }}
                         className={`absolute ${pos}`}
                       >
-                        <div className="flex items-center gap-1 bg-white/95 backdrop-blur-md px-1.5 py-0.5 rounded-full text-[8px] font-bold whitespace-nowrap shadow-sm border border-[var(--t-border)]"
+                        <div className="flex items-center gap-1 bg-white/95 backdrop-blur-md px-1.5 py-0.5 rounded-full text-[7px] xs:text-[7.5px] font-bold whitespace-nowrap shadow-sm border border-[var(--t-border)]"
                           style={{ color: 'var(--t-text, #121d1f)' }}>
-                          <span className="material-symbols-outlined text-[9px]" style={{ color: 'var(--t-primary, #00685e)' }}>{icon}</span>
+                          <span className="material-symbols-outlined text-[8.5px] xs:text-[9.5px]" style={{ color: 'var(--t-primary, #00685e)' }}>{icon}</span>
                           {label}
                         </div>
                       </motion.div>
@@ -141,13 +170,13 @@ export default function Home() {
 
                   {/* Center Hub */}
                   <motion.div
-                    animate={{ scale: [1, 1.05, 1] }}
-                    transition={{ duration: 3.5, repeat: Infinity, ease: 'easeInOut' }}
-                    className="relative z-20 w-24 h-24 rounded-full flex items-center justify-center cursor-pointer group p-2.5"
+                    animate={{ scale: [1, 1.04, 1] }}
+                    transition={{ duration: 4.5, repeat: Infinity, ease: 'easeInOut' }}
+                    className="relative z-20 w-20 h-20 xs:w-24 xs:h-24 rounded-full flex items-center justify-center cursor-pointer group p-2"
                     style={{
                       background: 'linear-gradient(135deg, var(--t-accent, #67d9ca) 0%, var(--t-primary, #00685e) 50%, var(--t-footer-bg, #061325) 100%)',
-                      boxShadow: '0 0 30px var(--t-btn-shadow), 0 0 55px var(--t-hero-glow), inset 0 1px 0 rgba(255,255,255,0.25)',
-                      border: '2.5px solid rgba(255,255,255,0.9)',
+                      boxShadow: '0 0 24px var(--t-btn-shadow), 0 0 45px var(--t-hero-glow), inset 0 1px 0 rgba(255,255,255,0.25)',
+                      border: '2px solid rgba(255,255,255,0.9)',
                     }}
                   >
                     <div className="w-full h-full rounded-full bg-white/95 backdrop-blur-md flex items-center justify-center shadow-inner p-2 group-hover:bg-white transition-colors">
@@ -165,19 +194,19 @@ export default function Home() {
               </div>
 
               {/* CTAs */}
-              <motion.div variants={fadeUp} className="flex flex-wrap items-center justify-center lg:justify-start gap-2.5 sm:gap-3 pt-1">
+              <motion.div variants={fadeUp} className="flex flex-wrap items-center justify-center lg:justify-start gap-2.5 sm:gap-3.5 pt-1">
                 <Link to="/contact"
-                  className="inline-flex items-center gap-1.5 text-white px-4 py-2 sm:px-6 sm:py-3 rounded-full text-xs sm:text-sm font-bold transition-all duration-200 hover:scale-[1.03]"
+                  className="inline-flex items-center gap-1.5 text-white px-4 py-2.5 sm:px-6 sm:py-3 rounded-full text-xs sm:text-sm font-bold transition-all duration-200 hover:scale-[1.03]"
                   style={{
                     background: 'var(--t-primary, #00685e)',
-                    boxShadow: '0 4px 24px var(--t-btn-shadow, rgba(0,104,94,0.35))',
+                    boxShadow: '0 4px 20px var(--t-btn-shadow, rgba(0,104,94,0.35))',
                   }}
                 >
                   Book a Demo
                   <span className="material-symbols-outlined text-xs sm:text-sm">arrow_forward</span>
                 </Link>
                 <Link to="/modules"
-                  className="inline-flex items-center gap-1.5 bg-white/90 backdrop-blur-sm border px-4 py-2 sm:px-6 sm:py-3 rounded-full text-xs sm:text-sm font-semibold hover:bg-white hover:shadow-md hover:scale-[1.02] transition-all duration-200"
+                  className="inline-flex items-center gap-1.5 bg-white/90 backdrop-blur-sm border px-4 py-2.5 sm:px-6 sm:py-3 rounded-full text-xs sm:text-sm font-semibold hover:bg-white hover:shadow-md hover:scale-[1.02] transition-all duration-200"
                   style={{
                     borderColor: 'var(--t-border, #bcc9c6)',
                     color: 'var(--t-primary, #00685e)',
@@ -188,16 +217,16 @@ export default function Home() {
               </motion.div>
 
               {/* Social proof avatars */}
-              <motion.div variants={fadeUp} className="flex items-center gap-3 pt-2 border-t border-[var(--t-border)]/30 w-full max-w-md mx-auto lg:mx-0">
-                <div className="flex -space-x-2.5 shrink-0">
+              <motion.div variants={fadeUp} className="flex items-center gap-2.5 pt-2 border-t border-[var(--t-border)]/30 w-full max-w-md mx-auto lg:mx-0">
+                <div className="flex -space-x-2 shrink-0">
                   {['DR', 'RN', 'AD', 'CM'].map((init, i) => (
-                    <span key={init} className="w-8 h-8 rounded-full text-white text-[11px] font-bold flex items-center justify-center border-2 border-white shadow-sm"
+                    <span key={init} className="w-7 h-7 rounded-full text-white text-[10px] font-bold flex items-center justify-center border-2 border-white shadow-sm"
                       style={{ background: ['var(--t-primary)', 'var(--t-primary-mid)', 'var(--t-accent)', 'var(--t-primary-dark)'][i] }}>
                       {init}
                     </span>
                   ))}
                 </div>
-                <span className="text-[11px] text-[var(--t-text-muted)] font-medium">Loved by doctors, nurses & admins across 50+ cities</span>
+                <span className="text-[11px] sm:text-xs text-[var(--t-text-muted)] font-medium">Loved by doctors, nurses &amp; admins across 50+ cities</span>
               </motion.div>
 
             </motion.div>
@@ -209,37 +238,37 @@ export default function Home() {
               animate={{ opacity: 1, scale: 1, y: 0 }}
               transition={{ duration: 1, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
             >
-              <div className="relative w-full max-w-[310px] xs:max-w-[340px] sm:max-w-[460px] md:max-w-[520px] aspect-square flex items-center justify-center select-none py-6 sm:py-0">
+              <div className="relative w-full max-w-[310px] xs:max-w-[360px] sm:max-w-[440px] md:max-w-[500px] lg:max-w-[540px] xl:max-w-[590px] aspect-square flex items-center justify-center select-none py-4 sm:py-0">
 
                 {/* Layered ambient glows */}
                 <div className="absolute inset-0 rounded-full pointer-events-none"
                   style={{ background: 'radial-gradient(circle, var(--t-hero-glow, rgba(0,203,183,0.22)) 0%, transparent 70%)' }} />
 
-                {/* Outer orbit ring */}
+                {/* Ring 3: Outer orbit ring (Clockwise - 45s) */}
                 <motion.div
                   animate={{ rotate: 360 }}
-                  transition={{ duration: 30, repeat: Infinity, ease: 'linear' }}
-                  className="absolute w-[90%] h-[90%] rounded-full pointer-events-none"
+                  transition={{ duration: 45, repeat: Infinity, ease: 'linear' }}
+                  className="absolute w-[96%] h-[96%] rounded-full pointer-events-none"
                   style={{
                     border: '1.5px dashed var(--t-primary, #00685e)',
-                    opacity: 0.4,
+                    opacity: 0.45,
                     filter: 'drop-shadow(0 0 12px var(--t-btn-shadow))',
                   }}
                 >
                   {/* Pills on outer ring — counter-rotated for upright text */}
                   {[
-                    { label: 'Clinical EMR', icon: 'stethoscope', pos: 'top-[-12px] sm:top-[-18px] left-1/2 -translate-x-1/2' },
-                    { label: 'Lab LIS', icon: 'science', pos: 'bottom-[-12px] sm:bottom-[-18px] left-1/2 -translate-x-1/2' },
-                    { label: 'Billing & GST', icon: 'receipt_long', pos: 'top-1/2 right-[-8px] sm:right-[-14px] -translate-y-1/2' },
-                    { label: 'IPD Wards', icon: 'bed', pos: 'top-1/2 left-[-8px] sm:left-[-14px] -translate-y-1/2' },
+                    { label: 'Reports & Analytics', icon: 'analytics', pos: 'top-[-11px] sm:top-[-15px] left-1/2 -translate-x-1/2' },
+                    { label: 'ABDM Integration', icon: 'verified_user', pos: 'bottom-[-11px] sm:bottom-[-15px] left-1/2 -translate-x-1/2' },
+                    { label: 'Billing & GST', icon: 'receipt_long', pos: 'top-1/2 right-[-6px] sm:right-[-12px] -translate-y-1/2' },
+                    { label: 'IPD & Bed Mgmt', icon: 'bed', pos: 'top-1/2 left-[-6px] sm:left-[-12px] -translate-y-1/2' },
                   ].map(({ label, icon, pos }) => (
                     <motion.div
                       key={label}
                       animate={{ rotate: -360 }}
-                      transition={{ duration: 30, repeat: Infinity, ease: 'linear' }}
+                      transition={{ duration: 45, repeat: Infinity, ease: 'linear' }}
                       className={`absolute ${pos}`}
                     >
-                      <div className="flex items-center gap-1 sm:gap-1.5 bg-white/95 backdrop-blur-md px-2 py-0.5 sm:px-3 sm:py-1.5 rounded-full text-[9px] sm:text-[11px] font-bold whitespace-nowrap shadow-md border"
+                      <div className="flex items-center gap-1 sm:gap-1.5 bg-white/95 backdrop-blur-md px-2 py-0.5 sm:px-3 sm:py-1 rounded-full text-[8.5px] sm:text-[10px] xl:text-[11px] font-bold whitespace-nowrap shadow-md border"
                         style={{
                           borderColor: 'color-mix(in srgb, var(--t-primary) 30%, transparent)',
                           color: 'var(--t-text, #121d1f)',
@@ -251,27 +280,59 @@ export default function Home() {
                   ))}
                 </motion.div>
 
-                {/* Inner orbit ring */}
+                {/* Ring 2: Middle orbit ring (Clockwise - 35s) */}
                 <motion.div
                   animate={{ rotate: 360 }}
-                  transition={{ duration: 30, repeat: Infinity, ease: 'linear' }}
-                  className="absolute w-[60%] h-[60%] rounded-full pointer-events-none"
+                  transition={{ duration: 35, repeat: Infinity, ease: 'linear' }}
+                  className="absolute w-[72%] h-[72%] rounded-full pointer-events-none"
+                  style={{
+                    border: '1.2px dashed color-mix(in srgb, var(--t-primary) 65%, var(--t-accent))',
+                    opacity: 0.38,
+                  }}
+                >
+                  {[
+                    { label: 'Clinical EMR', icon: 'stethoscope', pos: 'top-[6%] right-[6%]' },
+                    { label: 'Laboratory LIS', icon: 'science', pos: 'bottom-[6%] left-[6%]' },
+                  ].map(({ label, icon, pos }) => (
+                    <motion.div
+                      key={label}
+                      animate={{ rotate: -360 }}
+                      transition={{ duration: 35, repeat: Infinity, ease: 'linear' }}
+                      className={`absolute ${pos}`}
+                    >
+                      <div className="flex items-center gap-1 sm:gap-1.5 bg-white/95 backdrop-blur-md px-2 py-0.5 sm:px-3 sm:py-1 rounded-full text-[8.5px] sm:text-[10px] xl:text-[11px] font-bold whitespace-nowrap shadow-md border"
+                        style={{
+                          borderColor: 'color-mix(in srgb, var(--t-primary) 30%, transparent)',
+                          color: 'var(--t-text, #121d1f)',
+                        }}>
+                        <span className="material-symbols-outlined text-[10px] sm:text-[13px]" style={{ color: 'var(--t-primary, #00685e)' }}>{icon}</span>
+                        {label}
+                      </div>
+                    </motion.div>
+                  ))}
+                </motion.div>
+
+                {/* Ring 1: Inner orbit ring (Clockwise - 25s) */}
+                <motion.div
+                  animate={{ rotate: 360 }}
+                  transition={{ duration: 25, repeat: Infinity, ease: 'linear' }}
+                  className="absolute w-[48%] h-[48%] rounded-full pointer-events-none"
                   style={{
                     border: '1px solid var(--t-primary, #00685e)',
                     opacity: 0.3,
                   }}
                 >
                   {[
-                    { label: 'IT Admin', icon: 'manage_accounts', pos: 'top-[-10px] sm:top-[-14px] right-1/4' },
-                    { label: 'Pharmacy', icon: 'medication', pos: 'bottom-[-10px] sm:bottom-[-14px] left-1/4' },
+                    { label: 'IT Admin', icon: 'manage_accounts', pos: 'top-[-9px] sm:top-[-12px] left-1/4' },
+                    { label: 'Pharmacy', icon: 'medication', pos: 'bottom-[-9px] sm:bottom-[-12px] right-1/4' },
                   ].map(({ label, icon, pos }) => (
                     <motion.div
                       key={label}
                       animate={{ rotate: -360 }}
-                      transition={{ duration: 30, repeat: Infinity, ease: 'linear' }}
+                      transition={{ duration: 25, repeat: Infinity, ease: 'linear' }}
                       className={`absolute ${pos}`}
                     >
-                      <div className="flex items-center gap-1 bg-white/95 backdrop-blur-md px-1.5 py-0.5 sm:px-2.5 sm:py-1 rounded-full text-[8px] sm:text-[10px] font-bold whitespace-nowrap shadow-md border"
+                      <div className="flex items-center gap-1 bg-white/95 backdrop-blur-md px-1.5 py-0.5 sm:px-2.5 sm:py-0.5 rounded-full text-[8px] sm:text-[9.5px] xl:text-[10px] font-bold whitespace-nowrap shadow-md border"
                         style={{
                           borderColor: 'color-mix(in srgb, var(--t-primary) 30%, transparent)',
                           color: 'var(--t-text, #121d1f)',
@@ -285,13 +346,13 @@ export default function Home() {
 
                 {/* Center Hub */}
                 <motion.div
-                  animate={{ scale: [1, 1.05, 1] }}
-                  transition={{ duration: 3.5, repeat: Infinity, ease: 'easeInOut' }}
-                  className="relative z-20 w-28 h-28 sm:w-36 sm:h-36 md:w-44 md:h-44 rounded-full flex items-center justify-center cursor-pointer group p-3 sm:p-4"
+                  animate={{ scale: [1, 1.04, 1] }}
+                  transition={{ duration: 4.5, repeat: Infinity, ease: 'easeInOut' }}
+                  className="relative z-20 w-28 h-28 sm:w-32 sm:h-32 md:w-38 md:h-38 xl:w-44 xl:h-44 rounded-full flex items-center justify-center cursor-pointer group p-3 sm:p-4"
                   style={{
                     background: 'linear-gradient(135deg, var(--t-accent, #67d9ca) 0%, var(--t-primary, #00685e) 50%, var(--t-footer-bg, #061325) 100%)',
-                    boxShadow: '0 0 35px var(--t-btn-shadow), 0 0 65px var(--t-hero-glow), inset 0 1px 0 rgba(255,255,255,0.3)',
-                    border: '3.5px solid rgba(255,255,255,0.9)',
+                    boxShadow: '0 0 32px var(--t-btn-shadow), 0 0 60px var(--t-hero-glow), inset 0 1px 0 rgba(255,255,255,0.3)',
+                    border: '3px solid rgba(255,255,255,0.9)',
                   }}
                 >
                   <div className="w-full h-full rounded-full bg-white/95 backdrop-blur-md flex items-center justify-center shadow-inner p-3 sm:p-4 md:p-5 group-hover:bg-white transition-colors">
@@ -300,7 +361,7 @@ export default function Home() {
                       alt="OMEDO Emblem"
                       className="w-full h-full object-contain group-hover:scale-110 transition-transform duration-300"
                       style={{
-                        filter: 'drop-shadow(0 4px 12px rgba(0,104,94,0.25))',
+                        filter: 'drop-shadow(0 3px 10px rgba(0,104,94,0.25))',
                       }}
                     />
                   </div>
@@ -354,191 +415,9 @@ export default function Home() {
       </section>
 
       {/* ── 2. PRODUCTS SHOWCASE (CLINIC & HMS SUITES) ── */}
-      <ProductsShowcase />
+      <ProductsShowcase showComparison={false} />
 
-      {/* ── 3. CORE ADVANTAGES SECTION (HOSPITAL OPERATIONS) ── */}
-      <section className="py-12 sm:py-16 lg:py-20 site-wrapper">
-        <div className="text-center max-w-3xl mx-auto mb-10 sm:mb-14">
-          <span className="text-xs font-bold uppercase tracking-wider text-[var(--t-primary)] mb-2 block">Comprehensive OMEDO Modules</span>
-          <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-[var(--t-text)]" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
-            Complete Hospital Operation & Patient Management
-          </h2>
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-5 sm:gap-8 items-stretch">
-          {/* Card 1: Smart Bed & IPD Room Management */}
-          <motion.div
-            className="bg-[var(--t-bg-light,#f2fafb)] border border-[var(--t-border,#bcc9c6)]/40 rounded-xl sm:rounded-3xl p-4 sm:p-7 flex flex-col justify-between shadow-sm hover:shadow-md transition-all relative overflow-hidden group"
-            initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp}
-          >
-            {/* Content-Matched Background Image Overlay - Clear & Sharp */}
-            <img
-              src="/images/ipd_bg_soft.png"
-              alt="IPD Bed Management background"
-              className="absolute inset-0 w-full h-full object-cover opacity-55 group-hover:opacity-75 transition-all duration-500 pointer-events-none filter saturate-[1.1] contrast-[1.05]"
-            />
-            <div className="absolute inset-0 bg-gradient-to-b from-white/75 via-white/55 to-white/80 pointer-events-none" />
-
-            <div className="relative z-10">
-              <div className="w-8 h-8 sm:w-12 sm:h-12 rounded-full bg-[var(--t-surface-high,#afecde)] text-[var(--t-primary,#00685e)] flex items-center justify-center mb-3 sm:mb-6">
-                <span className="material-symbols-outlined text-lg sm:text-2xl">hotel</span>
-              </div>
-              <h3 className="text-base sm:text-xl font-bold text-[var(--t-text,#121d1f)] mb-1 sm:mb-3" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>Smart Bed & IPD Rooms</h3>
-              <p className="text-xs sm:text-sm text-[var(--t-text-secondary,#3d4947)] leading-relaxed mb-3 sm:mb-6">
-                Complete control over ward allocations, bed availability, and inpatient care workflows.
-              </p>
-
-              <div className="space-y-1.5 sm:space-y-3">
-                <div className="bg-white p-2 sm:p-3.5 rounded-lg sm:rounded-2xl border border-[var(--t-border)]/30 text-xs">
-                  <div className="font-bold text-[var(--t-text,#121d1f)] mb-0.5 flex items-center gap-1.5 text-xs sm:text-sm">
-                    <span className="material-symbols-outlined text-xs sm:text-base text-[var(--t-primary,#00685e)]">bed</span> Real-Time Bed Occupancy
-                  </div>
-                  <p className="text-[10px] sm:text-[11px] text-[var(--t-text-muted,#6d7a77)]">Live tracking of ICU, Private, and General ward bed availability.</p>
-                </div>
-                <div className="bg-white p-2 sm:p-3.5 rounded-lg sm:rounded-2xl border border-[var(--t-border)]/30 text-xs">
-                  <div className="font-bold text-[var(--t-text,#121d1f)] mb-0.5 flex items-center gap-1.5 text-xs sm:text-sm">
-                    <span className="material-symbols-outlined text-xs sm:text-base text-[var(--t-primary,#00685e)]">meeting_room</span> IPD Admission & Transfer
-                  </div>
-                  <p className="text-[10px] sm:text-[11px] text-[var(--t-text-muted,#6d7a77)]">Seamless patient ward transfer, bed charges, and discharge sync.</p>
-                </div>
-                <div className="bg-white p-2 sm:p-3.5 rounded-lg sm:rounded-2xl border border-[var(--t-border)]/30 text-xs">
-                  <div className="font-bold text-[var(--t-text,#121d1f)] mb-0.5 flex items-center gap-1.5 text-xs sm:text-sm">
-                    <span className="material-symbols-outlined text-xs sm:text-base text-[var(--t-primary,#00685e)]">medical_information</span> Nurse & Duty Roster
-                  </div>
-                  <p className="text-[10px] sm:text-[11px] text-[var(--t-text-muted,#6d7a77)]">Ward nursing assignments, round notes, and vitals recording.</p>
-                </div>
-                <div className="bg-white p-2 sm:p-3.5 rounded-lg sm:rounded-2xl border border-[var(--t-border)]/30 text-xs">
-                  <div className="font-bold text-[var(--t-text,#121d1f)] mb-0.5 flex items-center gap-1.5 text-xs sm:text-sm">
-                    <span className="material-symbols-outlined text-xs sm:text-base text-[var(--t-primary,#00685e)]">e911_emergency</span> ICU & Emergency Alerts
-                  </div>
-                  <p className="text-[10px] sm:text-[11px] text-[var(--t-text-muted,#6d7a77)]">Real-time vital monitors integration and urgent nurse calls.</p>
-                </div>
-                <div className="bg-white p-2 sm:p-3.5 rounded-lg sm:rounded-2xl border border-[var(--t-border)]/30 text-xs">
-                  <div className="font-bold text-[var(--t-text,#121d1f)] mb-0.5 flex items-center gap-1.5 text-xs sm:text-sm">
-                    <span className="material-symbols-outlined text-xs sm:text-base text-[var(--t-primary,#00685e)]">output</span> Discharge Summaries
-                  </div>
-                  <p className="text-[10px] sm:text-[11px] text-[var(--t-text-muted,#6d7a77)]">Instant discharge note generation & bed readiness status.</p>
-                </div>
-              </div>
-
-              <Link to="/modules" className="pt-2 sm:pt-3 mt-2.5 sm:mt-3.5 border-t border-[var(--t-border)]/30 flex items-center justify-between text-xs font-bold text-[var(--t-primary,#00685e)] hover:opacity-80 transition-all group">
-                <span>And more...</span>
-                <span className="material-symbols-outlined text-xs sm:text-sm transition-transform group-hover:translate-x-1">arrow_forward</span>
-              </Link>
-            </div>
-          </motion.div>
-
-          {/* Card 2: Doctor OPD & Patient Care Hub */}
-          <motion.div
-            className="bg-white border border-[var(--t-border,#bcc9c6)]/50 rounded-xl sm:rounded-3xl p-4 sm:p-7 flex flex-col justify-between shadow-md hover:shadow-lg transition-all relative overflow-hidden"
-            initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp}
-          >
-            <div>
-              <div className="rounded-lg sm:rounded-2xl overflow-hidden mb-4 sm:mb-6 h-32 sm:h-48">
-                <img src="/images/home_doctor_tablet.png" alt="Doctor reviewing patient EMR" className="w-full h-full object-cover" />
-              </div>
-              <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-[var(--t-surface-high,#afecde)] text-[var(--t-primary,#00685e)] flex items-center justify-center mb-2.5 sm:mb-4 -mt-8 sm:-mt-10 relative z-10 border-2 border-white">
-                <span className="material-symbols-outlined text-base sm:text-xl">stethoscope</span>
-              </div>
-              <h3 className="text-base sm:text-xl font-bold text-[var(--t-text,#121d1f)] mb-1 sm:mb-3" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>Doctor OPD & Patient EMR</h3>
-              <p className="text-xs sm:text-sm text-[var(--t-text-secondary,#3d4947)] leading-relaxed mb-3 sm:mb-6">
-                Streamline doctor consultations, patient queues, and electronic medical records.
-              </p>
-
-              <div className="space-y-1.5 sm:space-y-3">
-                <div className="bg-[var(--t-bg-light,#f2fafb)] p-2 sm:p-3.5 rounded-lg sm:rounded-2xl border border-[var(--t-border)]/30 text-xs">
-                  <div className="font-bold text-[var(--t-text,#121d1f)] mb-0.5 flex items-center gap-1.5 text-xs sm:text-sm">
-                    <span className="material-symbols-outlined text-xs sm:text-base text-[var(--t-primary,#00685e)]">calendar_month</span> OPD Queue & Tokens
-                  </div>
-                  <p className="text-[10px] sm:text-[11px] text-[var(--t-text-muted,#6d7a77)]">Smart appointment scheduling and live waiting room screen sync.</p>
-                </div>
-                <div className="bg-[var(--t-bg-light,#f2fafb)] p-2 sm:p-3.5 rounded-lg sm:rounded-2xl border border-[var(--t-border)]/30 text-xs">
-                  <div className="font-bold text-[var(--t-text,#121d1f)] mb-0.5 flex items-center gap-1.5 text-xs sm:text-sm">
-                    <span className="material-symbols-outlined text-xs sm:text-base text-[var(--t-primary,#00685e)]">folder_shared</span> 360° Patient Record
-                  </div>
-                  <p className="text-[10px] sm:text-[11px] text-[var(--t-text-muted,#6d7a77)]">UHID medical history, lab reports, diagnostic imaging, and vitals.</p>
-                </div>
-                <div className="bg-[var(--t-bg-light,#f2fafb)] p-2 sm:p-3.5 rounded-lg sm:rounded-2xl border border-[var(--t-border)]/30 text-xs">
-                  <div className="font-bold text-[var(--t-text,#121d1f)] mb-0.5 flex items-center gap-1.5 text-xs sm:text-sm">
-                    <span className="material-symbols-outlined text-xs sm:text-base text-[var(--t-primary,#00685e)]">prescriptions</span> Digital Rx & Orders
-                  </div>
-                  <p className="text-[10px] sm:text-[11px] text-[var(--t-text-muted,#6d7a77)]">Instant e-prescriptions sent directly to pharmacy and lab test ordering.</p>
-                </div>
-              </div>
-
-              <Link to="/modules" className="pt-2 sm:pt-3 mt-2.5 sm:mt-3.5 border-t border-[var(--t-border)]/30 flex items-center justify-between text-xs font-bold text-[var(--t-primary,#00685e)] hover:opacity-80 transition-all group">
-                <span>And more...</span>
-                <span className="material-symbols-outlined text-xs sm:text-sm transition-transform group-hover:translate-x-1">arrow_forward</span>
-              </Link>
-            </div>
-          </motion.div>
-
-          {/* Card 3: Billing, Accounts & Pharmacy */}
-          <motion.div
-            className="bg-[var(--t-bg-light,#f2fafb)] border border-[var(--t-border,#bcc9c6)]/40 rounded-xl sm:rounded-3xl p-4 sm:p-7 flex flex-col justify-between shadow-sm hover:shadow-md transition-all relative overflow-hidden group"
-            initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp}
-          >
-            {/* Content-Matched Background Image Overlay - Clear & Sharp */}
-            <img
-              src="/images/billing_bg_soft.png"
-              alt="Billing and Pharmacy background"
-              className="absolute inset-0 w-full h-full object-cover opacity-55 group-hover:opacity-75 transition-all duration-500 pointer-events-none filter saturate-[1.1] contrast-[1.05]"
-            />
-            <div className="absolute inset-0 bg-gradient-to-b from-white/75 via-white/55 to-white/80 pointer-events-none" />
-
-            <div className="relative z-10">
-              <div className="w-8 h-8 sm:w-12 sm:h-12 rounded-full bg-[var(--t-surface-high,#afecde)] text-[var(--t-primary,#00685e)] flex items-center justify-center mb-3 sm:mb-6">
-                <span className="material-symbols-outlined text-lg sm:text-2xl">receipt_long</span>
-              </div>
-              <h3 className="text-base sm:text-xl font-bold text-[var(--t-text,#121d1f)] mb-1 sm:mb-3" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>Billing & Pharmacy Hub</h3>
-              <p className="text-xs sm:text-sm text-[var(--t-text-secondary,#3d4947)] leading-relaxed mb-3 sm:mb-6">
-                Automated hospital invoicing, insurance claim clearance, and pharmacy inventory.
-              </p>
-
-              <div className="space-y-1.5 sm:space-y-3 mb-3 sm:mb-6">
-                <div className="bg-white p-2 sm:p-3.5 rounded-lg sm:rounded-2xl border border-[var(--t-border)]/30 text-xs">
-                  <div className="font-bold text-[var(--t-text,#121d1f)] mb-0.5 flex items-center gap-1.5 text-xs sm:text-sm">
-                    <span className="material-symbols-outlined text-xs sm:text-base text-[var(--t-primary,#00685e)]">payments</span> Automated Invoicing
-                  </div>
-                  <p className="text-[10px] sm:text-[11px] text-[var(--t-text-muted,#6d7a77)]">Itemized OPD/IPD billing, deposit receipts, and refund audits.</p>
-                </div>
-                <div className="bg-white p-2 sm:p-3.5 rounded-lg sm:rounded-2xl border border-[var(--t-border)]/30 text-xs">
-                  <div className="font-bold text-[var(--t-text,#121d1f)] mb-0.5 flex items-center gap-1.5 text-xs sm:text-sm">
-                    <span className="material-symbols-outlined text-xs sm:text-base text-[var(--t-primary,#00685e)]">verified_user</span> TPA & Insurance Sync
-                  </div>
-                  <p className="text-[10px] sm:text-[11px] text-[var(--t-text-muted,#6d7a77)]">Bi-directional cashless insurance pre-auth and claim tracking.</p>
-                </div>
-                <div className="bg-white p-2 sm:p-3.5 rounded-lg sm:rounded-2xl border border-[var(--t-border)]/30 text-xs">
-                  <div className="font-bold text-[var(--t-text,#121d1f)] mb-0.5 flex items-center gap-1.5 text-xs sm:text-sm">
-                    <span className="material-symbols-outlined text-xs sm:text-base text-[var(--t-primary,#00685e)]">medication</span> Pharmacy Inventory
-                  </div>
-                  <p className="text-[10px] sm:text-[11px] text-[var(--t-text-muted,#6d7a77)]">Real-time drug stock tracking, batch expiry alerts, and medicine dispatch.</p>
-                </div>
-                <div className="bg-white p-2 sm:p-3.5 rounded-lg sm:rounded-2xl border border-[var(--t-border)]/30 text-xs">
-                  <div className="font-bold text-[var(--t-text,#121d1f)] mb-0.5 flex items-center gap-1.5 text-xs sm:text-sm">
-                    <span className="material-symbols-outlined text-xs sm:text-base text-[var(--t-primary,#00685e)]">cancel</span> Cancel & Refund Audits
-                  </div>
-                  <p className="text-[10px] sm:text-[11px] text-[var(--t-text-muted,#6d7a77)]">Controlled refund voucher workflows with manager approval log.</p>
-                </div>
-                <div className="bg-white p-2 sm:p-3.5 rounded-lg sm:rounded-2xl border border-[var(--t-border)]/30 text-xs">
-                  <div className="font-bold text-[var(--t-text,#121d1f)] mb-0.5 flex items-center gap-1.5 text-xs sm:text-sm">
-                    <span className="material-symbols-outlined text-xs sm:text-base text-[var(--t-primary,#00685e)]">point_of_sale</span> Daily Collections Report
-                  </div>
-                  <p className="text-[10px] sm:text-[11px] text-[var(--t-text-muted,#6d7a77)]">Real-time cash counter, OPD revenue, and payment gateway logs.</p>
-                </div>
-              </div>
-
-              <Link to="/modules" className="pt-2 sm:pt-3 mt-2.5 sm:mt-3.5 border-t border-[var(--t-border)]/30 flex items-center justify-between text-xs font-bold text-[var(--t-primary,#00685e)] hover:opacity-80 transition-all group">
-                <span>And more...</span>
-                <span className="material-symbols-outlined text-xs sm:text-sm transition-transform group-hover:translate-x-1">arrow_forward</span>
-              </Link>
-            </div>
-          </motion.div>
-
-        </div>
-      </section>
-
-      {/* ── 4. STATS BAR (DARK NAVY BAND WITH ICONS) ── */}
+      {/* ── 3. STATS BAR (DARK NAVY BAND WITH ICONS) ── */}
       <section
         className="text-white py-8 sm:py-12 border-y border-white/10"
         style={{ background: 'var(--t-footer-bg, #061325)' }}
@@ -751,7 +630,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ── 6. COMPREHENSIVE HMS EXPLANATION & STAKEHOLDER SHOWCASE ── */}
+      {/* ── 6. COMPREHENSIVE HMS EXPLANATION SHOWCASE ── */}
       <HMSExplanationContainer />
 
       {/* ── ABDM & ABHA INTEGRATION ── */}

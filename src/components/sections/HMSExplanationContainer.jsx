@@ -1,89 +1,10 @@
 import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Link } from 'react-router-dom'
 
 const fadeUp = {
   hidden: { opacity: 0, y: 44, scale: 0.94 },
   visible: { opacity: 1, y: 0, scale: 1, transition: { duration: 1.1, ease: [0.16, 1, 0.3, 1] } },
 }
-
-const stakeholderViews = [
-  {
-    id: 'doctors',
-    label: 'Doctors & Clinicians',
-    icon: 'stethoscope',
-    badge: '75% Faster Consultations',
-    color: 'var(--t-primary, #00685e)',
-    heading: 'Designed for Clinical Speed & Accuracy',
-    desc: 'Empower medical staff with instant access to patient medical histories, digital prescriptions, intelligent drug interaction warnings, and seamless diagnostic orders.',
-    highlights: [
-      { title: 'Unified EMR Workspace', text: 'Complete patient timeline including past diagnosis, lab results, and imaging in one click.' },
-      { title: 'One-Click Digital Rx', text: 'Generate e-prescriptions with custom dosage templates and instant pharmacy dispatch.' },
-      { title: 'Smart CPOE & Orders', text: 'Directly order lab tests and radiology exams from the consultation screen.' },
-      { title: 'ICU & Vitals Sync', text: 'Continuous patient monitor integration for emergency alert notifications.' }
-    ]
-  },
-  {
-    id: 'admins',
-    label: 'Hospital Administrators',
-    icon: 'manage_accounts',
-    badge: 'Operational Transparency',
-    color: 'var(--t-primary-mid, #008378)',
-    heading: 'Complete Oversight & Multi-Branch Governance',
-    desc: 'Streamline hospital operations, monitor real-time bed census, schedule doctor shifts, and audit department performance across all branches.',
-    highlights: [
-      { title: 'Real-Time Bed Census', text: 'Live occupancy maps for ICU, Private, and General wards with instant bed turn-around tracking.' },
-      { title: 'Staff Roster & Attendance', text: 'Automated shift management, doctor duty schedules, and nursing assignments.' },
-      { title: 'Role-Based Security', text: 'Granular access controls ensuring patient data privacy and ABDM alignment.' },
-      { title: 'Executive Analytics', text: 'Live BI dashboards detailing bed utilization, OPD throughput, and department revenues.' }
-    ]
-  },
-  {
-    id: 'finance',
-    label: 'Billing & Finance',
-    icon: 'receipt_long',
-    badge: 'Zero Revenue Leakage',
-    color: '#0d9488',
-    heading: 'Automated Revenue Cycle & Cashless Claims',
-    desc: 'Eliminate billing errors, automate TPA insurance authorizations, track advance deposits, and generate audit-ready daily revenue reports.',
-    highlights: [
-      { title: 'Itemized Invoicing', text: 'Auto-captures bed charges, consultations, lab tests, and medications directly into final bill.' },
-      { title: 'TPA & Cashless Sync', text: 'Streamlined pre-authorization and claims tracking for insurance providers.' },
-      { title: 'Refund Audit Trail', text: 'Strict manager approval log for bill cancellations, discounts, and deposit refunds.' },
-      { title: 'GST & Tally Integration', text: 'Direct financial export for seamless accounting and tax filings.' }
-    ]
-  },
-  {
-    id: 'labs',
-    label: 'Labs & Pharmacy',
-    icon: 'science',
-    badge: 'End-to-End Barcode Traceability',
-    color: '#0284c7',
-    heading: 'Smart LIS Diagnostics & Inventory Control',
-    desc: 'Automate lab sample processing, integrate automated biochemistry analyzers, and manage pharmacy drug stocks with batch expiry alerts.',
-    highlights: [
-      { title: 'Barcode Sample Tracking', text: 'Eliminate sample mix-ups with unique barcode labels from collection to analyzer.' },
-      { title: 'Bi-Directional Analyzer Sync', text: 'Auto-fetches lab values directly into patient reports with baseline validation.' },
-      { title: 'Batch & Expiry Control', text: 'First-Expiry-First-Out (FEFO) dispensing logic with automated re-order triggers.' },
-      { title: 'DICOM Radiology PACS', text: 'Instant viewing of X-rays, CT scans, and MRI images inside doctor EMR.' }
-    ]
-  },
-  {
-    id: 'patients',
-    label: 'Patients & Families',
-    icon: 'sentiment_very_satisfied',
-    badge: '98% Patient Satisfaction',
-    color: '#4f46e5',
-    heading: 'Empowered Patients & Transparent Care',
-    desc: 'Reduce wait times with digital token queuing, provide instant online access to lab reports, and enable seamless ABHA digital health ID creation.',
-    highlights: [
-      { title: 'Live Token Displays', text: 'Real-time queue tracking on waiting room screens and mobile notifications.' },
-      { title: 'Patient Health Portal', text: '24/7 access to discharge summaries, diagnostic reports, and digital bills.' },
-      { title: 'ABHA & ABDM Linking', text: 'Universal health ID integration for nationwide health record sharing.' },
-      { title: 'Seamless Checkout', text: 'Multiple digital payment options including UPI, card, and cashless insurance.' }
-    ]
-  }
-]
 
 const devicePlatforms = [
   {
@@ -201,10 +122,8 @@ const workflowSteps = [
 ]
 
 export default function HMSExplanationContainer() {
-  const [activeTab, setActiveTab] = useState('doctors')
   const [activeDevice, setActiveDevice] = useState('laptop')
 
-  const activeStakeholder = stakeholderViews.find((s) => s.id === activeTab)
   const selectedDevice = devicePlatforms.find((d) => d.id === activeDevice)
 
   return (
@@ -472,108 +391,7 @@ export default function HMSExplanationContainer() {
           </div>
         </motion.div>
 
-        {/* ── 3. STAKEHOLDER BENEFIT CONTAINER (INTERACTIVE TABS) ── */}
-        <motion.div
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ amount: 0.15 }}
-          variants={fadeUp}
-          className="space-y-6 sm:space-y-8"
-        >
-          <div className="text-center max-w-3xl mx-auto space-y-3">
-            <span className="text-xs font-bold uppercase tracking-widest text-[var(--t-primary,#00685e)]">
-              STAKEHOLDER CENTRIC DESIGN
-            </span>
-            <h3 className="text-xl sm:text-3xl lg:text-4xl font-extrabold text-[var(--t-text,#121d1f)]" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
-              How OMEDO Empowers Every Department
-            </h3>
-            <p className="text-xs sm:text-sm text-[var(--t-text-secondary,#3d4947)]">
-              Select your role below to discover how OMEDO optimizes day-to-day operations and improves patient outcomes.
-            </p>
-          </div>
-
-          {/* Tab Navigation Buttons */}
-          <div className="flex flex-wrap items-center justify-center gap-2 sm:gap-3">
-            {stakeholderViews.map((tab) => {
-              const isActive = activeTab === tab.id
-              return (
-                <button
-                  key={tab.id}
-                  onClick={() => setActiveTab(tab.id)}
-                  className={`flex items-center gap-2 px-3.5 py-2.5 sm:px-5 sm:py-3 rounded-full text-xs sm:text-sm font-bold transition-all duration-200 cursor-pointer ${
-                    isActive
-                      ? 'bg-[var(--t-primary,#00685e)] text-white shadow-lg shadow-[var(--t-primary)]/20 scale-[1.03]'
-                      : 'bg-white text-[var(--t-text,#121d1f)] border border-[var(--t-border,#bcc9c6)]/60 hover:border-[var(--t-primary)] hover:bg-[var(--t-bg-light)]'
-                  }`}
-                >
-                  <span className={`material-symbols-outlined text-base sm:text-lg ${isActive ? 'text-white' : 'text-[var(--t-primary)]'}`}>
-                    {tab.icon}
-                  </span>
-                  {tab.label}
-                </button>
-              )
-            })}
-          </div>
-
-          {/* Active Tab Panel */}
-          <AnimatePresence mode="wait">
-            <motion.div
-              key={activeTab}
-              initial={{ opacity: 0, y: 15 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -15 }}
-              transition={{ duration: 0.3 }}
-              className="bg-white rounded-3xl p-6 sm:p-10 border border-[var(--t-border)]/60 shadow-lg relative overflow-hidden"
-            >
-              <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
-                {/* Left Side Info */}
-                <div className="lg:col-span-5 space-y-4">
-                  <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-bold bg-[var(--t-surface-high,#afecde)] text-[var(--t-primary)]">
-                    <span className="material-symbols-outlined text-sm">{activeStakeholder.icon}</span>
-                    {activeStakeholder.badge}
-                  </div>
-
-                  <h4 className="text-xl sm:text-2xl font-bold text-[var(--t-text)]" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
-                    {activeStakeholder.heading}
-                  </h4>
-
-                  <p className="text-xs sm:text-sm text-[var(--t-text-secondary)] leading-relaxed">
-                    {activeStakeholder.desc}
-                  </p>
-
-                  <div className="pt-2">
-                    <Link
-                      to="/modules"
-                      className="inline-flex items-center gap-2 text-xs sm:text-sm font-bold text-[var(--t-primary)] hover:gap-3 transition-all"
-                    >
-                      <span>Explore Related Modules</span>
-                      <span className="material-symbols-outlined text-sm">arrow_forward</span>
-                    </Link>
-                  </div>
-                </div>
-
-                {/* Right Side 2x2 Feature Grid */}
-                <div className="lg:col-span-7 grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  {activeStakeholder.highlights.map((h, idx) => (
-                    <div key={idx} className="bg-[var(--t-bg-light,#f2fafb)] p-4 sm:p-5 rounded-2xl border border-[var(--t-border)]/30 space-y-2 hover:border-[var(--t-primary)]/40 transition-colors">
-                      <div className="flex items-center gap-2">
-                        <span className="w-6 h-6 rounded-full bg-[var(--t-primary)]/15 text-[var(--t-primary)] flex items-center justify-center font-bold text-xs shrink-0">
-                          ✓
-                        </span>
-                        <h5 className="font-bold text-xs sm:text-sm text-[var(--t-text)]">{h.title}</h5>
-                      </div>
-                      <p className="text-[11px] sm:text-xs text-[var(--t-text-muted,#6d7a77)] leading-relaxed pl-8">
-                        {h.text}
-                      </p>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </motion.div>
-          </AnimatePresence>
-        </motion.div>
-
-        {/* ── 4. TRADITIONAL VS HMS COMPARISON CONTAINER ── */}
+        {/* ── 3. TRADITIONAL VS HMS COMPARISON CONTAINER ── */}
         <motion.div
           initial="hidden"
           whileInView="visible"

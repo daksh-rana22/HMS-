@@ -54,7 +54,7 @@ const sections = [
         <div className="space-y-3">
           <div>
             <p className="font-bold text-slate-900">2.1 &quot;Company&quot;, &quot;OMEDO&quot;, &quot;We&quot;, &quot;Us&quot; or &quot;Our&quot;</p>
-            <p className="text-slate-700">means OMEDO Software Solutions Private Limited, having its registered/official address at: H-11, Sector-23, Sanjay Nagar, Ghaziabad – 201002, Uttar Pradesh, India.</p>
+            <p className="text-slate-700">means OMEDO Software Solutions Private Limited, having its registered/official address at: H-154, Sector-23, Sanjay Nagar, Ghaziabad – 201001, Uttar Pradesh, India.</p>
           </div>
           <div>
             <p className="font-bold text-slate-900">2.2 &quot;Customer&quot;</p>
@@ -755,7 +755,7 @@ const sections = [
           <p className="font-bold text-slate-900">OMEDO Software Solutions Private Limited</p>
           <div>
             <p className="font-semibold text-slate-800">Address:</p>
-            <p className="text-slate-700">H-11, Sector-23, Sanjay Nagar,<br />Ghaziabad – 201002,<br />Uttar Pradesh, India</p>
+            <p className="text-slate-700">H-154, Sector-23, Sanjay Nagar,<br />Ghaziabad – 201001,<br />Uttar Pradesh, India</p>
           </div>
           <p className="text-slate-700"><strong>Email:</strong> <a href="mailto:support@omedosoft.com" className="text-[#00685e] hover:underline">support@omedosoft.com</a></p>
           <p className="text-slate-700"><strong>Website:</strong> <a href="https://www.omedosoft.com" target="_blank" rel="noopener noreferrer" className="text-[#00685e] hover:underline">www.omedosoft.com</a></p>
@@ -787,8 +787,8 @@ export default function Terms() {
     <motion.div {...pageTransition} className="min-h-screen bg-[#f8fdfe] pt-24 sm:pt-28 pb-16">
       
       {/* ── HEADER HERO ── */}
-      <section className="bg-gradient-to-b from-[#effcfe] via-[#f5fdfe] to-[#f8fdfe] py-10 sm:py-16 border-b border-[#bcc9c6]/30">
-        <div className="site-wrapper text-center max-w-6xl mx-auto px-4 space-y-5">
+      <section className="bg-gradient-to-b from-[#effcfe] via-[#f5fdfe] to-[#f8fdfe] py-10 sm:py-14 border-b border-[#bcc9c6]/30">
+        <div className="site-wrapper text-center max-w-7xl mx-auto space-y-5">
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#afecde]/80 text-[#00685e] text-xs sm:text-sm font-bold shadow-xs">
             <span className="material-symbols-outlined text-base">gavel</span>
             <span>Legal Documentation</span>
@@ -824,7 +824,7 @@ export default function Terms() {
       </section>
 
       {/* ── MAIN CONTENT CONTAINER (WIDER) ── */}
-      <section className="site-wrapper py-8 sm:py-12 px-4 max-w-6xl mx-auto space-y-8">
+      <section className="site-wrapper py-8 sm:py-12 max-w-7xl mx-auto space-y-8">
         
         {/* ── TABLE OF CONTENTS CARD (COMPACT & STREAMLINED) ── */}
         <div id="table-of-contents" className="bg-white rounded-2xl p-3.5 sm:p-4 border border-[#bcc9c6]/50 shadow-xs space-y-3 scroll-mt-28">

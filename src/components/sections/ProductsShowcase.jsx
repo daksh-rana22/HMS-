@@ -325,7 +325,7 @@ const getModuleRoute = (id) => {
   }
 }
 
-export default function ProductsShowcase() {
+export default function ProductsShowcase({ showComparison = true }) {
   const [activeProduct, setActiveProduct] = useState('clinic') // 'clinic' | 'hms'
   const [clinicActiveIndex, setClinicActiveIndex] = useState(0)
   const [hmsActiveIndex, setHmsActiveIndex] = useState(0)
@@ -1314,98 +1314,100 @@ export default function ProductsShowcase() {
         </AnimatePresence>
 
         {/* ── 3. SIDE-BY-SIDE FEATURE COMPARISON TABLE ── */}
-        <motion.div
-          className="bg-white rounded-3xl p-6 sm:p-8 lg:p-10 border border-[var(--t-border,#bcc9c6)]/50 shadow-md space-y-6"
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true }}
-          variants={fadeUp}
-        >
-          <div className="text-center max-w-2xl mx-auto space-y-2">
-            <span className="text-xs font-extrabold uppercase tracking-widest text-[var(--t-primary,#00685e)]">
-              COMPARISON AT A GLANCE
-            </span>
-            <h3 className="text-2xl sm:text-3xl font-extrabold text-[var(--t-text,#121d1f)]" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
-              OMEDO Clinic vs OMEDO HMS
-            </h3>
-            <p className="text-xs sm:text-sm text-[var(--t-text-secondary,#3d4947)]">
-              Find the perfect fit for your clinical practice or hospital facility.
-            </p>
-          </div>
+        {showComparison && (
+          <motion.div
+            className="bg-white rounded-3xl p-6 sm:p-8 lg:p-10 border border-[var(--t-border,#bcc9c6)]/50 shadow-md space-y-6"
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+            variants={fadeUp}
+          >
+            <div className="text-center max-w-2xl mx-auto space-y-2">
+              <span className="text-xs font-extrabold uppercase tracking-widest text-[var(--t-primary,#00685e)]">
+                COMPARISON AT A GLANCE
+              </span>
+              <h3 className="text-2xl sm:text-3xl font-extrabold text-[var(--t-text,#121d1f)]" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
+                OMEDO Clinic vs OMEDO HMS
+              </h3>
+              <p className="text-xs sm:text-sm text-[var(--t-text-secondary,#3d4947)]">
+                Find the perfect fit for your clinical practice or hospital facility.
+              </p>
+            </div>
 
-          <div className="overflow-x-auto">
-            <table className="w-full text-left text-xs border-collapse min-w-[600px]">
-              <thead>
-                <tr className="border-b-2 border-slate-200">
-                  <th className="py-3 px-4 text-slate-500 font-bold uppercase text-[11px]">Feature / Capability</th>
-                  <th className="py-3 px-4 text-[var(--t-primary,#00685e)] font-extrabold text-sm w-1/3">
-                    🩺 OMEDO Clinic (5 Modules)
-                  </th>
-                  <th className="py-3 px-4 text-[var(--t-primary,#00685e)] font-extrabold text-sm w-1/3">
-                    🏥 OMEDO HMS (16 Modules)
-                  </th>
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-slate-100 font-medium text-slate-700">
-                <tr className="hover:bg-slate-50/70 transition-colors">
-                  <td className="py-3 px-4 font-semibold text-slate-900">Target Healthcare Facility</td>
-                  <td className="py-3 px-4 text-slate-600">Independent Clinics &amp; Polyclinics</td>
-                  <td className="py-3 px-4 text-slate-600 font-semibold">Single &amp; Multi-Branch Hospitals</td>
-                </tr>
-                <tr className="hover:bg-slate-50/70 transition-colors">
-                  <td className="py-3 px-4 font-semibold text-slate-900">Appointment &amp; Token Scheduling</td>
-                  <td className="py-3 px-4 text-emerald-600 font-bold">✓ Included</td>
-                  <td className="py-3 px-4 text-emerald-600 font-bold">✓ Included (Multi-Department)</td>
-                </tr>
-                <tr className="hover:bg-slate-50/70 transition-colors">
-                  <td className="py-3 px-4 font-semibold text-slate-900">ABDM &amp; ABHA Express Check-In</td>
-                  <td className="py-3 px-4 text-emerald-600 font-bold">✓ Included</td>
-                  <td className="py-3 px-4 text-emerald-600 font-bold">✓ Full M1, M2 &amp; M3</td>
-                </tr>
-                <tr className="hover:bg-slate-50/70 transition-colors">
-                  <td className="py-3 px-4 font-semibold text-slate-900">OPD &amp; EMR Prescriptions</td>
-                  <td className="py-3 px-4 text-emerald-600 font-bold">✓ Included (15-Sec Rx)</td>
-                  <td className="py-3 px-4 text-emerald-600 font-bold">✓ Full Specialty Templates</td>
-                </tr>
-                <tr className="hover:bg-slate-50/70 transition-colors">
-                  <td className="py-3 px-4 font-semibold text-slate-900">IPD Wards &amp; Bed Census Matrix</td>
-                  <td className="py-3 px-4 text-slate-400">— Not Applicable</td>
-                  <td className="py-3 px-4 text-emerald-600 font-bold">✓ Live Interactive Bed Map</td>
-                </tr>
-                <tr className="hover:bg-slate-50/70 transition-colors">
-                  <td className="py-3 px-4 font-semibold text-slate-900">Day Care &amp; Short-Stay Bays</td>
-                  <td className="py-3 px-4 text-slate-400">— Not Applicable</td>
-                  <td className="py-3 px-4 text-emerald-600 font-bold">✓ Included</td>
-                </tr>
-                <tr className="hover:bg-slate-50/70 transition-colors">
-                  <td className="py-3 px-4 font-semibold text-slate-900">24/7 ER Trauma &amp; Emergency Triage</td>
-                  <td className="py-3 px-4 text-slate-400">— Not Applicable</td>
-                  <td className="py-3 px-4 text-emerald-600 font-bold">✓ Included</td>
-                </tr>
-                <tr className="hover:bg-slate-50/70 transition-colors">
-                  <td className="py-3 px-4 font-semibold text-slate-900">Pharmacy POS &amp; Laboratory LIS</td>
-                  <td className="py-3 px-4 text-slate-400">— Optional Add-on</td>
-                  <td className="py-3 px-4 text-emerald-600 font-bold">✓ Fully Integrated</td>
-                </tr>
-                <tr className="hover:bg-slate-50/70 transition-colors">
-                  <td className="py-3 px-4 font-semibold text-slate-900">Cashless TPA Insurance Management</td>
-                  <td className="py-3 px-4 text-slate-400">— Not Applicable</td>
-                  <td className="py-3 px-4 text-emerald-600 font-bold">✓ Included (Pre-Auth Desk)</td>
-                </tr>
-                <tr className="hover:bg-slate-50/70 transition-colors">
-                  <td className="py-3 px-4 font-semibold text-slate-900">OT (Operation Theatre) &amp; MRD</td>
-                  <td className="py-3 px-4 text-slate-400">— Not Applicable</td>
-                  <td className="py-3 px-4 text-amber-600 font-bold">🚀 Coming Soon</td>
-                </tr>
-                <tr className="hover:bg-slate-50/70 transition-colors">
-                  <td className="py-3 px-4 font-semibold text-slate-900">Reports &amp; Analytical MIS</td>
-                  <td className="py-3 px-4 text-emerald-600 font-bold">✓ Daily Clinic Reports</td>
-                  <td className="py-3 px-4 text-emerald-600 font-bold">✓ 12+ Analytical Sub-Modules</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </motion.div>
+            <div className="overflow-x-auto">
+              <table className="w-full text-left text-xs border-collapse min-w-[600px]">
+                <thead>
+                  <tr className="border-b-2 border-slate-200">
+                    <th className="py-3 px-4 text-slate-500 font-bold uppercase text-[11px]">Feature / Capability</th>
+                    <th className="py-3 px-4 text-[var(--t-primary,#00685e)] font-extrabold text-sm w-1/3">
+                      🩺 OMEDO Clinic (5 Modules)
+                    </th>
+                    <th className="py-3 px-4 text-[var(--t-primary,#00685e)] font-extrabold text-sm w-1/3">
+                      🏥 OMEDO HMS (16 Modules)
+                    </th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-slate-100 font-medium text-slate-700">
+                  <tr className="hover:bg-slate-50/70 transition-colors">
+                    <td className="py-3 px-4 font-semibold text-slate-900">Target Healthcare Facility</td>
+                    <td className="py-3 px-4 text-slate-600">Independent Clinics &amp; Polyclinics</td>
+                    <td className="py-3 px-4 text-slate-600 font-semibold">Single &amp; Multi-Branch Hospitals</td>
+                  </tr>
+                  <tr className="hover:bg-slate-50/70 transition-colors">
+                    <td className="py-3 px-4 font-semibold text-slate-900">Appointment &amp; Token Scheduling</td>
+                    <td className="py-3 px-4 text-emerald-600 font-bold">✓ Included</td>
+                    <td className="py-3 px-4 text-emerald-600 font-bold">✓ Included (Multi-Department)</td>
+                  </tr>
+                  <tr className="hover:bg-slate-50/70 transition-colors">
+                    <td className="py-3 px-4 font-semibold text-slate-900">ABDM &amp; ABHA Express Check-In</td>
+                    <td className="py-3 px-4 text-emerald-600 font-bold">✓ Included</td>
+                    <td className="py-3 px-4 text-emerald-600 font-bold">✓ Full M1, M2 &amp; M3</td>
+                  </tr>
+                  <tr className="hover:bg-slate-50/70 transition-colors">
+                    <td className="py-3 px-4 font-semibold text-slate-900">OPD &amp; EMR Prescriptions</td>
+                    <td className="py-3 px-4 text-emerald-600 font-bold">✓ Included (15-Sec Rx)</td>
+                    <td className="py-3 px-4 text-emerald-600 font-bold">✓ Full Specialty Templates</td>
+                  </tr>
+                  <tr className="hover:bg-slate-50/70 transition-colors">
+                    <td className="py-3 px-4 font-semibold text-slate-900">IPD Wards &amp; Bed Census Matrix</td>
+                    <td className="py-3 px-4 text-slate-400">— Not Applicable</td>
+                    <td className="py-3 px-4 text-emerald-600 font-bold">✓ Live Interactive Bed Map</td>
+                  </tr>
+                  <tr className="hover:bg-slate-50/70 transition-colors">
+                    <td className="py-3 px-4 font-semibold text-slate-900">Day Care &amp; Short-Stay Bays</td>
+                    <td className="py-3 px-4 text-slate-400">— Not Applicable</td>
+                    <td className="py-3 px-4 text-emerald-600 font-bold">✓ Included</td>
+                  </tr>
+                  <tr className="hover:bg-slate-50/70 transition-colors">
+                    <td className="py-3 px-4 font-semibold text-slate-900">24/7 ER Trauma &amp; Emergency Triage</td>
+                    <td className="py-3 px-4 text-slate-400">— Not Applicable</td>
+                    <td className="py-3 px-4 text-emerald-600 font-bold">✓ Included</td>
+                  </tr>
+                  <tr className="hover:bg-slate-50/70 transition-colors">
+                    <td className="py-3 px-4 font-semibold text-slate-900">Pharmacy POS &amp; Laboratory LIS</td>
+                    <td className="py-3 px-4 text-slate-400">— Optional Add-on</td>
+                    <td className="py-3 px-4 text-emerald-600 font-bold">✓ Fully Integrated</td>
+                  </tr>
+                  <tr className="hover:bg-slate-50/70 transition-colors">
+                    <td className="py-3 px-4 font-semibold text-slate-900">Cashless TPA Insurance Management</td>
+                    <td className="py-3 px-4 text-slate-400">— Not Applicable</td>
+                    <td className="py-3 px-4 text-emerald-600 font-bold">✓ Included (Pre-Auth Desk)</td>
+                  </tr>
+                  <tr className="hover:bg-slate-50/70 transition-colors">
+                    <td className="py-3 px-4 font-semibold text-slate-900">OT (Operation Theatre) &amp; MRD</td>
+                    <td className="py-3 px-4 text-slate-400">— Not Applicable</td>
+                    <td className="py-3 px-4 text-amber-600 font-bold">🚀 Coming Soon</td>
+                  </tr>
+                  <tr className="hover:bg-slate-50/70 transition-colors">
+                    <td className="py-3 px-4 font-semibold text-slate-900">Reports &amp; Analytical MIS</td>
+                    <td className="py-3 px-4 text-emerald-600 font-bold">✓ Daily Clinic Reports</td>
+                    <td className="py-3 px-4 text-emerald-600 font-bold">✓ 12+ Analytical Sub-Modules</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </motion.div>
+        )}
 
       </div>
     </section>

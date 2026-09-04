@@ -1,6 +1,13 @@
 import { createContext, useContext, useState, useEffect } from 'react'
 
 export const HERO_FOOTER_THEMES = {
+  navygold: {
+    id: 'navygold',
+    name: 'Imperial Navy & Gold',
+    description: 'Vivid Royal Indigo, Liquid Gold & Platinum',
+    gradientBg: 'linear-gradient(135deg, #1E3A8A 0%, #2563EB 50%, #D97706 100%)',
+    dotColor: '#1E3A8A',
+  },
   dreamy: {
     id: 'dreamy',
     name: 'Dreamy Skies',
@@ -57,13 +64,6 @@ export const HERO_FOOTER_THEMES = {
     gradientBg: 'linear-gradient(135deg, #881337 0%, #0F766E 60%, #D97706 100%)',
     dotColor: '#881337',
   },
-  navygold: {
-    id: 'navygold',
-    name: 'Imperial Navy & Gold',
-    description: 'Vivid Royal Indigo, Liquid Gold & Platinum',
-    gradientBg: 'linear-gradient(135deg, #1E3A8A 0%, #2563EB 50%, #D97706 100%)',
-    dotColor: '#1E3A8A',
-  },
   clinical: {
     id: 'clinical',
     name: 'Clinical Teal & Emerald',
@@ -83,7 +83,7 @@ export function ThemeProvider({ children }) {
         return saved
       }
     } catch (e) {}
-    return 'dreamy'
+    return 'navygold'
   })
 
   useEffect(() => {

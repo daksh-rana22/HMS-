@@ -837,7 +837,7 @@ const sections = [
           <p className="font-bold text-slate-900">OMEDO Software Solutions Private Limited</p>
           <div>
             <p className="font-semibold text-slate-800">Address:</p>
-            <p className="text-slate-700">H-11, Sector-23, Sanjay Nagar,<br />Ghaziabad – 201002,<br />Uttar Pradesh, India</p>
+            <p className="text-slate-700">H-154, Sector-23, Sanjay Nagar,<br />Ghaziabad – 201001,<br />Uttar Pradesh, India</p>
           </div>
           <p className="text-slate-700"><strong>Email:</strong> <a href="mailto:privacy@omedosoft.com" className="text-[#00685e] hover:underline">privacy@omedosoft.com</a></p>
           <p className="text-slate-700"><strong>Support:</strong> <a href="mailto:support@omedosoft.com" className="text-[#00685e] hover:underline">support@omedosoft.com</a></p>
@@ -885,8 +885,8 @@ export default function Privacy() {
     <motion.div {...pageTransition} className="min-h-screen bg-[#f8fdfe] pt-24 sm:pt-28 pb-16">
       
       {/* ── HEADER HERO ── */}
-      <section className="bg-gradient-to-b from-[#effcfe] via-[#f5fdfe] to-[#f8fdfe] py-10 sm:py-16 border-b border-[#bcc9c6]/30">
-        <div className="site-wrapper text-center max-w-6xl mx-auto px-4 space-y-5">
+      <section className="bg-gradient-to-b from-[#effcfe] via-[#f5fdfe] to-[#f8fdfe] py-10 sm:py-14 border-b border-[#bcc9c6]/30">
+        <div className="site-wrapper text-center max-w-7xl mx-auto space-y-5">
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#afecde]/80 text-[#00685e] text-xs sm:text-sm font-bold shadow-xs">
             <span className="material-symbols-outlined text-base">shield</span>
             <span>Privacy &amp; Data Governance</span>
@@ -917,7 +917,7 @@ export default function Privacy() {
               </p>
               <p className="text-slate-800 text-xs sm:text-sm">
                 <strong>OMEDO Software Solutions Private Limited</strong><br />
-                Address: H-11, Sector-23, Sanjay Nagar, Ghaziabad – 201002, Uttar Pradesh, India
+                Address: H-154, Sector-23, Sanjay Nagar, Ghaziabad – 201001, Uttar Pradesh, India
               </p>
               <p className="text-slate-600 text-xs pt-1">
                 This Privacy Policy should be read together with our <Link to="/terms" className="text-[#00685e] font-bold underline">Terms &amp; Conditions</Link>.
@@ -928,7 +928,7 @@ export default function Privacy() {
       </section>
 
       {/* ── MAIN CONTENT CONTAINER (WIDER) ── */}
-      <section className="site-wrapper py-8 sm:py-12 px-4 max-w-6xl mx-auto space-y-8">
+      <section className="site-wrapper py-8 sm:py-12 max-w-7xl mx-auto space-y-8">
         
         {/* ── TABLE OF CONTENTS CARD (COMPACT & STREAMLINED) ── */}
         <div id="table-of-contents" className="bg-white rounded-2xl p-3.5 sm:p-4 border border-[#bcc9c6]/50 shadow-xs space-y-3 scroll-mt-28">

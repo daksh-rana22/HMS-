@@ -4,12 +4,48 @@
    THEME SYSTEM — CSS Custom Properties per [data-theme]
    ═══════════════════════════════════════════════════════ */
 
-/* ── Default Theme: Dreamy Skies (Vivid Sapphire Blue, Electric Indigo & Ice) ── */
+/* ── Default Theme: Imperial Navy & Gold (Vivid Royal Indigo, Imperial Navy & Liquid Gold) ── */
 :root,
-[data-theme="dreamy"],
-[data-hero-theme="dreamy"],
+[data-theme="navygold"],
+[data-hero-theme="navygold"],
 [data-theme="default"],
 [data-hero-theme="default"] {
+  --t-primary: #1E3A8A;
+  --t-primary-dark: #172554;
+  --t-primary-mid: #2563EB;
+  --t-accent: #D97706;
+  --t-accent-light: #F59E0B;
+  --t-bg: #F8FAFC;
+  --t-bg-light: #F1F5F9;
+  --t-surface: #FFFFFF;
+  --t-surface-low: #F8FAFC;
+  --t-surface-mid: #F1F5F9;
+  --t-surface-high: #FEF3C7;
+  --t-border: #F59E0B;
+  --t-border-light: #FEF3C7;
+  --t-text: #0F172A;
+  --t-text-secondary: #1E293B;
+  --t-text-muted: #475569;
+  --t-on-primary: #ffffff;
+  --t-hero-glow: rgba(30, 58, 138, 0.30);
+  --t-card-hover-glow: rgba(217, 119, 6, 0.25);
+  --t-nav-bg: rgba(248, 250, 252, 0.95);
+  --t-nav-border: rgba(245, 158, 11, 0.50);
+  --t-module-bg: linear-gradient(135deg, #F8FAFC 0%, #EFF6FF 50%, #FEF3C7 100%);
+  --t-gradient-text: linear-gradient(135deg, #1E3A8A 0%, #2563EB 40%, #D97706 80%, #F59E0B 100%);
+  --t-btn-shadow: rgba(30, 58, 138, 0.42);
+  --t-scrollbar: rgba(30, 58, 138, 0.50);
+  --t-scrollbar-hover: rgba(23, 37, 84, 0.85);
+  --t-dropdown-shadow: rgba(30, 58, 138, 0.30);
+  --t-mobile-bg: #F8FAFC;
+  --t-active-bg: rgba(254, 243, 199, 0.85);
+  --t-active-border: rgba(217, 119, 6, 0.60);
+  --t-footer-bg: #0F172A;
+}
+
+/* ── Dreamy Skies (Vivid Sapphire Blue, Electric Indigo & Ice) ── */
+[data-theme="dreamy"],
+[data-hero-theme="dreamy"] {
   --t-primary: #0284C7;
   --t-primary-dark: #0369A1;
   --t-primary-mid: #0EA5E9;

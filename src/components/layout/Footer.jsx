@@ -31,7 +31,7 @@ export default function Footer() {
       }}
     >
       <div className="site-wrapper py-10 sm:py-12 md:py-14">
-        
+
         {/* Main 4-Column Flat Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-8 lg:gap-10 pb-10 border-b border-white/10">
 
@@ -39,7 +39,7 @@ export default function Footer() {
           <div className="lg:col-span-4 space-y-4">
             <Link to="/" className="inline-block bg-white p-2 sm:p-2.5 rounded-2xl shadow-lg border border-white/20 hover:scale-[1.02] transition-all">
               <img
-                src="/WhatsApp Image 2026-08-27 at 4.19.32 PM.jpeg"
+                src="/images/omedo_logo.png"
                 alt="OMEDO - Best Hospital Management Software in India!"
                 className="h-12 sm:h-14 w-auto object-contain rounded-xl"
                 style={{ maxWidth: '180px' }}
@@ -53,13 +53,6 @@ export default function Footer() {
             <div className="flex items-center gap-2 text-xs font-semibold text-emerald-400">
               <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
               <span>ABDM &amp; NHA Milestone 1, 2 &amp; 3 Integration Ready</span>
-            </div>
-
-            {/* Corporate Office */}
-            <div className="pt-2.5 text-xs leading-relaxed border-t border-white/10 space-y-0.5">
-              <div className="font-semibold text-white">Corporate Office</div>
-              <div className="text-cyan-300 font-semibold">OMEDO Software Solutions Pvt Ltd.</div>
-              <div className="text-slate-300">H-11, Sector-23, Sanjay Nagar, Ghaziabad — 201002, Uttar Pradesh, India</div>
             </div>
           </div>
 
@@ -104,24 +97,35 @@ export default function Footer() {
           </div>
 
           {/* 4. Contact & Support (3 cols) */}
-          <div className="lg:col-span-3 space-y-3">
+          <div className="lg:col-span-3 space-y-4">
             <h4 className="text-xs font-bold uppercase tracking-wider text-white" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
               Contact &amp; Support
             </h4>
 
-            <div className="space-y-2.5 text-xs text-slate-300 leading-relaxed">
-              <div>
-                <span className="text-slate-400 block text-[11px] font-medium">Email Inquiries:</span>
-                <div className="space-y-0.5">
-                  <div>Support: <a href="mailto:support@omedosoft.com" className="text-cyan-300 hover:underline">support@omedosoft.com</a></div>
-                  <div>Sales: <a href="mailto:sales@omedosoft.com" className="text-cyan-300 hover:underline">sales@omedosoft.com</a></div>
+            <div className="space-y-4 text-xs text-slate-300 leading-relaxed">
+              {/* Email Inquiries */}
+              <div className="space-y-1">
+                <span className="text-slate-400 block text-[11px] font-medium uppercase tracking-wider">Email Inquiries</span>
+                <div className="space-y-1 text-slate-300">
+                  <div>Sales: <a href="mailto:sales@omedosoft.com" className="text-cyan-300 hover:underline font-medium">sales@omedosoft.com</a></div>
+                  <div>Support: <a href="mailto:support@omedosoft.com" className="text-cyan-300 hover:underline font-medium">support@omedosoft.com</a></div>
                 </div>
               </div>
 
-              <div className="text-[11px] text-slate-400 pt-1">
-                <div className="text-emerald-400 font-semibold flex items-center gap-1.5">
-                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
-                  <span>Online Support 24*7</span>
+              {/* Corporate Office */}
+              <div className="pt-3.5 text-xs leading-relaxed border-t border-white/10 space-y-2">
+                <div>
+                  <div className="font-semibold text-white tracking-wide">Corporate Office</div>
+                  <div className="text-cyan-300 font-semibold text-xs mt-0.5">OMEDO Software Solutions Pvt Ltd.</div>
+                </div>
+                
+                <div className="text-slate-300 text-xs leading-relaxed">
+                  H-154, Sector-23, Sanjay Nagar, Ghaziabad — 201001, Uttar Pradesh, India
+                </div>
+
+                <div className="text-[11px] text-slate-400 space-y-0.5 pt-0.5">
+                  <div><strong className="text-slate-300">CIN:</strong> U62099UW2026PTC257817</div>
+                  <div><strong className="text-slate-300">MSME:</strong> UDYAM-UP-29-0255247</div>
                 </div>
               </div>
             </div>

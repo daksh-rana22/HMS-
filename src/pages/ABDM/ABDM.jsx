@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
 import { pageTransition } from '../../utils/animations'
@@ -10,135 +10,6 @@ const fadeUp = {
 }
 
 const stagger = { hidden: {}, visible: { transition: { staggerChildren: 0.22 } } }
-
-const milestonesData = [
-  {
-    id: 'M1',
-    badge: 'MILESTONE 1',
-    title: 'ABHA Creation & Registration',
-    subtitle: 'Digital Health Identity Generation & Legacy UHID Mapping',
-    icon: 'badge',
-    status: 'NHA M1 Ready',
-    color: 'var(--t-primary)',
-    bgGradient: 'linear-gradient(135deg, color-mix(in srgb, var(--t-primary) 12%, transparent) 0%, transparent 100%)',
-    highlights: [
-      {
-        title: 'Instant ABHA Number Generation',
-        desc: 'Generate 14-digit ABHA numbers instantly at OPD/IPD desks via Aadhaar OTP or Mobile OTP verification.',
-        icon: 'fingerprint',
-      },
-      {
-        title: 'Custom ABHA Address (@abdm)',
-        desc: 'Configure unique PHR handles (e.g. name@abdm) for easy patient lookup across national health portals.',
-        icon: 'alternate_email',
-      },
-      {
-        title: 'Automated UHID Sync',
-        desc: 'Seamlessly bind your hospital’s existing internal UHID with the patient’s national ABHA ID.',
-        icon: 'link',
-      },
-      {
-        title: 'Digital Health Card Printing',
-        desc: 'Print physical or digital ABHA cards with scannable QR codes directly from the registration counter.',
-        icon: 'qr_code_2',
-      },
-    ],
-    technicalDetails: 'Supports NHA API v2.0 for Demographic Verification, Aadhaar e-KYC, and Resend OTP handling with fallback protocols.',
-  },
-  {
-    id: 'M2',
-    title: 'Health Records Exchange (HIP & HIU)',
-    badge: 'MILESTONE 2',
-    subtitle: 'Digitizing EMR, Prescriptions, Lab Reports & Clinical Artifacts',
-    icon: 'folder_shared',
-    status: 'NHA M2 Ready',
-    color: 'var(--t-primary-mid)',
-    bgGradient: 'linear-gradient(135deg, color-mix(in srgb, var(--t-primary-mid) 12%, transparent) 0%, transparent 100%)',
-    highlights: [
-      {
-        title: 'HIP (Health Info Provider) Engine',
-        desc: 'Automatically push OPD prescriptions, lab reports, discharge summaries, and radiology imaging to NHA records repository.',
-        icon: 'cloud_upload',
-      },
-      {
-        title: 'HIU (Health Info User) Desk',
-        desc: 'Fetch past medical histories, diagnostic trends, and vaccination logs from other ABDM-linked facilities during consultations.',
-        icon: 'manage_search',
-      },
-      {
-        title: 'FHIR R4 Data Standard',
-        desc: 'Clinical data is formatted using international FHIR R4 & HL7 standards for seamless interoperability.',
-        icon: 'data_object',
-      },
-      {
-        title: 'Diagnostic LIS & RIS Linkage',
-        desc: 'Pathology test results and DICOM radiology scans are automatically tagged with ABHA record tokens.',
-        icon: 'biotech',
-      },
-    ],
-    technicalDetails: 'Uses standardized SNOMED CT and LOINC clinical terminology code sets embedded inside FHIR bundle payloads.',
-  },
-  {
-    id: 'M3',
-    title: 'Consent Management & Full Compliance',
-    badge: 'MILESTONE 3',
-    subtitle: 'Patient-Centric Digital Consent Gateway & Ecosystem Integration',
-    icon: 'verified_user',
-    status: 'NHA M3 Ready',
-    color: 'var(--t-primary)',
-    bgGradient: 'linear-gradient(135deg, color-mix(in srgb, var(--t-primary) 12%, transparent) 0%, transparent 100%)',
-    highlights: [
-      {
-        title: 'NHA Consent Manager Protocol',
-        desc: 'Doctors request access to past records; patients receive instant push notifications to approve or decline via their PHR app.',
-        icon: 'security',
-      },
-      {
-        title: 'Granular Time & Purpose Controls',
-        desc: 'Patient consents are strictly time-bound and purpose-specific (e.g. 24-hour access for emergency consultation).',
-        icon: 'timer',
-      },
-      {
-        title: 'PHR App Synchronization',
-        desc: 'Compatible with popular Personal Health Record apps including Aarogya Setu, ABHA App, and insurance portals.',
-        icon: 'smartphone',
-      },
-      {
-        title: 'Immutable Audit Trail & Encryption',
-        desc: 'End-to-end AES-256 bit encryption ensures medical data is unreadable in transit and fully logged for audit compliance.',
-        icon: 'lock_reset',
-      },
-    ],
-    technicalDetails: 'Implements Diffie-Hellman Key Exchange (ECDH) for secure peer-to-peer clinical data transfer between HIP and HIU endpoints.',
-  },
-]
-
-const abdmArchitectureComponents = [
-  {
-    title: 'ABHA Health ID',
-    desc: 'National 14-digit health identification number providing citizens a single digital health profile across all healthcare providers.',
-    icon: 'badge',
-    badge: 'PATIENT IDENTIFIER',
-  },
-  {
-    title: 'Healthcare Professionals Registry (HPR)',
-    desc: 'Comprehensive repository of verified medical practitioners (doctors, nurses) across modern and traditional medicine systems.',
-    icon: 'stethoscope',
-    badge: 'PRACTITIONER DIRECTORY',
-  },
-  {
-    title: 'Health Facility Registry (HFR)',
-    desc: 'Repository of all registered public and private healthcare facilities including hospitals, clinics, diagnostic centers, and pharmacies.',
-    icon: 'domain',
-    badge: 'FACILITY DIRECTORY',
-  },
-  {
-    title: 'Health Information Exchange (HIE-CM)',
-    desc: 'Network enabling secure, consent-based routing of encrypted digital health records between registered HIPs and HIUs.',
-    icon: 'hub',
-    badge: 'CONSENT GATEWAY',
-  },
-]
 
 const abdmFaqs = [
   {
@@ -192,21 +63,7 @@ const abdmFaqs = [
 ]
 
 export default function ABDM() {
-  const [activeTab, setActiveTab] = useState('M1')
   const [openFaq, setOpenFaq] = useState(null)
-
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setActiveTab((prev) => {
-        if (prev === 'M1') return 'M2'
-        if (prev === 'M2') return 'M3'
-        return 'M1'
-      })
-    }, 4000)
-    return () => clearTimeout(timer)
-  }, [activeTab])
-
-  const currentMilestone = milestonesData.find((m) => m.id === activeTab) || milestonesData[0]
 
   return (
     <motion.div {...pageTransition} className="min-h-screen pt-16 sm:pt-20 lg:pt-24 pb-12" style={{ background: 'var(--t-bg, #effcfe)' }}>
@@ -305,15 +162,15 @@ export default function ABDM() {
                     <span className="material-symbols-outlined text-xs sm:text-sm">arrow_forward</span>
                   </Link>
                   <a
-                    href="#milestones-explorer"
+                    href="#digital-abha-card"
                     className="inline-flex items-center gap-1 sm:gap-2 bg-white/90 backdrop-blur-sm border px-3 sm:px-6 py-2.5 sm:py-3.5 rounded-full text-[11px] sm:text-sm font-semibold hover:bg-white transition-all duration-200 shadow-sm whitespace-nowrap"
                     style={{
                       borderColor: 'var(--t-border)',
                       color: 'var(--t-primary)',
                     }}
                   >
-                    <span className="material-symbols-outlined text-xs sm:text-sm">explore</span>
-                    <span>Explore Milestones</span>
+                    <span className="material-symbols-outlined text-xs sm:text-sm">badge</span>
+                    <span>Explore ABHA Card</span>
                   </a>
                 </motion.div>
               </div>
@@ -601,215 +458,14 @@ export default function ABDM() {
       {/* ── 3. COMPREHENSIVE ABHA EXPLANATION & HEALTH CARD CONTAINER ── */}
       <ABHAExplanationContainer />
 
-      {/* ── 3. INTERACTIVE MILESTONES EXPLORER (M1, M2, M3 DEEP DIVE) ── */}
-      <motion.section
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ amount: 0.15 }}
-        variants={fadeUp}
-        id="milestones-explorer"
-        className="py-8 sm:py-12 site-wrapper scroll-mt-24"
-      >
-        <div className="text-center max-w-4xl mx-auto mb-6 sm:mb-8 space-y-3">
-          <span
-            className="text-xs font-extrabold uppercase tracking-widest px-3.5 py-1 rounded-full border inline-block"
-            style={{
-              background: 'color-mix(in srgb, var(--t-primary) 10%, transparent)',
-              borderColor: 'color-mix(in srgb, var(--t-primary) 25%, transparent)',
-              color: 'var(--t-primary)',
-            }}
-          >
-            ABDM INTEGRATION ROADMAP
-          </span>
-          <h2
-            className="text-2xl sm:text-3xl lg:text-4xl font-extrabold"
-            style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", color: 'var(--t-text)' }}
-          >
-            Deep Dive into Integration Milestones
-          </h2>
-          <p className="text-xs sm:text-sm" style={{ color: 'var(--t-text-secondary)' }}>
-            Click on any milestone to explore detailed feature capabilities, technical API specifications, and clinical workflows.
-          </p>
-          <div className="flex items-center justify-center gap-2 pt-1">
-            <span
-              className="text-[10px] font-extrabold uppercase tracking-wider px-2.5 py-0.5 rounded-full border inline-flex items-center gap-1.5"
-              style={{
-                background: 'color-mix(in srgb, var(--t-primary) 8%, transparent)',
-                borderColor: 'color-mix(in srgb, var(--t-primary) 20%, transparent)',
-                color: 'var(--t-primary)',
-              }}
-            >
-              <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-ping" />
-              Auto-advancing every 4 seconds
-            </span>
-          </div>
-        </div>
-
-        {/* Tab Selector Buttons */}
-        <div className="flex items-center justify-center gap-2 sm:gap-4 mb-6 flex-wrap">
-          {milestonesData.map((m) => {
-            const isActive = activeTab === m.id
-            return (
-              <button
-                key={m.id}
-                type="button"
-                onClick={() => setActiveTab(m.id)}
-                className="flex items-center gap-2.5 px-5 py-3 rounded-2xl text-xs sm:text-sm font-extrabold transition-all duration-200 cursor-pointer shadow-sm border"
-                style={{
-                  background: isActive ? 'var(--t-primary)' : 'var(--t-surface, #fff)',
-                  color: isActive ? '#ffffff' : 'var(--t-text)',
-                  borderColor: isActive ? 'var(--t-primary)' : 'var(--t-border-light)',
-                  boxShadow: isActive ? '0 4px 20px var(--t-btn-shadow)' : 'none',
-                }}
-              >
-                <span
-                  className="w-6 h-6 rounded-lg text-[11px] flex items-center justify-center font-black"
-                  style={{
-                    background: isActive ? 'rgba(255,255,255,0.25)' : 'color-mix(in srgb, var(--t-primary) 15%, transparent)',
-                    color: isActive ? '#ffffff' : 'var(--t-primary)',
-                  }}
-                >
-                  {m.id}
-                </span>
-                <span>{m.title.split(' ')[0]} {m.title.split(' ')[1]}</span>
-                {isActive && (
-                  <span className="material-symbols-outlined text-sm text-white">check_circle</span>
-                )}
-              </button>
-            )
-          })}
-        </div>
-
-        {/* Milestone Detail Display Box */}
-        <AnimatePresence mode="wait">
-          <motion.div
-            key={currentMilestone.id}
-            initial={{ opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -16 }}
-            transition={{ duration: 0.35, ease: 'easeOut' }}
-            className="rounded-3xl border shadow-lg overflow-hidden"
-            style={{
-              background: 'var(--t-surface, #fff)',
-              borderColor: 'color-mix(in srgb, var(--t-primary) 25%, transparent)',
-            }}
-          >
-            {/* Box Header */}
-            <div
-              className="p-6 sm:p-8 border-b flex flex-col md:flex-row md:items-center justify-between gap-4"
-              style={{
-                background: currentMilestone.bgGradient,
-                borderColor: 'var(--t-border-light)',
-              }}
-            >
-              <div className="flex items-center gap-4">
-                <div
-                  className="w-14 h-14 rounded-2xl flex items-center justify-center shrink-0 shadow-md text-white border border-white/30"
-                  style={{ background: 'var(--t-primary)' }}
-                >
-                  <span className="material-symbols-outlined text-2xl sm:text-3xl" style={{ fontVariationSettings: "'FILL' 1" }}>
-                    {currentMilestone.icon}
-                  </span>
-                </div>
-                <div>
-                  <div className="flex items-center gap-2 flex-wrap mb-1">
-                    <span
-                      className="text-[10px] font-extrabold uppercase tracking-widest px-2.5 py-0.5 rounded-full text-white"
-                      style={{ background: 'var(--t-primary)' }}
-                    >
-                      {currentMilestone.badge}
-                    </span>
-                    <span
-                      className="text-[10px] font-bold px-2.5 py-0.5 rounded-full border bg-white/80"
-                      style={{ color: 'var(--t-primary-dark)', borderColor: 'color-mix(in srgb, var(--t-primary) 30%, transparent)' }}
-                    >
-                      ✓ {currentMilestone.status}
-                    </span>
-                  </div>
-                  <h3 className="text-xl sm:text-2xl font-extrabold" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", color: 'var(--t-text)' }}>
-                    {currentMilestone.title}
-                  </h3>
-                  <p className="text-xs sm:text-sm mt-0.5 font-medium" style={{ color: 'var(--t-text-secondary)' }}>
-                    {currentMilestone.subtitle}
-                  </p>
-                </div>
-              </div>
-
-              <Link
-                to="/contact"
-                className="inline-flex items-center gap-2 text-xs font-bold px-5 py-2.5 rounded-full text-white shadow-sm self-start md:self-auto transition-transform hover:scale-105"
-                style={{ background: 'var(--t-primary)' }}
-              >
-                <span>Request {currentMilestone.id} Integration</span>
-                <span className="material-symbols-outlined text-sm">arrow_forward</span>
-              </Link>
-            </div>
-
-            {/* Highlights Grid */}
-            <div className="p-6 sm:p-8 space-y-6">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-                {currentMilestone.highlights.map((item, idx) => (
-                  <div
-                    key={idx}
-                    className="p-5 rounded-2xl border bg-white/60 backdrop-blur-sm transition-all hover:shadow-md flex items-start gap-3.5"
-                    style={{
-                      borderColor: 'var(--t-border-light)',
-                      background: 'color-mix(in srgb, var(--t-surface-low) 50%, white)',
-                    }}
-                  >
-                    <div
-                      className="w-10 h-10 rounded-xl flex items-center justify-center shrink-0 border shadow-xs"
-                      style={{
-                        background: 'color-mix(in srgb, var(--t-primary) 12%, transparent)',
-                        borderColor: 'color-mix(in srgb, var(--t-primary) 25%, transparent)',
-                        color: 'var(--t-primary)',
-                      }}
-                    >
-                      <span className="material-symbols-outlined text-xl" style={{ fontVariationSettings: "'FILL' 1" }}>
-                        {item.icon}
-                      </span>
-                    </div>
-                    <div>
-                      <h4 className="text-xs sm:text-sm font-bold mb-1" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", color: 'var(--t-text)' }}>
-                        {item.title}
-                      </h4>
-                      <p className="text-[11px] sm:text-xs leading-relaxed" style={{ color: 'var(--t-text-secondary)' }}>
-                        {item.desc}
-                      </p>
-                    </div>
-                  </div>
-                ))}
-              </div>
-
-              {/* Technical Specifications Note */}
-              <div
-                className="p-4 rounded-xl border flex items-center gap-3 text-xs"
-                style={{
-                  background: 'color-mix(in srgb, var(--t-primary) 6%, white)',
-                  borderColor: 'color-mix(in srgb, var(--t-primary) 20%, transparent)',
-                  color: 'var(--t-text-secondary)',
-                }}
-              >
-                <span className="material-symbols-outlined text-lg shrink-0" style={{ color: 'var(--t-primary)' }}>
-                  code
-                </span>
-                <div>
-                  <span className="font-bold text-[var(--t-text)]">Technical Architecture Note: </span>
-                  {currentMilestone.technicalDetails}
-                </div>
-              </div>
-            </div>
-          </motion.div>
-        </AnimatePresence>
-      </motion.section>
-
       {/* ── 3. SAMPLE DIGITAL ABHA CARD SIMULATOR ── */}
       <motion.section
         initial="hidden"
         whileInView="visible"
         viewport={{ amount: 0.15 }}
         variants={fadeUp}
-        className="py-8 sm:py-12 border-y relative overflow-hidden"
+        id="digital-abha-card"
+        className="py-8 sm:py-12 border-y relative overflow-hidden scroll-mt-24"
         style={{ background: 'color-mix(in srgb, var(--t-surface-mid) 40%, transparent)', borderColor: 'var(--t-border-light)' }}
       >
         <div className="site-wrapper">
@@ -965,88 +621,7 @@ export default function ABDM() {
         </div>
       </motion.section>
 
-      {/* ── 4. ABDM ARCHITECTURE COMPONENTS ── */}
-      <motion.section
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ amount: 0.15 }}
-        variants={fadeUp}
-        className="py-8 sm:py-12 site-wrapper"
-      >
-        <div className="text-center max-w-4xl mx-auto mb-8 sm:mb-10 space-y-3">
-          <span
-            className="text-xs font-extrabold uppercase tracking-widest px-3.5 py-1 rounded-full border inline-block"
-            style={{
-              background: 'color-mix(in srgb, var(--t-primary) 10%, transparent)',
-              borderColor: 'color-mix(in srgb, var(--t-primary) 25%, transparent)',
-              color: 'var(--t-primary)',
-            }}
-          >
-            NATIONAL HEALTH STACK
-          </span>
-          <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", color: 'var(--t-text)' }}>
-            Core Pillars of ABDM Ecosystem
-          </h2>
-          <p className="text-xs sm:text-sm" style={{ color: 'var(--t-text-secondary)' }}>
-            OMEDO seamlessly connects your hospital to all four key building blocks established by the National Health Authority.
-          </p>
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-          {abdmArchitectureComponents.map((comp, idx) => (
-            <motion.div
-              key={idx}
-              variants={fadeUp}
-              className="p-6 rounded-2xl border bg-white/70 backdrop-blur-sm shadow-sm flex flex-col justify-between space-y-4 hover:shadow-md transition-all"
-              style={{
-                background: 'var(--t-surface, #fff)',
-                borderColor: 'var(--t-border-light)',
-              }}
-            >
-              <div className="space-y-3">
-                <div className="flex items-center justify-between">
-                  <div
-                    className="w-12 h-12 rounded-xl flex items-center justify-center border shadow-xs"
-                    style={{
-                      background: 'color-mix(in srgb, var(--t-primary) 10%, transparent)',
-                      borderColor: 'color-mix(in srgb, var(--t-primary) 20%, transparent)',
-                      color: 'var(--t-primary)',
-                    }}
-                  >
-                    <span className="material-symbols-outlined text-2xl" style={{ fontVariationSettings: "'FILL' 1" }}>
-                      {comp.icon}
-                    </span>
-                  </div>
-                  <span
-                    className="text-[9px] font-extrabold px-2 py-0.5 rounded-full border"
-                    style={{
-                      background: 'color-mix(in srgb, var(--t-primary) 8%, transparent)',
-                      borderColor: 'color-mix(in srgb, var(--t-primary) 20%, transparent)',
-                      color: 'var(--t-primary)',
-                    }}
-                  >
-                    {comp.badge}
-                  </span>
-                </div>
-
-                <h3 className="text-base font-extrabold" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", color: 'var(--t-text)' }}>
-                  {comp.title}
-                </h3>
-                <p className="text-xs leading-relaxed" style={{ color: 'var(--t-text-secondary)' }}>
-                  {comp.desc}
-                </p>
-              </div>
-
-              <div className="pt-3 border-t flex items-center gap-1 text-[11px] font-bold" style={{ borderColor: 'var(--t-border-light)', color: 'var(--t-primary)' }}>
-                <span>NHA Integrated</span>
-                <span className="material-symbols-outlined text-xs">verified</span>
-              </div>
-            </motion.div>
-          ))}
-        </div>
-      </motion.section>
-
-      {/* ── 5. FREQUENTLY ASKED QUESTIONS ── */}
+      {/* ── 4. FREQUENTLY ASKED QUESTIONS ── */}
       <motion.section
         initial="hidden"
         whileInView="visible"
