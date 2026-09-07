@@ -4,6 +4,7 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { Menu, X, ChevronDown } from 'lucide-react'
 import { navLinks } from '../../data/navigation'
 import NavbarBackground from './NavbarBackground'
+import omedoLogo from '../../assets/omedo_logo.png'
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false)
@@ -50,7 +51,7 @@ export default function Navbar() {
         {/* Logo */}
         <Link to="/" className="flex items-center shrink-0 py-1">
           <img
-            src="/images/omedo_logo.png"
+            src={omedoLogo}
             alt="OMEDO - Best Hospital Management Software in India!"
             className="h-11 sm:h-13 md:h-15 lg:h-17 2xl:h-19 w-auto object-contain transition-transform duration-200 hover:scale-[1.02]"
             style={{ maxWidth: '265px' }}

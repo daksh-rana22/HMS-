@@ -90,36 +90,7 @@ const comparisonData = [
   },
 ]
 
-const workflowSteps = [
-  {
-    num: '01',
-    step: 'Patient Check-In',
-    title: 'Registration & ABHA Link',
-    desc: 'Quick OPD/IPD registration, creation of unique UHID, and ABHA health account setup in seconds.',
-    icon: 'person_add',
-  },
-  {
-    num: '02',
-    step: 'Doctor Care',
-    title: 'Consultation & EMR',
-    desc: 'Doctor reviews medical history, enters symptoms, and issues digital Rx with automated lab test orders.',
-    icon: 'stethoscope',
-  },
-  {
-    num: '03',
-    step: 'Diagnostics & Ward',
-    title: 'Lab, Radiology & IPD Bed',
-    desc: 'Barcode lab test processing, instant radiology PACS image link, and real-time IPD room allocation.',
-    icon: 'biotech',
-  },
-  {
-    num: '04',
-    step: 'Billing & Discharge',
-    title: 'Auto-Billing & Summary',
-    desc: 'Consolidated itemized invoice, insurance claim clearance, and instant electronic discharge summary.',
-    icon: 'task_alt',
-  },
-]
+
 
 export default function HMSExplanationContainer() {
   const [activeDevice, setActiveDevice] = useState('laptop')
@@ -158,25 +129,65 @@ export default function HMSExplanationContainer() {
             <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-[var(--t-primary)]/30 bg-white shadow-sm">
               <span className="w-2 h-2 rounded-full bg-[var(--t-primary)] animate-ping" />
               <span className="text-xs font-bold tracking-wider text-[var(--t-primary)] uppercase">
-                INTELLIGENT HEALTHCARE PLATFORM (OMEDO HMS)
+                INTELLIGENT HEALTHCARE PLATFORM · OMEDO HMS
               </span>
             </div>
 
             <h2 className="text-2xl sm:text-4xl lg:text-5xl font-extrabold text-[var(--t-text,#121d1f)] tracking-tight leading-tight" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
-              What is <span className="bg-clip-text text-transparent" style={{ backgroundImage: 'var(--t-gradient-text, linear-gradient(135deg, #00685e 0%, #2d685e 100%))' }}>OMEDO</span> & Why Does Every Modern Hospital Need It?
+              Everything Your Hospital Needs.{' '}
+              <span className="bg-clip-text text-transparent" style={{ backgroundImage: 'var(--t-gradient-text, linear-gradient(135deg, #00685e 0%, #2d685e 100%))' }}>
+                Connected in One Platform.
+              </span>
             </h2>
 
-            <p className="text-xs sm:text-base text-[var(--t-text-secondary,#3d4947)] leading-relaxed max-w-3xl mx-auto">
-              <strong>OMEDO (Hospital Management System)</strong> is an enterprise digital ecosystem that integrates clinical workflows, patient electronic medical records (EMR), laboratory diagnostics, pharmacy inventory, and revenue cycle management into a single, unified platform. It eliminates manual paperwork, speeds up patient care, prevents revenue loss, and enforces strict national healthcare compliance.
-            </p>
+            <div className="space-y-2 max-w-3xl mx-auto text-xs sm:text-base text-[var(--t-text-secondary,#3d4947)] leading-relaxed">
+              <p>
+                OMEDO connects clinical, administrative and financial workflows into one intelligent healthcare platform.
+              </p>
+              <p className="font-semibold text-[var(--t-primary,#00685e)]">
+                One platform. One connected patient journey. One source of truth.
+              </p>
+            </div>
 
             {/* Quick Stat Pill Grid inside Banner */}
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4 pt-4 text-left">
               {[
-                { title: 'Zero Paperwork', label: 'Digital EMR & Rx', icon: 'description' },
-                { title: '60% Faster Discharge', label: 'Automated IPD Invoicing', icon: 'speed' },
-                { title: 'Zero Billing Leakage', label: 'Audited Cashless Claims', icon: 'verified' },
-                { title: 'ABDM Ready', label: 'Instant ABHA ID Creation', icon: 'verified_user' },
+                {
+                  title: 'Go Digital',
+                  label: (
+                    <>
+                      Digital EMR &amp;<br />e-Prescriptions
+                    </>
+                  ),
+                  icon: 'description',
+                },
+                {
+                  title: 'Faster Operations',
+                  label: (
+                    <>
+                      Automated IPD &amp;<br />discharge workflows
+                    </>
+                  ),
+                  icon: 'speed',
+                },
+                {
+                  title: 'Control Revenue',
+                  label: (
+                    <>
+                      Integrated billing &amp;<br />claim auditing
+                    </>
+                  ),
+                  icon: 'payments',
+                },
+                {
+                  title: 'ABDM Ready',
+                  label: (
+                    <>
+                      Digital health<br />ecosystem integration
+                    </>
+                  ),
+                  icon: 'verified_user',
+                },
               ].map(({ title, label, icon }) => (
                 <div key={title} className="bg-white/90 backdrop-blur-md p-3 sm:p-4 rounded-2xl border border-[var(--t-border)]/40 shadow-sm flex items-start gap-2.5">
                   <div className="w-8 h-8 rounded-xl bg-[var(--t-primary)]/10 text-[var(--t-primary)] flex items-center justify-center shrink-0">
@@ -184,11 +195,200 @@ export default function HMSExplanationContainer() {
                   </div>
                   <div>
                     <div className="text-xs font-extrabold text-[var(--t-text)]">{title}</div>
-                    <div className="text-[10px] sm:text-xs text-[var(--t-text-muted,#6d7a77)] font-medium">{label}</div>
+                    <div className="text-[10px] sm:text-xs text-[var(--t-text-muted,#6d7a77)] font-medium leading-snug">{label}</div>
                   </div>
                 </div>
               ))}
             </div>
+          </div>
+        </motion.div>
+
+        {/* ── 1.5. SIMPLE IMPLEMENTATION IN 3 SIMPLE STEPS ── */}
+        <motion.div
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ amount: 0.15 }}
+          variants={fadeUp}
+          className="space-y-8 sm:space-y-12"
+        >
+          <div className="text-center max-w-3xl mx-auto space-y-2.5">
+            <span className="text-xs font-bold uppercase tracking-wider text-[var(--t-primary,#00685e)] block">
+              SIMPLE IMPLEMENTATION
+            </span>
+            <h3 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-[var(--t-text,#121d1f)]" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
+              Implementation in 3 Simple Steps
+            </h3>
+            <p className="text-xs sm:text-sm text-[var(--t-text-secondary,#3d4947)] leading-relaxed">
+              Experience seamless hospital onboarding, fast clinical integration, and comprehensive staff training.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8 relative items-stretch">
+            {/* Mobile Vertical Connector Line */}
+            <div className="md:hidden absolute left-1/2 top-8 bottom-40 w-0.5 bg-[#bcc9c6]/40 -translate-x-1/2 z-0 pointer-events-none" />
+
+            {/* ECG Connector 1 */}
+            <div className="hidden md:block absolute top-12 left-[16.66%] w-[33.33%] z-20 pointer-events-none">
+              <svg className="w-full h-10 text-[#00685e]" viewBox="0 0 300 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path
+                  d="M0 20 H100 L115 8 L125 32 L135 0 L145 40 L155 10 L165 28 L175 20 H300"
+                  stroke="#bcc9c6"
+                  strokeWidth="2.5"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  opacity="0.3"
+                />
+                <motion.path
+                  d="M0 20 H100 L115 8 L125 32 L135 0 L145 40 L155 10 L165 28 L175 20 H300"
+                  stroke="var(--t-primary, #00685e)"
+                  strokeWidth="3.5"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  initial={{ pathLength: 0, opacity: 0.2 }}
+                  animate={{ pathLength: [0, 1, 1, 0], opacity: [0.2, 1, 1, 0.2] }}
+                  transition={{
+                    duration: 3.2,
+                    times: [0, 0.45, 0.5, 1],
+                    repeat: Infinity,
+                    ease: "easeInOut"
+                  }}
+                />
+              </svg>
+            </div>
+
+            {/* ECG Connector 2 */}
+            <div className="hidden md:block absolute top-12 left-[50%] w-[33.33%] z-20 pointer-events-none">
+              <svg className="w-full h-10 text-[#00685e]" viewBox="0 0 300 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path
+                  d="M0 20 H100 L115 8 L125 32 L135 0 L145 40 L155 10 L165 28 L175 20 H300"
+                  stroke="#bcc9c6"
+                  strokeWidth="2.5"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  opacity="0.3"
+                />
+                <motion.path
+                  d="M0 20 H100 L115 8 L125 32 L135 0 L145 40 L155 10 L165 28 L175 20 H300"
+                  stroke="var(--t-primary, #00685e)"
+                  strokeWidth="3.5"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  initial={{ pathLength: 0, opacity: 0.2 }}
+                  animate={{ pathLength: [0, 0, 1, 1], opacity: [0.2, 0.2, 1, 0.2] }}
+                  transition={{
+                    duration: 3.2,
+                    times: [0, 0.5, 0.95, 1],
+                    repeat: Infinity,
+                    ease: "easeInOut"
+                  }}
+                />
+              </svg>
+            </div>
+
+            {/* Step 1: Implement */}
+            <motion.div
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ amount: 0.15 }}
+              variants={fadeUp}
+              className="bg-white border border-[#bcc9c6]/50 rounded-3xl shadow-sm hover:shadow-xl transition-all duration-300 relative overflow-hidden group hover:-translate-y-1 text-center z-10 flex flex-col justify-between"
+            >
+              <div className="relative h-44 sm:h-48 overflow-hidden">
+                <img
+                  src="/images/home_hero_reception.png"
+                  alt="Hospital Cloud Setup & Implementation"
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-slate-900/80 via-slate-900/30 to-transparent" />
+                <div
+                  className="absolute top-4 left-1/2 -translate-x-1/2 w-12 h-12 sm:w-14 sm:h-14 rounded-2xl text-white text-lg sm:text-xl font-bold flex items-center justify-center shadow-lg ring-4 ring-white/90"
+                  style={{ background: 'linear-gradient(135deg, var(--t-primary,#00685e) 0%, var(--t-primary-mid,#008378) 100%)' }}
+                >
+                  1
+                </div>
+                <div className="absolute bottom-3 left-1/2 -translate-x-1/2 inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full text-[11px] font-extrabold uppercase tracking-wider text-white bg-black/40 backdrop-blur-md border border-white/30">
+                  <span className="material-symbols-outlined text-sm text-emerald-400">cloud_upload</span>
+                  <span>Cloud Setup</span>
+                </div>
+              </div>
+
+              <div className="p-6 sm:p-7 space-y-2.5 relative z-10">
+                <h4 className="text-lg sm:text-xl font-extrabold text-[#0F172A]" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>Implement</h4>
+                <p className="text-xs sm:text-sm text-[#475569] leading-relaxed max-w-xs mx-auto font-medium">
+                  Rapid cloud deployment with personalized configuration based on your hospital's specific workflows.
+                </p>
+              </div>
+            </motion.div>
+
+            {/* Step 2: Integrate */}
+            <motion.div
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ amount: 0.15 }}
+              variants={fadeUp}
+              className="bg-white border border-[#bcc9c6]/50 rounded-3xl shadow-sm hover:shadow-xl transition-all duration-300 relative overflow-hidden group hover:-translate-y-1 text-center z-10 flex flex-col justify-between"
+            >
+              <div className="relative h-44 sm:h-48 overflow-hidden">
+                <img
+                  src="/images/lab_opd_orders.png"
+                  alt="System Integration & LIS Diagnostics Sync"
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-slate-900/80 via-slate-900/30 to-transparent" />
+                <div
+                  className="absolute top-4 left-1/2 -translate-x-1/2 w-12 h-12 sm:w-14 sm:h-14 rounded-2xl text-white text-lg sm:text-xl font-bold flex items-center justify-center shadow-lg ring-4 ring-white/90"
+                  style={{ background: 'linear-gradient(135deg, var(--t-primary-mid,#008378) 0%, var(--t-accent,#67d9ca) 100%)' }}
+                >
+                  2
+                </div>
+                <div className="absolute bottom-3 left-1/2 -translate-x-1/2 inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full text-[11px] font-extrabold uppercase tracking-wider text-white bg-black/40 backdrop-blur-md border border-white/30">
+                  <span className="material-symbols-outlined text-sm text-cyan-400">hub</span>
+                  <span>API &amp; LIS Sync</span>
+                </div>
+              </div>
+
+              <div className="p-6 sm:p-7 space-y-2.5 relative z-10">
+                <h4 className="text-lg sm:text-xl font-extrabold text-[#0F172A]" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>Integrate</h4>
+                <p className="text-xs sm:text-sm text-[#475569] leading-relaxed max-w-xs mx-auto font-medium">
+                  Connect your existing systems, diagnostics equipment, legacy data, and third-party platforms seamlessly.
+                </p>
+              </div>
+            </motion.div>
+
+            {/* Step 3: Empower */}
+            <motion.div
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ amount: 0.15 }}
+              variants={fadeUp}
+              className="bg-white border border-[#bcc9c6]/50 rounded-3xl shadow-sm hover:shadow-xl transition-all duration-300 relative overflow-hidden group hover:-translate-y-1 text-center z-10 flex flex-col justify-between"
+            >
+              <div className="relative h-44 sm:h-48 overflow-hidden">
+                <img
+                  src="/images/home_doctor_tablet.png"
+                  alt="Doctor & Nurse Staff Onboarding"
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-slate-900/80 via-slate-900/30 to-transparent" />
+                <div
+                  className="absolute top-4 left-1/2 -translate-x-1/2 w-12 h-12 sm:w-14 sm:h-14 rounded-2xl text-white text-lg sm:text-xl font-bold flex items-center justify-center shadow-lg ring-4 ring-white/90"
+                  style={{ background: 'linear-gradient(135deg, var(--t-primary-dark,#003d36) 0%, var(--t-primary,#00685e) 100%)' }}
+                >
+                  3
+                </div>
+                <div className="absolute bottom-3 left-1/2 -translate-x-1/2 inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full text-[11px] font-extrabold uppercase tracking-wider text-white bg-black/40 backdrop-blur-md border border-white/30">
+                  <span className="material-symbols-outlined text-sm text-sky-400">groups</span>
+                  <span>Staff Onboarding</span>
+                </div>
+              </div>
+
+              <div className="p-6 sm:p-7 space-y-2.5 relative z-10">
+                <h4 className="text-lg sm:text-xl font-extrabold text-[#0F172A]" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>Empower</h4>
+                <p className="text-xs sm:text-sm text-[#475569] leading-relaxed max-w-xs mx-auto font-medium">
+                  Onboard your staff in days, not months, with our intuitive, user-friendly clinical interface.
+                </p>
+              </div>
+            </motion.div>
           </div>
         </motion.div>
 
@@ -450,69 +650,6 @@ export default function HMSExplanationContainer() {
                 </tbody>
               </table>
             </div>
-          </div>
-        </motion.div>
-
-        {/* ── 5. END-TO-END PATIENT LIFECYCLE WORKFLOW ── */}
-        <motion.div
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ amount: 0.15 }}
-          variants={fadeUp}
-          className="space-y-6 sm:space-y-8"
-        >
-          <div className="text-center max-w-3xl mx-auto space-y-3">
-            <span className="text-xs font-bold uppercase tracking-widest text-[var(--t-primary,#00685e)]">
-              SEAMLESS DATA FLOW
-            </span>
-            <h3 className="text-xl sm:text-3xl lg:text-4xl font-extrabold text-[var(--t-text,#121d1f)]" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
-              How Patient Data Flows Through OMEDO
-            </h3>
-            <p className="text-xs sm:text-sm text-[var(--t-text-secondary,#3d4947)]">
-              From initial registration to final billing, OMEDO links every clinical touchpoint in real time.
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 relative">
-            {workflowSteps.map((step, idx) => (
-              <motion.div
-                key={step.num}
-                initial={{ opacity: 0, y: 44, scale: 0.94 }}
-                whileInView={{ opacity: 1, y: 0, scale: 1 }}
-                viewport={{ amount: 0.15 }}
-                transition={{ duration: 1.1, delay: idx * 0.22, ease: [0.16, 1, 0.3, 1] }}
-                className="bg-white rounded-3xl p-5 sm:p-6 border border-[var(--t-border)]/50 shadow-md hover:shadow-xl hover:border-[var(--t-primary)] transition-all duration-300 flex flex-col justify-between space-y-4 group relative"
-              >
-                <div className="space-y-3">
-                  <div className="flex items-center justify-between">
-                    <span className="text-2xl sm:text-3xl font-black text-[var(--t-primary)] opacity-40 group-hover:opacity-100 transition-opacity">
-                      {step.num}
-                    </span>
-                    <div className="w-10 h-10 rounded-2xl bg-[var(--t-surface-high,#afecde)] text-[var(--t-primary)] flex items-center justify-center group-hover:scale-110 transition-transform">
-                      <span className="material-symbols-outlined text-xl">{step.icon}</span>
-                    </div>
-                  </div>
-
-                  <div>
-                    <span className="text-[10px] font-bold uppercase tracking-wider text-[var(--t-text-muted)] block">
-                      {step.step}
-                    </span>
-                    <h4 className="text-base font-bold text-[var(--t-text)] mt-0.5" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
-                      {step.title}
-                    </h4>
-                  </div>
-
-                  <p className="text-xs text-[var(--t-text-secondary)] leading-relaxed">
-                    {step.desc}
-                  </p>
-                </div>
-
-                <div className="pt-2 border-t border-[var(--t-border)]/30 flex items-center gap-1.5 text-[11px] font-bold text-[var(--t-primary)]">
-                  <span>Connected Core</span>
-                  <span className="material-symbols-outlined text-xs">sync</span>
-                </div>
-              </motion.div>
-            ))}
           </div>
         </motion.div>
 

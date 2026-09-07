@@ -159,7 +159,7 @@ export default function Contact() {
             <span className="text-[#00685e]">Simplify Healthcare Management</span> Together
           </motion.h1>
           <motion.p
-            className="text-description text-[#3d4947] max-w-2xl mx-auto"
+            className="text-description text-[#3d4947] max-w-3xl lg:max-w-4xl mx-auto"
             variants={fadeUp}
           >
             Whether you're looking for a complete hospital management solution, ABDM integration, or support with your existing OMEDO setup, our team is ready to help.
@@ -540,7 +540,7 @@ export default function Contact() {
                       href="https://maps.google.com/?q=H-154+Sector-23+Sanjay+Nagar+Ghaziabad+201001"
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="inline-flex items-center gap-1 text-[11px] font-bold text-[#00685e] hover:underline"
+                      className="inline-flex items-center gap-1 text-xs font-bold text-[#00685e] hover:underline"
                     >
                       <span>View in Google Maps</span>
                       <span className="material-symbols-outlined text-xs">open_in_new</span>
@@ -550,14 +550,14 @@ export default function Contact() {
                   <div className="grid grid-cols-1 sm:grid-cols-12 gap-4 items-center">
                     {/* Left: Office Address Details */}
                     <div className="sm:col-span-7 space-y-2 text-slate-700 pl-0 sm:pl-1">
-                      <div className="font-bold text-slate-900 text-xs sm:text-sm">
+                      <div className="font-bold text-slate-900 text-sm sm:text-base leading-snug">
                         OMEDO Software Solutions Private Limited
                       </div>
-                      <p className="text-xs text-slate-600 leading-relaxed">
+                      <p className="text-sm text-slate-600 leading-relaxed">
                         H-154, Sector-23, Sanjay Nagar,<br />
                         Ghaziabad – 201001, Uttar Pradesh, India
                       </p>
-                      <div className="text-[11px] text-slate-500 font-medium space-y-0.5 pt-0.5">
+                      <div className="text-xs text-slate-500 font-medium space-y-0.5 pt-0.5">
                         <div><span className="font-semibold text-slate-700">CIN:</span> U62099UW2026PTC257817</div>
                         <div><span className="font-semibold text-slate-700">MSME:</span> UDYAM-UP-29-0255247</div>
                       </div>

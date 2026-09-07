@@ -4,7 +4,6 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { pageTransition } from '../../utils/animations'
 import { testimonials } from '../../data/testimonials'
 import HeroBackground from '../../components/common/HeroBackground'
-import ABDMIntegration from '../../components/sections/ABDMIntegration'
 import HMSExplanationContainer from '../../components/sections/HMSExplanationContainer'
 import ProductsShowcase from '../../components/sections/ProductsShowcase'
 
@@ -15,6 +14,7 @@ const heroSlides = [
   { id: 4, title: 'IT Governance', img: '/images/hero_slide_4.png', tag: '19 IT Admin Sub-Modules' },
   { id: 5, title: 'Department Registry', img: '/images/hero_slide_5.png', tag: 'Department & Staff Master' },
 ]
+
 
 const fadeUp = {
   hidden: { opacity: 0, y: 44, scale: 0.94 },
@@ -52,23 +52,23 @@ export default function Home() {
               {/* Badge */}
               <motion.div variants={fadeUp} className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-[var(--t-primary,#00685e)]/30 bg-white/90 backdrop-blur-sm shadow-[0_2px_16px_var(--t-btn-shadow,rgba(0,180,162,0.12))]">
                 <span className="flex w-2 h-2 rounded-full bg-[var(--t-primary,#00685e)] animate-pulse" />
-                <span className="text-[11px] sm:text-xs font-semibold text-[var(--t-primary,#00685e)] tracking-wide">Trusted by 150+ Hospitals &amp; 50+ Clinics</span>
+                <span className="text-[11px] sm:text-xs font-semibold text-[var(--t-primary,#00685e)] tracking-wide uppercase">Trusted by 200+ Healthcare Organizations</span>
               </motion.div>
 
               {/* Headline */}
               <motion.h1 variants={fadeUp} className="text-2xl sm:text-4xl lg:text-[2.65rem] xl:text-[3.1rem] font-black leading-[1.12] tracking-tight text-center lg:text-left" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
-                <span className="text-[var(--t-text,#121d1f)]">Transforming</span><br />
-                <span className="text-[var(--t-text,#121d1f)]">Healthcare with</span><br />
+                <span className="text-[var(--t-text,#121d1f)]">One Platform to</span><br />
+                <span className="text-[var(--t-text,#121d1f)]">Run Your Entire</span><br />
                 <span className="relative inline-block">
                   <span className="bg-clip-text text-transparent" style={{ backgroundImage: 'var(--t-gradient-text, linear-gradient(135deg, #00685e 0%, #2d685e 100%))' }}>
-                    Intelligent OMEDO
+                    Healthcare Operation
                   </span>
                 </span>
               </motion.h1>
 
               {/* Subtext */}
               <motion.p variants={fadeUp} className="text-xs sm:text-sm lg:text-[15px] text-[var(--t-text-secondary,#3d4947)] leading-relaxed max-w-md mx-auto lg:mx-0">
-                A unified Hospital Management System built for modern healthcare — reduce admin burden, streamline patient workflows, ensure ABDM compliance, and make data-driven decisions at scale.
+                OMEDO connects patients, doctors, appointments, EMR, OPD, IPD, billing, pharmacy, laboratory and analytics in one powerful healthcare management platform.
               </motion.p>
 
               {/* ── Mobile Orbital Graphic (Positioned above CTA buttons on phone view) ── */}
@@ -91,7 +91,7 @@ export default function Home() {
                   >
                     {[
                       { label: 'Reports & Analytics', icon: 'analytics', pos: 'top-[-9px] left-1/2 -translate-x-1/2' },
-                      { label: 'ABDM Integration', icon: 'verified_user', pos: 'bottom-[-9px] left-1/2 -translate-x-1/2' },
+                      { label: 'Emergency Care', icon: 'e911_emergency', pos: 'bottom-[-9px] left-1/2 -translate-x-1/2' },
                       { label: 'Billing & GST', icon: 'receipt_long', pos: 'top-1/2 right-[-5px] -translate-y-1/2' },
                       { label: 'IPD & Bed Mgmt', icon: 'bed', pos: 'top-1/2 left-[-5px] -translate-y-1/2' },
                     ].map(({ label, icon, pos }) => (
@@ -202,7 +202,7 @@ export default function Home() {
                     boxShadow: '0 4px 20px var(--t-btn-shadow, rgba(0,104,94,0.35))',
                   }}
                 >
-                  Book a Demo
+                  Book a Free Demo
                   <span className="material-symbols-outlined text-xs sm:text-sm">arrow_forward</span>
                 </Link>
                 <Link to="/modules"
@@ -212,11 +212,11 @@ export default function Home() {
                     color: 'var(--t-primary, #00685e)',
                   }}
                 >
-                  Explore Modules
+                  See OMEDO in Action
                 </Link>
               </motion.div>
 
-              {/* Social proof avatars */}
+              {/* Trust line */}
               <motion.div variants={fadeUp} className="flex items-center gap-2.5 pt-2 border-t border-[var(--t-border)]/30 w-full max-w-md mx-auto lg:mx-0">
                 <div className="flex -space-x-2 shrink-0">
                   {['DR', 'RN', 'AD', 'CM'].map((init, i) => (
@@ -226,7 +226,9 @@ export default function Home() {
                     </span>
                   ))}
                 </div>
-                <span className="text-[11px] sm:text-xs text-[var(--t-text-muted)] font-medium">Loved by doctors, nurses &amp; admins across 50+ cities</span>
+                <span className="text-[11px] sm:text-xs text-[var(--t-text-muted)] font-semibold tracking-wide">
+                  150+ Hospitals · 50+ Clinics · 50+ Cities
+                </span>
               </motion.div>
 
             </motion.div>
@@ -258,7 +260,7 @@ export default function Home() {
                   {/* Pills on outer ring — counter-rotated for upright text */}
                   {[
                     { label: 'Reports & Analytics', icon: 'analytics', pos: 'top-[-11px] sm:top-[-15px] left-1/2 -translate-x-1/2' },
-                    { label: 'ABDM Integration', icon: 'verified_user', pos: 'bottom-[-11px] sm:bottom-[-15px] left-1/2 -translate-x-1/2' },
+                    { label: 'Emergency Care', icon: 'e911_emergency', pos: 'bottom-[-11px] sm:bottom-[-15px] left-1/2 -translate-x-1/2' },
                     { label: 'Billing & GST', icon: 'receipt_long', pos: 'top-1/2 right-[-6px] sm:right-[-12px] -translate-y-1/2' },
                     { label: 'IPD & Bed Mgmt', icon: 'bed', pos: 'top-1/2 left-[-6px] sm:left-[-12px] -translate-y-1/2' },
                   ].map(({ label, icon, pos }) => (
@@ -374,42 +376,67 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ── 2. TRUSTED LOGOS BANNER ── */}
+      {/* ── 2. TRUSTED BY LEADING INSTITUTIONS (ROYAL BLUE SHADE) ── */}
       <section
-        className="py-6 sm:py-8 border-y shadow-inner relative overflow-hidden"
+        className="py-8 sm:py-9 md:py-11 relative overflow-hidden shadow-2xl"
         style={{
-          background: 'linear-gradient(90deg, color-mix(in srgb, var(--t-primary) 95%, black) 0%, color-mix(in srgb, var(--t-primary-mid) 85%, black) 50%, color-mix(in srgb, var(--t-primary) 95%, black) 100%)',
-          borderColor: 'color-mix(in srgb, var(--t-primary) 50%, transparent)',
+          background: 'linear-gradient(135deg, #07152d 0%, #0d2857 25%, #18428a 50%, #12336d 75%, #061226 100%)',
+          borderTop: '1px solid rgba(147, 197, 253, 0.25)',
+          borderBottom: '1px solid rgba(147, 197, 253, 0.18)',
+          boxShadow: 'inset 0 1px 0 rgba(255, 255, 255, 0.15), inset 0 -1px 0 rgba(255, 255, 255, 0.05), 0 18px 36px -12px rgba(7, 21, 45, 0.4)',
         }}
       >
-        <div className="absolute inset-0 pointer-events-none"
-          style={{ background: 'radial-gradient(circle at center, color-mix(in srgb, var(--t-accent) 15%, transparent) 0%, transparent 70%)' }} />
-        <div className="site-wrapper text-center relative z-10">
+        {/* Royal Blue Luminous Ambient Radial Overlays */}
+        <div
+          className="absolute inset-0 pointer-events-none"
+          style={{
+            background: 'radial-gradient(ellipse 70% 60% at 50% 0%, rgba(59, 130, 246, 0.38) 0%, rgba(29, 78, 216, 0.15) 50%, transparent 80%)',
+          }}
+        />
+        <div
+          className="absolute inset-0 pointer-events-none"
+          style={{
+            background: 'radial-gradient(circle at 50% 50%, rgba(96, 165, 250, 0.16) 0%, transparent 65%)',
+          }}
+        />
+        
+        {/* Subtle royal mesh accent lines */}
+        <div
+          className="absolute inset-0 opacity-[0.04] pointer-events-none"
+          style={{
+            backgroundImage: 'radial-gradient(rgba(255, 255, 255, 0.8) 1px, transparent 1px)',
+            backgroundSize: '24px 24px',
+          }}
+        />
+
+        {/* Content */}
+        <div className="site-wrapper text-center relative z-10 space-y-2 sm:space-y-3">
           <p
-            className="text-[10px] sm:text-xs font-extrabold uppercase tracking-[0.2em] mb-4 sm:mb-5 text-white/90"
-            style={{ textShadow: '0 0 10px rgba(255,255,255,0.4)', fontFamily: "'Plus Jakarta Sans', sans-serif" }}
+            className="text-[10px] sm:text-[11px] font-bold uppercase tracking-[0.22em] text-blue-200/90"
+            style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}
           >
             TRUSTED BY LEADING INSTITUTIONS
           </p>
-          <div className="flex flex-wrap items-center justify-center gap-8 sm:gap-16 md:gap-24">
-            {[
-              { icon: 'stethoscope', name: 'Clinics - 50+' },
-              { icon: 'local_hospital', name: 'Hospitals - 150+' },
-            ].map(({ icon, name }) => (
-              <div
-                key={name}
-                className="flex items-center gap-3 font-bold text-white text-base sm:text-lg lg:text-xl tracking-wide transition-colors duration-200 group"
-                style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}
-              >
-                <span
-                  className="material-symbols-outlined group-hover:scale-110 transition-transform duration-200 text-white text-2xl sm:text-3xl"
-                  style={{ filter: 'drop-shadow(0 0 6px rgba(255,255,255,0.6))' }}
-                >
-                  {icon}
-                </span>
-                <span>{name}</span>
-              </div>
-            ))}
+
+          <h2
+            className="text-xl sm:text-2xl lg:text-3xl 2xl:text-4xl font-extrabold text-white tracking-tight drop-shadow-md"
+            style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}
+          >
+            200+ Healthcare Organizations
+          </h2>
+
+          <p
+            className="text-[11px] sm:text-xs md:text-sm font-semibold text-blue-100/90 tracking-wide max-w-xl mx-auto"
+            style={{ fontFamily: "'Inter', sans-serif" }}
+          >
+            150+ Hospitals &nbsp;<span className="text-blue-300/60 font-normal">•</span>&nbsp; 50+ Clinics &nbsp;<span className="text-blue-300/60 font-normal">•</span>&nbsp; 50+ Cities Across India
+          </p>
+
+          {/* Glowing Indicator Accent Bars */}
+          <div className="flex items-center justify-center gap-1.5 pt-0.5">
+            <span className="w-6 h-1 rounded-full bg-blue-300/25" />
+            <span className="w-11 h-1.5 rounded-full bg-gradient-to-r from-blue-400 via-white to-blue-400 shadow-[0_0_10px_rgba(147,197,253,0.9)]" />
+            <span className="w-6 h-1 rounded-full bg-blue-300/25" />
           </div>
         </div>
       </section>
@@ -417,224 +444,12 @@ export default function Home() {
       {/* ── 2. PRODUCTS SHOWCASE (CLINIC & HMS SUITES) ── */}
       <ProductsShowcase showComparison={false} />
 
-      {/* ── 3. STATS BAR (DARK NAVY BAND WITH ICONS) ── */}
-      <section
-        className="text-white py-8 sm:py-12 border-y border-white/10"
-        style={{ background: 'var(--t-footer-bg, #061325)' }}
-      >
-        <div className="site-wrapper">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6 text-center divide-x-0 md:divide-x divide-white/10">
-            {[
-              { value: '40%', label: 'Efficiency Gain', icon: 'bar_chart' },
-              { value: '99.9%', label: 'System Uptime', icon: 'shield' },
-              { value: '150+ / 50+', label: 'Hospitals & Clinics', icon: 'domain' },
-              { value: '15M+', label: 'Patients Records Managed', icon: 'groups' },
-            ].map(({ value, label, icon }) => (
-              <div key={label} className="flex items-center justify-center gap-3 px-3 py-2">
-                <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl bg-white/10 border border-white/15 flex items-center justify-center shrink-0">
-                  <span className="material-symbols-outlined text-xl sm:text-2xl text-[var(--t-accent-light)]">{icon}</span>
-                </div>
-                <div className="text-left">
-                  <div className="text-xl sm:text-3xl font-extrabold text-white leading-tight" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>{value}</div>
-                  <div className="text-[10px] sm:text-xs text-white/70 font-medium">{label}</div>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
 
-      {/* ── 5. IMPLEMENTATION IN 3 SIMPLE STEPS ── */}
-      <section className="py-12 sm:py-16 lg:py-20 site-wrapper">
-        <div className="text-center max-w-3xl mx-auto mb-12 sm:mb-16">
-          <span className="text-xs font-bold uppercase tracking-wider text-[var(--t-primary)] mb-2 block">SIMPLE IMPLEMENTATION</span>
-          <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-[var(--t-text)]" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
-            Implementation in 3 Simple Steps
-          </h2>
-        </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8 relative items-stretch">
 
-          {/* Mobile Vertical Connector Line */}
-          <div className="md:hidden absolute left-1/2 top-8 bottom-40 w-0.5 bg-[#bcc9c6]/40 -translate-x-1/2 z-0 pointer-events-none" />
-
-          {/* ECG Connector 1 */}
-          <div className="hidden md:block absolute top-12 left-[16.66%] w-[33.33%] z-20 pointer-events-none">
-            <svg className="w-full h-10 text-[#00685e]" viewBox="0 0 300 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path
-                d="M0 20 H100 L115 8 L125 32 L135 0 L145 40 L155 10 L165 28 L175 20 H300"
-                stroke="#bcc9c6"
-                strokeWidth="2.5"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                opacity="0.3"
-              />
-              <motion.path
-                d="M0 20 H100 L115 8 L125 32 L135 0 L145 40 L155 10 L165 28 L175 20 H300"
-                stroke="var(--t-primary, #00685e)"
-                strokeWidth="3.5"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                initial={{ pathLength: 0, opacity: 0.2 }}
-                animate={{ pathLength: [0, 1, 1, 0], opacity: [0.2, 1, 1, 0.2] }}
-                transition={{
-                  duration: 3.2,
-                  times: [0, 0.45, 0.5, 1],
-                  repeat: Infinity,
-                  ease: "easeInOut"
-                }}
-              />
-            </svg>
-          </div>
-
-          {/* ECG Connector 2 */}
-          <div className="hidden md:block absolute top-12 left-[50%] w-[33.33%] z-20 pointer-events-none">
-            <svg className="w-full h-10 text-[#00685e]" viewBox="0 0 300 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path
-                d="M0 20 H100 L115 8 L125 32 L135 0 L145 40 L155 10 L165 28 L175 20 H300"
-                stroke="#bcc9c6"
-                strokeWidth="2.5"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                opacity="0.3"
-              />
-              <motion.path
-                d="M0 20 H100 L115 8 L125 32 L135 0 L145 40 L155 10 L165 28 L175 20 H300"
-                stroke="var(--t-primary, #00685e)"
-                strokeWidth="3.5"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                initial={{ pathLength: 0, opacity: 0.2 }}
-                animate={{ pathLength: [0, 0, 1, 1], opacity: [0.2, 0.2, 1, 0.2] }}
-                transition={{
-                  duration: 3.2,
-                  times: [0, 0.5, 0.95, 1],
-                  repeat: Infinity,
-                  ease: "easeInOut"
-                }}
-              />
-            </svg>
-          </div>
-
-          {/* Step 1: Implement */}
-          <motion.div
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ amount: 0.15 }}
-            variants={fadeUp}
-            className="bg-white border border-[#bcc9c6]/50 rounded-3xl shadow-sm hover:shadow-xl transition-all duration-300 relative overflow-hidden group hover:-translate-y-1 text-center z-10 flex flex-col justify-between"
-          >
-            {/* Top Featured Content-Matched Image Header */}
-            <div className="relative h-44 sm:h-48 overflow-hidden">
-              <img
-                src="/images/home_hero_reception.png"
-                alt="Hospital Cloud Setup & Implementation"
-                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-slate-900/80 via-slate-900/30 to-transparent" />
-              <div
-                className="absolute top-4 left-1/2 -translate-x-1/2 w-12 h-12 sm:w-14 sm:h-14 rounded-2xl text-white text-lg sm:text-xl font-bold flex items-center justify-center shadow-lg ring-4 ring-white/90"
-                style={{ background: 'linear-gradient(135deg, var(--t-primary) 0%, var(--t-primary-mid) 100%)' }}
-              >
-                1
-              </div>
-              <div className="absolute bottom-3 left-1/2 -translate-x-1/2 inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full text-[11px] font-extrabold uppercase tracking-wider text-white bg-black/40 backdrop-blur-md border border-white/30">
-                <span className="material-symbols-outlined text-sm text-emerald-400">cloud_upload</span>
-                <span>Cloud Setup</span>
-              </div>
-            </div>
-
-            {/* Card Text Content */}
-            <div className="p-6 sm:p-7 space-y-2.5 relative z-10">
-              <h3 className="text-lg sm:text-xl font-extrabold text-[#0F172A]" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>Implement</h3>
-              <p className="text-xs sm:text-sm text-[#475569] leading-relaxed max-w-xs mx-auto font-medium">
-                Rapid cloud deployment with personalized configuration based on your hospital's specific workflows.
-              </p>
-            </div>
-          </motion.div>
-
-          {/* Step 2: Integrate */}
-          <motion.div
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ amount: 0.15 }}
-            variants={fadeUp}
-            className="bg-white border border-[#bcc9c6]/50 rounded-3xl shadow-sm hover:shadow-xl transition-all duration-300 relative overflow-hidden group hover:-translate-y-1 text-center z-10 flex flex-col justify-between"
-          >
-            {/* Top Featured Content-Matched Image Header */}
-            <div className="relative h-44 sm:h-48 overflow-hidden">
-              <img
-                src="/images/lab_opd_orders.png"
-                alt="System Integration & LIS Diagnostics Sync"
-                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-slate-900/80 via-slate-900/30 to-transparent" />
-              <div
-                className="absolute top-4 left-1/2 -translate-x-1/2 w-12 h-12 sm:w-14 sm:h-14 rounded-2xl text-white text-lg sm:text-xl font-bold flex items-center justify-center shadow-lg ring-4 ring-white/90"
-                style={{ background: 'linear-gradient(135deg, var(--t-primary-mid) 0%, var(--t-accent) 100%)' }}
-              >
-                2
-              </div>
-              <div className="absolute bottom-3 left-1/2 -translate-x-1/2 inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full text-[11px] font-extrabold uppercase tracking-wider text-white bg-black/40 backdrop-blur-md border border-white/30">
-                <span className="material-symbols-outlined text-sm text-cyan-400">hub</span>
-                <span>API &amp; LIS Sync</span>
-              </div>
-            </div>
-
-            {/* Card Text Content */}
-            <div className="p-6 sm:p-7 space-y-2.5 relative z-10">
-              <h3 className="text-lg sm:text-xl font-extrabold text-[#0F172A]" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>Integrate</h3>
-              <p className="text-xs sm:text-sm text-[#475569] leading-relaxed max-w-xs mx-auto font-medium">
-                Connect your existing systems, diagnostics equipment, legacy data, and third-party platforms seamlessly.
-              </p>
-            </div>
-          </motion.div>
-
-          {/* Step 3: Empower */}
-          <motion.div
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ amount: 0.15 }}
-            variants={fadeUp}
-            className="bg-white border border-[#bcc9c6]/50 rounded-3xl shadow-sm hover:shadow-xl transition-all duration-300 relative overflow-hidden group hover:-translate-y-1 text-center z-10 flex flex-col justify-between"
-          >
-            {/* Top Featured Content-Matched Image Header */}
-            <div className="relative h-44 sm:h-48 overflow-hidden">
-              <img
-                src="/images/home_doctor_tablet.png"
-                alt="Doctor & Nurse Staff Onboarding"
-                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-slate-900/80 via-slate-900/30 to-transparent" />
-              <div
-                className="absolute top-4 left-1/2 -translate-x-1/2 w-12 h-12 sm:w-14 sm:h-14 rounded-2xl text-white text-lg sm:text-xl font-bold flex items-center justify-center shadow-lg ring-4 ring-white/90"
-                style={{ background: 'linear-gradient(135deg, var(--t-primary-dark) 0%, var(--t-primary) 100%)' }}
-              >
-                3
-              </div>
-              <div className="absolute bottom-3 left-1/2 -translate-x-1/2 inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full text-[11px] font-extrabold uppercase tracking-wider text-white bg-black/40 backdrop-blur-md border border-white/30">
-                <span className="material-symbols-outlined text-sm text-sky-400">groups</span>
-                <span>Staff Onboarding</span>
-              </div>
-            </div>
-
-            {/* Card Text Content */}
-            <div className="p-6 sm:p-7 space-y-2.5 relative z-10">
-              <h3 className="text-lg sm:text-xl font-extrabold text-[#0F172A]" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>Empower</h3>
-              <p className="text-xs sm:text-sm text-[#475569] leading-relaxed max-w-xs mx-auto font-medium">
-                Onboard your staff in days, not months, with our intuitive, user-friendly clinical interface.
-              </p>
-            </div>
-          </motion.div>
-
-        </div>
-      </section>
 
       {/* ── 6. COMPREHENSIVE HMS EXPLANATION SHOWCASE ── */}
       <HMSExplanationContainer />
-
-      {/* ── ABDM & ABHA INTEGRATION ── */}
-      <ABDMIntegration />
 
       {/* ── 7. REVIEWS & TESTIMONIALS GRID ── */}
       <section className="pt-6 sm:pt-8 lg:pt-10 pb-12 sm:pb-16 lg:pb-20 site-wrapper space-y-10 sm:space-y-12">
@@ -703,7 +518,7 @@ export default function Home() {
         className="py-6 sm:py-10 lg:py-12 site-wrapper"
       >
         <div
-          className="text-white rounded-2xl sm:rounded-3xl p-6 sm:p-10 lg:p-14 text-center shadow-xl relative overflow-hidden"
+          className="text-white rounded-2xl sm:rounded-3xl p-8 sm:p-12 lg:p-16 text-center shadow-xl relative overflow-hidden"
           style={{ background: 'linear-gradient(135deg, var(--t-primary) 0%, var(--t-primary-mid) 100%)' }}
         >
           {/* Subtle bg decoration */}
@@ -712,33 +527,22 @@ export default function Home() {
           <div className="absolute bottom-0 left-0 w-64 h-64 rounded-full pointer-events-none"
             style={{ background: 'radial-gradient(circle, rgba(255,255,255,0.06) 0%, transparent 70%)', transform: 'translate(-30%, 30%)' }} />
 
-          <div className="max-w-3xl mx-auto space-y-5 sm:space-y-6 relative z-10">
+          <div className="max-w-3xl mx-auto space-y-6 sm:space-y-8 relative z-10">
             <h2 className="text-2xl sm:text-4xl lg:text-5xl font-bold leading-tight" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
-              Ready to Modernize Your Care?
+              Ready to transform your healthcare operations?
             </h2>
-            <p className="text-xs sm:text-sm lg:text-base leading-relaxed max-w-xl mx-auto" style={{ color: 'rgba(255,255,255,0.82)' }}>
-              Join the future of healthcare management. Book your personalized strategy session today and see how we can transform your facility.
-            </p>
 
-            <div className="flex flex-wrap items-center justify-center gap-3 sm:gap-4 pt-2">
+            <div className="flex justify-center pt-2">
               <Link
                 to="/contact"
-                className="px-6 py-3 sm:px-7 sm:py-3.5 rounded-full text-xs sm:text-sm font-bold shadow-md transition-all"
+                className="inline-flex items-center gap-2.5 px-8 py-4 sm:px-10 sm:py-4.5 rounded-full text-sm sm:text-base font-bold shadow-lg hover:shadow-2xl transition-all duration-200 hover:scale-[1.03] active:scale-95"
                 style={{ background: 'white', color: 'var(--t-primary)' }}
                 onMouseEnter={e => e.currentTarget.style.background = 'var(--t-bg-light, #effcfe)'}
                 onMouseLeave={e => e.currentTarget.style.background = 'white'}
               >
-                Schedule a Consultation
+                <span>Book a Free OMEDO Demo</span>
+                <span className="material-symbols-outlined text-base font-bold">arrow_forward</span>
               </Link>
-              <Link to="/modules" className="border border-white/40 text-white px-6 py-3 sm:px-7 sm:py-3.5 rounded-full text-xs sm:text-sm font-semibold hover:bg-white/10 transition-all">
-                Watch Video Tour
-              </Link>
-            </div>
-
-            <div className="flex flex-wrap items-center justify-center gap-4 sm:gap-6 text-[11px] sm:text-xs pt-3" style={{ color: 'rgba(255,255,255,0.72)' }}>
-              <span className="flex items-center gap-1"><span className="material-symbols-outlined text-sm">check</span> Fast Setup</span>
-              <span className="flex items-center gap-1"><span className="material-symbols-outlined text-sm">check</span> No Credit Card Required</span>
-              <span className="flex items-center gap-1"><span className="material-symbols-outlined text-sm">check</span> 24/7 Priority Support</span>
             </div>
           </div>
         </div>

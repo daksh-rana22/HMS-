@@ -1,13 +1,14 @@
 import { Link } from 'react-router-dom'
+import omedoLogo from '../../assets/omedo_logo.png'
 
 const moduleLinks = [
-  { name: 'Clinical Management', path: '/modules/clinical' },
-  { name: 'IT Administration', path: '/modules/it-admin' },
-  { name: 'Reports & Analytics', path: '/modules/reports' },
-  { name: 'IPD Care', path: '/modules/ipd' },
+  { name: 'Clinical', path: '/modules/clinical' },
+  { name: 'IPD', path: '/modules/ipd' },
+  { name: 'Laboratory', path: '/modules/laboratory' },
   { name: 'Billing & Accounts', path: '/modules/billing-accounts' },
-  { name: 'Laboratory Management', path: '/modules/laboratory' },
-  { name: 'ABDM Integration', path: '/abdm-integration' },
+  { name: 'ABDM', path: '/abdm-integration' },
+  { name: 'Reports & Analytics', path: '/modules/reports' },
+  { name: 'IT Admin', path: '/modules/it-admin' },
 ]
 
 const mainLinks = [
@@ -39,7 +40,7 @@ export default function Footer() {
           <div className="lg:col-span-4 space-y-4">
             <Link to="/" className="inline-block bg-white p-2 sm:p-2.5 rounded-2xl shadow-lg border border-white/20 hover:scale-[1.02] transition-all">
               <img
-                src="/images/omedo_logo.png"
+                src={omedoLogo}
                 alt="OMEDO - Best Hospital Management Software in India!"
                 className="h-12 sm:h-14 w-auto object-contain rounded-xl"
                 style={{ maxWidth: '180px' }}
@@ -120,7 +121,8 @@ export default function Footer() {
                 </div>
                 
                 <div className="text-slate-300 text-xs leading-relaxed">
-                  H-154, Sector-23, Sanjay Nagar, Ghaziabad — 201001, Uttar Pradesh, India
+                  H-154, Sector-23, Sanjay Nagar,<br />
+                  Ghaziabad — 201001, Uttar Pradesh, India
                 </div>
 
                 <div className="text-[11px] text-slate-400 space-y-0.5 pt-0.5">

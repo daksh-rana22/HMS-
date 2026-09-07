@@ -267,12 +267,7 @@ export default function About() {
                   technology that simplifies administrative complexity and enhances clinical outcomes globally.
                 </p>
               </div>
-              <div className="mt-8 flex items-center -space-x-3">
-                {['DR', 'MS', 'JA'].map((av) => (
-                  <div key={av} className="w-8 h-8 sm:w-10 sm:h-10 rounded-full border-2 border-white bg-[#e4f0f2] flex items-center justify-center text-xs font-bold text-[#00685e]">{av}</div>
-                ))}
-                <div className="pl-4 sm:pl-6 text-xs sm:text-sm text-[#3d4947]" style={{ fontFamily: "'Inter', sans-serif" }}>Trusted by 5,000+ Professionals</div>
-              </div>
+
             </motion.div>
 
             {/* Security First — dark */}

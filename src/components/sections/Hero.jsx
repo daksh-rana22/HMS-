@@ -25,29 +25,29 @@ export default function Hero() {
               style={{ border: '1px solid color-mix(in srgb, var(--t-primary) 20%, transparent)' }}>
               <span className="flex w-2.5 h-2.5 rounded-full animate-pulse"
                 style={{ background: 'var(--t-accent)', boxShadow: '0 0 8px var(--t-accent)' }} />
-              <span className="text-xs font-semibold tracking-wide" style={{ color: 'var(--t-primary)' }}>
-                Trusted by Modern Healthcare Providers
+              <span className="text-xs font-semibold tracking-wide uppercase" style={{ color: 'var(--t-primary)' }}>
+                Trusted by 200+ Healthcare Organizations
               </span>
             </motion.div>
 
             {/* Headline */}
             <motion.h1 variants={fadeUp} className="text-3xl sm:text-4xl lg:text-5xl font-extrabold leading-[1.15] tracking-tight"
               style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", color: 'var(--t-text)' }}>
-              Modern <br className="hidden sm:inline" />
+              One Platform to Run Your Entire <br className="hidden sm:inline" />
               <span style={{
                 background: 'var(--t-gradient-text, linear-gradient(135deg, var(--t-primary) 0%, var(--t-accent) 100%))',
                 WebkitBackgroundClip: 'text',
                 WebkitTextFillColor: 'transparent',
                 backgroundClip: 'text',
               }}>
-                Hospital Management System
+                Healthcare Operation
               </span>
             </motion.h1>
 
             {/* Supporting Text */}
             <motion.p variants={fadeUp} className="text-sm sm:text-base leading-relaxed max-w-lg mx-auto lg:mx-0 font-normal"
               style={{ color: 'var(--t-text-secondary)' }}>
-              Simplify hospital operations with a unified platform for patient management, appointments, billing, pharmacy, laboratory, inventory, HR, and analytics.
+              OMEDO connects patients, doctors, appointments, EMR, OPD, IPD, billing, pharmacy, laboratory and analytics in one powerful healthcare management platform.
             </motion.p>
 
             {/* CTA Buttons */}
@@ -59,7 +59,7 @@ export default function Hero() {
                   boxShadow: '0 8px 24px var(--t-btn-shadow)',
                 }}
               >
-                Request Demo
+                Book a Free Demo
                 <span className="material-symbols-outlined text-sm">arrow_forward</span>
               </Link>
               <Link to="/modules"
@@ -69,7 +69,7 @@ export default function Hero() {
                   color: 'var(--t-primary)',
                 }}
               >
-                Explore Features
+                See OMEDO in Action
               </Link>
             </motion.div>
 
