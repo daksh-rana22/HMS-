@@ -13,6 +13,7 @@ const IPD = lazy(() => import('../pages/IPD/IPD'))
 const Laboratory = lazy(() => import('../pages/Laboratory/Laboratory'))
 const About = lazy(() => import('../pages/About/About'))
 const Contact = lazy(() => import('../pages/Contact/Contact'))
+const Login = lazy(() => import('../pages/Login/Login'))
 const ABDM = lazy(() => import('../pages/ABDM/ABDM'))
 const Products = lazy(() => import('../pages/Products/Products'))
 const Terms = lazy(() => import('../pages/Terms/Terms'))
@@ -42,6 +43,8 @@ const router = createBrowserRouter([
       { path: '/modules/abdm', element: <Suspense fallback={<Loader />}><ABDM /></Suspense> },
       { path: '/about', element: <Suspense fallback={<Loader />}><About /></Suspense> },
       { path: '/contact', element: <Suspense fallback={<Loader />}><Contact /></Suspense> },
+      { path: '/login', element: <Suspense fallback={<Loader />}><Login /></Suspense> },
+
       { path: '/terms', element: <Suspense fallback={<Loader />}><Terms /></Suspense> },
       { path: '/terms-conditions', element: <Suspense fallback={<Loader />}><Terms /></Suspense> },
       { path: '/privacy', element: <Suspense fallback={<Loader />}><Privacy /></Suspense> },

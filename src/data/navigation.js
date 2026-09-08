@@ -3,6 +3,9 @@ export const navLinks = [
   { 
     name: 'Modules', 
     path: '/modules',
+    dropdownLabel: 'System Sub-Modules',
+    icon: 'grid_view',
+    dropdownWidth: 'w-80',
     children: [
       { name: 'Clinical', path: '/modules/clinical', icon: 'clinical_notes', desc: 'OPD, IPD Admissions, Doctor & Nurse Workspaces' },
       { name: 'IPD', path: '/modules/ipd', icon: 'bed', desc: 'Nurse dashboard, provisional estimates & ward billing' },
@@ -14,6 +17,17 @@ export const navLinks = [
     ]
   },
   { name: 'ABDM', path: '/abdm-integration' },
-  { name: 'About Us', path: '/about' },
-  { name: 'Contact Us', path: '/contact' },
+  {
+    name: 'Company',
+    path: '/about',
+    dropdownLabel: 'Company & Contact',
+    icon: 'corporate_fare',
+    dropdownWidth: 'w-72',
+    children: [
+      { name: 'About Us', path: '/about', icon: 'info', desc: 'Our mission, vision, leadership & story' },
+      { name: 'Contact Us', path: '/contact', icon: 'support_agent', desc: 'Get in touch, sales enquiries & 24/7 support' },
+    ]
+  },
 ]
+
+

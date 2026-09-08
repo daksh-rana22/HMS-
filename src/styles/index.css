@@ -1294,18 +1294,19 @@
   }
 
   /* Primary action backgrounds */
-  .bg-\[\#008378\], [class*="bg-[#008378]"],
-  .bg-\[\#00685e\], [class*="bg-[#00685e]"],
-  [class*="bg-[#005049]"] {
+  .bg-\[\#008378\],
+  .bg-\[\#00685e\],
+  .bg-\[\#005049\] {
     background-color: var(--t-primary) !important;
   }
 
   /* Primary text & borders */
-  .text-\[\#00685e\], [class*="text-[#00685e]"],
-  [class*="text-[#008378]"] {
+  .text-\[\#00685e\],
+  .text-\[\#008378\] {
     color: var(--t-primary) !important;
   }
-  .border-\[\#00685e\], [class*="border-[#00685e]"] {
+  .border-\[\#00685e\],
+  .border-\[\#008378\] {
     border-color: var(--t-primary) !important;
   }
   .border-\[\#2d685e\] {
@@ -1431,3 +1432,24 @@
   ::-webkit-scrollbar-thumb:hover {
     background: var(--t-scrollbar-hover) !important;
   }
+
+/* ── Seamless Horizontal Client Logos Marquee ── */
+@keyframes omedoMarquee {
+  0% {
+    transform: translateX(0%);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.animate-omedo-marquee {
+  display: flex;
+  width: max-content;
+  animation: omedoMarquee 32s linear infinite;
+}
+
+.animate-omedo-marquee:hover {
+  animation-play-state: paused;
+}
+
