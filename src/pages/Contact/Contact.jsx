@@ -126,6 +126,29 @@ export default function Contact() {
 
       await submitDemoRequest(payload)
 
+      // Store in local storage for real-time visibility in Login Admin Queries
+      try {
+        const existing = JSON.parse(localStorage.getItem('omedo_client_queries') || '[]')
+        const now = new Date()
+        const formattedDate = `${now.toISOString().split('T')[0]} ${now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}`
+        const newRecord = {
+          id: Date.now(),
+          name: payload.name,
+          facility: payload.hospital_clinic_name,
+          mobile: payload.mobile,
+          email: payload.email,
+          location: payload.location,
+          message: payload.message,
+          date: formattedDate,
+          rawDate: now.toISOString().split('T')[0],
+          category: 'Demo Request',
+        }
+        localStorage.setItem('omedo_client_queries', JSON.stringify([newRecord, ...existing]))
+        window.dispatchEvent(new Event('omedo_queries_updated'))
+      } catch (storageErr) {
+        console.warn('LocalStorage queries update notice:', storageErr)
+      }
+
       // Success
       setSent(true)
       setFormData({ name: '', mobile: '', email: '', facility: '', location: '', message: '', website: '' })

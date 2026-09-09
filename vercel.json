@@ -2,7 +2,7 @@
   "rewrites": [
     {
       "source": "/it/api/:match*",
-      "destination": "http://103.153.58.135:8081/it/api/:match*"
+      "destination": "https://api.omedosoft.com/it/api/:match*"
     },
     {
       "source": "/(.*)",

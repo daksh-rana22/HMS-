@@ -10,8 +10,9 @@ export default defineConfig({
   server: {
     proxy: {
       '/it/api': {
-        target: 'http://103.153.58.135:8081',
+        target: 'https://api.omedosoft.com',
         changeOrigin: true,
+        secure: false,
       },
     },
   },
