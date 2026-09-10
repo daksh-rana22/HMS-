@@ -267,14 +267,8 @@ export async function fetchDemoRequests({ search, fromDate, toDate } = {}) {
 
   const queryString = params.toString() ? `?${params.toString()}` : ''
   const candidateEndpoints = [
-    `https://api.omedosoft.com/it/api/v1/omedo/demo-requests/all${queryString}`,
-    `https://api.omedosoft.com/it/api/v1/omedo/demo-requests/list${queryString}`,
     `https://api.omedosoft.com/it/api/v1/omedo/demo-requests${queryString}`,
-    `${API_ENDPOINTS.DEMO_REQUESTS}/all${queryString}`,
-    `${API_ENDPOINTS.DEMO_REQUESTS}/list${queryString}`,
     `${API_ENDPOINTS.DEMO_REQUESTS}${queryString}`,
-    `http://103.153.58.135:8081/it/api/v1/omedo/demo-requests/all${queryString}`,
-    `http://103.153.58.135:8081/it/api/v1/omedo/demo-requests/list${queryString}`,
     `http://103.153.58.135:8081/it/api/v1/omedo/demo-requests${queryString}`,
   ]
 
