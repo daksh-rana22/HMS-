@@ -1099,31 +1099,9 @@ export default function Login() {
                                   </span>
                                 </td>
 
-                                {/* Mobile Contact with direct WhatsApp / Call triggers */}
+                                {/* Mobile Contact */}
                                 <td className="py-2.5 px-3 border-r border-slate-200 font-mono text-xs text-slate-700 whitespace-nowrap">
-                                  <div className="flex items-center gap-2">
-                                    <span>{q.mobile}</span>
-                                    {q.mobile && (
-                                      <div className="flex items-center gap-1 opacity-80 group-hover:opacity-100">
-                                        <a
-                                          href={`https://wa.me/${q.mobile.replace(/\D/g, '')}`}
-                                          target="_blank"
-                                          rel="noopener noreferrer"
-                                          className="w-5 h-5 rounded bg-emerald-100 hover:bg-emerald-200 text-emerald-700 flex items-center justify-center text-[10px]"
-                                          title="Chat on WhatsApp"
-                                        >
-                                          <span className="material-symbols-outlined text-xs">chat</span>
-                                        </a>
-                                        <a
-                                          href={`tel:${q.mobile}`}
-                                          className="w-5 h-5 rounded bg-blue-100 hover:bg-blue-200 text-blue-700 flex items-center justify-center text-[10px]"
-                                          title="Call client"
-                                        >
-                                          <span className="material-symbols-outlined text-xs">call</span>
-                                        </a>
-                                      </div>
-                                    )}
-                                  </div>
+                                  <span>{q.mobile || '-'}</span>
                                 </td>
 
                                 {/* Email */}
@@ -1241,27 +1219,8 @@ export default function Login() {
 
                         {/* Card Bottom Controls */}
                         <div className="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between gap-2">
-                          <div className="flex items-center gap-1">
-                            {q.mobile && (
-                              <a
-                                href={`https://wa.me/${q.mobile.replace(/\D/g, '')}`}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="px-2.5 py-1 rounded-lg bg-emerald-50 text-emerald-700 border border-emerald-200 text-xs font-bold flex items-center gap-1 hover:bg-emerald-100"
-                              >
-                                <span className="material-symbols-outlined text-xs">chat</span>
-                                <span>WhatsApp</span>
-                              </a>
-                            )}
-                            {q.mobile && (
-                              <a
-                                href={`tel:${q.mobile}`}
-                                className="px-2.5 py-1 rounded-lg bg-blue-50 text-blue-700 border border-blue-200 text-xs font-bold flex items-center gap-1 hover:bg-blue-100"
-                              >
-                                <span className="material-symbols-outlined text-xs">call</span>
-                                <span>Call</span>
-                              </a>
-                            )}
+                          <div className="font-mono text-xs text-slate-600 font-semibold">
+                            <span>{q.mobile || 'No contact'}</span>
                           </div>
 
                           <div className="flex items-center gap-1">
@@ -1529,28 +1488,8 @@ export default function Login() {
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                     <div className="p-3 rounded-xl bg-slate-50 border border-slate-200/80">
                       <div className="text-[10px] font-bold text-slate-400 uppercase">Mobile Number</div>
-                      <div className="text-xs font-mono font-bold text-slate-900 mt-0.5 flex items-center justify-between">
+                      <div className="text-xs font-mono font-bold text-slate-900 mt-0.5">
                         <span>{selectedQueryDetail.mobile || 'Not specified'}</span>
-                        {selectedQueryDetail.mobile && (
-                          <div className="flex items-center gap-1">
-                            <a
-                              href={`https://wa.me/${selectedQueryDetail.mobile.replace(/\D/g, '')}`}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              className="px-2 py-0.5 rounded bg-emerald-100 text-emerald-800 text-[10px] font-bold flex items-center gap-1 hover:bg-emerald-200"
-                            >
-                              <span className="material-symbols-outlined text-xs">chat</span>
-                              <span>WhatsApp</span>
-                            </a>
-                            <a
-                              href={`tel:${selectedQueryDetail.mobile}`}
-                              className="px-2 py-0.5 rounded bg-blue-100 text-blue-800 text-[10px] font-bold flex items-center gap-1 hover:bg-blue-200"
-                            >
-                              <span className="material-symbols-outlined text-xs">call</span>
-                              <span>Call</span>
-                            </a>
-                          </div>
-                        )}
                       </div>
                     </div>
 
