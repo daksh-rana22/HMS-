@@ -2,7 +2,7 @@
   "rewrites": [
     {
       "source": "/it/api/:match*",
-      "destination": "https://api.omedosoft.com/it/api/:match*"
+      "destination": "/api/proxy?match=:match*"
     },
     {
       "source": "/(.*)",
