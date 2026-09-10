@@ -16,7 +16,6 @@ export const API_ENDPOINTS = {
   AUTH_TOKEN: `${API_BASE_URL}/it/api/v1/platform/auth/token`,
   DEMO_REQUESTS: `${API_BASE_URL}/it/api/v1/omedo/demo-requests`,
   DEMO_REQUESTS_EXPORT_EXCEL: `${API_BASE_URL}/it/api/v1/omedo/demo-requests/export/excel`,
-  DEMO_REQUESTS_EXPORT_GOOGLE_SHEET: `${API_BASE_URL}/it/api/v1/omedo/demo-requests/export/google-sheet`,
   CLIENT_DETAILS: `${API_BASE_URL}/it/api/v1/omedo/client-details`,
 }
 
@@ -320,104 +319,9 @@ export async function exportDemoRequestsExcel({ search, fromDate, toDate, fallba
 }
 
 /**
- * Export / Sync Demo Requests with Google Sheets
- * @param {Object} [params]
- * @param {string} [params.search]
- * @param {string} [params.fromDate]
- * @param {string} [params.toDate]
- * @param {Array} [params.fallbackData]
- * @returns {Promise<{ success: boolean, url?: string, copied?: boolean }>}
+ * Copy data formatted as TSV for pasting into spreadsheets
  */
-export async function exportDemoRequestsGoogleSheet({ search, fromDate, toDate, fallbackData = [] } = {}) {
-  const params = new URLSearchParams()
-  if (search && search.trim()) params.append('search', search.trim())
-  if (fromDate && fromDate.trim()) params.append('fromDate', fromDate.trim())
-  if (toDate && toDate.trim()) params.append('toDate', toDate.trim())
-
-  const queryString = params.toString() ? `?${params.toString()}` : ''
-  const endpoint = `${API_ENDPOINTS.DEMO_REQUESTS_EXPORT_GOOGLE_SHEET}${queryString}`
-
-  let backendUrl = null
-  try {
-    const response = await fetch(endpoint, {
-      method: 'GET',
-      headers: getAuthHeaders({ Accept: 'application/json, text/plain' }),
-    })
-    if (response.ok) {
-      const text = await response.text()
-      try {
-        const json = JSON.parse(text)
-        backendUrl = json.url || json.sheetUrl || json.link || json.data?.url
-      } catch {
-        if (text && text.startsWith('http')) {
-          backendUrl = text.trim()
-        }
-      }
-    }
-  } catch (err) {
-    console.warn('Google Sheet export notice:', err.message)
-  }
-
-  // Copy Tab-Separated Data to Clipboard for instant Google Sheets pasting
-  const copied = copyForGoogleSheets(fallbackData)
-
-  if (backendUrl) {
-    window.open(backendUrl, '_blank')
-    return { success: true, url: backendUrl, copied }
-  }
-
-  // Open a new Google Sheet directly for immediate 1-click pasting
-  window.open('https://sheets.new', '_blank')
-  return { success: true, url: 'https://sheets.new', copied }
-}
-
-/**
- * Helper to download Blob as file in browser
- */
-export function triggerBlobDownload(blob, filename) {
-  const url = window.URL.createObjectURL(blob)
-  const a = document.createElement('a')
-  a.style.display = 'none'
-  a.href = url
-  a.download = filename
-  document.body.appendChild(a)
-  a.click()
-  window.URL.revokeObjectURL(url)
-  document.body.removeChild(a)
-}
-
-/**
- * Generate and download formatted Excel-compatible CSV file (with UTF-8 BOM)
- */
-export function downloadClientSideExcelCSV(data = [], filename = 'OMEDO_Client_Queries.csv') {
-  const headers = ['Query ID', 'Date & Time', 'Client / Doctor Name', 'Hospital / Clinic Name', 'Mobile Number', 'Email Address', 'Location', 'Inquiry Message']
-
-  const escapeCSV = (val) => {
-    if (val === undefined || val === null) return '""'
-    const str = String(val).replace(/"/g, '""')
-    return `"${str}"`
-  }
-
-  const rows = data.map((item, idx) => [
-    escapeCSV(item.id || idx + 1),
-    escapeCSV(item.date || item.created_on || new Date().toLocaleDateString()),
-    escapeCSV(item.name || item.client_name || ''),
-    escapeCSV(item.facility || item.hospital_clinic_name || ''),
-    escapeCSV(item.mobile || ''),
-    escapeCSV(item.email || ''),
-    escapeCSV(item.location || item.cityName || ''),
-    escapeCSV(item.message || ''),
-  ])
-
-  const csvContent = '\uFEFF' + [headers.map(escapeCSV).join(','), ...rows.map((r) => r.join(','))].join('\r\n')
-  const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' })
-  triggerBlobDownload(blob, filename)
-}
-
-/**
- * Copy data formatted as TSV for pasting into Google Sheets
- */
-export function copyForGoogleSheets(data = []) {
+export function copyQueryTableTSV(data = []) {
   const headers = ['Query ID', 'Date & Time', 'Client / Doctor Name', 'Hospital / Clinic Name', 'Mobile Number', 'Email Address', 'Location', 'Inquiry Message']
 
   const cleanTSV = (val) => {

@@ -10,9 +10,8 @@ import {
   postClientDetails,
   dataURLtoFile,
   exportDemoRequestsExcel,
-  exportDemoRequestsGoogleSheet,
   fetchDemoRequests,
-  copyForGoogleSheets,
+  copyQueryTableTSV,
   authenticateAdmin,
   logoutAdmin,
   getAuthToken,
@@ -34,7 +33,6 @@ export default function Login() {
   const [queriesViewMode, setQueriesViewMode] = useState('sheet') // 'sheet' | 'card'
   const [selectedQueryDetail, setSelectedQueryDetail] = useState(null)
   const [isExportingExcel, setIsExportingExcel] = useState(false)
-  const [isExportingSheet, setIsExportingSheet] = useState(false)
   const [exportToast, setExportToast] = useState(null)
 
   // Live Backend Sync State for Demo Requests
@@ -144,6 +142,7 @@ export default function Login() {
 
   // ── FETCH LIVE DEMO REQUESTS FROM BACKEND API: https://api.omedosoft.com/it/api/v1/omedo/demo-requests ──
   const loadLiveDemoRequests = useCallback(async (showToastNotice = false) => {
+    if (!isAuthenticated) return
     setIsLoadingLive(true)
     try {
       const res = await fetchDemoRequests({
@@ -187,12 +186,14 @@ export default function Login() {
     } finally {
       setIsLoadingLive(false)
     }
-  }, [searchQuery, fromDate, toDate])
+  }, [isAuthenticated, searchQuery, fromDate, toDate])
 
-  // Initial load and filter change trigger
+  // Initial load and filter change trigger (only when authenticated)
   useEffect(() => {
-    loadLiveDemoRequests(false)
-  }, [loadLiveDemoRequests])
+    if (isAuthenticated) {
+      loadLiveDemoRequests(false)
+    }
+  }, [loadLiveDemoRequests, isAuthenticated])
 
   // Sync datasets to localStorage
   useEffect(() => {
@@ -221,11 +222,13 @@ export default function Login() {
       } catch (e) {
         console.error(e)
       }
-      loadLiveDemoRequests(false)
+      if (isAuthenticated) {
+        loadLiveDemoRequests(false)
+      }
     }
     window.addEventListener('omedo_queries_updated', handleExternalQueriesUpdate)
     return () => window.removeEventListener('omedo_queries_updated', handleExternalQueriesUpdate)
-  }, [loadLiveDemoRequests])
+  }, [loadLiveDemoRequests, isAuthenticated])
 
   const openModal = () => {
     setEditingItem(null)
@@ -371,41 +374,14 @@ export default function Login() {
     }
   }
 
-  // Export / Open Google Sheet handler
-  const handleGoogleSheetExport = async () => {
-    setIsExportingSheet(true)
-    try {
-      await exportDemoRequestsGoogleSheet({
-        search: searchQuery,
-        fromDate,
-        toDate,
-        fallbackData: filteredQueries,
-      })
-      setExportToast({
-        type: 'success',
-        title: 'Google Sheets Ready',
-        message: 'Data formatted and copied to clipboard! Paste directly (Ctrl+V) into the opened Google Sheet.',
-      })
-    } catch (err) {
-      setExportToast({
-        type: 'error',
-        title: 'Google Sheets Export',
-        message: err.message || 'Failed to sync with Google Sheets.',
-      })
-    } finally {
-      setIsExportingSheet(false)
-      setTimeout(() => setExportToast(null), 7000)
-    }
-  }
-
   // Quick Copy Table Data TSV to Clipboard
   const handleCopyQueryTable = () => {
-    const ok = copyForGoogleSheets(filteredQueries)
+    const ok = copyQueryTableTSV(filteredQueries)
     if (ok) {
       setExportToast({
         type: 'success',
         title: 'Copied to Clipboard',
-        message: 'Tabular client queries copied. You can paste it directly into Excel or Google Sheets (Ctrl+V).',
+        message: 'Tabular client queries copied. You can paste directly into Excel or spreadsheets (Ctrl+V).',
       })
       setTimeout(() => setExportToast(null), 5000)
     }
@@ -803,12 +779,12 @@ export default function Login() {
                   {activeMenu === 'queries' && (
                     <span className="px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-[#107c41]/10 text-[#107c41] border border-[#107c41]/25 flex items-center gap-1">
                       <span className="material-symbols-outlined text-sm">table_view</span>
-                      Excel / Google Sheets Form
+                      Excel Spreadsheet Form
                     </span>
                   )}
                 </h1>
                 <p className="text-xs text-[#64748b] mt-1">
-                  {activeMenu === 'queries' && 'Review, track, and export client hospital inquiries in spreadsheet and Google Sheet formats.'}
+                  {activeMenu === 'queries' && 'Review, track, and export client hospital inquiries in Excel spreadsheet format.'}
                   {activeMenu === 'clients' && 'Manage, filter, and upload partner hospital & clinic chain logos.'}
                   {activeMenu === 'reviews' && 'Moderate, approve, and curate verified doctor testimonials & star ratings.'}
                 </p>
@@ -883,7 +859,7 @@ export default function Login() {
                             ? 'bg-white text-[#107c41] shadow-2xs font-extrabold'
                             : 'text-slate-600 hover:text-slate-900'
                         }`}
-                        title="Excel / Google Sheets Grid View"
+                        title="Excel Spreadsheet Grid View"
                       >
                         <span className="material-symbols-outlined text-base">table_chart</span>
                         <span className="hidden sm:inline">Sheet Grid</span>
@@ -940,7 +916,7 @@ export default function Login() {
 
               </div>
 
-              {/* Row 2: Date Range Pickers + Excel & Google Sheet Export Buttons */}
+              {/* Row 2: Date Range Pickers + Excel Export Button */}
               {activeMenu === 'queries' && (
                 <div className="pt-2.5 border-t border-slate-100 flex flex-col xl:flex-row items-stretch xl:items-center justify-between gap-3">
                   
@@ -983,7 +959,7 @@ export default function Login() {
                     )}
                   </div>
 
-                  {/* ── EXPORT TO EXCEL & GOOGLE SHEETS BUTTONS ── */}
+                  {/* ── EXPORT TO EXCEL BUTTON ── */}
                   <div className="flex items-center gap-2 shrink-0">
                     
                     {/* 1. Export Excel Button */}
@@ -1007,27 +983,6 @@ export default function Login() {
                       )}
                     </button>
 
-                    {/* 2. Export / Open Google Sheets Button */}
-                    <button
-                      type="button"
-                      onClick={handleGoogleSheetExport}
-                      disabled={isExportingSheet}
-                      className="px-3 py-2 rounded-xl text-xs font-extrabold text-white bg-[#0f9d58] hover:bg-[#0b8043] active:scale-98 transition-all flex items-center gap-1.5 cursor-pointer shadow-xs disabled:opacity-70"
-                      title="Open Google Sheet & paste client queries"
-                    >
-                      {isExportingSheet ? (
-                        <>
-                          <span className="w-3.5 h-3.5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
-                          <span>Opening Sheet...</span>
-                        </>
-                      ) : (
-                        <>
-                          <span className="material-symbols-outlined text-base">open_in_new</span>
-                          <span>Google Sheets</span>
-                        </>
-                      )}
-                    </button>
-
                   </div>
 
                 </div>
@@ -1036,11 +991,11 @@ export default function Login() {
             </div>
 
             {/* ═════════════════════════════════════════════════════════════ */}
-            {/* 1. QUERIES SECTION: SPREADSHEET & GOOGLE SHEETS FORM          */}
+            {/* 1. QUERIES SECTION: SPREADSHEET FORM                          */}
             {/* ═════════════════════════════════════════════════════════════ */}
             {activeMenu === 'queries' && (
               <div>
-                {/* ── EXCEL & GOOGLE SHEETS SPREADSHEET GRID VIEW (NO PRIORITY / STATUS) ── */}
+                {/* ── EXCEL SPREADSHEET GRID VIEW (NO PRIORITY / STATUS) ── */}
                 {queriesViewMode === 'sheet' && (
                   <div className="bg-white rounded-2xl border border-slate-300/80 shadow-xs overflow-hidden flex flex-col">
                     
@@ -1248,15 +1203,6 @@ export default function Login() {
                         >
                           <span className="material-symbols-outlined text-sm">file_download</span>
                           <span>Download .xlsx</span>
-                        </button>
-                        <span className="text-slate-300">•</span>
-                        <button
-                          type="button"
-                          onClick={handleGoogleSheetExport}
-                          className="text-[11px] font-bold text-[#0f9d58] hover:underline flex items-center gap-1 cursor-pointer"
-                        >
-                          <span className="material-symbols-outlined text-sm">open_in_new</span>
-                          <span>Open Google Sheet</span>
                         </button>
                       </div>
                     </div>
