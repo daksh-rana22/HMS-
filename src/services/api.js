@@ -1,23 +1,23 @@
 /**
  * Centralized API Configuration and Service Methods
- * All API routes and network calls should be managed here.
+ * All API routes and network calls are managed here.
  */
 
 // Base backend URL:
-// - If VITE_API_BASE_URL is set in .env / Vercel env, use it.
-// - Otherwise, defaults to '' (relative) to leverage Vercel & Vite proxies cleanly over HTTPS.
+// - Defaults to '' (relative same-origin) to cleanly leverage Vite dev proxy and Vercel serverless proxy.
+// - If VITE_API_BASE_URL is set in .env / Vercel, it overrides the base URL.
 export const API_BASE_URL =
   import.meta.env.VITE_API_BASE_URL !== undefined
-    ? import.meta.env.VITE_API_BASE_URL
+    ? import.meta.env.VITE_API_BASE_URL.replace(/\/$/, '')
     : ''
 
-// Centralized API Paths / Endpoints dictionary
+// Centralized API Endpoints dictionary
 export const API_ENDPOINTS = {
-  AUTH_TOKEN: `${API_BASE_URL ? API_BASE_URL.replace(/\/$/, '') : ''}/it/api/v1/platform/auth/token`,
-  DEMO_REQUESTS: `${API_BASE_URL ? API_BASE_URL.replace(/\/$/, '') : ''}/it/api/v1/omedo/demo-requests`,
-  DEMO_REQUESTS_EXPORT_EXCEL: `${API_BASE_URL ? API_BASE_URL.replace(/\/$/, '') : ''}/it/api/v1/omedo/demo-requests/export/excel`,
-  DEMO_REQUESTS_EXPORT_GOOGLE_SHEET: `${API_BASE_URL ? API_BASE_URL.replace(/\/$/, '') : ''}/it/api/v1/omedo/demo-requests/export/google-sheet`,
-  CLIENT_DETAILS: `${API_BASE_URL ? API_BASE_URL.replace(/\/$/, '') : ''}/it/api/v1/omedo/client-details`,
+  AUTH_TOKEN: `${API_BASE_URL}/it/api/v1/platform/auth/token`,
+  DEMO_REQUESTS: `${API_BASE_URL}/it/api/v1/omedo/demo-requests`,
+  DEMO_REQUESTS_EXPORT_EXCEL: `${API_BASE_URL}/it/api/v1/omedo/demo-requests/export/excel`,
+  DEMO_REQUESTS_EXPORT_GOOGLE_SHEET: `${API_BASE_URL}/it/api/v1/omedo/demo-requests/export/google-sheet`,
+  CLIENT_DETAILS: `${API_BASE_URL}/it/api/v1/omedo/client-details`,
 }
 
 /**
@@ -69,7 +69,6 @@ export function isUserAuthenticated() {
 
 /**
  * Generate Authorization and Custom Headers for Authenticated API Requests
- * Automatically attaches 'Authorization: Bearer <token>' whenever an auth token exists.
  * @param {Record<string, string>} [customHeaders]
  * @returns {Record<string, string>}
  */
@@ -84,7 +83,6 @@ export function getAuthHeaders(customHeaders = {}) {
 
 /**
  * Authenticate Admin User / Generate Platform Auth Token
- * Target API Endpoint: https://api.omedosoft.com/it/api/v1/platform/auth/token
  * @param {Object} credentials
  * @param {string} [credentials.username]
  * @param {string} [credentials.email]
@@ -99,7 +97,7 @@ export async function authenticateAdmin({ username, email, password } = {}) {
     throw new Error('Please enter both username/email and password.')
   }
 
-  // Pre-check for default demo credentials so testing always succeeds smoothly
+  // Fallback demo credential support for admin evaluation
   const isDemoAdmin = loginIdentifier === 'admin@omedosoft.com' && loginPassword === 'omedo@admin2026'
 
   const payload = {
@@ -108,91 +106,60 @@ export async function authenticateAdmin({ username, email, password } = {}) {
     password: loginPassword,
   }
 
-  // Prioritize relative proxy endpoints first to avoid CORS and mixed-content issues on Vercel
-  const candidateEndpoints = [
-    API_ENDPOINTS.AUTH_TOKEN,
-    '/it/api/v1/platform/auth/token',
-    'https://api.omedosoft.com/it/api/v1/platform/auth/token',
-  ].filter((v, i, a) => Boolean(v) && a.indexOf(v) === i)
+  try {
+    const response = await fetch(API_ENDPOINTS.AUTH_TOKEN, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+      },
+      body: JSON.stringify(payload),
+    })
 
-  let lastError = null
+    const data = await response.json().catch(() => ({}))
 
-  for (const endpoint of candidateEndpoints) {
-    try {
-      const response = await fetch(endpoint, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Accept': 'application/json',
-        },
-        body: JSON.stringify(payload),
-      })
+    if (response.ok) {
+      const token =
+        data.token ||
+        data.access_token ||
+        data.accessToken ||
+        data.jwt ||
+        data.data?.token ||
+        data.data?.accessToken ||
+        data.data?.access_token ||
+        data.id_token ||
+        `omedo_tok_${Date.now()}`
 
-      const data = await response.json().catch(() => ({}))
+      if (token) {
+        localStorage.setItem('omedo_auth_token', token)
+        const userObj = data.user || data.data?.user || { username: loginIdentifier, email: loginIdentifier, role: 'SUPER_ADMIN' }
+        localStorage.setItem('omedo_auth_user', JSON.stringify(userObj))
+      }
 
-      if (response.ok) {
-        const token =
-          data.token ||
-          data.access_token ||
-          data.accessToken ||
-          data.jwt ||
-          data.data?.token ||
-          data.data?.accessToken ||
-          data.data?.access_token ||
-          data.id_token ||
-          `omedo_tok_${Date.now()}`
+      return {
+        success: true,
+        token,
+        user: data.user || data.data?.user || { username: loginIdentifier, role: 'SUPER_ADMIN' },
+        data,
+      }
+    }
 
-        if (token) {
-          localStorage.setItem('omedo_auth_token', token)
-          const userObj = data.user || data.data?.user || { username: loginIdentifier, email: loginIdentifier, role: 'SUPER_ADMIN' }
-          localStorage.setItem('omedo_auth_user', JSON.stringify(userObj))
-        }
-
-        return {
-          success: true,
-          token,
-          user: data.user || data.data?.user || { username: loginIdentifier, role: 'SUPER_ADMIN' },
-          data,
-        }
+    if (response.status === 401 || response.status === 403) {
+      if (isDemoAdmin) {
+        // Fallback to local demo session below
       } else {
-        const errMsg =
-          data.message ||
-          data.error_description ||
-          data.error ||
-          data.detail ||
-          (response.status === 401 || response.status === 403
-            ? 'Invalid email or password. Please verify your admin credentials.'
-            : `Authentication failed (${response.status})`)
-
-        lastError = new Error(errMsg)
-        if (response.status === 401 || response.status === 403 || response.status === 400) {
-          if (isDemoAdmin) {
-            break // Fallback to demo admin below
-          }
-          throw lastError
-        }
+        throw new Error(data.message || 'Invalid email or password. Please verify your admin credentials.')
       }
-    } catch (err) {
-      lastError = err
-      if (
-        err.message &&
-        (err.message.includes('credential') ||
-          err.message.includes('password') ||
-          err.message.includes('Unauthorized') ||
-          err.message.includes('401') ||
-          err.message.includes('403') ||
-          err.message.includes('Invalid'))
-      ) {
-        if (isDemoAdmin) {
-          break // Fallback to demo admin below
-        }
-        throw err
-      }
-      console.warn(`Auth token endpoint notice (${endpoint}):`, err.message)
+    } else {
+      throw new Error(data.message || data.error || `Authentication failed (${response.status})`)
+    }
+  } catch (err) {
+    if (!isDemoAdmin) {
+      throw err
     }
   }
 
-  // Fallback demo validation in case of offline/CORS/demo credentials:
+  // Demo Admin Fallback Session
   if (isDemoAdmin) {
     const demoToken = `demo_admin_tok_${Date.now()}`
     localStorage.setItem('omedo_auth_token', demoToken)
@@ -208,14 +175,14 @@ export async function authenticateAdmin({ username, email, password } = {}) {
     }
   }
 
-  throw lastError || new Error('Unable to connect to authentication server.')
+  throw new Error('Unable to connect to authentication server. Please try again.')
 }
 
 /**
  * Submit Demo Request / Enquiry Form
  * @param {Object} payload
  * @param {string} payload.name
- * @param {string} payload.mobile - e.g. +919876543210
+ * @param {string} payload.mobile
  * @param {string} payload.email
  * @param {string} payload.hospital_clinic_name
  * @param {string} payload.location
@@ -223,45 +190,33 @@ export async function authenticateAdmin({ username, email, password } = {}) {
  * @returns {Promise<any>}
  */
 export async function submitDemoRequest(payload) {
-  const candidateEndpoints = [
-    API_ENDPOINTS.DEMO_REQUESTS,
-    '/it/api/v1/omedo/demo-requests',
-    'https://api.omedosoft.com/it/api/v1/omedo/demo-requests',
-  ].filter((v, i, a) => Boolean(v) && a.indexOf(v) === i)
+  try {
+    const response = await fetch(API_ENDPOINTS.DEMO_REQUESTS, {
+      method: 'POST',
+      headers: getAuthHeaders({
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+      }),
+      body: JSON.stringify(payload),
+    })
 
-  let lastError = null
-
-  for (const endpoint of candidateEndpoints) {
-    try {
-      const response = await fetch(endpoint, {
-        method: 'POST',
-        headers: getAuthHeaders({
-          'Content-Type': 'application/json',
-          'Accept': 'application/json',
-        }),
-        body: JSON.stringify(payload),
-      })
-
-      if (response.ok) {
-        return response.json().catch(() => ({ success: true }))
-      }
-
-      const errData = await response.json().catch(() => ({}))
-      lastError = new Error(
-        errData.message ||
-        errData.error ||
-        `Submission failed with status ${response.status}. Please check your details and try again.`
-      )
-    } catch (err) {
-      lastError = err
+    if (response.ok) {
+      return response.json().catch(() => ({ success: true }))
     }
-  }
 
-  throw lastError || new Error('Failed to submit demo request. Please try again.')
+    const errData = await response.json().catch(() => ({}))
+    throw new Error(
+      errData.message ||
+      errData.error ||
+      `Submission failed (${response.status}). Please check your details and try again.`
+    )
+  } catch (err) {
+    throw err instanceof Error ? err : new Error('Failed to submit demo request. Please try again.')
+  }
 }
 
 /**
- * Fetch Demo Requests / Queries from Backend API: http://103.153.58.135:8081/it/api/v1/omedo/demo-requests
+ * Fetch Demo Requests / Queries from Backend API
  * @param {Object} [params]
  * @param {string} [params.search] - Case-insensitive search on name, mobile, email, hospital, location
  * @param {string} [params.fromDate] - Format yyyy-MM-dd
@@ -275,56 +230,50 @@ export async function fetchDemoRequests({ search, fromDate, toDate } = {}) {
   if (toDate && toDate.trim()) params.append('toDate', toDate.trim())
 
   const queryString = params.toString() ? `?${params.toString()}` : ''
-  const candidateEndpoints = [
-    `${API_ENDPOINTS.DEMO_REQUESTS}${queryString}`,
-    `/it/api/v1/omedo/demo-requests${queryString}`,
-    `https://api.omedosoft.com/it/api/v1/omedo/demo-requests${queryString}`,
-  ].filter((v, i, a) => Boolean(v) && a.indexOf(v) === i)
+  const endpoint = `${API_ENDPOINTS.DEMO_REQUESTS}${queryString}`
 
-  for (const endpoint of candidateEndpoints) {
-    try {
-      const res = await fetch(endpoint, {
-        method: 'GET',
-        headers: getAuthHeaders({ Accept: 'application/json' }),
-      })
-      if (res.ok) {
-        const data = await res.json()
-        let list = []
-        let total = 0
+  try {
+    const res = await fetch(endpoint, {
+      method: 'GET',
+      headers: getAuthHeaders({ Accept: 'application/json' }),
+    })
 
-        if (Array.isArray(data)) {
-          list = data
-          total = data.length
-        } else if (data && Array.isArray(data.data)) {
-          list = data.data
-          total = data.total !== undefined ? data.total : (data.count !== undefined ? data.count : data.data.length)
-        } else if (data && Array.isArray(data.content)) {
-          list = data.content
-          total = data.totalElements !== undefined ? data.totalElements : data.content.length
-        } else if (data && Array.isArray(data.results)) {
-          list = data.results
-          total = data.total !== undefined ? data.total : data.results.length
-        } else if (data && typeof data === 'object') {
-          total = data.total || data.count || data.totalRequests || 0
-          if (Array.isArray(data.requests)) list = data.requests
-          else if (Array.isArray(data.list)) list = data.list
-        }
+    if (res.ok) {
+      const data = await res.json()
+      let list = []
+      let total = 0
 
-        if (list.length > 0 || total > 0) {
-          return { list, total: total || list.length, success: true, raw: data }
-        }
+      if (Array.isArray(data)) {
+        list = data
+        total = data.length
+      } else if (data && Array.isArray(data.data)) {
+        list = data.data
+        total = data.total !== undefined ? data.total : (data.count !== undefined ? data.count : data.data.length)
+      } else if (data && Array.isArray(data.content)) {
+        list = data.content
+        total = data.totalElements !== undefined ? data.totalElements : data.content.length
+      } else if (data && Array.isArray(data.results)) {
+        list = data.results
+        total = data.total !== undefined ? data.total : data.results.length
+      } else if (data && typeof data === 'object') {
+        total = data.total || data.count || data.totalRequests || 0
+        if (Array.isArray(data.requests)) list = data.requests
+        else if (Array.isArray(data.list)) list = data.list
       }
-    } catch (e) {
-      // Quietly ignore network/routing mismatch on candidate probing
+
+      if (list.length > 0 || total > 0) {
+        return { list, total: total || list.length, success: true, raw: data }
+      }
     }
+  } catch (e) {
+    console.warn('Fetch demo requests error:', e.message)
   }
+
   return { list: [], total: 0, success: false }
 }
 
 /**
  * Export Demo Requests to Excel (.xlsx / .csv)
- * Calls Backend Endpoint: /it/api/v1/omedo/demo-requests/export/excel
- * Parameters: search, fromDate (yyyy-MM-dd), toDate (yyyy-MM-dd)
  * If backend is offline or network fails, downloads a client-generated Excel CSV.
  * @param {Object} [params]
  * @param {string} [params.search]
@@ -340,35 +289,29 @@ export async function exportDemoRequestsExcel({ search, fromDate, toDate, fallba
   if (toDate && toDate.trim()) params.append('toDate', toDate.trim())
 
   const queryString = params.toString() ? `?${params.toString()}` : ''
-  const candidateEndpoints = [
-    `${API_ENDPOINTS.DEMO_REQUESTS_EXPORT_EXCEL}${queryString}`,
-    `/it/api/v1/omedo/demo-requests/export/excel${queryString}`,
-    `https://api.omedosoft.com/it/api/v1/omedo/demo-requests/export/excel${queryString}`,
-  ].filter((v, i, a) => Boolean(v) && a.indexOf(v) === i)
+  const endpoint = `${API_ENDPOINTS.DEMO_REQUESTS_EXPORT_EXCEL}${queryString}`
 
-  for (const endpoint of candidateEndpoints) {
-    try {
-      const response = await fetch(endpoint, {
-        method: 'GET',
-        headers: getAuthHeaders({
-          'Accept': 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel, text/csv, application/octet-stream',
-        }),
-      })
+  try {
+    const response = await fetch(endpoint, {
+      method: 'GET',
+      headers: getAuthHeaders({
+        'Accept': 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel, text/csv, application/octet-stream',
+      }),
+    })
 
-      if (response.ok) {
-        const blob = await response.blob()
-        const disposition = response.headers.get('content-disposition')
-        let filename = 'OMEDO_Client_Queries.xlsx'
-        if (disposition && disposition.includes('filename=')) {
-          const match = disposition.match(/filename[^;=\n]*=((['"]).*?\2|[^;\n]*)/)
-          if (match && match[1]) filename = match[1].replace(/['"]/g, '')
-        }
-        triggerBlobDownload(blob, filename)
-        return { success: true, source: 'backend' }
+    if (response.ok) {
+      const blob = await response.blob()
+      const disposition = response.headers.get('content-disposition')
+      let filename = 'OMEDO_Client_Queries.xlsx'
+      if (disposition && disposition.includes('filename=')) {
+        const match = disposition.match(/filename[^;=\n]*=((['"]).*?\2|[^;\n]*)/)
+        if (match && match[1]) filename = match[1].replace(/['"]/g, '')
       }
-    } catch (err) {
-      console.warn('Backend Excel Export failed, initiating client-side Excel generation:', err.message)
+      triggerBlobDownload(blob, filename)
+      return { success: true, source: 'backend' }
     }
+  } catch (err) {
+    console.warn('Backend Excel Export failed, initiating client-side Excel fallback:', err.message)
   }
 
   // Client-Side Excel / CSV Export Fallback
@@ -378,8 +321,6 @@ export async function exportDemoRequestsExcel({ search, fromDate, toDate, fallba
 
 /**
  * Export / Sync Demo Requests with Google Sheets
- * Calls Backend Endpoint: /it/api/v1/omedo/demo-requests/export/google-sheet
- * Parameters: search, fromDate (yyyy-MM-dd), toDate (yyyy-MM-dd)
  * @param {Object} [params]
  * @param {string} [params.search]
  * @param {string} [params.fromDate]
@@ -394,34 +335,27 @@ export async function exportDemoRequestsGoogleSheet({ search, fromDate, toDate, 
   if (toDate && toDate.trim()) params.append('toDate', toDate.trim())
 
   const queryString = params.toString() ? `?${params.toString()}` : ''
-  const candidateEndpoints = [
-    `${API_ENDPOINTS.DEMO_REQUESTS_EXPORT_GOOGLE_SHEET}${queryString}`,
-    `/it/api/v1/omedo/demo-requests/export/google-sheet${queryString}`,
-    `https://api.omedosoft.com/it/api/v1/omedo/demo-requests/export/google-sheet${queryString}`,
-  ].filter((v, i, a) => Boolean(v) && a.indexOf(v) === i)
+  const endpoint = `${API_ENDPOINTS.DEMO_REQUESTS_EXPORT_GOOGLE_SHEET}${queryString}`
 
   let backendUrl = null
-  for (const endpoint of candidateEndpoints) {
-    try {
-      const response = await fetch(endpoint, {
-        method: 'GET',
-        headers: getAuthHeaders({ Accept: 'application/json, text/plain' }),
-      })
-      if (response.ok) {
-        const text = await response.text()
-        try {
-          const json = JSON.parse(text)
-          backendUrl = json.url || json.sheetUrl || json.link || json.data?.url
-        } catch {
-          if (text && text.startsWith('http')) {
-            backendUrl = text.trim()
-          }
+  try {
+    const response = await fetch(endpoint, {
+      method: 'GET',
+      headers: getAuthHeaders({ Accept: 'application/json, text/plain' }),
+    })
+    if (response.ok) {
+      const text = await response.text()
+      try {
+        const json = JSON.parse(text)
+        backendUrl = json.url || json.sheetUrl || json.link || json.data?.url
+      } catch {
+        if (text && text.startsWith('http')) {
+          backendUrl = text.trim()
         }
-        if (backendUrl) break
       }
-    } catch (err) {
-      console.warn('Backend Google Sheet export endpoint notice:', err.message)
     }
+  } catch (err) {
+    console.warn('Google Sheet export notice:', err.message)
   }
 
   // Copy Tab-Separated Data to Clipboard for instant Google Sheets pasting
@@ -538,13 +472,6 @@ export function dataURLtoFile(dataurl, filename = 'client-logo.png') {
 
 /**
  * Post Client Details (Hospital / Client Logo and Metadata)
- * Form-Data Request Body:
- * - file: File (Binary) - Required (.png, .jpg, .jpeg, .webp, .svg, max 5MB)
- * - clientName: Text - Required (Max 100 characters)
- * - cityName: Text - Optional (Max 100 characters)
- * - isActive: Text / Boolean - Required (true / false)
- * 
- * Target Endpoint: POST http://103.153.58.135:8081/it/api/v1/omedo/client-details
  * @param {Object} params
  * @param {File|Blob} params.file - Binary file
  * @param {string} params.clientName - Name of the client
@@ -566,53 +493,26 @@ export async function postClientDetails({ file, clientName, cityName, isActive =
   }
   formData.append('isActive', String(isActive !== false))
 
-  // Candidate endpoints (Vercel/Vite same-origin proxy first, then direct remote backend)
-  const candidateEndpoints = [
-    API_ENDPOINTS.CLIENT_DETAILS,
-    '/it/api/v1/omedo/client-details',
-    'https://api.omedosoft.com/it/api/v1/omedo/client-details',
-  ].filter((v, i, a) => Boolean(v) && a.indexOf(v) === i)
+  try {
+    const response = await fetch(API_ENDPOINTS.CLIENT_DETAILS, {
+      method: 'POST',
+      headers: getAuthHeaders(),
+      body: formData,
+    })
 
-  let lastError = null
+    const jsonResult = await response.json().catch(() => ({}))
 
-  for (const endpoint of candidateEndpoints) {
-    try {
-      const response = await fetch(endpoint, {
-        method: 'POST',
-        headers: getAuthHeaders(),
-        body: formData,
-      })
-
-      // If proxy returns 502/504, try direct endpoint
-      if ((response.status === 502 || response.status === 504) && endpoint === API_ENDPOINTS.CLIENT_DETAILS) {
-        continue
-      }
-
-      const jsonResult = await response.json().catch(() => ({}))
-
-      if (!response.ok) {
-        throw new Error(
-          jsonResult.message ||
-          jsonResult.error ||
-          `Failed to post client details (${response.status})`
-        )
-      }
-
-      return jsonResult
-    } catch (err) {
-      lastError = err
-      // If it's a specific validation response from backend (e.g. 400 Bad Request), don't keep trying, throw immediately
-      if (
-        err.message &&
-        !err.message.includes('502') &&
-        !err.message.includes('504') &&
-        !err.message.includes('Failed to fetch') &&
-        !err.message.includes('NetworkError')
-      ) {
-        throw err
-      }
+    if (!response.ok) {
+      throw new Error(
+        jsonResult.message ||
+        jsonResult.error ||
+        `Failed to post client details (${response.status})`
+      )
     }
-  }
 
-  throw lastError || new Error('Failed to post client details to http://103.153.58.135:8081/it/api/v1/omedo/client-details')
+    return jsonResult
+  } catch (err) {
+    throw err instanceof Error ? err : new Error('Failed to post client details. Please try again.')
+  }
 }
+
