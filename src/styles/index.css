@@ -1436,17 +1436,18 @@
 /* ── Seamless Horizontal Client Logos Marquee ── */
 @keyframes omedoMarquee {
   0% {
-    transform: translateX(0%);
+    transform: translate3d(0, 0, 0);
   }
   100% {
-    transform: translateX(-50%);
+    transform: translate3d(-50%, 0, 0);
   }
 }
 
 .animate-omedo-marquee {
-  display: flex;
-  width: max-content;
-  animation: omedoMarquee 32s linear infinite;
+  display: flex !important;
+  width: max-content !important;
+  animation: omedoMarquee 38s linear infinite !important;
+  will-change: transform;
 }
 
 .animate-omedo-marquee:hover {

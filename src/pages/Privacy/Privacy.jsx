@@ -94,7 +94,7 @@ const sections = [
     content: (
       <div className="space-y-3 text-sm leading-relaxed text-slate-800">
         <p>When OMEDO is used by a healthcare organization, the Customer may enter or generate Patient Data including:</p>
-        
+
         <div>
           <p className="font-bold text-slate-900 mb-1">Patient Identification</p>
           <ul className="list-disc pl-5 space-y-1 text-slate-700">
@@ -286,7 +286,7 @@ const sections = [
     content: (
       <div className="space-y-3 text-sm leading-relaxed text-slate-800">
         <p>OMEDO may process information for the following purposes:</p>
-        
+
         <div>
           <p className="font-bold text-slate-900 mb-1">Providing Services</p>
           <p className="text-slate-700 mb-1 text-xs">To:</p>
@@ -403,7 +403,7 @@ const sections = [
         <p className="font-bold text-slate-900">OMEDO does not sell Patient Data.</p>
         <p>We may disclose or provide access to information where reasonably necessary to provide the Services or where legally permitted or required.</p>
         <p>This may include:</p>
-        
+
         <div>
           <p className="font-bold text-slate-900 mb-1">12.1 Customer and Authorized Users</p>
           <p className="text-slate-700">Information may be accessible to authorized Users of the healthcare organization according to roles and permissions configured by the Customer.</p>
@@ -883,7 +883,7 @@ export default function Privacy() {
 
   return (
     <motion.div {...pageTransition} className="min-h-screen bg-[#f8fdfe] pt-24 sm:pt-28 pb-16">
-      
+
       {/* ── HEADER HERO ── */}
       <section className="bg-gradient-to-b from-[#effcfe] via-[#f5fdfe] to-[#f8fdfe] py-10 sm:py-14 border-b border-[#bcc9c6]/30">
         <div className="site-wrapper text-center max-w-7xl mx-auto space-y-5">
@@ -929,10 +929,10 @@ export default function Privacy() {
 
       {/* ── MAIN CONTENT CONTAINER (WIDER) ── */}
       <section className="site-wrapper py-8 sm:py-12 max-w-7xl mx-auto space-y-8">
-        
+
         {/* ── TABLE OF CONTENTS CARD (COMPACT & STREAMLINED) ── */}
         <div id="table-of-contents" className="bg-white rounded-2xl p-3.5 sm:p-4 border border-[#bcc9c6]/50 shadow-xs space-y-3 scroll-mt-28">
-          
+
           {/* Header Bar */}
           <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2.5 pb-2.5 border-b border-slate-100">
             <div className="flex items-center gap-2">

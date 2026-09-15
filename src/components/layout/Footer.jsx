@@ -108,8 +108,8 @@ export default function Footer() {
               <div className="space-y-1">
                 <span className="text-slate-400 block text-[11px] font-medium uppercase tracking-wider">Email Inquiries</span>
                 <div className="space-y-1 text-slate-300">
-                  <div>Sales: <a href="mailto:sales@omedosoft.com" className="text-cyan-300 hover:underline font-medium">sales@omedosoft.com</a></div>
-                  <div>Support: <a href="mailto:support@omedosoft.com" className="text-cyan-300 hover:underline font-medium">support@omedosoft.com</a></div>
+                  <div>Sales: <a href="tel:+917457912924" className="text-cyan-300 hover:underline font-medium">+91 74579 12924</a> &bull; <a href="mailto:sales@omedosoft.com" className="text-cyan-300 hover:underline font-medium">sales@omedosoft.com</a></div>
+                  <div>Support: <a href="tel:+917457912923" className="text-cyan-300 hover:underline font-medium">+91 74579 12923</a> &bull; <a href="mailto:support@omedosoft.com" className="text-cyan-300 hover:underline font-medium">support@omedosoft.com</a></div>
                 </div>
               </div>
 

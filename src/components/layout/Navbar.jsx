@@ -379,20 +379,20 @@ export default function Navbar() {
                 </div>
 
                 <div className="flex flex-wrap items-center justify-center gap-3 text-xs font-semibold text-[#6d7a77] pt-2">
+                  <a href="tel:+917457912924" className="flex items-center gap-1 text-[#00685e] hover:underline" title="Sales">
+                    <span className="material-symbols-outlined text-sm">call</span>
+                    Sales: +91 74579 12924
+                  </a>
+                  <span>•</span>
+                  <a href="tel:+917457912923" className="flex items-center gap-1 text-[#00685e] hover:underline" title="Support">
+                    <span className="material-symbols-outlined text-sm">headset_mic</span>
+                    Support: +91 74579 12923
+                  </a>
+                  <span>•</span>
                   <a href="mailto:support@omedosoft.com" className="flex items-center gap-1 hover:text-[#00685e]">
                     <span className="material-symbols-outlined text-sm text-[#00685e]">mail</span>
                     support@omedosoft.com
                   </a>
-                  <span>•</span>
-                  <a href="mailto:sales@omedosoft.com" className="flex items-center gap-1 hover:text-[#00685e]">
-                    <span className="material-symbols-outlined text-sm text-[#00685e]">mail</span>
-                    sales@omedosoft.com
-                  </a>
-                  <span>•</span>
-                  <span className="flex items-center gap-1 text-emerald-600 font-bold">
-                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
-                    Online Support 24*7
-                  </span>
                 </div>
               </motion.div>
             </div>

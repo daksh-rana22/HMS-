@@ -8,6 +8,9 @@ import { useTheme } from '../../contexts/ThemeContext'
 import HeroBackground from '../../components/common/HeroBackground'
 import HMSExplanationContainer from '../../components/sections/HMSExplanationContainer'
 import ProductsShowcase from '../../components/sections/ProductsShowcase'
+import { fetchCompanyClients, fetchTestimonials, formatLogoUrl } from '../../services/api'
+import SafeImage from '../../components/common/SafeImage'
+import { safeSetItem, safeGetItem } from '../../utils/storage'
 
 const TRUSTED_BY_THEMES = {
   navygold: {
@@ -186,7 +189,7 @@ export default function Home() {
 
   // Client Logos state synced with Admin Console
   const [clients, setClients] = useState(() => {
-    const s = localStorage.getItem('omedo_admin_clients')
+    const s = safeGetItem('omedo_admin_clients')
     if (s) {
       try {
         const parsed = JSON.parse(s)
@@ -202,7 +205,7 @@ export default function Home() {
 
   // Reviews state synced with Admin Console (Filtered strictly for valid doctor reviews)
   const [reviews, setReviews] = useState(() => {
-    const s = localStorage.getItem('omedo_admin_reviews')
+    const s = safeGetItem('omedo_admin_reviews')
     if (s) {
       try {
         const parsed = JSON.parse(s)
@@ -217,10 +220,50 @@ export default function Home() {
     return initialTestimonials
   })
 
-  // Sync dynamically with storage updates from Admin Console
+  // Sync dynamically with storage updates & fetch live backend records
   useEffect(() => {
+    const loadLive = async () => {
+      try {
+        const [cRes, rRes] = await Promise.allSettled([
+          fetchCompanyClients(),
+          fetchTestimonials(),
+        ])
+        if (cRes.status === 'fulfilled' && cRes.value?.success && Array.isArray(cRes.value.list) && cRes.value.list.length > 0) {
+          const normClients = cRes.value.list.map((c, idx) => ({
+            id: c.id ?? idx + 1,
+            name: c.client_name || c.name || 'Healthcare Partner',
+            location: c.short_description || c.location || '',
+            logoUrl: formatLogoUrl(c.logo_url || c.logoUrl || c.image_base64 || null),
+            logoText: (c.client_name || c.name || 'HOSPITAL').slice(0, 10).toUpperCase(),
+            status: (c.is_active ?? (c.status !== 'INACTIVE')) ? 'ACTIVE' : 'INACTIVE',
+            featured: c.is_featured ?? c.featured ?? true,
+            badgeColor: c.badgeColor || '#00685e',
+          }))
+          setClients(normClients)
+          safeSetItem('omedo_admin_clients', normClients)
+        }
+        if (rRes.status === 'fulfilled' && rRes.value?.success && Array.isArray(rRes.value.list) && rRes.value.list.length > 0) {
+          const normReviews = rRes.value.list.map((t, idx) => ({
+            id: t.id ?? idx + 1,
+            name: t.person_name || t.name || 'Healthcare Practitioner',
+            role: t.designation || t.role || 'Medical Leader',
+            organization: t.organization || t.facility || t.client_name || 'Healthcare Network',
+            content: t.testimonial || t.content || '',
+            rating: Number(t.rating) || 5,
+            avatar: (t.person_name || t.name || 'HP').slice(0, 2).toUpperCase(),
+            status: (t.is_active ?? (t.status !== 'INACTIVE')) ? 'ACTIVE' : 'INACTIVE',
+          }))
+          setReviews(normReviews)
+          safeSetItem('omedo_admin_reviews', normReviews)
+        }
+      } catch (err) {
+        console.warn('Home live sync notice:', err)
+      }
+    }
+    loadLive()
+
     const handleSync = () => {
-      const sClients = localStorage.getItem('omedo_admin_clients')
+      const sClients = safeGetItem('omedo_admin_clients')
       if (sClients) {
         try {
           const parsed = JSON.parse(sClients)
@@ -233,7 +276,7 @@ export default function Home() {
         }
       }
 
-      const sReviews = localStorage.getItem('omedo_admin_reviews')
+      const sReviews = safeGetItem('omedo_admin_reviews')
       if (sReviews) {
         try {
           const parsed = JSON.parse(sReviews)
@@ -257,11 +300,21 @@ export default function Home() {
     }
   }, [])
 
-  // Filter only ACTIVE clients for display
+  // Filter only ACTIVE clients for display and build seamless infinite loop
   const activeClients = useMemo(() => {
     const list = clients.filter((c) => c.status !== 'INACTIVE')
     return list.length > 0 ? list : initialClientLogos
   }, [clients])
+
+  const loopedClients = useMemo(() => {
+    let repeated = [...activeClients]
+    // Ensure base length is at least 8-10 items so infinite loop never leaves blank gaps
+    while (repeated.length < 10) {
+      repeated = [...repeated, ...activeClients]
+    }
+    // Double for continuous 0% -> -50% translateX loop
+    return [...repeated, ...repeated]
+  }, [activeClients])
 
   // Active reviews list & slide pagination state (6 reviews per slide)
   const activeReviews = useMemo(() => {
@@ -716,33 +769,40 @@ export default function Home() {
 
           {/* Continuous Infinite Ticker Row (Boundaryless Clean Logos) */}
           <div className="flex w-max animate-omedo-marquee items-center gap-6 sm:gap-10 md:gap-12 px-4">
-            {/* Duplicate array for seamless infinite marquee loop */}
-            {[...activeClients, ...activeClients].map((client, idx) => (
+            {loopedClients.map((client, idx) => (
               <div
                 key={`${client.id || idx}-${idx}`}
                 className="flex flex-col items-center shrink-0 group transition-transform duration-300 hover:scale-105 px-1 sm:px-1.5"
               >
-                {/* Uniform 1-Size Logo Card (No 12px padding - Full Crisp Logo Display) */}
-                <div className="w-40 sm:w-44 md:w-48 h-18 sm:h-20 md:h-22 bg-white rounded-2xl shadow-sm flex items-center justify-center p-1 sm:p-1.5 overflow-hidden transition-all duration-300 group-hover:shadow-lg group-hover:border group-hover:border-white/40">
-                  {client.logoUrl ? (
-                    <img
-                      src={client.logoUrl}
-                      alt={client.name}
-                      className="w-full h-full max-h-full max-w-full object-contain select-none transition-transform duration-300 group-hover:scale-105"
-                      loading="lazy"
-                    />
-                  ) : (
-                    <div
-                      className="w-full h-full rounded-xl flex items-center justify-center text-xs font-black tracking-wider text-white shadow-inner p-1 text-center"
-                      style={{ background: client.badgeColor || '#00685e' }}
-                    >
-                      {client.logoText || (client.name || 'HOSPITAL').slice(0, 10).toUpperCase()}
-                    </div>
-                  )}
+                {/* Uniform 4:3 Ratio Card (Borderless Edge-to-Edge with Hover Overlay) */}
+                <div className="relative w-32 sm:w-36 md:w-40 aspect-[4/3] rounded-2xl shadow-md flex items-center justify-center overflow-hidden transition-all duration-300 group-hover:shadow-2xl group-hover:scale-105 cursor-pointer">
+                  <SafeImage
+                    src={client.logoUrl}
+                    alt={client.name}
+                    className="w-full h-full object-fill select-none rounded-2xl transition-transform duration-300 group-hover:scale-105"
+                    fallback={
+                      <div
+                        className="w-full h-full rounded-2xl flex items-center justify-center text-xs sm:text-sm font-black tracking-wider text-white shadow-inner p-2 text-center"
+                        style={{ background: client.badgeColor || '#00685e' }}
+                      >
+                        {client.logoText || (client.name || 'HOSPITAL').slice(0, 10).toUpperCase()}
+                      </div>
+                    }
+                  />
+
+                  {/* Dark Frosted Hover Overlay with Purple Pin and Location */}
+                  <div className="absolute inset-0 bg-[#0f172a]/80 backdrop-blur-[2px] rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col items-center justify-center p-2 z-10 select-none">
+                    <span className="material-symbols-outlined text-[#a855f7] text-xl sm:text-2xl drop-shadow-md mb-0.5">
+                      location_on
+                    </span>
+                    <span className="text-[10px] sm:text-[11px] font-black uppercase text-white tracking-wider text-center leading-tight drop-shadow-md px-1 line-clamp-2">
+                      {client.location || client.name || 'INDIA'}
+                    </span>
+                  </div>
                 </div>
 
-                {/* Client Name Label Below (Uniform Fixed Width) */}
-                <p className={`text-[10px] sm:text-[11px] font-semibold text-center truncate mt-2 w-40 sm:w-44 md:w-48 transition-colors tracking-wide ${themeStyle.labelColor}`}>
+                {/* Client Name Label Below (Uniform Fixed Width Matching 4:3 Card) */}
+                <p className={`text-[10px] sm:text-[11px] font-semibold text-center truncate mt-2.5 w-32 sm:w-36 md:w-40 transition-colors tracking-wide ${themeStyle.labelColor}`}>
                   {client.name}
                 </p>
               </div>

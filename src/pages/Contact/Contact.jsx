@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { pageTransition } from '../../utils/animations'
 import { Send } from 'lucide-react'
 import { submitDemoRequest } from '../../services/api'
+import { safeSetItem, safeGetItem } from '../../utils/storage'
 
 const fadeUp = {
   hidden: { opacity: 0, y: 24 },
@@ -128,7 +129,8 @@ export default function Contact() {
 
       // Store in local storage for real-time visibility in Login Admin Queries
       try {
-        const existing = JSON.parse(localStorage.getItem('omedo_client_queries') || '[]')
+        const raw = safeGetItem('omedo_client_queries')
+        const existing = raw ? JSON.parse(raw) : []
         const now = new Date()
         const formattedDate = `${now.toISOString().split('T')[0]} ${now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}`
         const newRecord = {
@@ -143,7 +145,7 @@ export default function Contact() {
           rawDate: now.toISOString().split('T')[0],
           category: 'Demo Request',
         }
-        localStorage.setItem('omedo_client_queries', JSON.stringify([newRecord, ...existing]))
+        safeSetItem('omedo_client_queries', [newRecord, ...existing])
         window.dispatchEvent(new Event('omedo_queries_updated'))
       } catch (storageErr) {
         console.warn('LocalStorage queries update notice:', storageErr)
@@ -509,8 +511,8 @@ export default function Contact() {
                   <div className="space-y-1.5 pl-10">
                     <div className="flex items-center gap-2 text-slate-700">
                       <span className="material-symbols-outlined text-sm text-[#00685e]">call</span>
-                      <a href="tel:+91XXXXXXXXXX" className="font-semibold text-slate-800 hover:text-[#00685e] transition-colors">
-                        +91 XXXXX XXXXX
+                      <a href="tel:+917457912924" className="font-semibold text-slate-800 hover:text-[#00685e] transition-colors">
+                        +91 74579 12924
                       </a>
                     </div>
                     <div className="flex items-center gap-2 text-slate-700">
@@ -534,8 +536,8 @@ export default function Contact() {
                   <div className="space-y-1.5 pl-10">
                     <div className="flex items-center gap-2 text-slate-700">
                       <span className="material-symbols-outlined text-sm text-[#00685e]">call</span>
-                      <a href="tel:+91XXXXXXXXXX" className="font-semibold text-slate-800 hover:text-[#00685e] transition-colors">
-                        +91 XXXXX XXXXX
+                      <a href="tel:+917457912923" className="font-semibold text-slate-800 hover:text-[#00685e] transition-colors">
+                        +91 74579 12923
                       </a>
                     </div>
                     <div className="flex items-center gap-2 text-slate-700">

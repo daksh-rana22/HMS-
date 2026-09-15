@@ -11,13 +11,15 @@ export default function Layout() {
     window.scrollTo({ top: 0, behavior: 'instant' })
   }, [pathname])
 
+  const isLoginPage = pathname.startsWith('/login')
+
   return (
     <div className="flex flex-col min-h-screen">
-      <Navbar />
+      {!isLoginPage && <Navbar />}
       <main className="flex-1">
         <Outlet />
       </main>
-      <Footer />
+      {!isLoginPage && <Footer />}
       <ThemeChanger />
     </div>
   )

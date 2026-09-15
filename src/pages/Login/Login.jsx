@@ -16,7 +16,23 @@ import {
   logoutAdmin,
   getAuthToken,
   getAuthUser,
+  fetchCompanyClients,
+  createCompanyClient,
+  updateCompanyClient,
+  deleteCompanyClient,
+  patchCompanyClientStatus,
+  patchCompanyClientFeatured,
+  fetchTestimonials,
+  createClientTestimonial,
+  updateTestimonial,
+  deleteTestimonial,
+  patchTestimonialStatus,
+  formatLogoUrl,
+  getClientImageUrl,
+  API_BASE_URL,
 } from '../../services/api'
+import SafeImage from '../../components/common/SafeImage'
+import { safeSetItem, safeGetItem } from '../../utils/storage'
 
 export default function Login() {
   const [isAuthenticated, setIsAuthenticated] = useState(() => {
@@ -48,9 +64,9 @@ export default function Login() {
   const [authLoading, setAuthLoading] = useState(false)
   const [authError, setAuthError] = useState(null)
 
-  // Managed Datasets
+  // Managed Datasets (safely retrieved from storage)
   const [clients, setClients] = useState(() => {
-    const s = localStorage.getItem('omedo_admin_clients')
+    const s = safeGetItem('omedo_admin_clients')
     if (s) {
       try {
         const parsed = JSON.parse(s)
@@ -66,7 +82,7 @@ export default function Login() {
   })
 
   const [reviews, setReviews] = useState(() => {
-    const s = localStorage.getItem('omedo_admin_reviews')
+    const s = safeGetItem('omedo_admin_reviews')
     if (s) {
       try {
         const parsed = JSON.parse(s)
@@ -82,7 +98,7 @@ export default function Login() {
   })
 
   const [queries, setQueries] = useState(() => {
-    const s = localStorage.getItem('omedo_client_queries')
+    const s = safeGetItem('omedo_client_queries')
     if (s) {
       try {
         const parsed = JSON.parse(s)
@@ -140,6 +156,32 @@ export default function Login() {
     }
   }
 
+  // Normalizer for Company Clients
+  const normalizeCompanyClient = (c, idx) => ({
+    id: c.id !== undefined ? c.id : Date.now() + idx,
+    name: c.client_name || c.name || 'Healthcare Partner',
+    location: c.short_description || c.location || '',
+    logoUrl: formatLogoUrl(c.logo_url || c.logoUrl || c.image_base64 || null),
+    logoText: (c.client_name || c.name || 'HOSPITAL').slice(0, 10).toUpperCase(),
+    status: (c.is_active ?? (c.status !== 'INACTIVE')) ? 'ACTIVE' : 'INACTIVE',
+    featured: Boolean(c.is_featured ?? c.featured ?? true),
+    displayOrder: c.display_order ?? idx,
+    badgeColor: c.badgeColor || '#00685e',
+  })
+
+  // Normalizer for Testimonials
+  const normalizeTestimonialRecord = (t, idx) => ({
+    id: t.id !== undefined ? t.id : Date.now() + idx,
+    clientId: t.client_id,
+    name: t.person_name || t.name || 'Doctor / Administrator',
+    role: t.designation || t.role || 'Verified Medical Practitioner',
+    organization: t.organization || t.facility || t.client_name || 'Healthcare Network',
+    content: t.testimonial || t.content || '',
+    rating: Number(t.rating) || 5,
+    avatar: (t.person_name || t.name || 'DR').slice(0, 2).toUpperCase(),
+    status: (t.is_active ?? (t.status !== 'INACTIVE')) ? 'ACTIVE' : 'INACTIVE',
+  })
+
   // ── FETCH LIVE DEMO REQUESTS FROM BACKEND API: https://api.omedosoft.com/it/api/v1/omedo/demo-requests ──
   const loadLiveDemoRequests = useCallback(async (showToastNotice = false) => {
     if (!isAuthenticated) return
@@ -158,7 +200,7 @@ export default function Login() {
 
         const normalized = res.list.map(normalizeQueryRecord)
         setQueries(normalized)
-        localStorage.setItem('omedo_client_queries', JSON.stringify(normalized))
+        safeSetItem('omedo_client_queries', normalized)
 
         if (showToastNotice) {
           setExportToast({
@@ -188,33 +230,69 @@ export default function Login() {
     }
   }, [isAuthenticated, searchQuery, fromDate, toDate])
 
-  // Initial load and filter change trigger (only when authenticated)
-  useEffect(() => {
-    if (isAuthenticated) {
-      loadLiveDemoRequests(false)
+  // ── FETCH LIVE COMPANY CLIENTS FROM BACKEND API: https://api.omedosoft.com/it/api/v1/omedo/websites/company-clients ──
+  const loadLiveCompanyClients = useCallback(async () => {
+    if (!isAuthenticated) return
+    try {
+      const res = await fetchCompanyClients()
+      if (res && res.success && Array.isArray(res.list) && res.list.length > 0) {
+        const normalized = res.list.map(normalizeCompanyClient)
+        setClients(normalized)
+        safeSetItem('omedo_admin_clients', normalized)
+      }
+    } catch (err) {
+      console.warn('Live company clients sync error:', err)
     }
-  }, [loadLiveDemoRequests, isAuthenticated])
+  }, [isAuthenticated])
 
-  // Sync datasets to localStorage
+  // ── FETCH LIVE TESTIMONIALS FROM BACKEND API: https://api.omedosoft.com/it/api/v1/omedo/websites/testimonials ──
+  const loadLiveReviews = useCallback(async () => {
+    if (!isAuthenticated) return
+    try {
+      const res = await fetchTestimonials()
+      if (res && res.success && Array.isArray(res.list) && res.list.length > 0) {
+        const normalized = res.list.map(normalizeTestimonialRecord)
+        setReviews(normalized)
+        safeSetItem('omedo_admin_reviews', normalized)
+      }
+    } catch (err) {
+      console.warn('Live testimonials sync error:', err)
+    }
+  }, [isAuthenticated])
+
+  // Load data on-demand only for the currently active tab when authenticated
   useEffect(() => {
-    localStorage.setItem('omedo_admin_clients', JSON.stringify(clients))
+    if (!isAuthenticated) return
+
+    if (activeMenu === 'queries') {
+      loadLiveDemoRequests(false)
+    } else if (activeMenu === 'clients') {
+      loadLiveCompanyClients()
+    } else if (activeMenu === 'reviews') {
+      loadLiveReviews()
+    }
+  }, [isAuthenticated, activeMenu, loadLiveDemoRequests, loadLiveCompanyClients, loadLiveReviews])
+
+  // Sync datasets safely to storage with Quota protection
+  useEffect(() => {
+    safeSetItem('omedo_admin_clients', clients)
     window.dispatchEvent(new Event('omedo_clients_updated'))
   }, [clients])
 
   useEffect(() => {
-    localStorage.setItem('omedo_admin_reviews', JSON.stringify(reviews))
+    safeSetItem('omedo_admin_reviews', reviews)
     window.dispatchEvent(new Event('omedo_reviews_updated'))
   }, [reviews])
 
   useEffect(() => {
-    localStorage.setItem('omedo_client_queries', JSON.stringify(queries))
+    safeSetItem('omedo_client_queries', queries)
   }, [queries])
 
   // Listen for real-time enquiries submitted on the site
   useEffect(() => {
     const handleExternalQueriesUpdate = () => {
       try {
-        const s = localStorage.getItem('omedo_client_queries')
+        const s = safeGetItem('omedo_client_queries')
         if (s) {
           const parsed = JSON.parse(s)
           if (Array.isArray(parsed)) setQueries(parsed)
@@ -295,26 +373,68 @@ export default function Login() {
   }
 
   // Toggle Item Status Handler for Clients & Reviews
-  const toggleItemStatus = (id, type) => {
-    const toggle = (list) =>
-      list.map((item, idx) => {
-        const match = item.id !== undefined ? item.id === id : idx === id
-        if (match) {
-          const next = item.status === 'ACTIVE' ? 'INACTIVE' : 'ACTIVE'
-          return { ...item, status: next }
+  const toggleItemStatus = async (id, type) => {
+    if (type === 'clients') {
+      const target = clients.find((item, idx) => (item.id !== undefined ? item.id === id : idx === id))
+      const nextStatus = target && target.status === 'ACTIVE' ? 'INACTIVE' : 'ACTIVE'
+      setClients((prev) =>
+        prev.map((item, idx) => {
+          const match = item.id !== undefined ? item.id === id : idx === id
+          return match ? { ...item, status: nextStatus } : item
+        })
+      )
+      try {
+        if (target && target.id && typeof target.id === 'number') {
+          await patchCompanyClientStatus(target.id, nextStatus === 'ACTIVE')
         }
-        return item
-      })
-
-    if (type === 'clients') setClients(toggle)
-    if (type === 'reviews') setReviews(toggle)
+      } catch (err) {
+        console.warn('Backend company-client status patch notice:', err)
+      }
+    }
+    if (type === 'reviews') {
+      const target = reviews.find((item, idx) => (item.id !== undefined ? item.id === id : idx === id))
+      const nextStatus = target && target.status === 'ACTIVE' ? 'INACTIVE' : 'ACTIVE'
+      setReviews((prev) =>
+        prev.map((item, idx) => {
+          const match = item.id !== undefined ? item.id === id : idx === id
+          return match ? { ...item, status: nextStatus } : item
+        })
+      )
+      try {
+        if (target && target.id && typeof target.id === 'number') {
+          await patchTestimonialStatus(target.id, nextStatus === 'ACTIVE')
+        }
+      } catch (err) {
+        console.warn('Backend testimonial status patch notice:', err)
+      }
+    }
   }
 
   // Delete Item Handler
-  const deleteItem = (id, type) => {
+  const deleteItem = async (id, type) => {
     if (!window.confirm('Are you sure you want to remove this record?')) return
-    if (type === 'clients') setClients((prev) => prev.filter((i) => i.id !== id))
-    if (type === 'reviews') setReviews((prev) => prev.filter((_, idx) => idx !== id))
+    if (type === 'clients') {
+      const target = clients.find((item, idx) => (item.id !== undefined ? item.id === id : idx === id))
+      setClients((prev) => prev.filter((i, idx) => (i.id !== undefined ? i.id !== id : idx !== id)))
+      try {
+        if (target && target.id && typeof target.id === 'number') {
+          await deleteCompanyClient(target.id)
+        }
+      } catch (err) {
+        console.warn('Backend delete company-client notice:', err)
+      }
+    }
+    if (type === 'reviews') {
+      const target = reviews.find((item, idx) => (item.id !== undefined ? item.id === id : idx === id))
+      setReviews((prev) => prev.filter((_, idx) => (target?.id !== undefined ? _.id !== id : idx !== id)))
+      try {
+        if (target && target.id && typeof target.id === 'number') {
+          await deleteTestimonial(target.id)
+        }
+      } catch (err) {
+        console.warn('Backend delete testimonial notice:', err)
+      }
+    }
     if (type === 'queries') setQueries((prev) => prev.filter((i) => i.id !== id))
   }
 
@@ -341,9 +461,38 @@ export default function Login() {
   const totalDisplayCount = liveRequestsCount !== null ? Math.max(liveRequestsCount, queries.length) : queries.length
   const uniqueLocationsCount = useMemo(() => {
     const locs = new Set(queries.map((q) => (q.location || '').trim()).filter(Boolean))
-    return locs.size || 1
+    return locs.size || (queries.length > 0 ? 1 : 0)
+  }, [queries])
+  const uniqueFacilitiesCount = useMemo(() => {
+    const facs = new Set(queries.map((q) => (q.facility || q.hospital_clinic_name || '').trim()).filter(Boolean))
+    return facs.size || (queries.length > 0 ? 1 : 0)
   }, [queries])
   const emailsProvidedCount = useMemo(() => queries.filter((q) => q.email && q.email.trim()).length, [queries])
+  const phonesProvidedCount = useMemo(() => queries.filter((q) => q.mobile && q.mobile.trim()).length, [queries])
+
+  // Avatar helper for doctor/client initials
+  const getInitials = (name) => {
+    if (!name) return 'CL'
+    const clean = name.replace(/^(Dr\.|Dr|Mr\.|Mr|Ms\.|Ms|Mrs\.|Mrs)\s+/i, '').trim()
+    const parts = clean.split(' ').filter(Boolean)
+    if (parts.length >= 2) return (parts[0][0] + parts[1][0]).toUpperCase()
+    return (parts[0] ? parts[0].slice(0, 2) : 'CL').toUpperCase()
+  }
+
+  // Consistent pleasant avatar background color palette
+  const getAvatarBg = (name = '') => {
+    const colors = [
+      'bg-teal-100 text-teal-800 border-teal-200',
+      'bg-sky-100 text-sky-800 border-sky-200',
+      'bg-indigo-100 text-indigo-800 border-indigo-200',
+      'bg-emerald-100 text-emerald-800 border-emerald-200',
+      'bg-amber-100 text-amber-800 border-amber-200',
+      'bg-rose-100 text-rose-800 border-rose-200',
+    ]
+    let sum = 0
+    for (let i = 0; i < name.length; i++) sum += name.charCodeAt(i)
+    return colors[sum % colors.length]
+  }
 
   // Export to Excel handler
   const handleExcelExport = async () => {
@@ -387,12 +536,13 @@ export default function Login() {
     }
   }
 
-  // Handle Logo File Upload
+  // Handle Logo File Upload with Automatic High-Resolution Downscaling & Compression
+  // Prevents 413 "Request Entity Too Large" by bounding dimensions to max 480x240 px and compressing
   const handleLogoUpload = (e) => {
     const file = e.target.files?.[0]
     if (file) {
-      if (file.size > 5 * 1024 * 1024) {
-        setModalError('Please choose an image file under 5MB.')
+      if (file.size > 15 * 1024 * 1024) {
+        setModalError('Please choose an image file under 15MB.')
         return
       }
       setModalError(null)
@@ -403,38 +553,60 @@ export default function Login() {
         img.crossOrigin = 'anonymous'
         img.onload = () => {
           try {
-            const canvas = document.createElement('canvas')
-            const width = img.naturalWidth || img.width || 400
-            const height = img.naturalHeight || img.height || 200
-            canvas.width = width
-            canvas.height = height
-            const ctx = canvas.getContext('2d')
-            ctx.fillStyle = '#FFFFFF'
-            ctx.fillRect(0, 0, width, height)
-            ctx.drawImage(img, 0, 0, width, height)
+            const MAX_WIDTH = 480
+            const MAX_HEIGHT = 240
+            let srcWidth = img.naturalWidth || img.width || 400
+            let srcHeight = img.naturalHeight || img.height || 200
 
-            const processedUrl = canvas.toDataURL('image/png')
-            const whiteBgFile = dataURLtoFile(processedUrl, file.name.replace(/\.[^/.]+$/, "") + ".png") || file
-            setNewItemData((prev) => ({
-              ...prev,
-              logoUrl: processedUrl,
-              logoFileName: file.name,
-              logoFile: whiteBgFile,
-            }))
+            let targetWidth = srcWidth
+            let targetHeight = srcHeight
+
+            if (srcWidth > MAX_WIDTH || srcHeight > MAX_HEIGHT) {
+              const scaleRatio = Math.min(MAX_WIDTH / srcWidth, MAX_HEIGHT / srcHeight)
+              targetWidth = Math.max(1, Math.round(srcWidth * scaleRatio))
+              targetHeight = Math.max(1, Math.round(srcHeight * scaleRatio))
+            }
+
+            const canvas = document.createElement('canvas')
+            canvas.width = targetWidth
+            canvas.height = targetHeight
+            const ctx = canvas.getContext('2d')
+            if (ctx) {
+              ctx.imageSmoothingEnabled = true
+              ctx.imageSmoothingQuality = 'high'
+              ctx.fillStyle = '#FFFFFF'
+              ctx.fillRect(0, 0, targetWidth, targetHeight)
+              ctx.drawImage(img, 0, 0, targetWidth, targetHeight)
+
+              const processedUrl = canvas.toDataURL('image/png')
+              const safeFile = dataURLtoFile(
+                processedUrl,
+                file.name.replace(/\.[^/.]+$/, '') + '.png'
+              ) || file
+
+              setNewItemData((prev) => ({
+                ...prev,
+                logoUrl: processedUrl,
+                logoFileName: file.name,
+                logoFile: safeFile,
+              }))
+              return
+            }
           } catch (err) {
             console.error('Canvas processing error:', err)
-            setNewItemData((prev) => ({
-              ...prev,
-              logoUrl: rawDataUrl,
-              logoFileName: file.name,
-              logoFile: file,
-            }))
           }
+
+          setNewItemData((prev) => ({
+            ...prev,
+            logoUrl: formatLogoUrl(rawDataUrl),
+            logoFileName: file.name,
+            logoFile: file,
+          }))
         }
         img.onerror = () => {
           setNewItemData((prev) => ({
             ...prev,
-            logoUrl: rawDataUrl,
+            logoUrl: formatLogoUrl(rawDataUrl),
             logoFileName: file.name,
             logoFile: file,
           }))
@@ -477,33 +649,72 @@ export default function Login() {
           fileToSend = dataURLtoFile(logoUrl, newItemData.logoFileName || `${name.toLowerCase().replace(/\s+/g, '-')}-logo.png`)
         }
 
+        let backendLogoUrl = ''
+        if (logoUrl && !logoUrl.startsWith('data:') && logoUrl.length <= 500) {
+          backendLogoUrl = logoUrl
+        }
+
+        // 1. If file/dataURL is available, upload to multipart clients endpoint first
         if (fileToSend) {
-          const apiRes = await postClientDetails({
-            file: fileToSend,
-            clientName: name,
-            cityName: location || '',
-            isActive: true,
-          })
-          if (apiRes && apiRes.data) {
-            savedRecord = apiRes.data
+          try {
+            const apiRes = await postClientDetails({
+              file: fileToSend,
+              clientName: name,
+              cityName: location || '',
+              isActive: true,
+            })
+            if (apiRes && apiRes.data) {
+              savedRecord = apiRes.data
+              if (apiRes.data.id) {
+                backendLogoUrl = getClientImageUrl(apiRes.data.id)
+              }
+            }
+          } catch (err) {
+            console.warn('Backend multipart upload notice:', err)
+          }
+        }
+
+        if (editingItem && editingItem.type === 'clients') {
+          // 2. Update company client in backend (/it/api/v1/omedo/websites/company-clients/{id})
+          try {
+            const updateRes = await updateCompanyClient(editingItem.id, {
+              client_name: name,
+              logo_url: backendLogoUrl || (logoUrl && !logoUrl.startsWith('data:') ? logoUrl : ''),
+              short_description: location,
+              is_featured: true,
+              is_active: true,
+            })
+            if (updateRes) savedRecord = updateRes.data || updateRes || savedRecord
+          } catch (err) {
+            console.warn('Backend update company client notice:', err)
+          }
+        } else {
+          // 3. Create company client in backend (/it/api/v1/omedo/websites/company-clients)
+          try {
+            const createRes = await createCompanyClient({
+              client_name: name,
+              logo_url: backendLogoUrl || (logoUrl && !logoUrl.startsWith('data:') ? logoUrl : ''),
+              short_description: location,
+              is_featured: true,
+              is_active: true,
+            })
+            if (createRes) savedRecord = createRes.data || createRes || savedRecord
+          } catch (err) {
+            console.warn('Backend create company client notice:', err)
           }
         }
       } catch (err) {
-        console.warn('Backend API client-details notification:', err)
-        if (
-          err.message &&
-          !err.message.includes('Failed to fetch') &&
-          !err.message.includes('NetworkError') &&
-          !err.message.includes('502') &&
-          !err.message.includes('504')
-        ) {
-          setModalError(err.message)
-          setIsSaving(false)
-          return
-        }
+        console.warn('Backend client save error:', err)
       } finally {
         setIsSaving(false)
       }
+
+      const finalLogo = formatLogoUrl(
+        savedRecord?.image_base64 ||
+        savedRecord?.logo_url ||
+        (savedRecord?.id ? getClientImageUrl(savedRecord.id) : logoUrl),
+        savedRecord?.id
+      )
 
       if (editingItem && editingItem.type === 'clients') {
         setClients((prev) =>
@@ -513,10 +724,11 @@ export default function Login() {
                   ...item,
                   id: savedRecord?.id || item.id,
                   name: savedRecord?.client_name || name,
-                  location: savedRecord?.city_name || location,
-                  logoUrl: savedRecord?.image_base64 || logoUrl,
+                  location: savedRecord?.short_description || savedRecord?.city_name || location,
+                  logoUrl: finalLogo,
                   logoText: (savedRecord?.client_name || name).slice(0, 10).toUpperCase(),
                   status: (savedRecord?.is_active ?? true) ? 'ACTIVE' : 'INACTIVE',
+                  featured: Boolean(savedRecord?.is_featured ?? true),
                 }
               : item
           )
@@ -525,12 +737,12 @@ export default function Login() {
         const created = {
           id: savedRecord?.id || Date.now(),
           name: savedRecord?.client_name || name,
-          location: savedRecord?.city_name || location,
-          logoUrl: savedRecord?.image_base64 || logoUrl,
+          location: savedRecord?.short_description || savedRecord?.city_name || location,
+          logoUrl: finalLogo,
           logoText: (savedRecord?.client_name || name).slice(0, 10).toUpperCase(),
           badgeColor: '#00685e',
           status: (savedRecord?.is_active ?? true) ? 'ACTIVE' : 'INACTIVE',
-          featured: true,
+          featured: Boolean(savedRecord?.is_featured ?? true),
         }
         setClients([created, ...clients])
       }
@@ -552,29 +764,71 @@ export default function Login() {
         return
       }
 
+      setIsSaving(true)
+      let savedReview = null
+      try {
+        if (editingItem && editingItem.type === 'reviews') {
+          const apiRes = await updateTestimonial(editingItem.id, {
+            person_name: name,
+            designation: newItemData.role?.trim() || 'Verified Medical Practitioner',
+            testimonial: content,
+            rating: Number(newItemData.rating) || 5,
+            is_active: true,
+          }).catch((err) => {
+            console.warn('updateTestimonial notice:', err)
+            return null
+          })
+          if (apiRes) savedReview = apiRes.data || apiRes
+        } else {
+          const matchedClient = clients.find(
+            (c) => c && c.name && organization && c.name.toLowerCase().trim() === organization.toLowerCase().trim()
+          )
+          const targetClientId = matchedClient?.id || (clients[0] && typeof clients[0].id === 'number' ? clients[0].id : null)
+
+          const apiRes = await createClientTestimonial(targetClientId, {
+            person_name: name,
+            designation: newItemData.role?.trim() || 'Verified Medical Practitioner',
+            organization,
+            testimonial: content,
+            rating: Number(newItemData.rating) || 5,
+            is_active: true,
+          }).catch((err) => {
+            console.warn('createClientTestimonial notice:', err)
+            return null
+          })
+          if (apiRes) savedReview = apiRes.data || apiRes
+        }
+      } catch (err) {
+        console.warn('Review API notice:', err)
+      } finally {
+        setIsSaving(false)
+      }
+
       if (editingItem && editingItem.type === 'reviews') {
         setReviews((prev) =>
           prev.map((item, idx) =>
             idx === editingItem.index || (item.id && item.id === editingItem.id)
               ? {
                   ...item,
-                  name,
-                  organization,
-                  content,
+                  id: savedReview?.id || item.id,
+                  name: savedReview?.person_name || name,
+                  organization: savedReview?.organization || organization,
+                  content: savedReview?.testimonial || content,
                   role: newItemData.role?.trim() || item.role || 'Verified Medical Practitioner',
                   rating: Number(newItemData.rating) || item.rating || 5,
                   avatar: name.slice(0, 2).toUpperCase(),
+                  status: (savedReview?.is_active ?? true) ? 'ACTIVE' : 'INACTIVE',
                 }
               : item
           )
         )
       } else {
         const created = {
-          id: Date.now(),
-          name,
+          id: savedReview?.id || Date.now(),
+          name: savedReview?.person_name || name,
           role: newItemData.role?.trim() || 'Verified Medical Practitioner',
           organization,
-          content,
+          content: savedReview?.testimonial || content,
           rating: Number(newItemData.rating) || 5,
           avatar: name.slice(0, 2).toUpperCase(),
           status: 'ACTIVE',
@@ -616,13 +870,21 @@ export default function Login() {
   // ═════════════════════════════════════════════════════════════════════════
   if (isAuthenticated) {
     return (
-      <motion.div {...pageTransition} className="min-h-screen bg-[#f8fafc] text-[#121d1f] flex flex-col font-sans pt-16 sm:pt-18 md:pt-21 2xl:pt-24">
+      <motion.div {...pageTransition} className="min-h-screen bg-[#f8fafc] text-[#121d1f] flex flex-col font-sans">
         
         {/* ── TOP ADMIN CONSOLE SUB-HEADER ── */}
-        <header className="bg-white/95 backdrop-blur-md border-b border-slate-200 sticky top-16 sm:top-18 md:top-21 2xl:top-24 z-30 px-4 sm:px-6 lg:px-8 py-3 flex items-center justify-between shadow-2xs">
+        <header className="bg-white/95 backdrop-blur-md border-b border-slate-200 sticky top-0 z-30 px-4 sm:px-6 lg:px-8 py-3 flex items-center justify-between shadow-2xs">
           
-          {/* Left: Admin Status Badge */}
+          {/* Left: Logo & Admin Status Badge */}
           <div className="flex items-center gap-3 sm:gap-4">
+            <Link to="/" className="flex items-center shrink-0 transition-transform duration-200 hover:scale-[1.02]" title="Return to Homepage">
+              <img
+                src={omedoLogo}
+                alt="OMEDO Hospital Management System"
+                className="h-7 sm:h-8 md:h-9 w-auto object-contain"
+              />
+            </Link>
+            <div className="h-5 w-px bg-slate-200" />
             <div className="flex items-center gap-2">
               <span className="px-2.5 py-1 rounded-lg text-[10px] font-black uppercase tracking-wider bg-[#00685e] text-white shadow-xs">
                 ADMIN CONSOLE
@@ -674,7 +936,7 @@ export default function Login() {
               initial={{ opacity: 0, y: -20 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -20 }}
-              className="fixed top-28 right-4 sm:right-8 z-50 max-w-md bg-white rounded-2xl p-4 shadow-2xl border border-slate-200 flex items-start gap-3"
+              className="fixed top-6 right-4 sm:right-8 z-50 max-w-md bg-white rounded-2xl p-4 shadow-2xl border border-slate-200 flex items-start gap-3"
             >
               <div
                 className={`w-9 h-9 rounded-xl flex items-center justify-center shrink-0 ${
@@ -777,35 +1039,35 @@ export default function Login() {
                     {activeMenu === 'reviews' && 'Reviews Manager'}
                   </span>
                   {activeMenu === 'queries' && (
-                    <span className="px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-[#107c41]/10 text-[#107c41] border border-[#107c41]/25 flex items-center gap-1">
-                      <span className="material-symbols-outlined text-sm">table_view</span>
-                      Excel Spreadsheet Form
+                    <span className="px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-emerald-50 text-emerald-700 border border-emerald-200 flex items-center gap-1">
+                      <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
+                      Live Data Table
                     </span>
                   )}
                 </h1>
                 <p className="text-xs text-[#64748b] mt-1">
-                  {activeMenu === 'queries' && 'Review, track, and export client hospital inquiries in Excel spreadsheet format.'}
+                  {activeMenu === 'queries' && 'Manage, inspect, and export inbound doctor demo inquiries & hospital consultation requests.'}
                   {activeMenu === 'clients' && 'Manage, filter, and upload partner hospital & clinic chain logos.'}
                   {activeMenu === 'reviews' && 'Moderate, approve, and curate verified doctor testimonials & star ratings.'}
                 </p>
               </div>
 
-              {/* Quick Summary Badges for Queries + Live Refresh Button */}
+              {/* Quick Live Refresh & Status Badge */}
               {activeMenu === 'queries' && (
                 <div className="flex items-center gap-2 flex-wrap">
-                  <div className="px-3 py-1.5 rounded-xl bg-white border border-slate-200 shadow-2xs text-xs font-bold text-slate-800 flex items-center gap-2">
-                    <span className="w-2 h-2 rounded-full bg-emerald-500" />
-                    <span>Total Requests: <strong className="text-[#00685e] text-sm font-black">{totalDisplayCount}</strong></span>
+                  <div className="px-3 py-1.5 rounded-xl bg-white border border-slate-200/90 shadow-2xs text-xs font-bold text-slate-700 flex items-center gap-2">
+                    <span className={`w-2 h-2 rounded-full ${isBackendConnected ? 'bg-emerald-500' : 'bg-amber-400'}`} />
+                    <span>Total Inquiries: <strong className="text-[#00685e] text-sm font-black">{totalDisplayCount}</strong></span>
                   </div>
 
                   <button
                     type="button"
                     onClick={() => loadLiveDemoRequests(true)}
                     disabled={isLoadingLive}
-                    className="px-3 py-1.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold flex items-center gap-1.5 transition-all cursor-pointer border border-slate-200"
-                    title="Refresh data directly from backend endpoint: https://api.omedosoft.com/it/api/v1/omedo/demo-requests"
+                    className="px-3 py-1.5 rounded-xl bg-white hover:bg-slate-50 text-slate-700 text-xs font-bold flex items-center gap-1.5 transition-all cursor-pointer border border-slate-200 shadow-2xs disabled:opacity-60"
+                    title={lastSyncTime ? `Last synced: ${lastSyncTime}` : 'Sync live inquiries from backend'}
                   >
-                    <span className={`material-symbols-outlined text-base ${isLoadingLive ? 'animate-spin' : ''}`}>
+                    <span className={`material-symbols-outlined text-base text-[#00685e] ${isLoadingLive ? 'animate-spin' : ''}`}>
                       sync
                     </span>
                     <span>{isLoadingLive ? 'Syncing...' : 'Sync API'}</span>
@@ -814,161 +1076,191 @@ export default function Login() {
               )}
             </div>
 
+            {/* ── KPI METRIC CARDS: TOTAL INQUIRIES, TOTAL LOGOS, TOTAL REVIEWS ── */}
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4 mb-5">
+              {/* Card 1: Total Inquiries */}
+              <div
+                onClick={() => {
+                  setActiveMenu('queries')
+                  setActiveFilter('ALL')
+                }}
+                className={`bg-white rounded-2xl p-4 border transition-all cursor-pointer shadow-2xs hover:shadow-xs flex items-center justify-between ${
+                  activeMenu === 'queries' ? 'border-[#00685e] ring-1 ring-[#00685e]/20' : 'border-slate-200/90 hover:border-slate-300'
+                }`}
+              >
+                <div>
+                  <p className="text-[10px] sm:text-[11px] font-bold text-slate-500 uppercase tracking-wider">Total Inquiries</p>
+                  <p className="text-xl sm:text-2xl font-black text-slate-900 mt-1 tracking-tight">{totalDisplayCount}</p>
+                  <p className="text-[10px] text-emerald-600 font-semibold mt-0.5 flex items-center gap-1">
+                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
+                    Inbound requests
+                  </p>
+                </div>
+                <div className="w-10 h-10 sm:w-11 sm:h-11 rounded-xl bg-teal-50 text-[#00685e] border border-teal-100 flex items-center justify-center shrink-0">
+                  <span className="material-symbols-outlined text-xl sm:text-2xl">mark_email_unread</span>
+                </div>
+              </div>
+
+              {/* Card 2: Total Logos */}
+              <div
+                onClick={() => {
+                  setActiveMenu('clients')
+                  setActiveFilter('ALL')
+                }}
+                className={`bg-white rounded-2xl p-4 border transition-all cursor-pointer shadow-2xs hover:shadow-xs flex items-center justify-between ${
+                  activeMenu === 'clients' ? 'border-[#00685e] ring-1 ring-[#00685e]/20' : 'border-slate-200/90 hover:border-slate-300'
+                }`}
+              >
+                <div>
+                  <p className="text-[10px] sm:text-[11px] font-bold text-slate-500 uppercase tracking-wider">Total Logos</p>
+                  <p className="text-xl sm:text-2xl font-black text-slate-900 mt-1 tracking-tight">{clients.length}</p>
+                  <p className="text-[10px] text-sky-600 font-semibold mt-0.5 flex items-center gap-1">
+                    <span className="w-1.5 h-1.5 rounded-full bg-sky-500" />
+                    Partner hospital logos
+                  </p>
+                </div>
+                <div className="w-10 h-10 sm:w-11 sm:h-11 rounded-xl bg-sky-50 text-sky-600 border border-sky-100 flex items-center justify-center shrink-0">
+                  <span className="material-symbols-outlined text-xl sm:text-2xl">domain</span>
+                </div>
+              </div>
+
+              {/* Card 3: Total Reviews */}
+              <div
+                onClick={() => {
+                  setActiveMenu('reviews')
+                  setActiveFilter('ALL')
+                }}
+                className={`bg-white rounded-2xl p-4 border transition-all cursor-pointer shadow-2xs hover:shadow-xs flex items-center justify-between ${
+                  activeMenu === 'reviews' ? 'border-[#00685e] ring-1 ring-[#00685e]/20' : 'border-slate-200/90 hover:border-slate-300'
+                }`}
+              >
+                <div>
+                  <p className="text-[10px] sm:text-[11px] font-bold text-slate-500 uppercase tracking-wider">Total Reviews</p>
+                  <p className="text-xl sm:text-2xl font-black text-slate-900 mt-1 tracking-tight">{reviews.length}</p>
+                  <p className="text-[10px] text-violet-600 font-semibold mt-0.5 flex items-center gap-1">
+                    <span className="w-1.5 h-1.5 rounded-full bg-violet-500" />
+                    Doctor testimonials posted
+                  </p>
+                </div>
+                <div className="w-10 h-10 sm:w-11 sm:h-11 rounded-xl bg-violet-50 text-violet-600 border border-violet-100 flex items-center justify-center shrink-0">
+                  <span className="material-symbols-outlined text-xl sm:text-2xl">rate_review</span>
+                </div>
+              </div>
+            </div>
+
             {/* ── TOOLBAR: FILTER CONTROLS + DATE RANGE + SEARCH + EXPORT CONTROLS ── */}
-            <div className="bg-white p-3.5 rounded-2xl border border-slate-200 shadow-xs mb-5 flex flex-col gap-3">
+            <div className="bg-white p-3.5 sm:p-4 rounded-2xl border border-slate-200/90 shadow-xs mb-5 flex flex-col gap-3">
               
-              {/* Row 1: Search Bar + View Switcher */}
               <div className="flex flex-col lg:flex-row items-stretch lg:items-center justify-between gap-3">
                 
                 {/* Search Bar */}
                 <div className="relative flex-1">
-                  <span className="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-base">
+                  <span className="material-symbols-outlined absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400 text-lg">
                     search
                   </span>
                   <input
                     type="text"
                     placeholder={
                       activeMenu === 'queries'
-                        ? 'Search by doctor, hospital, phone (+91...), email, city, message...'
+                        ? 'Search doctor, hospital clinic, phone, email, city, requirement message...'
                         : 'Search records...'
                     }
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
-                    className="w-full pl-9 pr-3 py-2 text-xs bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[var(--t-primary)]/20 focus:border-[var(--t-primary)] font-medium"
+                    className="w-full pl-10 pr-9 py-2.5 text-xs sm:text-sm bg-slate-50 hover:bg-slate-100/70 focus:bg-white border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#00685e]/20 focus:border-[#00685e] font-medium text-slate-800 transition-all placeholder:text-slate-400"
                   />
                   {searchQuery && (
                     <button
                       type="button"
                       onClick={() => setSearchQuery('')}
-                      className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 text-xs"
+                      className="absolute right-3 top-1/2 -translate-y-1/2 w-5 h-5 rounded-full bg-slate-200 hover:bg-slate-300 text-slate-600 flex items-center justify-center text-xs transition-colors cursor-pointer"
+                      title="Clear search"
                     >
-                      clear
+                      <span className="material-symbols-outlined text-xs">close</span>
                     </button>
                   )}
                 </div>
 
-                {/* View Switcher (for Queries) OR Add New Button (for Clients/Reviews only) */}
-                <div className="flex items-center gap-2 justify-between lg:justify-end">
-                  {activeMenu === 'queries' ? (
+                {/* Right Toolbar Controls */}
+                {activeMenu === 'queries' ? (
+                  <div className="flex items-center gap-2.5 flex-wrap justify-between lg:justify-end">
+                    
+                    {/* Date Filter Range */}
+                    <div className="flex items-center gap-1.5 bg-slate-50 p-1 rounded-xl border border-slate-200">
+                      <div className="flex items-center gap-1 px-2 py-1">
+                        <span className="material-symbols-outlined text-slate-400 text-sm">calendar_month</span>
+                        <span className="text-[10px] font-bold text-slate-400 uppercase">From:</span>
+                        <input
+                          type="date"
+                          value={fromDate}
+                          onChange={(e) => setFromDate(e.target.value)}
+                          className="text-xs bg-transparent border-0 focus:outline-none text-slate-700 font-semibold cursor-pointer"
+                          title="Filter from date (yyyy-MM-dd)"
+                        />
+                      </div>
+                      <span className="text-slate-300 font-light">—</span>
+                      <div className="flex items-center gap-1 px-2 py-1">
+                        <span className="text-[10px] font-bold text-slate-400 uppercase">To:</span>
+                        <input
+                          type="date"
+                          value={toDate}
+                          onChange={(e) => setToDate(e.target.value)}
+                          className="text-xs bg-transparent border-0 focus:outline-none text-slate-700 font-semibold cursor-pointer"
+                          title="Filter to date (yyyy-MM-dd)"
+                        />
+                      </div>
+                      {(fromDate || toDate) && (
+                        <button
+                          type="button"
+                          onClick={() => {
+                            setFromDate('')
+                            setToDate('')
+                          }}
+                          className="p-1 text-slate-400 hover:text-red-600 rounded-lg transition-colors cursor-pointer"
+                          title="Reset Date Filters"
+                        >
+                          <span className="material-symbols-outlined text-sm">restart_alt</span>
+                        </button>
+                      )}
+                    </div>
+
+                    {/* View Switcher: Table vs Cards */}
                     <div className="flex items-center bg-slate-100 p-1 rounded-xl border border-slate-200">
                       <button
                         type="button"
                         onClick={() => setQueriesViewMode('sheet')}
-                        className={`px-2.5 py-1 rounded-lg text-xs font-bold transition-all flex items-center gap-1 cursor-pointer ${
+                        className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all flex items-center gap-1.5 cursor-pointer ${
                           queriesViewMode === 'sheet'
-                            ? 'bg-white text-[#107c41] shadow-2xs font-extrabold'
+                            ? 'bg-white text-[#00685e] shadow-2xs font-extrabold'
                             : 'text-slate-600 hover:text-slate-900'
                         }`}
-                        title="Excel Spreadsheet Grid View"
+                        title="Modern Data Table View"
                       >
                         <span className="material-symbols-outlined text-base">table_chart</span>
-                        <span className="hidden sm:inline">Sheet Grid</span>
+                        <span className="hidden sm:inline">Table</span>
                       </button>
                       <button
                         type="button"
                         onClick={() => setQueriesViewMode('card')}
-                        className={`px-2.5 py-1 rounded-lg text-xs font-bold transition-all flex items-center gap-1 cursor-pointer ${
+                        className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all flex items-center gap-1.5 cursor-pointer ${
                           queriesViewMode === 'card'
-                            ? 'bg-white text-[var(--t-primary)] shadow-2xs font-extrabold'
+                            ? 'bg-white text-[#00685e] shadow-2xs font-extrabold'
                             : 'text-slate-600 hover:text-slate-900'
                         }`}
                         title="CRM Cards View"
                       >
-                        <span className="material-symbols-outlined text-base">view_agenda</span>
+                        <span className="material-symbols-outlined text-base">grid_view</span>
                         <span className="hidden sm:inline">Cards</span>
                       </button>
                     </div>
-                  ) : (
-                    <div className="flex items-center gap-2">
-                      {/* Active/Inactive filters for Clients & Reviews */}
-                      <div className="flex items-center gap-1">
-                        {['ALL', 'ACTIVE', 'INACTIVE'].map((f) => (
-                          <button
-                            key={f}
-                            type="button"
-                            onClick={() => setActiveFilter(f)}
-                            className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer ${
-                              activeFilter === f
-                                ? 'bg-[#00685e] text-white shadow-xs'
-                                : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
-                            }`}
-                          >
-                            {f}
-                          </button>
-                        ))}
-                      </div>
 
-                      <button
-                        type="button"
-                        onClick={openModal}
-                        className="px-3.5 py-2 rounded-xl text-xs font-bold transition-all shadow-xs flex items-center gap-1.5 cursor-pointer shrink-0"
-                        style={{
-                          backgroundColor: 'var(--t-primary, #00685e)',
-                          color: '#ffffff',
-                        }}
-                      >
-                        <span className="material-symbols-outlined text-base">add</span>
-                        <span>Add New</span>
-                      </button>
-                    </div>
-                  )}
-                </div>
-
-              </div>
-
-              {/* Row 2: Date Range Pickers + Excel Export Button */}
-              {activeMenu === 'queries' && (
-                <div className="pt-2.5 border-t border-slate-100 flex flex-col xl:flex-row items-stretch xl:items-center justify-between gap-3">
-                  
-                  {/* Date Filter Controls (Directly maps to backend fromDate & toDate params) */}
-                  <div className="flex items-center gap-2 flex-wrap">
-                    <div className="flex items-center gap-1.5 bg-slate-50 px-2.5 py-1 rounded-xl border border-slate-200">
-                      <span className="text-[10px] font-bold text-slate-500 uppercase">From:</span>
-                      <input
-                        type="date"
-                        value={fromDate}
-                        onChange={(e) => setFromDate(e.target.value)}
-                        className="text-xs bg-transparent border-0 focus:outline-none text-slate-700 font-semibold cursor-pointer"
-                        title="Filter from date (yyyy-MM-dd)"
-                      />
-                    </div>
-
-                    <div className="flex items-center gap-1.5 bg-slate-50 px-2.5 py-1 rounded-xl border border-slate-200">
-                      <span className="text-[10px] font-bold text-slate-500 uppercase">To:</span>
-                      <input
-                        type="date"
-                        value={toDate}
-                        onChange={(e) => setToDate(e.target.value)}
-                        className="text-xs bg-transparent border-0 focus:outline-none text-slate-700 font-semibold cursor-pointer"
-                        title="Filter to date (yyyy-MM-dd)"
-                      />
-                    </div>
-
-                    {(fromDate || toDate) && (
-                      <button
-                        type="button"
-                        onClick={() => {
-                          setFromDate('')
-                          setToDate('')
-                        }}
-                        className="px-2 py-1 text-[11px] font-bold text-red-600 hover:bg-red-50 rounded-lg transition-colors cursor-pointer"
-                        title="Reset Date Range"
-                      >
-                        Reset Dates
-                      </button>
-                    )}
-                  </div>
-
-                  {/* ── EXPORT TO EXCEL BUTTON ── */}
-                  <div className="flex items-center gap-2 shrink-0">
-                    
-                    {/* 1. Export Excel Button */}
+                    {/* Export Excel Button */}
                     <button
                       type="button"
                       onClick={handleExcelExport}
                       disabled={isExportingExcel}
-                      className="px-3 py-2 rounded-xl text-xs font-extrabold text-white bg-[#107c41] hover:bg-[#0e6b37] active:scale-98 transition-all flex items-center gap-1.5 cursor-pointer shadow-xs disabled:opacity-70"
-                      title="Download queries as Excel (.xlsx / .csv)"
+                      className="px-3.5 py-2 rounded-xl text-xs font-extrabold text-white bg-emerald-600 hover:bg-emerald-700 active:scale-98 transition-all flex items-center gap-1.5 cursor-pointer shadow-xs disabled:opacity-70"
+                      title="Download all queries as Excel spreadsheet (.xlsx)"
                     >
                       {isExportingExcel ? (
                         <>
@@ -984,83 +1276,132 @@ export default function Login() {
                     </button>
 
                   </div>
+                ) : (
+                  <div className="flex items-center gap-2">
+                    {/* Active/Inactive filters for Clients & Reviews */}
+                    <div className="flex items-center gap-1">
+                      {['ALL', 'ACTIVE', 'INACTIVE'].map((f) => (
+                        <button
+                          key={f}
+                          type="button"
+                          onClick={() => setActiveFilter(f)}
+                          className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer ${
+                            activeFilter === f
+                              ? 'bg-[#00685e] text-white shadow-xs'
+                              : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
+                          }`}
+                        >
+                          {f}
+                        </button>
+                      ))}
+                    </div>
 
-                </div>
-              )}
+                    <button
+                      type="button"
+                      onClick={openModal}
+                      className="px-3.5 py-2 rounded-xl text-xs font-bold transition-all shadow-xs flex items-center gap-1.5 cursor-pointer shrink-0"
+                      style={{
+                        backgroundColor: 'var(--t-primary, #00685e)',
+                        color: '#ffffff',
+                      }}
+                    >
+                      <span className="material-symbols-outlined text-base">add</span>
+                      <span>Add New</span>
+                    </button>
+                  </div>
+                )}
+
+              </div>
 
             </div>
 
             {/* ═════════════════════════════════════════════════════════════ */}
-            {/* 1. QUERIES SECTION: SPREADSHEET FORM                          */}
+            {/* 1. QUERIES SECTION: TABLE & CARDS VIEW                        */}
             {/* ═════════════════════════════════════════════════════════════ */}
             {activeMenu === 'queries' && (
               <div>
-                {/* ── EXCEL SPREADSHEET GRID VIEW (NO PRIORITY / STATUS) ── */}
+                {/* ── MODERN DATA TABLE VIEW ── */}
                 {queriesViewMode === 'sheet' && (
-                  <div className="bg-white rounded-2xl border border-slate-300/80 shadow-xs overflow-hidden flex flex-col">
+                  <div className="bg-white rounded-2xl border border-slate-200/90 shadow-xs overflow-hidden flex flex-col">
                     
-                    {/* Spreadsheet Sheet Top Ribbon / Status Bar */}
-                    <div className="bg-slate-100 px-4 py-2 border-b border-slate-300 flex items-center justify-between text-xs font-medium text-slate-600">
-                      <div className="flex items-center gap-3">
-                        <div className="flex items-center gap-1.5 font-bold text-slate-800">
-                          <span className="w-2.5 h-2.5 rounded-sm bg-[#107c41]" />
-                          <span>Sheet1: OMEDO_Client_Queries.xlsx</span>
-                        </div>
-                        <span className="text-slate-300">|</span>
-                        <div className="hidden sm:flex items-center gap-1 font-mono text-[11px] text-slate-500 bg-white px-2 py-0.5 rounded border border-slate-200">
-                          <span className="text-[#107c41] font-bold">fx</span>
-                          <span>=FILTER(Queries{fromDate ? `, from="${fromDate}"` : ''}{toDate ? `, to="${toDate}"` : ''})</span>
-                        </div>
+                    {/* Table Header Ribbon */}
+                    <div className="px-5 py-3 border-b border-slate-200 bg-slate-50/70 flex items-center justify-between text-xs font-medium text-slate-600">
+                      <div className="flex items-center gap-2">
+                        <span className="w-2 h-2 rounded-full bg-emerald-500" />
+                        <span className="font-bold text-slate-800">
+                          Showing <strong className="text-[#00685e]">{filteredQueries.length}</strong> of {totalDisplayCount} Client Inquiries
+                        </span>
+                        {(searchQuery || fromDate || toDate) && (
+                          <span className="ml-1 px-2 py-0.5 rounded-md bg-amber-50 text-amber-700 border border-amber-200 text-[10px] font-bold">
+                            Filters Active
+                          </span>
+                        )}
                       </div>
 
-                      <div className="flex items-center gap-2 text-[11px] font-bold text-slate-600">
-                        <span>Showing: <strong>{filteredQueries.length}</strong> of {totalDisplayCount} records</span>
+                      <div className="flex items-center gap-2">
+                        <button
+                          type="button"
+                          onClick={handleCopyQueryTable}
+                          className="px-2.5 py-1 rounded-lg bg-white border border-slate-200 hover:bg-slate-50 text-slate-700 text-[11px] font-bold flex items-center gap-1 transition-all cursor-pointer shadow-2xs"
+                          title="Copy tab-separated table rows to paste directly into Excel / Spreadsheets"
+                        >
+                          <span className="material-symbols-outlined text-sm text-slate-500">content_copy</span>
+                          <span className="hidden sm:inline">Copy TSV</span>
+                        </button>
+                        <button
+                          type="button"
+                          onClick={handleExcelExport}
+                          className="px-2.5 py-1 rounded-lg bg-emerald-50 border border-emerald-200 hover:bg-emerald-100 text-emerald-700 text-[11px] font-bold flex items-center gap-1 transition-all cursor-pointer"
+                          title="Download Excel spreadsheet"
+                        >
+                          <span className="material-symbols-outlined text-sm">file_download</span>
+                          <span>Download .xlsx</span>
+                        </button>
                       </div>
                     </div>
 
                     {/* Table Container with Horizontal & Vertical Scroll */}
                     <div className="overflow-x-auto max-h-[640px] overflow-y-auto">
                       <table className="w-full border-collapse text-left text-xs">
-                        
-                        {/* Excel-Style Column Identifier Row (A, B, C, D...) */}
                         <thead>
-                          <tr className="bg-slate-100 border-b border-slate-300 text-[10px] font-mono text-slate-500 select-none">
-                            <th className="py-1 px-2 border-r border-slate-300 text-center w-10 font-bold">#</th>
-                            <th className="py-1 px-3 border-r border-slate-300 font-bold">A</th>
-                            <th className="py-1 px-3 border-r border-slate-300 font-bold">B</th>
-                            <th className="py-1 px-3 border-r border-slate-300 font-bold">C</th>
-                            <th className="py-1 px-3 border-r border-slate-300 font-bold">D</th>
-                            <th className="py-1 px-3 border-r border-slate-300 font-bold">E</th>
-                            <th className="py-1 px-3 border-r border-slate-300 font-bold">F</th>
-                            <th className="py-1 px-3 border-r border-slate-300 font-bold">G</th>
-                            <th className="py-1 px-3 border-r border-slate-300 font-bold">H</th>
-                            <th className="py-1 px-3 font-bold text-center">I</th>
-                          </tr>
-
-                          {/* Data Column Headers */}
-                          <tr className="bg-slate-50/90 sticky top-0 z-10 border-b border-slate-300 text-[11px] font-extrabold text-slate-700 uppercase tracking-wider backdrop-blur-xs">
-                            <th className="py-2.5 px-2 border-r border-slate-200 text-center font-mono text-slate-400">Row</th>
-                            <th className="py-2.5 px-3 border-r border-slate-200 min-w-[80px]">ID</th>
-                            <th className="py-2.5 px-3 border-r border-slate-200 min-w-[130px]">Date &amp; Time</th>
-                            <th className="py-2.5 px-3 border-r border-slate-200 min-w-[180px]">Doctor / Client Name</th>
-                            <th className="py-2.5 px-3 border-r border-slate-200 min-w-[200px]">Hospital / Clinic</th>
-                            <th className="py-2.5 px-3 border-r border-slate-200 min-w-[140px]">Mobile Contact</th>
-                            <th className="py-2.5 px-3 border-r border-slate-200 min-w-[170px]">Email Address</th>
-                            <th className="py-2.5 px-3 border-r border-slate-200 min-w-[130px]">Location</th>
-                            <th className="py-2.5 px-3 border-r border-slate-200 min-w-[280px]">Inquiry Message</th>
-                            <th className="py-2.5 px-3 text-center min-w-[90px]">Actions</th>
+                          <tr className="bg-slate-100/90 sticky top-0 z-10 border-b border-slate-200 text-[11px] font-extrabold text-slate-700 uppercase tracking-wider backdrop-blur-xs">
+                            <th className="py-3 px-3.5 min-w-[70px]">ID</th>
+                            <th className="py-3 px-3.5 min-w-[140px]">Date &amp; Time</th>
+                            <th className="py-3 px-3.5 min-w-[200px]">Doctor / Client Name</th>
+                            <th className="py-3 px-3.5 min-w-[210px]">Hospital / Clinic</th>
+                            <th className="py-3 px-3.5 min-w-[140px]">Mobile Contact</th>
+                            <th className="py-3 px-3.5 min-w-[180px]">Email Address</th>
+                            <th className="py-3 px-3.5 min-w-[130px]">Location</th>
+                            <th className="py-3 px-3.5 min-w-[260px]">Inquiry Message</th>
+                            <th className="py-3 px-3.5 text-center min-w-[90px]">Actions</th>
                           </tr>
                         </thead>
 
-                        {/* Table Body */}
-                        <tbody className="divide-y divide-slate-200 bg-white font-sans text-slate-700">
+                        <tbody className="divide-y divide-slate-100 bg-white font-sans text-slate-700">
                           {filteredQueries.length === 0 ? (
                             <tr>
-                              <td colSpan={10} className="py-12 text-center text-slate-400">
-                                <div className="flex flex-col items-center justify-center gap-2">
-                                  <span className="material-symbols-outlined text-4xl text-slate-300">table_rows</span>
-                                  <div className="text-sm font-bold text-slate-600">No client queries found</div>
-                                  <div className="text-xs text-slate-400">Try adjusting your search query or date range filters.</div>
+                              <td colSpan={9} className="py-16 text-center text-slate-400">
+                                <div className="flex flex-col items-center justify-center gap-3">
+                                  <div className="w-14 h-14 rounded-2xl bg-slate-100 flex items-center justify-center text-slate-400">
+                                    <span className="material-symbols-outlined text-3xl">search_off</span>
+                                  </div>
+                                  <div className="text-sm font-bold text-slate-700">No client inquiries found</div>
+                                  <div className="text-xs text-slate-400 max-w-sm">
+                                    No records match your current search or date range filters. Try clearing or expanding your criteria.
+                                  </div>
+                                  {(searchQuery || fromDate || toDate) && (
+                                    <button
+                                      type="button"
+                                      onClick={() => {
+                                        setSearchQuery('')
+                                        setFromDate('')
+                                        setToDate('')
+                                      }}
+                                      className="mt-1 px-3.5 py-1.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold transition-all cursor-pointer"
+                                    >
+                                      Clear Filters
+                                    </button>
+                                  )}
                                 </div>
                               </td>
                             </tr>
@@ -1068,48 +1409,62 @@ export default function Login() {
                             filteredQueries.map((q, idx) => (
                               <tr
                                 key={q.id || idx}
-                                className={`hover:bg-teal-50/40 transition-colors group ${
-                                  idx % 2 === 1 ? 'bg-slate-50/40' : 'bg-white'
-                                }`}
+                                className="hover:bg-teal-50/40 transition-colors group border-b border-slate-100"
                               >
-                                {/* Row Number */}
-                                <td className="py-2.5 px-2 border-r border-slate-200 text-center font-mono text-[11px] text-slate-400 select-none bg-slate-50/60">
-                                  {idx + 1}
-                                </td>
-
                                 {/* ID */}
-                                <td className="py-2.5 px-3 border-r border-slate-200 font-mono text-[11px] font-bold text-slate-600">
-                                  #{q.id}
-                                </td>
-
-                                {/* Date */}
-                                <td className="py-2.5 px-3 border-r border-slate-200 text-[11px] font-medium text-slate-600 whitespace-nowrap">
-                                  {q.date || q.rawDate || 'Recent'}
-                                </td>
-
-                                {/* Doctor / Client Name */}
-                                <td className="py-2.5 px-3 border-r border-slate-200 font-bold text-slate-900 whitespace-nowrap">
-                                  <span className="truncate max-w-[170px] block" title={q.name}>{q.name}</span>
-                                </td>
-
-                                {/* Hospital / Clinic */}
-                                <td className="py-2.5 px-3 border-r border-slate-200 font-semibold text-[#00685e] whitespace-nowrap">
-                                  <span className="truncate max-w-[190px] block" title={q.facility || q.hospital_clinic_name}>
-                                    {q.facility || q.hospital_clinic_name || 'Healthcare Facility'}
+                                <td className="py-3 px-3.5 font-mono text-[11px] font-bold text-slate-600 whitespace-nowrap">
+                                  <span className="px-2 py-0.5 rounded-md bg-slate-100 text-slate-700 border border-slate-200/80">
+                                    #{q.id}
                                   </span>
                                 </td>
 
-                                {/* Mobile Contact */}
-                                <td className="py-2.5 px-3 border-r border-slate-200 font-mono text-xs text-slate-700 whitespace-nowrap">
-                                  <span>{q.mobile || '-'}</span>
+                                {/* Date & Time */}
+                                <td className="py-3 px-3.5 text-xs text-slate-600 whitespace-nowrap font-medium">
+                                  <div className="flex items-center gap-1.5 text-slate-700">
+                                    <span className="material-symbols-outlined text-xs text-slate-400">schedule</span>
+                                    <span>{q.date || q.rawDate || 'Recent'}</span>
+                                  </div>
                                 </td>
 
-                                {/* Email */}
-                                <td className="py-2.5 px-3 border-r border-slate-200 text-xs text-slate-600 whitespace-nowrap">
+                                {/* Doctor / Client Name */}
+                                <td className="py-3 px-3.5 whitespace-nowrap">
+                                  <div className="flex items-center gap-2.5">
+                                    <div className={`w-8 h-8 rounded-full flex items-center justify-center font-bold text-xs border ${getAvatarBg(q.name)} shrink-0 shadow-2xs`}>
+                                      {getInitials(q.name)}
+                                    </div>
+                                    <div>
+                                      <span
+                                        className="font-bold text-slate-900 block text-xs hover:text-[#00685e] cursor-pointer transition-colors"
+                                        onClick={() => setSelectedQueryDetail(q)}
+                                        title={q.name}
+                                      >
+                                        {q.name}
+                                      </span>
+                                    </div>
+                                  </div>
+                                </td>
+
+                                {/* Hospital / Clinic */}
+                                <td className="py-3 px-3.5 font-semibold text-[#00685e] whitespace-nowrap">
+                                  <div className="flex items-center gap-1.5">
+                                    <span className="material-symbols-outlined text-sm text-[#00685e]/70">local_hospital</span>
+                                    <span className="truncate max-w-[180px] block" title={q.facility || q.hospital_clinic_name}>
+                                      {q.facility || q.hospital_clinic_name || 'Healthcare Facility'}
+                                    </span>
+                                  </div>
+                                </td>
+
+                                {/* Mobile Contact */}
+                                <td className="py-3 px-3.5 font-mono text-xs text-slate-700 whitespace-nowrap">
+                                  <span className="font-semibold text-slate-800">{q.mobile || '-'}</span>
+                                </td>
+
+                                {/* Email Address */}
+                                <td className="py-3 px-3.5 text-xs text-slate-600 whitespace-nowrap">
                                   {q.email ? (
                                     <a
                                       href={`mailto:${q.email}`}
-                                      className="text-slate-600 hover:text-[#00685e] hover:underline flex items-center gap-1"
+                                      className="text-slate-600 hover:text-[#00685e] hover:underline flex items-center gap-1.5"
                                       title={q.email}
                                     >
                                       <span className="material-symbols-outlined text-xs text-slate-400">mail</span>
@@ -1121,45 +1476,47 @@ export default function Login() {
                                 </td>
 
                                 {/* Location */}
-                                <td className="py-2.5 px-3 border-r border-slate-200 text-xs text-slate-600 whitespace-nowrap">
-                                  <span className="truncate max-w-[120px] block" title={q.location}>
-                                    {q.location || 'India'}
-                                  </span>
+                                <td className="py-3 px-3.5 text-xs text-slate-600 whitespace-nowrap">
+                                  <div className="flex items-center gap-1 text-slate-700">
+                                    <span className="material-symbols-outlined text-xs text-slate-400">location_on</span>
+                                    <span className="truncate max-w-[120px] block" title={q.location}>
+                                      {q.location || 'India'}
+                                    </span>
+                                  </div>
                                 </td>
 
                                 {/* Inquiry Message */}
-                                <td className="py-2.5 px-3 border-r border-slate-200 text-xs text-slate-700 max-w-[300px]">
+                                <td className="py-3 px-3.5 text-xs text-slate-700 max-w-[260px]">
                                   <div
                                     onClick={() => setSelectedQueryDetail(q)}
-                                    className="truncate cursor-pointer hover:text-[#00685e] hover:underline"
+                                    className="truncate cursor-pointer hover:text-[#00685e] hover:underline text-slate-600 group-hover:text-slate-900 transition-colors"
                                     title={q.message}
                                   >
                                     {q.message}
                                   </div>
                                 </td>
 
-                                {/* Actions: View Details + Delete */}
-                                <td className="py-2.5 px-3 text-center whitespace-nowrap">
+                                {/* Actions */}
+                                <td className="py-3 px-3.5 text-center whitespace-nowrap">
                                   <div className="flex items-center justify-center gap-1.5">
                                     <button
                                       type="button"
                                       onClick={() => setSelectedQueryDetail(q)}
-                                      className="p-1 rounded-lg hover:bg-slate-100 text-slate-600 hover:text-[#00685e] cursor-pointer"
+                                      className="w-7 h-7 rounded-lg bg-teal-50 hover:bg-teal-100 text-[#00685e] flex items-center justify-center transition-all cursor-pointer shadow-2xs"
                                       title="View Full Inquiry Details"
                                     >
-                                      <span className="material-symbols-outlined text-base">visibility</span>
+                                      <span className="material-symbols-outlined text-sm">visibility</span>
                                     </button>
                                     <button
                                       type="button"
                                       onClick={() => deleteItem(q.id, 'queries')}
-                                      className="p-1 rounded-lg hover:bg-red-50 text-slate-400 hover:text-red-600 cursor-pointer"
-                                      title="Delete Query"
+                                      className="w-7 h-7 rounded-lg bg-red-50 hover:bg-red-100 text-red-600 flex items-center justify-center transition-all cursor-pointer shadow-2xs"
+                                      title="Delete Record"
                                     >
-                                      <span className="material-symbols-outlined text-base">delete</span>
+                                      <span className="material-symbols-outlined text-sm">delete</span>
                                     </button>
                                   </div>
                                 </td>
-
                               </tr>
                             ))
                           )}
@@ -1167,20 +1524,20 @@ export default function Login() {
                       </table>
                     </div>
 
-                    {/* Spreadsheet Bottom Status Row */}
-                    <div className="bg-slate-50 px-4 py-2.5 border-t border-slate-300 flex items-center justify-between text-xs text-slate-500">
+                    {/* Table Bottom Status Row */}
+                    <div className="px-5 py-3 border-t border-slate-200 bg-slate-50/70 flex flex-col sm:flex-row items-center justify-between gap-2 text-xs text-slate-500">
                       <div className="flex items-center gap-2 text-[11px]">
-                        <span className="material-symbols-outlined text-sm text-[#107c41]">info</span>
-                        <span>Click on any inquiry message to open the full dialogue drawer.</span>
+                        <span className="material-symbols-outlined text-sm text-[#00685e]">help_outline</span>
+                        <span>Click on any doctor or message row to open the complete dialogue &amp; hospital notes.</span>
                       </div>
-                      <div className="flex items-center gap-2">
+                      <div className="flex items-center gap-3">
                         <button
                           type="button"
                           onClick={handleExcelExport}
-                          className="text-[11px] font-bold text-[#107c41] hover:underline flex items-center gap-1 cursor-pointer"
+                          className="text-[11px] font-bold text-emerald-700 hover:underline flex items-center gap-1 cursor-pointer"
                         >
                           <span className="material-symbols-outlined text-sm">file_download</span>
-                          <span>Download .xlsx</span>
+                          <span>Download Spreadsheet (.xlsx)</span>
                         </button>
                       </div>
                     </div>
@@ -1190,55 +1547,73 @@ export default function Login() {
 
                 {/* ── ALTERNATIVE CRM CARDS VIEW ── */}
                 {queriesViewMode === 'card' && (
-                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 2xl:grid-cols-4 gap-4">
                     {filteredQueries.map((q, idx) => (
                       <div
                         key={q.id || idx}
-                        className="bg-white rounded-2xl p-4 sm:p-5 border border-slate-200 shadow-2xs hover:shadow-xs transition-all flex flex-col justify-between"
+                        className="bg-white rounded-2xl p-4 sm:p-5 border border-slate-200/90 shadow-2xs hover:shadow-xs transition-all flex flex-col justify-between"
                       >
                         <div>
                           {/* Card Top Row */}
-                          <div className="flex items-center justify-between gap-2 mb-2">
-                            <span className="text-xs font-mono font-bold text-slate-400">#{q.id}</span>
-                            <span className="text-[11px] text-slate-400 font-medium">{q.date || 'Recent'}</span>
+                          <div className="flex items-center justify-between gap-2 mb-3">
+                            <span className="px-2 py-0.5 rounded-md bg-slate-100 text-slate-700 border border-slate-200/80 font-mono text-[10px] font-bold">
+                              #{q.id}
+                            </span>
+                            <span className="text-[11px] text-slate-400 font-medium flex items-center gap-1">
+                              <span className="material-symbols-outlined text-xs">schedule</span>
+                              {q.date || 'Recent'}
+                            </span>
                           </div>
 
                           {/* Client / Hospital Name */}
-                          <h3 className="text-sm font-bold text-slate-900">{q.name}</h3>
-                          <div className="text-xs font-bold text-[#00685e] mt-0.5">{q.facility || q.hospital_clinic_name}</div>
-                          <div className="text-[11px] text-slate-500 mt-0.5 flex items-center gap-1">
+                          <div className="flex items-center gap-2.5 mb-2">
+                            <div className={`w-8 h-8 rounded-full flex items-center justify-center font-bold text-xs border ${getAvatarBg(q.name)} shrink-0`}>
+                              {getInitials(q.name)}
+                            </div>
+                            <div className="min-w-0">
+                              <h3 className="text-xs sm:text-sm font-bold text-slate-900 truncate" title={q.name}>{q.name}</h3>
+                              <div className="text-[11px] font-semibold text-[#00685e] truncate" title={q.facility || q.hospital_clinic_name}>
+                                {q.facility || q.hospital_clinic_name}
+                              </div>
+                            </div>
+                          </div>
+
+                          <div className="text-[11px] text-slate-500 mt-1 flex items-center gap-1">
                             <span className="material-symbols-outlined text-xs">location_on</span>
-                            <span>{q.location || 'India'}</span>
+                            <span className="truncate">{q.location || 'India'}</span>
                           </div>
 
                           {/* Inquiry Snippet */}
-                          <div className="mt-3 p-3 rounded-xl bg-slate-50 border border-slate-100 text-xs text-slate-700 line-clamp-3 leading-relaxed">
-                            {q.message}
+                          <div
+                            onClick={() => setSelectedQueryDetail(q)}
+                            className="mt-3 p-3 rounded-xl bg-slate-50 border border-slate-100 text-xs text-slate-700 line-clamp-3 leading-relaxed cursor-pointer hover:bg-teal-50/30 transition-colors"
+                          >
+                            "{q.message}"
                           </div>
                         </div>
 
                         {/* Card Bottom Controls */}
                         <div className="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between gap-2">
-                          <div className="font-mono text-xs text-slate-600 font-semibold">
-                            <span>{q.mobile || 'No contact'}</span>
+                          <div className="font-mono text-xs text-slate-700 font-semibold truncate">
+                            <span>{q.mobile || 'No phone'}</span>
                           </div>
 
-                          <div className="flex items-center gap-1">
+                          <div className="flex items-center gap-1.5">
                             <button
                               type="button"
                               onClick={() => setSelectedQueryDetail(q)}
-                              className="p-1.5 rounded-lg border border-slate-200 text-slate-600 hover:bg-slate-50"
+                              className="w-7 h-7 rounded-lg bg-teal-50 hover:bg-teal-100 text-[#00685e] flex items-center justify-center transition-all cursor-pointer shadow-2xs"
                               title="View Details"
                             >
-                              <span className="material-symbols-outlined text-base">visibility</span>
+                              <span className="material-symbols-outlined text-sm">visibility</span>
                             </button>
                             <button
                               type="button"
                               onClick={() => deleteItem(q.id, 'queries')}
-                              className="p-1.5 rounded-lg border border-red-200 text-red-600 hover:bg-red-50"
+                              className="w-7 h-7 rounded-lg bg-red-50 hover:bg-red-100 text-red-600 flex items-center justify-center transition-all cursor-pointer shadow-2xs"
                               title="Delete Record"
                             >
-                              <span className="material-symbols-outlined text-base">delete</span>
+                              <span className="material-symbols-outlined text-sm">delete</span>
                             </button>
                           </div>
                         </div>
@@ -1253,7 +1628,7 @@ export default function Login() {
             {/* 2. CLIENT LOGOS CARDS                                         */}
             {/* ═════════════════════════════════════════════════════════════ */}
             {activeMenu === 'clients' && (
-              <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-5 2xl:grid-cols-5 gap-3 sm:gap-3.5">
+              <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 gap-3 sm:gap-3.5">
                 {clients
                   .filter((item) => activeFilter === 'ALL' || item.status === activeFilter)
                   .filter((item) => (item.name || '').toLowerCase().includes(searchQuery.toLowerCase()))
@@ -1269,22 +1644,21 @@ export default function Login() {
                             {client.name}
                           </h3>
 
-                          {client.logoUrl ? (
-                            <div className="my-1.5 h-18 sm:h-20 w-full rounded-xl flex items-center justify-center p-1 bg-white border border-slate-200/80 shadow-2xs overflow-hidden">
-                              <img
-                                src={client.logoUrl}
-                                alt={client.name}
-                                className="w-full h-full max-h-full max-w-full object-contain select-none"
-                              />
-                            </div>
-                          ) : (
-                            <div
-                              className="my-1.5 h-18 sm:h-20 w-full rounded-xl flex items-center justify-center text-xs font-black tracking-wider text-white shadow-inner p-2 text-center"
-                              style={{ background: client.badgeColor || '#00685e' }}
-                            >
-                              {client.logoText || client.name.slice(0, 10).toUpperCase()}
-                            </div>
-                          )}
+                          <div className="my-1.5 h-18 sm:h-20 w-full rounded-xl flex items-center justify-center p-1 bg-white border border-slate-200/80 shadow-2xs overflow-hidden">
+                            <SafeImage
+                              src={client.logoUrl}
+                              alt={client.name}
+                              className="w-full h-full max-h-full max-w-full object-contain select-none"
+                              fallback={
+                                <div
+                                  className="w-full h-full rounded-xl flex items-center justify-center text-xs font-black tracking-wider text-white shadow-inner p-2 text-center"
+                                  style={{ background: client.badgeColor || '#00685e' }}
+                                >
+                                  {client.logoText || client.name.slice(0, 10).toUpperCase()}
+                                </div>
+                              }
+                            />
+                          </div>
                         </div>
 
                         <div className="mt-2 pt-2 border-t border-slate-100 flex flex-col gap-2">
@@ -1342,7 +1716,7 @@ export default function Login() {
             {/* 3. REVIEWS MANAGER CARDS                                      */}
             {/* ═════════════════════════════════════════════════════════════ */}
             {activeMenu === 'reviews' && (
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 2xl:grid-cols-4 gap-4">
                 {reviews
                   .filter((item) => activeFilter === 'ALL' || item.status === activeFilter)
                   .filter((item) => ((item.name || '') + (item.organization || '')).toLowerCase().includes(searchQuery.toLowerCase()))
@@ -1351,19 +1725,19 @@ export default function Login() {
                     return (
                       <div
                         key={review.id || idx}
-                        className="bg-white rounded-2xl p-5 border border-slate-200 shadow-xs hover:shadow-sm transition-all flex flex-col justify-between"
+                        className="bg-white rounded-2xl p-4 sm:p-5 border border-slate-200 shadow-xs hover:shadow-sm transition-all flex flex-col justify-between overflow-hidden"
                       >
                         <div>
-                          <div className="flex items-center justify-between mb-3">
-                            <div className="w-8 h-8 rounded-lg bg-sky-50 text-[#0284c7] flex items-center justify-center text-base">
-                              <span className="material-symbols-outlined">rate_review</span>
+                          <div className="flex items-center justify-between gap-2 mb-3">
+                            <div className="w-8 h-8 rounded-lg bg-sky-50 text-[#0284c7] flex items-center justify-center text-base shrink-0">
+                              <span className="material-symbols-outlined text-base">rate_review</span>
                             </div>
-                            <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-amber-50/90 border border-amber-200/80 shadow-2xs">
+                            <div className="flex items-center gap-1 px-2 py-0.5 rounded-lg bg-amber-50/90 border border-amber-200/80 shadow-2xs shrink-0">
                               <div className="flex items-center gap-0.5">
                                 {[1, 2, 3, 4, 5].map((star) => (
                                   <span
                                     key={star}
-                                    className="material-symbols-outlined text-sm leading-none"
+                                    className="material-symbols-outlined text-xs leading-none"
                                     style={{
                                       fontVariationSettings: star <= (review.rating || 5) ? "'FILL' 1" : "'FILL' 0",
                                       color: star <= (review.rating || 5) ? '#f59e0b' : '#cbd5e1',
@@ -1373,7 +1747,7 @@ export default function Login() {
                                   </span>
                                 ))}
                               </div>
-                              <span className="text-[10px] font-black text-amber-700">
+                              <span className="text-[10px] font-black text-amber-700 ml-0.5">
                                 {(Number(review.rating) || 5).toFixed(1)}
                               </span>
                             </div>
@@ -1638,7 +2012,7 @@ export default function Login() {
                           <div className="p-3 rounded-2xl border border-emerald-200 bg-emerald-50/40 flex items-center justify-between">
                             <div className="flex items-center gap-3">
                               <div className="w-14 h-14 rounded-xl bg-white border border-emerald-200 p-1 flex items-center justify-center overflow-hidden shadow-2xs">
-                                <img
+                                <SafeImage
                                   src={newItemData.logoUrl}
                                   alt="Logo preview"
                                   className="max-h-full max-w-full object-contain"
@@ -1866,11 +2240,11 @@ export default function Login() {
   // 2. UNAUTHENTICATED SIGN-IN SCREEN
   // ═════════════════════════════════════════════════════════════════════════
   return (
-    <motion.div {...pageTransition} className="min-h-screen flex flex-col lg:flex-row bg-[#effcfe]/30 pt-16 sm:pt-18 md:pt-21 2xl:pt-24">
+    <motion.div {...pageTransition} className="min-h-screen flex flex-col lg:flex-row bg-[#effcfe]/30">
       
       {/* ── LEFT COLUMN: ONLY LOGO CENTERED IN GRADIENT CONTAINER ── */}
       <div
-        className="w-full lg:w-[48%] xl:w-[45%] flex flex-col items-center justify-center p-8 sm:p-12 lg:p-16 relative overflow-hidden shrink-0 min-h-[360px] lg:min-h-[calc(100vh-5.5rem)]"
+        className="w-full lg:w-[48%] xl:w-[45%] flex flex-col items-center justify-center p-8 sm:p-12 lg:p-16 relative overflow-hidden shrink-0 min-h-[360px] lg:min-h-screen"
         style={{
           background: 'linear-gradient(135deg, #ccfbf1 0%, #e6faf7 35%, #e0f2fe 70%, #bae6fd 100%)',
         }}

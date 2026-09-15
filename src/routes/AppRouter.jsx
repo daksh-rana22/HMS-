@@ -20,9 +20,37 @@ const Terms = lazy(() => import('../pages/Terms/Terms'))
 const Privacy = lazy(() => import('../pages/Privacy/Privacy'))
 const Refund = lazy(() => import('../pages/Refund/Refund'))
 
+function RouteErrorBoundary() {
+  return (
+    <div className="min-h-screen flex flex-col items-center justify-center bg-[#f8fafc] text-center p-6 font-sans">
+      <div className="w-16 h-16 rounded-2xl bg-teal-50 border border-teal-200 text-[#00685e] flex items-center justify-center mb-4 shadow-sm">
+        <span className="material-symbols-outlined text-3xl">health_and_safety</span>
+      </div>
+      <h2 className="text-xl font-bold text-slate-900 mb-2">Welcome to OMEDO HMS</h2>
+      <p className="text-sm text-slate-600 max-w-md mb-6 leading-relaxed">
+        An unexpected storage event was encountered. The session cache has been safely refreshed.
+      </p>
+      <button
+        type="button"
+        onClick={() => {
+          try {
+            localStorage.removeItem('omedo_admin_clients')
+            localStorage.removeItem('omedo_admin_reviews')
+          } catch {}
+          window.location.href = '/'
+        }}
+        className="px-6 py-2.5 rounded-xl bg-[#00685e] hover:bg-[#005149] text-white font-semibold text-sm transition-all shadow-sm cursor-pointer"
+      >
+        Return to Home Page
+      </button>
+    </div>
+  )
+}
+
 const router = createBrowserRouter([
   {
     element: <Layout />,
+    errorElement: <RouteErrorBoundary />,
     children: [
       { path: '/', element: <Suspense fallback={<Loader />}><Home /></Suspense> },
       { path: '/products', element: <Suspense fallback={<Loader />}><Products /></Suspense> },

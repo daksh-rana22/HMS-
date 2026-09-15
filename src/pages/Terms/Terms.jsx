@@ -785,7 +785,7 @@ export default function Terms() {
 
   return (
     <motion.div {...pageTransition} className="min-h-screen bg-[#f8fdfe] pt-24 sm:pt-28 pb-16">
-      
+
       {/* ── HEADER HERO ── */}
       <section className="bg-gradient-to-b from-[#effcfe] via-[#f5fdfe] to-[#f8fdfe] py-10 sm:py-14 border-b border-[#bcc9c6]/30">
         <div className="site-wrapper text-center max-w-7xl mx-auto space-y-5">
@@ -825,10 +825,10 @@ export default function Terms() {
 
       {/* ── MAIN CONTENT CONTAINER (WIDER) ── */}
       <section className="site-wrapper py-8 sm:py-12 max-w-7xl mx-auto space-y-8">
-        
+
         {/* ── TABLE OF CONTENTS CARD (COMPACT & STREAMLINED) ── */}
         <div id="table-of-contents" className="bg-white rounded-2xl p-3.5 sm:p-4 border border-[#bcc9c6]/50 shadow-xs space-y-3 scroll-mt-28">
-          
+
           {/* Header Bar */}
           <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2.5 pb-2.5 border-b border-slate-100">
             <div className="flex items-center gap-2">
