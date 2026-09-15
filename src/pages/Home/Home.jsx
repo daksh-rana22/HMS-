@@ -4,166 +4,13 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { pageTransition } from '../../utils/animations'
 import { testimonials as initialTestimonials } from '../../data/testimonials'
 import { initialClientLogos } from '../../data/clientLogos'
-import { useTheme } from '../../contexts/ThemeContext'
 import HeroBackground from '../../components/common/HeroBackground'
 import HMSExplanationContainer from '../../components/sections/HMSExplanationContainer'
 import ProductsShowcase from '../../components/sections/ProductsShowcase'
 import { fetchCompanyClients, fetchTestimonials, formatLogoUrl } from '../../services/api'
 import SafeImage from '../../components/common/SafeImage'
 import { safeSetItem, safeGetItem } from '../../utils/storage'
-
-const TRUSTED_BY_THEMES = {
-  navygold: {
-    bg: 'linear-gradient(135deg, #07152d 0%, #0d2857 25%, #18428a 50%, #12336d 75%, #061226 100%)',
-    border: '1px solid rgba(147, 197, 253, 0.25)',
-    borderBottom: '1px solid rgba(147, 197, 253, 0.18)',
-    shadow: 'inset 0 1px 0 rgba(255, 255, 255, 0.15), inset 0 -1px 0 rgba(255, 255, 255, 0.05), 0 18px 36px -12px rgba(7, 21, 45, 0.4)',
-    glowTop: 'radial-gradient(ellipse 70% 60% at 50% 0%, rgba(59, 130, 246, 0.38) 0%, rgba(29, 78, 216, 0.15) 50%, transparent 80%)',
-    glowMid: 'radial-gradient(circle at 50% 50%, rgba(96, 165, 250, 0.16) 0%, transparent 65%)',
-    badgeText: 'text-blue-200/90',
-    descText: 'text-blue-100/90',
-    bulletColor: 'text-blue-300/60',
-    accentBar: 'from-blue-400 via-white to-blue-400 shadow-[0_0_10px_rgba(147,197,253,0.9)]',
-    sideGlow1: 'from-[#07152d] via-[#07152d]/90 to-transparent',
-    sideGlow2: 'from-[#061226] via-[#061226]/90 to-transparent',
-    labelColor: 'text-blue-100/90 group-hover:text-white',
-  },
-  oceanic: {
-    bg: 'linear-gradient(135deg, #041d1a 0%, #063c37 25%, #0d5f57 50%, #08403b 75%, #031513 100%)',
-    border: '1px solid rgba(103, 217, 202, 0.25)',
-    borderBottom: '1px solid rgba(103, 217, 202, 0.18)',
-    shadow: 'inset 0 1px 0 rgba(255, 255, 255, 0.15), inset 0 -1px 0 rgba(255, 255, 255, 0.05), 0 18px 36px -12px rgba(4, 29, 26, 0.4)',
-    glowTop: 'radial-gradient(ellipse 70% 60% at 50% 0%, rgba(13, 148, 136, 0.38) 0%, rgba(5, 150, 105, 0.15) 50%, transparent 80%)',
-    glowMid: 'radial-gradient(circle at 50% 50%, rgba(45, 212, 191, 0.16) 0%, transparent 65%)',
-    badgeText: 'text-teal-200/90',
-    descText: 'text-teal-100/90',
-    bulletColor: 'text-teal-300/60',
-    accentBar: 'from-teal-400 via-white to-teal-400 shadow-[0_0_10px_rgba(45,212,191,0.9)]',
-    sideGlow1: 'from-[#041d1a] via-[#041d1a]/90 to-transparent',
-    sideGlow2: 'from-[#031513] via-[#031513]/90 to-transparent',
-    labelColor: 'text-teal-100/90 group-hover:text-white',
-  },
-  dreamy: {
-    bg: 'linear-gradient(135deg, #0c122c 0%, #171e4d 25%, #2a347c 50%, #1a2054 75%, #080c20 100%)',
-    border: '1px solid rgba(165, 180, 252, 0.25)',
-    borderBottom: '1px solid rgba(165, 180, 252, 0.18)',
-    shadow: 'inset 0 1px 0 rgba(255, 255, 255, 0.15), inset 0 -1px 0 rgba(255, 255, 255, 0.05), 0 18px 36px -12px rgba(12, 18, 44, 0.4)',
-    glowTop: 'radial-gradient(ellipse 70% 60% at 50% 0%, rgba(99, 102, 241, 0.38) 0%, rgba(139, 92, 246, 0.15) 50%, transparent 80%)',
-    glowMid: 'radial-gradient(circle at 50% 50%, rgba(129, 140, 248, 0.16) 0%, transparent 65%)',
-    badgeText: 'text-indigo-200/90',
-    descText: 'text-indigo-100/90',
-    bulletColor: 'text-indigo-300/60',
-    accentBar: 'from-indigo-400 via-white to-purple-400 shadow-[0_0_10px_rgba(129,140,248,0.9)]',
-    sideGlow1: 'from-[#0c122c] via-[#0c122c]/90 to-transparent',
-    sideGlow2: 'from-[#080c20] via-[#080c20]/90 to-transparent',
-    labelColor: 'text-indigo-100/90 group-hover:text-white',
-  },
-  thinker: {
-    bg: 'linear-gradient(135deg, #08211f 0%, #0f3d38 25%, #185c54 50%, #302028 75%, #18080f 100%)',
-    border: '1px solid rgba(244, 63, 94, 0.25)',
-    borderBottom: '1px solid rgba(244, 63, 94, 0.18)',
-    shadow: 'inset 0 1px 0 rgba(255, 255, 255, 0.15), inset 0 -1px 0 rgba(255, 255, 255, 0.05), 0 18px 36px -12px rgba(8, 33, 31, 0.4)',
-    glowTop: 'radial-gradient(ellipse 70% 60% at 50% 0%, rgba(15, 118, 110, 0.38) 0%, rgba(244, 63, 94, 0.2) 50%, transparent 80%)',
-    glowMid: 'radial-gradient(circle at 50% 50%, rgba(251, 113, 133, 0.16) 0%, transparent 65%)',
-    badgeText: 'text-rose-200/90',
-    descText: 'text-teal-100/90',
-    bulletColor: 'text-rose-300/60',
-    accentBar: 'from-teal-400 via-rose-300 to-rose-400 shadow-[0_0_10px_rgba(251,113,133,0.9)]',
-    sideGlow1: 'from-[#08211f] via-[#08211f]/90 to-transparent',
-    sideGlow2: 'from-[#18080f] via-[#18080f]/90 to-transparent',
-    labelColor: 'text-teal-100/90 group-hover:text-white',
-  },
-  amberteal: {
-    bg: 'linear-gradient(135deg, #240e04 0%, #4a1d08 25%, #6e2e0a 50%, #153835 75%, #061c1a 100%)',
-    border: '1px solid rgba(251, 146, 60, 0.25)',
-    borderBottom: '1px solid rgba(251, 146, 60, 0.18)',
-    shadow: 'inset 0 1px 0 rgba(255, 255, 255, 0.15), inset 0 -1px 0 rgba(255, 255, 255, 0.05), 0 18px 36px -12px rgba(36, 14, 4, 0.4)',
-    glowTop: 'radial-gradient(ellipse 70% 60% at 50% 0%, rgba(234, 88, 12, 0.38) 0%, rgba(13, 148, 136, 0.2) 50%, transparent 80%)',
-    glowMid: 'radial-gradient(circle at 50% 50%, rgba(245, 158, 11, 0.16) 0%, transparent 65%)',
-    badgeText: 'text-amber-200/90',
-    descText: 'text-orange-100/90',
-    bulletColor: 'text-amber-300/60',
-    accentBar: 'from-orange-400 via-amber-300 to-teal-400 shadow-[0_0_10px_rgba(245,158,11,0.9)]',
-    sideGlow1: 'from-[#240e04] via-[#240e04]/90 to-transparent',
-    sideGlow2: 'from-[#061c1a] via-[#061c1a]/90 to-transparent',
-    labelColor: 'text-amber-100/90 group-hover:text-white',
-  },
-  darkcrimson: {
-    bg: 'linear-gradient(135deg, #180829 0%, #2f104f 25%, #4c1d7c 50%, #38125b 75%, #10041d 100%)',
-    border: '1px solid rgba(216, 180, 254, 0.25)',
-    borderBottom: '1px solid rgba(216, 180, 254, 0.18)',
-    shadow: 'inset 0 1px 0 rgba(255, 255, 255, 0.15), inset 0 -1px 0 rgba(255, 255, 255, 0.05), 0 18px 36px -12px rgba(24, 8, 41, 0.4)',
-    glowTop: 'radial-gradient(ellipse 70% 60% at 50% 0%, rgba(124, 58, 237, 0.38) 0%, rgba(236, 72, 153, 0.2) 50%, transparent 80%)',
-    glowMid: 'radial-gradient(circle at 50% 50%, rgba(192, 132, 252, 0.16) 0%, transparent 65%)',
-    badgeText: 'text-purple-200/90',
-    descText: 'text-purple-100/90',
-    bulletColor: 'text-purple-300/60',
-    accentBar: 'from-purple-400 via-fuchsia-300 to-pink-400 shadow-[0_0_10px_rgba(192,132,252,0.9)]',
-    sideGlow1: 'from-[#180829] via-[#180829]/90 to-transparent',
-    sideGlow2: 'from-[#10041d] via-[#10041d]/90 to-transparent',
-    labelColor: 'text-purple-100/90 group-hover:text-white',
-  },
-  embers: {
-    bg: 'linear-gradient(135deg, #130e2b 0%, #221544 25%, #3c1a55 50%, #41182d 75%, #160714 100%)',
-    border: '1px solid rgba(244, 63, 94, 0.25)',
-    borderBottom: '1px solid rgba(244, 63, 94, 0.18)',
-    shadow: 'inset 0 1px 0 rgba(255, 255, 255, 0.15), inset 0 -1px 0 rgba(255, 255, 255, 0.05), 0 18px 36px -12px rgba(19, 14, 43, 0.4)',
-    glowTop: 'radial-gradient(ellipse 70% 60% at 50% 0%, rgba(67, 56, 202, 0.38) 0%, rgba(244, 63, 94, 0.2) 50%, transparent 80%)',
-    glowMid: 'radial-gradient(circle at 50% 50%, rgba(251, 113, 133, 0.16) 0%, transparent 65%)',
-    badgeText: 'text-rose-200/90',
-    descText: 'text-orange-100/90',
-    bulletColor: 'text-rose-300/60',
-    accentBar: 'from-indigo-400 via-rose-300 to-orange-400 shadow-[0_0_10px_rgba(251,113,133,0.9)]',
-    sideGlow1: 'from-[#130e2b] via-[#130e2b]/90 to-transparent',
-    sideGlow2: 'from-[#160714] via-[#160714]/90 to-transparent',
-    labelColor: 'text-rose-100/90 group-hover:text-white',
-  },
-  cerulean: {
-    bg: 'linear-gradient(135deg, #051a2e 0%, #0a3357 25%, #0e4c7d 50%, #3d2c0d 75%, #171103 100%)',
-    border: '1px solid rgba(125, 211, 252, 0.25)',
-    borderBottom: '1px solid rgba(125, 211, 252, 0.18)',
-    shadow: 'inset 0 1px 0 rgba(255, 255, 255, 0.15), inset 0 -1px 0 rgba(255, 255, 255, 0.05), 0 18px 36px -12px rgba(5, 26, 46, 0.4)',
-    glowTop: 'radial-gradient(ellipse 70% 60% at 50% 0%, rgba(2, 132, 199, 0.38) 0%, rgba(245, 158, 11, 0.2) 50%, transparent 80%)',
-    glowMid: 'radial-gradient(circle at 50% 50%, rgba(56, 189, 248, 0.16) 0%, transparent 65%)',
-    badgeText: 'text-sky-200/90',
-    descText: 'text-sky-100/90',
-    bulletColor: 'text-sky-300/60',
-    accentBar: 'from-sky-400 via-amber-300 to-amber-400 shadow-[0_0_10px_rgba(56,189,248,0.9)]',
-    sideGlow1: 'from-[#051a2e] via-[#051a2e]/90 to-transparent',
-    sideGlow2: 'from-[#171103] via-[#171103]/90 to-transparent',
-    labelColor: 'text-sky-100/90 group-hover:text-white',
-  },
-  burgundyteal: {
-    bg: 'linear-gradient(135deg, #240510 0%, #470d23 25%, #651332 50%, #0d3834 75%, #041715 100%)',
-    border: '1px solid rgba(244, 114, 182, 0.25)',
-    borderBottom: '1px solid rgba(244, 114, 182, 0.18)',
-    shadow: 'inset 0 1px 0 rgba(255, 255, 255, 0.15), inset 0 -1px 0 rgba(255, 255, 255, 0.05), 0 18px 36px -12px rgba(36, 5, 16, 0.4)',
-    glowTop: 'radial-gradient(ellipse 70% 60% at 50% 0%, rgba(136, 19, 55, 0.38) 0%, rgba(15, 118, 110, 0.2) 50%, transparent 80%)',
-    glowMid: 'radial-gradient(circle at 50% 50%, rgba(244, 114, 182, 0.16) 0%, transparent 65%)',
-    badgeText: 'text-rose-200/90',
-    descText: 'text-rose-100/90',
-    bulletColor: 'text-rose-300/60',
-    accentBar: 'from-rose-400 via-amber-300 to-teal-400 shadow-[0_0_10px_rgba(244,114,182,0.9)]',
-    sideGlow1: 'from-[#240510] via-[#240510]/90 to-transparent',
-    sideGlow2: 'from-[#041715] via-[#041715]/90 to-transparent',
-    labelColor: 'text-rose-100/90 group-hover:text-white',
-  },
-  clinical: {
-    bg: 'linear-gradient(135deg, #031c19 0%, #063934 25%, #00685e 50%, #034842 75%, #021715 100%)',
-    border: '1px solid rgba(103, 217, 202, 0.25)',
-    borderBottom: '1px solid rgba(103, 217, 202, 0.18)',
-    shadow: 'inset 0 1px 0 rgba(255, 255, 255, 0.15), inset 0 -1px 0 rgba(255, 255, 255, 0.05), 0 18px 36px -12px rgba(3, 28, 25, 0.4)',
-    glowTop: 'radial-gradient(ellipse 70% 60% at 50% 0%, rgba(0, 104, 94, 0.38) 0%, rgba(2, 132, 199, 0.2) 50%, transparent 80%)',
-    glowMid: 'radial-gradient(circle at 50% 50%, rgba(103, 217, 202, 0.16) 0%, transparent 65%)',
-    badgeText: 'text-teal-200/90',
-    descText: 'text-teal-100/90',
-    bulletColor: 'text-teal-300/60',
-    accentBar: 'from-teal-400 via-emerald-300 to-cyan-400 shadow-[0_0_10px_rgba(103,217,202,0.9)]',
-    sideGlow1: 'from-[#031c19] via-[#031c19]/90 to-transparent',
-    sideGlow2: 'from-[#021715] via-[#021715]/90 to-transparent',
-    labelColor: 'text-teal-100/90 group-hover:text-white',
-  },
-}
+import trustedByBg from '../../assets/trusted_by_bg.jpg'
 
 const heroSlides = [
   { id: 1, title: 'Clinical Dashboard', img: '/images/hero_slide_1.png', tag: 'Live Clinical OPD & Emergency' },
@@ -181,9 +28,6 @@ const fadeUp = {
 const stagger = { hidden: {}, visible: { transition: { staggerChildren: 0.22 } } }
 
 export default function Home() {
-  const { heroTheme } = useTheme()
-  const themeStyle = TRUSTED_BY_THEMES[heroTheme] || TRUSTED_BY_THEMES.navygold
-
   const [currentSlide, setCurrentSlide] = useState(0)
   const [isPaused, setIsPaused] = useState(false)
 
@@ -697,43 +541,29 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ── 2. TRUSTED BY LEADING INSTITUTIONS (THEME-AWARE CONTAINER) ── */}
+      {/* ── 2. TRUSTED BY LEADING INSTITUTIONS CONTAINER ── */}
       <section
-        className="py-10 sm:py-12 md:py-14 relative overflow-hidden shadow-2xl transition-all duration-500"
+        className="py-12 sm:py-14 md:py-16 relative overflow-hidden shadow-2xl transition-all duration-500 bg-cover bg-center bg-no-repeat"
         style={{
-          background: themeStyle.bg,
-          borderTop: themeStyle.border,
-          borderBottom: themeStyle.borderBottom,
-          boxShadow: themeStyle.shadow,
+          backgroundImage: `url(${trustedByBg})`,
+          backgroundColor: '#07152d',
+          borderTop: '1px solid rgba(245, 158, 11, 0.28)',
+          borderBottom: '1px solid rgba(245, 158, 11, 0.22)',
+          boxShadow: 'inset 0 1px 0 rgba(255, 255, 255, 0.15), inset 0 -1px 0 rgba(255, 255, 255, 0.05), 0 18px 36px -12px rgba(7, 21, 45, 0.5)',
         }}
       >
-        {/* Luminous Ambient Radial Overlays */}
+        {/* Subtle Ambient Radial Overlay */}
         <div
-          className="absolute inset-0 pointer-events-none transition-all duration-500"
+          className="absolute inset-0 pointer-events-none"
           style={{
-            background: themeStyle.glowTop,
-          }}
-        />
-        <div
-          className="absolute inset-0 pointer-events-none transition-all duration-500"
-          style={{
-            background: themeStyle.glowMid,
-          }}
-        />
-        
-        {/* Subtle mesh accent lines */}
-        <div
-          className="absolute inset-0 opacity-[0.04] pointer-events-none"
-          style={{
-            backgroundImage: 'radial-gradient(rgba(255, 255, 255, 0.8) 1px, transparent 1px)',
-            backgroundSize: '24px 24px',
+            background: 'radial-gradient(ellipse 70% 50% at 50% 50%, rgba(7, 21, 45, 0.4) 0%, rgba(7, 21, 45, 0.8) 100%)',
           }}
         />
 
         {/* Content Header */}
         <div className="site-wrapper text-center relative z-10 space-y-2 sm:space-y-3 mb-8 sm:mb-10">
           <p
-            className={`text-[10px] sm:text-[11px] font-bold uppercase tracking-[0.22em] transition-colors ${themeStyle.badgeText}`}
+            className="text-[10px] sm:text-[11px] font-black uppercase tracking-[0.25em] text-transparent bg-clip-text bg-gradient-to-r from-amber-200 via-yellow-100 to-amber-300 drop-shadow-sm"
             style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}
           >
             TRUSTED BY LEADING INSTITUTIONS
@@ -747,16 +577,16 @@ export default function Home() {
           </h2>
 
           <p
-            className={`text-[11px] sm:text-xs md:text-sm font-semibold tracking-wide max-w-xl mx-auto transition-colors ${themeStyle.descText}`}
+            className="text-[11px] sm:text-xs md:text-sm font-semibold tracking-wide max-w-xl mx-auto text-blue-100/90"
             style={{ fontFamily: "'Inter', sans-serif" }}
           >
-            150+ Hospitals &nbsp;<span className={`${themeStyle.bulletColor} font-normal`}>•</span>&nbsp; 50+ Clinics &nbsp;<span className={`${themeStyle.bulletColor} font-normal`}>•</span>&nbsp; 50+ Cities Across India
+            150+ Hospitals &nbsp;<span className="text-amber-300 font-normal">•</span>&nbsp; 50+ Clinics &nbsp;<span className="text-amber-300 font-normal">•</span>&nbsp; 50+ Cities Across India
           </p>
 
           {/* Glowing Indicator Accent Bars */}
           <div className="flex items-center justify-center gap-1.5 pt-0.5">
             <span className="w-6 h-1 rounded-full bg-white/25" />
-            <span className={`w-11 h-1.5 rounded-full bg-gradient-to-r ${themeStyle.accentBar}`} />
+            <span className="w-11 h-1.5 rounded-full bg-gradient-to-r from-amber-400 via-yellow-200 to-amber-400 shadow-[0_0_12px_rgba(251,191,36,0.9)]" />
             <span className="w-6 h-1 rounded-full bg-white/25" />
           </div>
         </div>
@@ -764,8 +594,8 @@ export default function Home() {
         {/* ── CLIENT LOGOS CAROUSEL / TICKER AS SEEN IN REFERENCE IMAGE ── */}
         <div className="relative w-full overflow-hidden z-10 py-2">
           {/* Edge Blur / Fade Mask Overlays */}
-          <div className={`absolute left-0 top-0 bottom-0 w-16 sm:w-28 bg-gradient-to-r ${themeStyle.sideGlow1} z-20 pointer-events-none transition-all duration-500`} />
-          <div className={`absolute right-0 top-0 bottom-0 w-16 sm:w-28 bg-gradient-to-l ${themeStyle.sideGlow2} z-20 pointer-events-none transition-all duration-500`} />
+          <div className="absolute left-0 top-0 bottom-0 w-12 sm:w-20 bg-gradient-to-r from-[#07152d]/80 to-transparent z-20 pointer-events-none" />
+          <div className="absolute right-0 top-0 bottom-0 w-12 sm:w-20 bg-gradient-to-l from-[#07152d]/80 to-transparent z-20 pointer-events-none" />
 
           {/* Continuous Infinite Ticker Row (Boundaryless Clean Logos) */}
           <div className="flex w-max animate-omedo-marquee items-center gap-6 sm:gap-10 md:gap-12 px-4">
@@ -802,7 +632,7 @@ export default function Home() {
                 </div>
 
                 {/* Client Name Label Below (Uniform Fixed Width Matching 4:3 Card) */}
-                <p className={`text-[10px] sm:text-[11px] font-semibold text-center truncate mt-2.5 w-32 sm:w-36 md:w-40 transition-colors tracking-wide ${themeStyle.labelColor}`}>
+                <p className="text-[10px] sm:text-[11px] font-semibold text-center truncate mt-2.5 w-32 sm:w-36 md:w-40 transition-colors tracking-wide text-blue-100/90 group-hover:text-amber-300 drop-shadow-sm">
                   {client.name}
                 </p>
               </div>

@@ -6,6 +6,7 @@ import { initialClientLogos } from '../../data/clientLogos'
 import { fetchCompanyClients, formatLogoUrl } from '../../services/api'
 import SafeImage from '../common/SafeImage'
 import { safeSetItem, safeGetItem } from '../../utils/storage'
+import trustedByBg from '../../assets/trusted_by_bg.jpg'
 
 export default function TrustedBy() {
   const [clients, setClients] = useState(() => {
@@ -79,8 +80,24 @@ export default function TrustedBy() {
   }, [clients])
 
   return (
-    <section className="py-10 md:py-14 border-y border-border/50 bg-slate-50/50 relative overflow-hidden">
-      <Container>
+    <section
+      className="py-12 md:py-16 relative overflow-hidden bg-cover bg-center bg-no-repeat shadow-2xl"
+      style={{
+        backgroundImage: `url(${trustedByBg})`,
+        backgroundColor: '#07152d',
+        borderTop: '1px solid rgba(245, 158, 11, 0.28)',
+        borderBottom: '1px solid rgba(245, 158, 11, 0.22)',
+      }}
+    >
+      {/* Ambient radial overlay */}
+      <div
+        className="absolute inset-0 pointer-events-none"
+        style={{
+          background: 'radial-gradient(ellipse 70% 50% at 50% 50%, rgba(7, 21, 45, 0.4) 0%, rgba(7, 21, 45, 0.8) 100%)',
+        }}
+      />
+
+      <Container className="relative z-10">
         <motion.div
           initial="hidden"
           whileInView="visible"
@@ -89,7 +106,7 @@ export default function TrustedBy() {
           className="space-y-6"
         >
           <motion.p
-            className="text-center text-xs font-bold text-[#64748b] uppercase tracking-widest"
+            className="text-center text-xs sm:text-sm font-black uppercase tracking-[0.25em] text-transparent bg-clip-text bg-gradient-to-r from-amber-200 via-yellow-100 to-amber-300 drop-shadow-sm"
             variants={fadeIn}
           >
             TRUSTED BY LEADING INSTITUTIONS
@@ -129,7 +146,7 @@ export default function TrustedBy() {
                     </span>
                   </div>
                 </div>
-                <span className="text-[10px] sm:text-[11px] font-semibold text-center text-[#334155] group-hover:text-[#00685e] truncate mt-2.5 w-32 sm:w-36 md:w-40 transition-colors">
+                <span className="text-[10px] sm:text-[11px] font-semibold text-center text-blue-100/90 group-hover:text-amber-300 truncate mt-2.5 w-32 sm:w-36 md:w-40 transition-colors drop-shadow-sm">
                   {client.name}
                 </span>
               </div>

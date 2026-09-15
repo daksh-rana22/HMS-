@@ -2,7 +2,6 @@ import { Outlet, useLocation } from 'react-router-dom'
 import { useEffect } from 'react'
 import Navbar from './Navbar'
 import Footer from './Footer'
-import ThemeChanger from '../ui/ThemeChanger'
 
 export default function Layout() {
   const { pathname } = useLocation()
@@ -20,7 +19,6 @@ export default function Layout() {
         <Outlet />
       </main>
       {!isLoginPage && <Footer />}
-      <ThemeChanger />
     </div>
   )
 }
