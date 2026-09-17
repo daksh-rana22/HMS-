@@ -27,6 +27,7 @@ export {
   submitDemoRequest,
   fetchDemoRequests,
   exportDemoRequestsExcel,
+  archiveDemoRequest,
 } from './demo.service'
 
 // Company & Website Clients

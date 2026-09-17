@@ -11,6 +11,7 @@ import {
   dataURLtoFile,
   exportDemoRequestsExcel,
   fetchDemoRequests,
+  archiveDemoRequest,
   copyQueryTableTSV,
   authenticateAdmin,
   logoutAdmin,
@@ -114,6 +115,21 @@ export default function Login() {
     return []
   })
 
+  // Archived Inquiries Dataset
+  const [archivedQueries, setArchivedQueries] = useState(() => {
+    const s = safeGetItem('omedo_archived_queries')
+    if (s) {
+      try {
+        const parsed = JSON.parse(s)
+        if (Array.isArray(parsed)) return parsed
+      } catch (e) {
+        console.error(e)
+      }
+    }
+    return []
+  })
+  const [inquiryTab, setInquiryTab] = useState('active') // 'active' | 'archived'
+
   // Modal State for Adding / Editing Items (Clients & Reviews Only)
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [modalType, setModalType] = useState('clients') // 'clients' | 'reviews'
@@ -191,6 +207,9 @@ export default function Login() {
         search: searchQuery,
         fromDate,
         toDate,
+        isActive: inquiryTab === 'active' ? true : (inquiryTab === 'archived' ? false : undefined),
+        page: 0,
+        size: 200,
       })
 
       if (res && res.success && Array.isArray(res.list)) {
@@ -199,8 +218,13 @@ export default function Login() {
         setLastSyncTime(new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' }))
 
         const normalized = res.list.map(normalizeQueryRecord)
-        setQueries(normalized)
-        safeSetItem('omedo_client_queries', normalized)
+        if (inquiryTab === 'archived') {
+          setArchivedQueries(normalized)
+          safeSetItem('omedo_archived_queries', normalized)
+        } else {
+          setQueries(normalized)
+          safeSetItem('omedo_client_queries', normalized)
+        }
 
         if (showToastNotice) {
           setExportToast({
@@ -228,7 +252,7 @@ export default function Login() {
     } finally {
       setIsLoadingLive(false)
     }
-  }, [isAuthenticated, searchQuery, fromDate, toDate])
+  }, [isAuthenticated, searchQuery, fromDate, toDate, inquiryTab])
 
   // ── FETCH LIVE COMPANY CLIENTS FROM BACKEND API: https://api.omedosoft.com/it/api/v1/omedo/websites/company-clients ──
   const loadLiveCompanyClients = useCallback(async () => {
@@ -410,8 +434,95 @@ export default function Login() {
     }
   }
 
+  // Archive Query / Client Details Handler
+  const handleArchiveQuery = async (queryItemOrId) => {
+    const targetId = typeof queryItemOrId === 'object' ? queryItemOrId.id : queryItemOrId
+    const targetItem = queries.find((q) => q.id === targetId) || (typeof queryItemOrId === 'object' ? queryItemOrId : null)
+
+    if (!window.confirm(`Are you sure you want to archive inquiry #${targetId}${targetItem?.name ? ` for ${targetItem.name}` : ''}?`)) {
+      return
+    }
+
+    // Move from active queries to archived queries
+    setQueries((prev) => {
+      const updated = prev.filter((i) => i.id !== targetId)
+      safeSetItem('omedo_client_queries', updated)
+      return updated
+    })
+
+    if (targetItem) {
+      setArchivedQueries((prev) => {
+        const updated = [targetItem, ...prev.filter((i) => i.id !== targetId)]
+        safeSetItem('omedo_archived_queries', updated)
+        return updated
+      })
+    }
+
+    if (selectedQueryDetail && selectedQueryDetail.id === targetId) {
+      setSelectedQueryDetail(null)
+    }
+
+    setExportToast({
+      type: 'success',
+      title: 'Inquiry Archived',
+      message: `Inquiry #${targetId} moved to Archived. Switch to the Archived tab to view or restore it.`,
+    })
+    setTimeout(() => setExportToast(null), 4500)
+
+    try {
+      if (targetId && (typeof targetId === 'number' || !isNaN(Number(targetId)))) {
+        await archiveDemoRequest(targetId)
+      }
+    } catch (err) {
+      console.warn('Backend archiveDemoRequest notice:', err)
+    }
+  }
+
+  // Restore / Unarchive Query Handler
+  const handleRestoreQuery = async (queryItemOrId) => {
+    const targetId = typeof queryItemOrId === 'object' ? queryItemOrId.id : queryItemOrId
+    const targetItem = archivedQueries.find((q) => q.id === targetId) || (typeof queryItemOrId === 'object' ? queryItemOrId : null)
+
+    // Move from archived queries back to active queries
+    setArchivedQueries((prev) => {
+      const updated = prev.filter((i) => i.id !== targetId)
+      safeSetItem('omedo_archived_queries', updated)
+      return updated
+    })
+
+    if (targetItem) {
+      setQueries((prev) => {
+        const updated = [targetItem, ...prev.filter((i) => i.id !== targetId)]
+        safeSetItem('omedo_client_queries', updated)
+        return updated
+      })
+    }
+
+    if (selectedQueryDetail && selectedQueryDetail.id === targetId) {
+      setSelectedQueryDetail(null)
+    }
+
+    setExportToast({
+      type: 'success',
+      title: 'Inquiry Restored',
+      message: `Inquiry #${targetId} has been restored to Unarchived.`,
+    })
+    setTimeout(() => setExportToast(null), 4000)
+
+    try {
+      if (targetId && (typeof targetId === 'number' || !isNaN(Number(targetId)))) {
+        await archiveDemoRequest(targetId)
+      }
+    } catch (err) {
+      console.warn('Backend restore archiveDemoRequest notice:', err)
+    }
+  }
+
   // Delete Item Handler
   const deleteItem = async (id, type) => {
+    if (type === 'queries') {
+      return handleArchiveQuery(id)
+    }
     if (!window.confirm('Are you sure you want to remove this record?')) return
     if (type === 'clients') {
       const target = clients.find((item, idx) => (item.id !== undefined ? item.id === id : idx === id))
@@ -435,12 +546,13 @@ export default function Login() {
         console.warn('Backend delete testimonial notice:', err)
       }
     }
-    if (type === 'queries') setQueries((prev) => prev.filter((i) => i.id !== id))
   }
+
+  const currentQueriesDataset = inquiryTab === 'archived' ? archivedQueries : queries
 
   // Filtered queries computation (search & date range only, no priority/status)
   const filteredQueries = useMemo(() => {
-    return queries.filter((item) => {
+    return currentQueriesDataset.filter((item) => {
       // 1. Date Range Filter (fromDate, toDate in yyyy-MM-dd)
       const itemDate = item.rawDate || (item.date ? item.date.slice(0, 10) : '')
       if (fromDate && itemDate && itemDate < fromDate) return false
@@ -455,10 +567,12 @@ export default function Login() {
 
       return true
     })
-  }, [queries, fromDate, toDate, searchQuery])
+  }, [currentQueriesDataset, fromDate, toDate, searchQuery])
 
   // Summary counts
-  const totalDisplayCount = liveRequestsCount !== null ? Math.max(liveRequestsCount, queries.length) : queries.length
+  const totalDisplayCount = inquiryTab === 'archived'
+    ? archivedQueries.length
+    : (liveRequestsCount !== null ? Math.max(liveRequestsCount, queries.length) : queries.length)
   const uniqueLocationsCount = useMemo(() => {
     const locs = new Set(queries.map((q) => (q.location || '').trim()).filter(Boolean))
     return locs.size || (queries.length > 0 ? 1 : 0)
@@ -502,6 +616,7 @@ export default function Login() {
         search: searchQuery,
         fromDate,
         toDate,
+        isActive: inquiryTab === 'active' ? true : (inquiryTab === 'archived' ? false : undefined),
         fallbackData: filteredQueries,
       })
       setExportToast({
@@ -1224,6 +1339,44 @@ export default function Login() {
                       )}
                     </div>
 
+                    {/* Active vs Archived Tab Switcher */}
+                    <div className="flex items-center bg-slate-100 p-1 rounded-xl border border-slate-200">
+                      <button
+                        type="button"
+                        onClick={() => setInquiryTab('active')}
+                        className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all flex items-center gap-1.5 cursor-pointer ${
+                          inquiryTab === 'active'
+                            ? 'bg-white text-[#00685e] shadow-2xs font-extrabold'
+                            : 'text-slate-600 hover:text-slate-900'
+                        }`}
+                        title="View Unarchived Inquiries"
+                      >
+                        <span className="material-symbols-outlined text-base">inbox</span>
+                        <span>Unarchived</span>
+                        <span className="px-1.5 py-0.2 rounded-full text-[10px] bg-teal-50 text-[#00685e] font-bold">
+                          {queries.length}
+                        </span>
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => setInquiryTab('archived')}
+                        className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all flex items-center gap-1.5 cursor-pointer ${
+                          inquiryTab === 'archived'
+                            ? 'bg-amber-600 text-white shadow-2xs font-extrabold'
+                            : 'text-slate-600 hover:text-slate-900'
+                        }`}
+                        title="View Archived Inquiries"
+                      >
+                        <span className="material-symbols-outlined text-base">archive</span>
+                        <span>Archived</span>
+                        {archivedQueries.length > 0 && (
+                          <span className={`px-1.5 py-0.2 rounded-full text-[10px] font-bold ${inquiryTab === 'archived' ? 'bg-white text-amber-700' : 'bg-amber-100 text-amber-800'}`}>
+                            {archivedQueries.length}
+                          </span>
+                        )}
+                      </button>
+                    </div>
+
                     {/* View Switcher: Table vs Cards */}
                     <div className="flex items-center bg-slate-100 p-1 rounded-xl border border-slate-200">
                       <button
@@ -1327,10 +1480,15 @@ export default function Login() {
                     {/* Table Header Ribbon */}
                     <div className="px-5 py-3 border-b border-slate-200 bg-slate-50/70 flex items-center justify-between text-xs font-medium text-slate-600">
                       <div className="flex items-center gap-2">
-                        <span className="w-2 h-2 rounded-full bg-emerald-500" />
+                        <span className={`w-2 h-2 rounded-full ${inquiryTab === 'archived' ? 'bg-amber-500' : 'bg-emerald-500'}`} />
                         <span className="font-bold text-slate-800">
-                          Showing <strong className="text-[#00685e]">{filteredQueries.length}</strong> of {totalDisplayCount} Client Inquiries
+                          Showing <strong className={inquiryTab === 'archived' ? 'text-amber-700' : 'text-[#00685e]'}>{filteredQueries.length}</strong> of {totalDisplayCount} {inquiryTab === 'archived' ? 'Archived Inquiries' : 'Unarchived Inquiries'}
                         </span>
+                        {inquiryTab === 'archived' && (
+                          <span className="ml-1 px-2 py-0.5 rounded-md bg-amber-100 text-amber-800 border border-amber-300 text-[10px] font-bold uppercase tracking-wider">
+                            Archive Vault
+                          </span>
+                        )}
                         {(searchQuery || fromDate || toDate) && (
                           <span className="ml-1 px-2 py-0.5 rounded-md bg-amber-50 text-amber-700 border border-amber-200 text-[10px] font-bold">
                             Filters Active
@@ -1507,14 +1665,25 @@ export default function Login() {
                                     >
                                       <span className="material-symbols-outlined text-sm">visibility</span>
                                     </button>
-                                    <button
-                                      type="button"
-                                      onClick={() => deleteItem(q.id, 'queries')}
-                                      className="w-7 h-7 rounded-lg bg-red-50 hover:bg-red-100 text-red-600 flex items-center justify-center transition-all cursor-pointer shadow-2xs"
-                                      title="Delete Record"
-                                    >
-                                      <span className="material-symbols-outlined text-sm">delete</span>
-                                    </button>
+                                    {inquiryTab === 'archived' ? (
+                                      <button
+                                        type="button"
+                                        onClick={() => handleRestoreQuery(q)}
+                                        className="w-7 h-7 rounded-lg bg-emerald-50 hover:bg-emerald-100 text-emerald-700 flex items-center justify-center transition-all cursor-pointer shadow-2xs border border-emerald-200/60"
+                                        title="Restore Inquiry to Unarchived"
+                                      >
+                                        <span className="material-symbols-outlined text-sm">unarchive</span>
+                                      </button>
+                                    ) : (
+                                      <button
+                                        type="button"
+                                        onClick={() => handleArchiveQuery(q)}
+                                        className="w-7 h-7 rounded-lg bg-amber-50 hover:bg-amber-100 text-amber-700 flex items-center justify-center transition-all cursor-pointer shadow-2xs border border-amber-200/60"
+                                        title="Archive Inquiry"
+                                      >
+                                        <span className="material-symbols-outlined text-sm">archive</span>
+                                      </button>
+                                    )}
                                   </div>
                                 </td>
                               </tr>
@@ -1607,14 +1776,25 @@ export default function Login() {
                             >
                               <span className="material-symbols-outlined text-sm">visibility</span>
                             </button>
-                            <button
-                              type="button"
-                              onClick={() => deleteItem(q.id, 'queries')}
-                              className="w-7 h-7 rounded-lg bg-red-50 hover:bg-red-100 text-red-600 flex items-center justify-center transition-all cursor-pointer shadow-2xs"
-                              title="Delete Record"
-                            >
-                              <span className="material-symbols-outlined text-sm">delete</span>
-                            </button>
+                            {inquiryTab === 'archived' ? (
+                              <button
+                                type="button"
+                                onClick={() => handleRestoreQuery(q)}
+                                className="w-7 h-7 rounded-lg bg-emerald-50 hover:bg-emerald-100 text-emerald-700 flex items-center justify-center transition-all cursor-pointer shadow-2xs border border-emerald-200/60"
+                                title="Restore to Unarchived"
+                              >
+                                <span className="material-symbols-outlined text-sm">unarchive</span>
+                              </button>
+                            ) : (
+                              <button
+                                type="button"
+                                onClick={() => handleArchiveQuery(q)}
+                                className="w-7 h-7 rounded-lg bg-amber-50 hover:bg-amber-100 text-amber-700 flex items-center justify-center transition-all cursor-pointer shadow-2xs border border-amber-200/60"
+                                title="Archive Inquiry"
+                              >
+                                <span className="material-symbols-outlined text-sm">archive</span>
+                              </button>
+                            )}
                           </div>
                         </div>
                       </div>
@@ -1904,7 +2084,28 @@ export default function Login() {
                     </div>
                   </div>
 
-                  <div className="pt-2 flex items-center justify-end">
+                  <div className="pt-2 flex items-center justify-between gap-2">
+                    {archivedQueries.some((a) => a.id === selectedQueryDetail.id) ? (
+                      <button
+                        type="button"
+                        onClick={() => handleRestoreQuery(selectedQueryDetail)}
+                        className="px-4 py-2 rounded-xl text-xs font-bold bg-emerald-50 hover:bg-emerald-100 text-emerald-700 flex items-center gap-1.5 border border-emerald-200 cursor-pointer transition-colors"
+                        title="Restore this inquiry to unarchived"
+                      >
+                        <span className="material-symbols-outlined text-sm">unarchive</span>
+                        <span>Unarchive Inquiry</span>
+                      </button>
+                    ) : (
+                      <button
+                        type="button"
+                        onClick={() => handleArchiveQuery(selectedQueryDetail)}
+                        className="px-4 py-2 rounded-xl text-xs font-bold bg-amber-50 hover:bg-amber-100 text-amber-700 flex items-center gap-1.5 border border-amber-200 cursor-pointer transition-colors"
+                        title="Archive this inquiry record"
+                      >
+                        <span className="material-symbols-outlined text-sm">archive</span>
+                        <span>Archive Inquiry</span>
+                      </button>
+                    )}
                     <button
                       type="button"
                       onClick={() => setSelectedQueryDetail(null)}

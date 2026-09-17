@@ -12,6 +12,7 @@ const ReportsAnalytics = lazy(() => import('../pages/ReportsAnalytics/ReportsAna
 const IPD = lazy(() => import('../pages/IPD/IPD'))
 const Laboratory = lazy(() => import('../pages/Laboratory/Laboratory'))
 const About = lazy(() => import('../pages/About/About'))
+const Advisors = lazy(() => import('../pages/Advisors/Advisors'))
 const Contact = lazy(() => import('../pages/Contact/Contact'))
 const Login = lazy(() => import('../pages/Login/Login'))
 const ABDM = lazy(() => import('../pages/ABDM/ABDM'))
@@ -70,6 +71,9 @@ const router = createBrowserRouter([
       { path: '/abdm-integration', element: <Suspense fallback={<Loader />}><ABDM /></Suspense> },
       { path: '/modules/abdm', element: <Suspense fallback={<Loader />}><ABDM /></Suspense> },
       { path: '/about', element: <Suspense fallback={<Loader />}><About /></Suspense> },
+      { path: '/advisors-consultants', element: <Suspense fallback={<Loader />}><Advisors /></Suspense> },
+      { path: '/advisors', element: <Suspense fallback={<Loader />}><Advisors /></Suspense> },
+      { path: '/consultants', element: <Suspense fallback={<Loader />}><Advisors /></Suspense> },
       { path: '/contact', element: <Suspense fallback={<Loader />}><Contact /></Suspense> },
       { path: '/login', element: <Suspense fallback={<Loader />}><Login /></Suspense> },
 

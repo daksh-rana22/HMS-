@@ -29,16 +29,40 @@ export async function submitDemoRequest(payload) {
 /**
  * Fetch Demo Requests / Queries from Backend API
  * @param {Object} [params]
- * @param {string} [params.search] - Case-insensitive search on name, mobile, email, hospital, location
- * @param {string} [params.fromDate] - Format yyyy-MM-dd
- * @param {string} [params.toDate] - Format yyyy-MM-dd
+ * @param {string} [params.search] - Case-insensitive partial match on name
+ * @param {string} [params.fromDate] - Filter from date (inclusive), format yyyy-MM-dd
+ * @param {string} [params.toDate] - Filter to date (inclusive), format yyyy-MM-dd
+ * @param {boolean} [params.isActive] - Filter by archive status: true = unarchived, false = archived, omit = all
+ * @param {boolean} [params.is_active] - Alternate key for isActive
+ * @param {number} [params.page=0] - 0-based page index
+ * @param {number} [params.size=200] - Page size (1–200, default 20)
  * @returns {Promise<{ list: any[], total: number, success: boolean, raw?: any }>}
  */
-export async function fetchDemoRequests({ search, fromDate, toDate } = {}) {
+export async function fetchDemoRequests({
+  search,
+  fromDate,
+  toDate,
+  isActive,
+  is_active,
+  page = 0,
+  size = 200,
+} = {}) {
   const params = new URLSearchParams()
   if (search && search.trim()) params.append('search', search.trim())
   if (fromDate && fromDate.trim()) params.append('fromDate', fromDate.trim())
   if (toDate && toDate.trim()) params.append('toDate', toDate.trim())
+
+  const activeVal = isActive !== undefined ? isActive : is_active
+  if (activeVal !== undefined && activeVal !== null && activeVal !== '') {
+    params.append('is_active', String(Boolean(activeVal)))
+  }
+
+  if (page !== undefined && page !== null) {
+    params.append('page', String(page))
+  }
+  if (size !== undefined && size !== null) {
+    params.append('size', String(size))
+  }
 
   const queryString = params.toString() ? `?${params.toString()}` : ''
   const endpoint = `${API_ENDPOINTS.DEMO_REQUESTS}${queryString}`
@@ -61,7 +85,7 @@ export async function fetchDemoRequests({ search, fromDate, toDate } = {}) {
       list = data.results
       total = data.total !== undefined ? data.total : data.results.length
     } else if (data && typeof data === 'object') {
-      total = data.total || data.count || data.totalRequests || 0
+      total = data.total || data.count || data.totalRequests || (Array.isArray(data.data) ? data.data.length : 0)
       if (Array.isArray(data.requests)) list = data.requests
       else if (Array.isArray(data.list)) list = data.list
     }
@@ -80,14 +104,28 @@ export async function fetchDemoRequests({ search, fromDate, toDate } = {}) {
  * @param {string} [params.search]
  * @param {string} [params.fromDate]
  * @param {string} [params.toDate]
+ * @param {boolean} [params.isActive]
+ * @param {boolean} [params.is_active]
  * @param {Array} [params.fallbackData]
  * @returns {Promise<{ success: boolean, source: 'backend' | 'client' }>}
  */
-export async function exportDemoRequestsExcel({ search, fromDate, toDate, fallbackData = [] } = {}) {
+export async function exportDemoRequestsExcel({
+  search,
+  fromDate,
+  toDate,
+  isActive,
+  is_active,
+  fallbackData = [],
+} = {}) {
   const params = new URLSearchParams()
   if (search && search.trim()) params.append('search', search.trim())
   if (fromDate && fromDate.trim()) params.append('fromDate', fromDate.trim())
   if (toDate && toDate.trim()) params.append('toDate', toDate.trim())
+
+  const activeVal = isActive !== undefined ? isActive : is_active
+  if (activeVal !== undefined && activeVal !== null && activeVal !== '') {
+    params.append('is_active', String(Boolean(activeVal)))
+  }
 
   const queryString = params.toString() ? `?${params.toString()}` : ''
   const endpoint = `${API_ENDPOINTS.DEMO_REQUESTS_EXPORT_EXCEL}${queryString}`
@@ -119,3 +157,23 @@ export async function exportDemoRequestsExcel({ search, fromDate, toDate, fallba
   downloadClientSideExcelCSV(fallbackData, `OMEDO_Client_Queries_${new Date().toISOString().split('T')[0]}.csv`)
   return { success: true, source: 'client' }
 }
+
+/**
+ * Archive / Unarchive OMEDO Demo Request (Soft toggle active status)
+ * Endpoint: PATCH /it/api/v1/omedo/demo-requests/{id}/archive
+ * @param {string|number} id - Positive ID of the demo request
+ * @returns {Promise<any>}
+ */
+export async function archiveDemoRequest(id) {
+  if (!id) {
+    throw new Error('Demo request ID is required to toggle archive status.')
+  }
+  const endpoint = API_ENDPOINTS.DEMO_REQUEST_ARCHIVE(id)
+  try {
+    return await http.patch(endpoint)
+  } catch (err) {
+    console.warn(`archiveDemoRequest notice for ID ${id}:`, err?.message || err)
+    throw err
+  }
+}
+

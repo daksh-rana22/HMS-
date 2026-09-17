@@ -19,6 +19,7 @@ export const API_ENDPOINTS = {
   TESTIMONIALS: `${API_BASE_URL}/it/api/v1/omedo/websites/testimonials`,
   CLIENT_DETAILS: `${API_BASE_URL}/it/api/v1/omedo/websites/clients`,
   CLIENT_IMAGE: (id) => `${API_BASE_URL}/it/api/v1/omedo/websites/clients/${id}/image`,
+  DEMO_REQUEST_ARCHIVE: (id) => `${API_BASE_URL}/it/api/v1/omedo/demo-requests/${id}/archive`,
 }
 
 // In-flight GET request deduplication map
