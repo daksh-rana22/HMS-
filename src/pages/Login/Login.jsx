@@ -2498,11 +2498,11 @@ export default function Login() {
   // 2. UNAUTHENTICATED SIGN-IN SCREEN
   // ═════════════════════════════════════════════════════════════════════════
   return (
-    <motion.div {...pageTransition} className="min-h-screen flex flex-col lg:flex-row bg-[#effcfe]/30">
+    <motion.div {...pageTransition} className="min-h-screen flex flex-col lg:flex-row bg-[#effcfe]/30 selection:bg-[#00685e]/20 selection:text-[#00685e]">
       
-      {/* ── LEFT COLUMN: ONLY LOGO CENTERED IN GRADIENT CONTAINER ── */}
+      {/* ── LEFT COLUMN: BRANDING HERO CANVAS (DESKTOP ONLY) ── */}
       <div
-        className="w-full lg:w-[48%] xl:w-[45%] flex flex-col items-center justify-center p-8 sm:p-12 lg:p-16 relative overflow-hidden shrink-0 min-h-[360px] lg:min-h-screen"
+        className="hidden lg:flex lg:w-[48%] xl:w-[45%] flex-col items-center justify-center p-8 lg:p-16 relative overflow-hidden shrink-0 min-h-screen"
         style={{
           background: 'linear-gradient(135deg, #ccfbf1 0%, #e6faf7 35%, #e0f2fe 70%, #bae6fd 100%)',
         }}
@@ -2550,24 +2550,42 @@ export default function Login() {
         </div>
       </div>
 
-      {/* ── RIGHT COLUMN: LOGIN FORM PANEL ── */}
-      <div className="w-full lg:w-[52%] xl:w-[55%] flex flex-col justify-between p-6 sm:p-10 lg:p-14 bg-[#effcfe]/40 relative">
+      {/* ── RIGHT COLUMN: LOGIN FORM PANEL (RESPONSIVE FOR ALL SCREEN SIZES) ── */}
+      <div className="w-full lg:w-[52%] xl:w-[55%] min-h-screen flex flex-col justify-between p-4 xs:p-6 sm:p-10 lg:p-14 bg-gradient-to-br from-[#effcfe]/40 via-[#f0fdfa]/30 to-[#f8fafc] relative">
         
-        <div className="w-full flex justify-start">
+        {/* Top Back Navigation Bar */}
+        <div className="w-full flex items-center justify-between">
           <Link
             to="/"
-            className="inline-flex items-center gap-1.5 text-xs sm:text-sm font-semibold text-[#6d7a77] hover:text-[#00685e] transition-colors"
+            className="inline-flex items-center gap-1.5 text-xs sm:text-sm font-semibold text-[#6d7a77] hover:text-[#00685e] transition-colors py-1 px-2 rounded-lg hover:bg-white/60"
           >
-            <span className="material-symbols-outlined text-base">&larr;</span>
+            <span className="material-symbols-outlined text-base">arrow_back</span>
             <span>Back to main page</span>
           </Link>
+
+          <span className="lg:hidden text-[10px] font-extrabold uppercase tracking-wider text-[#00685e] bg-teal-50 border border-teal-200/60 px-2 py-0.5 rounded-full">
+            Admin Portal
+          </span>
         </div>
 
-        <div className="w-full max-w-md mx-auto my-auto py-8">
-          <div className="bg-white rounded-3xl p-7 sm:p-9 shadow-[0_20px_50px_rgba(0,104,94,0.08)] border border-[#bcc9c6]/40">
+        {/* Center Card Container */}
+        <div className="w-full max-w-[420px] mx-auto my-auto py-6 sm:py-8">
+          
+          {/* Mobile Logo Branding (shown only on mobile < lg) */}
+          <div className="text-center mb-5 lg:hidden">
+            <Link to="/" className="inline-block transition-transform duration-200 hover:scale-105" title="OMEDO Home">
+              <img
+                src={omedoLogo}
+                alt="OMEDO"
+                className="h-10 sm:h-12 w-auto mx-auto object-contain drop-shadow-xs"
+              />
+            </Link>
+          </div>
+
+          <div className="bg-white rounded-2xl sm:rounded-3xl p-6 xs:p-7 sm:p-9 shadow-[0_15px_45px_rgba(0,104,94,0.08)] border border-slate-200/80">
             
-            <div className="text-center mb-7">
-              <h2 className="text-2xl sm:text-3xl font-black text-[#121d1f] tracking-tight" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
+            <div className="text-center mb-6 sm:mb-7">
+              <h2 className="text-xl xs:text-2xl sm:text-3xl font-black text-[#121d1f] tracking-tight" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
                 Admin Login
               </h2>
               <p className="text-xs text-[#6d7a77] mt-1.5 font-medium" style={{ fontFamily: "'Inter', sans-serif" }}>
@@ -2590,7 +2608,7 @@ export default function Login() {
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     placeholder="Username or admin@omedosoft.com"
-                    className="w-full pl-11 pr-4 py-3 bg-[#effcfe]/30 border border-[#bcc9c6]/60 rounded-xl text-sm text-[#121d1f] placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-[#00685e]/25 focus:border-[#00685e] transition-all font-medium"
+                    className="w-full pl-11 pr-4 py-2.5 sm:py-3 bg-[#effcfe]/30 border border-slate-200 rounded-xl text-xs sm:text-sm text-[#121d1f] placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-[#00685e]/25 focus:border-[#00685e] transition-all font-medium"
                   />
                 </div>
               </div>
@@ -2609,12 +2627,12 @@ export default function Login() {
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                     placeholder="••••••••••••"
-                    className="w-full pl-11 pr-11 py-3 bg-[#effcfe]/30 border border-[#bcc9c6]/60 rounded-xl text-sm text-[#121d1f] placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-[#00685e]/25 focus:border-[#00685e] transition-all font-medium"
+                    className="w-full pl-11 pr-11 py-2.5 sm:py-3 bg-[#effcfe]/30 border border-slate-200 rounded-xl text-xs sm:text-sm text-[#121d1f] placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-[#00685e]/25 focus:border-[#00685e] transition-all font-medium"
                   />
                   <button
                     type="button"
                     onClick={() => setShowPassword(!showPassword)}
-                    className="absolute right-3.5 top-1/2 -translate-y-1/2 text-[#6d7a77] hover:text-[#00685e] cursor-pointer"
+                    className="absolute right-3.5 top-1/2 -translate-y-1/2 text-[#6d7a77] hover:text-[#00685e] cursor-pointer p-1"
                   >
                     <span className="material-symbols-outlined text-lg">
                       {showPassword ? 'visibility_off' : 'visibility'}
@@ -2632,7 +2650,7 @@ export default function Login() {
               <button
                 type="submit"
                 disabled={authLoading}
-                className="w-full py-3.5 rounded-xl font-extrabold text-white bg-[#00685e] hover:bg-[#00524a] active:scale-98 transition-all shadow-md shadow-[#00685e]/25 flex items-center justify-center gap-2 cursor-pointer disabled:opacity-70 mt-2 text-sm tracking-wide"
+                className="w-full py-3 sm:py-3.5 rounded-xl font-extrabold text-white bg-[#00685e] hover:bg-[#00524a] active:scale-98 transition-all shadow-md shadow-[#00685e]/25 flex items-center justify-center gap-2 cursor-pointer disabled:opacity-70 mt-3 text-xs sm:text-sm tracking-wide"
                 style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}
               >
                 {authLoading ? (
@@ -2649,7 +2667,10 @@ export default function Login() {
           </div>
         </div>
 
-        <div className="hidden lg:block h-6" />
+        {/* Footer info on mobile & desktop */}
+        <div className="text-center py-2 text-[10px] sm:text-[11px] text-[#64748b] font-medium">
+          © {new Date().getFullYear()} OMEDO Software Solutions Pvt. Ltd. · Secure Admin Portal
+        </div>
 
       </div>
 
