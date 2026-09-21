@@ -336,6 +336,24 @@ export default function Login() {
     return () => window.removeEventListener('omedo_queries_updated', handleExternalQueriesUpdate)
   }, [loadLiveDemoRequests, isAuthenticated])
 
+  // Listen for session expiry / unauthorized API events
+  useEffect(() => {
+    const handleUnauthorizedReset = (e) => {
+      setIsAuthenticated(false)
+      setAuthUser(null)
+      const msg = e.detail?.message || 'Authorization header is missing or session expired. Please sign in again.'
+      setAuthError(msg)
+    }
+
+    window.addEventListener('auth:unauthorized', handleUnauthorizedReset)
+    window.addEventListener('auth:logout_reset', handleUnauthorizedReset)
+
+    return () => {
+      window.removeEventListener('auth:unauthorized', handleUnauthorizedReset)
+      window.removeEventListener('auth:logout_reset', handleUnauthorizedReset)
+    }
+  }, [])
+
   const openModal = () => {
     setEditingItem(null)
     setModalType(activeMenu === 'queries' ? 'clients' : activeMenu)

@@ -85,17 +85,40 @@ export async function request(endpoint, options = {}) {
 
       const response = await fetch(url, fetchOptions)
 
-      // Global 401 Unauthorized handling
-      if (response.status === 401) {
-        logoutAdmin()
-        if (typeof window !== 'undefined') {
-          window.dispatchEvent(new CustomEvent('auth:unauthorized'))
-        }
-      }
-
       const contentType = response.headers.get('content-type') || ''
       const isJson = contentType.includes('application/json')
       const data = isJson ? await response.json().catch(() => ({})) : await response.text().catch(() => '')
+
+      // Global 401 Unauthorized / Missing Authorization Header handling (Error Code 1004)
+      const isUnauthorized =
+        response.status === 401 ||
+        response.status === 403 ||
+        (typeof data === 'object' && (
+          data.error_code === 1004 ||
+          data.status === 401 ||
+          (typeof data.message === 'string' && (
+            data.message.toLowerCase().includes('authorization header is missing') ||
+            data.message.toLowerCase().includes('unauthorized') ||
+            data.message.toLowerCase().includes('jwt') ||
+            data.message.toLowerCase().includes('token')
+          ))
+        ))
+
+      if (isUnauthorized) {
+        logoutAdmin()
+        if (typeof window !== 'undefined') {
+          window.dispatchEvent(
+            new CustomEvent('auth:unauthorized', {
+              detail: {
+                message: (typeof data === 'object' && data.message) || 'Authorization header is missing. Please log in again to continue.',
+                errorCode: (typeof data === 'object' && data.error_code) || 1004,
+                status: response.status || 401,
+                path: (typeof data === 'object' && data.path) || url,
+              },
+            })
+          )
+        }
+      }
 
       if (!response.ok) {
         const errorMessage =
