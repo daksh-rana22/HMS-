@@ -257,10 +257,10 @@ export default function Home() {
                     }}
                   >
                     {[
-                      { label: 'Reports & Analytics', icon: 'analytics', pos: 'top-[-9px] left-1/2 -translate-x-1/2' },
-                      { label: 'Emergency Care', icon: 'e911_emergency', pos: 'bottom-[-9px] left-1/2 -translate-x-1/2' },
-                      { label: 'Billing & GST', icon: 'receipt_long', pos: 'top-1/2 right-[-5px] -translate-y-1/2' },
-                      { label: 'IPD & Bed Mgmt', icon: 'bed', pos: 'top-1/2 left-[-5px] -translate-y-1/2' },
+                      { label: 'Reports & Analytics', icon: 'analytics', pos: 'top-0 left-1/2 -translate-x-1/2 -translate-y-1/2' },
+                      { label: 'Emergency Care', icon: 'e911_emergency', pos: 'bottom-0 left-1/2 -translate-x-1/2 translate-y-1/2' },
+                      { label: 'Billing & GST', icon: 'receipt_long', pos: 'top-1/2 right-0 translate-x-1/2 -translate-y-1/2' },
+                      { label: 'IPD & Bed Mgmt', icon: 'bed', pos: 'top-1/2 left-0 -translate-x-1/2 -translate-y-1/2' },
                     ].map(({ label, icon, pos }) => (
                       <motion.div
                         key={label}
@@ -268,10 +268,10 @@ export default function Home() {
                         transition={{ duration: 45, repeat: Infinity, ease: 'linear' }}
                         className={`absolute ${pos}`}
                       >
-                        <div className="flex items-center gap-1 bg-white/95 backdrop-blur-md px-1.5 py-0.5 rounded-full text-[7px] xs:text-[7.5px] font-bold whitespace-nowrap shadow-sm border border-[var(--t-border)]"
+                        <div className="flex items-center gap-1.5 bg-white/95 backdrop-blur-md px-2 py-1 xs:px-2.5 xs:py-1 rounded-full text-[8.5px] xs:text-[9.5px] sm:text-[10.5px] font-black whitespace-nowrap shadow-md border border-[var(--t-border)]/80"
                           style={{ color: 'var(--t-text, #121d1f)' }}>
-                          <span className="material-symbols-outlined text-[8.5px] xs:text-[9.5px]" style={{ color: 'var(--t-primary, #00685e)' }}>{icon}</span>
-                          {label}
+                          <span className="material-symbols-outlined text-[11px] xs:text-[13px] font-bold" style={{ color: 'var(--t-primary, #00685e)' }}>{icon}</span>
+                          <span>{label}</span>
                         </div>
                       </motion.div>
                     ))}
@@ -288,8 +288,8 @@ export default function Home() {
                     }}
                   >
                     {[
-                      { label: 'Clinical EMR', icon: 'stethoscope', pos: 'top-[6%] right-[6%]' },
-                      { label: 'Laboratory LIS', icon: 'science', pos: 'bottom-[6%] left-[6%]' },
+                      { label: 'Clinical EMR', icon: 'stethoscope', pos: 'top-[8%] right-[8%] -translate-y-1/2 translate-x-1/2' },
+                      { label: 'Laboratory LIS', icon: 'science', pos: 'bottom-[8%] left-[8%] translate-y-1/2 -translate-x-1/2' },
                     ].map(({ label, icon, pos }) => (
                       <motion.div
                         key={label}
@@ -297,10 +297,10 @@ export default function Home() {
                         transition={{ duration: 35, repeat: Infinity, ease: 'linear' }}
                         className={`absolute ${pos}`}
                       >
-                        <div className="flex items-center gap-1 bg-white/95 backdrop-blur-md px-1.5 py-0.5 rounded-full text-[7px] xs:text-[7.5px] font-bold whitespace-nowrap shadow-sm border border-[var(--t-border)]"
+                        <div className="flex items-center gap-1.5 bg-white/95 backdrop-blur-md px-2 py-1 xs:px-2.5 xs:py-1 rounded-full text-[8.5px] xs:text-[9.5px] sm:text-[10.5px] font-black whitespace-nowrap shadow-md border border-[var(--t-border)]/80"
                           style={{ color: 'var(--t-text, #121d1f)' }}>
-                          <span className="material-symbols-outlined text-[8.5px] xs:text-[9.5px]" style={{ color: 'var(--t-primary, #00685e)' }}>{icon}</span>
-                          {label}
+                          <span className="material-symbols-outlined text-[11px] xs:text-[13px] font-bold" style={{ color: 'var(--t-primary, #00685e)' }}>{icon}</span>
+                          <span>{label}</span>
                         </div>
                       </motion.div>
                     ))}
@@ -317,8 +317,8 @@ export default function Home() {
                     }}
                   >
                     {[
-                      { label: 'IT Admin', icon: 'manage_accounts', pos: 'top-[-7px] left-1/4' },
-                      { label: 'Pharmacy', icon: 'medication', pos: 'bottom-[-7px] right-1/4' },
+                      { label: 'IT Admin', icon: 'manage_accounts', pos: 'top-0 left-1/4 -translate-y-1/2 -translate-x-1/2' },
+                      { label: 'Pharmacy', icon: 'medication', pos: 'bottom-0 right-1/4 translate-y-1/2 translate-x-1/2' },
                     ].map(({ label, icon, pos }) => (
                       <motion.div
                         key={label}
@@ -326,10 +326,10 @@ export default function Home() {
                         transition={{ duration: 25, repeat: Infinity, ease: 'linear' }}
                         className={`absolute ${pos}`}
                       >
-                        <div className="flex items-center gap-1 bg-white/95 backdrop-blur-md px-1.5 py-0.5 rounded-full text-[7px] xs:text-[7.5px] font-bold whitespace-nowrap shadow-sm border border-[var(--t-border)]"
+                        <div className="flex items-center gap-1.5 bg-white/95 backdrop-blur-md px-2 py-1 xs:px-2.5 xs:py-1 rounded-full text-[8px] xs:text-[9px] sm:text-[10px] font-black whitespace-nowrap shadow-md border border-[var(--t-border)]/80"
                           style={{ color: 'var(--t-text, #121d1f)' }}>
-                          <span className="material-symbols-outlined text-[8.5px] xs:text-[9.5px]" style={{ color: 'var(--t-primary, #00685e)' }}>{icon}</span>
-                          {label}
+                          <span className="material-symbols-outlined text-[11px] xs:text-[13px] font-bold" style={{ color: 'var(--t-primary, #00685e)' }}>{icon}</span>
+                          <span>{label}</span>
                         </div>
                       </motion.div>
                     ))}
@@ -426,10 +426,10 @@ export default function Home() {
                 >
                   {/* Pills on outer ring — counter-rotated for upright text */}
                   {[
-                    { label: 'Reports & Analytics', icon: 'analytics', pos: 'top-[-11px] sm:top-[-15px] left-1/2 -translate-x-1/2' },
-                    { label: 'Emergency Care', icon: 'e911_emergency', pos: 'bottom-[-11px] sm:bottom-[-15px] left-1/2 -translate-x-1/2' },
-                    { label: 'Billing & GST', icon: 'receipt_long', pos: 'top-1/2 right-[-6px] sm:right-[-12px] -translate-y-1/2' },
-                    { label: 'IPD & Bed Mgmt', icon: 'bed', pos: 'top-1/2 left-[-6px] sm:left-[-12px] -translate-y-1/2' },
+                    { label: 'Reports & Analytics', icon: 'analytics', pos: 'top-0 left-1/2 -translate-x-1/2 -translate-y-1/2' },
+                    { label: 'Emergency Care', icon: 'e911_emergency', pos: 'bottom-0 left-1/2 -translate-x-1/2 translate-y-1/2' },
+                    { label: 'Billing & GST', icon: 'receipt_long', pos: 'top-1/2 right-0 translate-x-1/2 -translate-y-1/2' },
+                    { label: 'IPD & Bed Mgmt', icon: 'bed', pos: 'top-1/2 left-0 -translate-x-1/2 -translate-y-1/2' },
                   ].map(({ label, icon, pos }) => (
                     <motion.div
                       key={label}
@@ -437,13 +437,13 @@ export default function Home() {
                       transition={{ duration: 45, repeat: Infinity, ease: 'linear' }}
                       className={`absolute ${pos}`}
                     >
-                      <div className="flex items-center gap-1 sm:gap-1.5 bg-white/95 backdrop-blur-md px-2 py-0.5 sm:px-3 sm:py-1 rounded-full text-[8.5px] sm:text-[10px] xl:text-[11px] font-bold whitespace-nowrap shadow-md border"
+                      <div className="flex items-center gap-1.5 sm:gap-2 bg-white/95 backdrop-blur-md px-3 py-1.5 sm:px-4 sm:py-2 rounded-full text-[11px] sm:text-[12.5px] xl:text-[13.5px] font-black whitespace-nowrap shadow-lg border border-[var(--t-border)]/70"
                         style={{
-                          borderColor: 'color-mix(in srgb, var(--t-primary) 30%, transparent)',
                           color: 'var(--t-text, #121d1f)',
+                          boxShadow: '0 8px 20px -3px rgba(0, 104, 94, 0.14), 0 3px 8px -1px rgba(0, 0, 0, 0.05)',
                         }}>
-                        <span className="material-symbols-outlined text-[10px] sm:text-[13px]" style={{ color: 'var(--t-primary, #00685e)' }}>{icon}</span>
-                        {label}
+                        <span className="material-symbols-outlined text-[14px] sm:text-[17px] xl:text-[19px] font-bold" style={{ color: 'var(--t-primary, #00685e)' }}>{icon}</span>
+                        <span>{label}</span>
                       </div>
                     </motion.div>
                   ))}
@@ -460,8 +460,8 @@ export default function Home() {
                   }}
                 >
                   {[
-                    { label: 'Clinical EMR', icon: 'stethoscope', pos: 'top-[6%] right-[6%]' },
-                    { label: 'Laboratory LIS', icon: 'science', pos: 'bottom-[6%] left-[6%]' },
+                    { label: 'Clinical EMR', icon: 'stethoscope', pos: 'top-[8%] right-[8%] -translate-y-1/2 translate-x-1/2' },
+                    { label: 'Laboratory LIS', icon: 'science', pos: 'bottom-[8%] left-[8%] translate-y-1/2 -translate-x-1/2' },
                   ].map(({ label, icon, pos }) => (
                     <motion.div
                       key={label}
@@ -469,13 +469,13 @@ export default function Home() {
                       transition={{ duration: 35, repeat: Infinity, ease: 'linear' }}
                       className={`absolute ${pos}`}
                     >
-                      <div className="flex items-center gap-1 sm:gap-1.5 bg-white/95 backdrop-blur-md px-2 py-0.5 sm:px-3 sm:py-1 rounded-full text-[8.5px] sm:text-[10px] xl:text-[11px] font-bold whitespace-nowrap shadow-md border"
+                      <div className="flex items-center gap-1.5 sm:gap-2 bg-white/95 backdrop-blur-md px-3 py-1.5 sm:px-4 sm:py-2 rounded-full text-[11px] sm:text-[12.5px] xl:text-[13.5px] font-black whitespace-nowrap shadow-lg border border-[var(--t-border)]/70"
                         style={{
-                          borderColor: 'color-mix(in srgb, var(--t-primary) 30%, transparent)',
                           color: 'var(--t-text, #121d1f)',
+                          boxShadow: '0 8px 20px -3px rgba(0, 104, 94, 0.14), 0 3px 8px -1px rgba(0, 0, 0, 0.05)',
                         }}>
-                        <span className="material-symbols-outlined text-[10px] sm:text-[13px]" style={{ color: 'var(--t-primary, #00685e)' }}>{icon}</span>
-                        {label}
+                        <span className="material-symbols-outlined text-[14px] sm:text-[17px] xl:text-[19px] font-bold" style={{ color: 'var(--t-primary, #00685e)' }}>{icon}</span>
+                        <span>{label}</span>
                       </div>
                     </motion.div>
                   ))}
@@ -492,8 +492,8 @@ export default function Home() {
                   }}
                 >
                   {[
-                    { label: 'IT Admin', icon: 'manage_accounts', pos: 'top-[-9px] sm:top-[-12px] left-1/4' },
-                    { label: 'Pharmacy', icon: 'medication', pos: 'bottom-[-9px] sm:bottom-[-12px] right-1/4' },
+                    { label: 'IT Admin', icon: 'manage_accounts', pos: 'top-0 left-1/4 -translate-y-1/2 -translate-x-1/2' },
+                    { label: 'Pharmacy', icon: 'medication', pos: 'bottom-0 right-1/4 translate-y-1/2 translate-x-1/2' },
                   ].map(({ label, icon, pos }) => (
                     <motion.div
                       key={label}
@@ -501,13 +501,13 @@ export default function Home() {
                       transition={{ duration: 25, repeat: Infinity, ease: 'linear' }}
                       className={`absolute ${pos}`}
                     >
-                      <div className="flex items-center gap-1 bg-white/95 backdrop-blur-md px-1.5 py-0.5 sm:px-2.5 sm:py-0.5 rounded-full text-[8px] sm:text-[9.5px] xl:text-[10px] font-bold whitespace-nowrap shadow-md border"
+                      <div className="flex items-center gap-1.5 sm:gap-2 bg-white/95 backdrop-blur-md px-2.5 py-1.5 sm:px-3.5 sm:py-1.5 rounded-full text-[10.5px] sm:text-[12px] xl:text-[13px] font-black whitespace-nowrap shadow-lg border border-[var(--t-border)]/70"
                         style={{
-                          borderColor: 'color-mix(in srgb, var(--t-primary) 30%, transparent)',
                           color: 'var(--t-text, #121d1f)',
+                          boxShadow: '0 8px 20px -3px rgba(0, 104, 94, 0.14), 0 3px 8px -1px rgba(0, 0, 0, 0.05)',
                         }}>
-                        <span className="material-symbols-outlined text-[9px] sm:text-[12px]" style={{ color: 'var(--t-primary, #00685e)' }}>{icon}</span>
-                        {label}
+                        <span className="material-symbols-outlined text-[13px] sm:text-[16px] xl:text-[18px] font-bold" style={{ color: 'var(--t-primary, #00685e)' }}>{icon}</span>
+                        <span>{label}</span>
                       </div>
                     </motion.div>
                   ))}
