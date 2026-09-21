@@ -75,8 +75,7 @@ export default function TrustedBy() {
   }, [])
 
   const activeClients = useMemo(() => {
-    const list = clients.filter((c) => c.status !== 'INACTIVE')
-    return list.length > 0 ? list : initialClientLogos
+    return clients.filter((c) => c.status !== 'INACTIVE')
   }, [clients])
 
   return (
@@ -112,46 +111,48 @@ export default function TrustedBy() {
             TRUSTED BY LEADING INSTITUTIONS
           </motion.p>
 
-          <motion.div
-            className="flex flex-wrap items-center justify-center gap-4 sm:gap-6"
-            variants={fadeIn}
-          >
-            {activeClients.map((client, idx) => (
-              <div
-                key={client.id || idx}
-                className="flex flex-col items-center group transition-transform duration-300 hover:scale-105 px-1 sm:px-1.5"
-              >
-                <div className="relative w-32 sm:w-36 md:w-40 aspect-[4/3] rounded-2xl shadow-md flex items-center justify-center overflow-hidden transition-all duration-300 group-hover:shadow-2xl group-hover:scale-105 cursor-pointer">
-                  <SafeImage
-                    src={client.logoUrl}
-                    alt={client.name}
-                    className="w-full h-full object-fill select-none rounded-2xl transition-all duration-300"
-                    fallback={
-                      <div
-                        className="w-full h-full rounded-2xl flex items-center justify-center text-xs sm:text-sm font-black tracking-wider text-white shadow-inner p-2 text-center"
-                        style={{ background: client.badgeColor || '#00685e' }}
-                      >
-                        {client.logoText || (client.name || 'HOSPITAL').slice(0, 10).toUpperCase()}
-                      </div>
-                    }
-                  />
+          {activeClients.length > 0 && (
+            <motion.div
+              className="flex flex-wrap items-center justify-center gap-4 sm:gap-6"
+              variants={fadeIn}
+            >
+              {activeClients.map((client, idx) => (
+                <div
+                  key={client.id || idx}
+                  className="flex flex-col items-center group transition-transform duration-300 hover:scale-105 px-1 sm:px-1.5"
+                >
+                  <div className="relative w-32 sm:w-36 md:w-40 aspect-[4/3] rounded-2xl shadow-md flex items-center justify-center overflow-hidden transition-all duration-300 group-hover:shadow-2xl group-hover:scale-105 cursor-pointer">
+                    <SafeImage
+                      src={client.logoUrl}
+                      alt={client.name}
+                      className="w-full h-full object-fill select-none rounded-2xl transition-all duration-300"
+                      fallback={
+                        <div
+                          className="w-full h-full rounded-2xl flex items-center justify-center text-xs sm:text-sm font-black tracking-wider text-white shadow-inner p-2 text-center"
+                          style={{ background: client.badgeColor || '#00685e' }}
+                        >
+                          {client.logoText || (client.name || 'HOSPITAL').slice(0, 10).toUpperCase()}
+                        </div>
+                      }
+                    />
 
-                  {/* Dark Frosted Hover Overlay with Purple Pin and Location */}
-                  <div className="absolute inset-0 bg-[#0f172a]/80 backdrop-blur-[2px] rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col items-center justify-center p-2 z-10 select-none">
-                    <span className="material-symbols-outlined text-[#a855f7] text-xl sm:text-2xl drop-shadow-md mb-0.5">
-                      location_on
-                    </span>
-                    <span className="text-[10px] sm:text-[11px] font-black uppercase text-white tracking-wider text-center leading-tight drop-shadow-md px-1 line-clamp-2">
-                      {client.location || client.name || 'INDIA'}
-                    </span>
+                    {/* Dark Frosted Hover Overlay with Purple Pin and Location */}
+                    <div className="absolute inset-0 bg-[#0f172a]/80 backdrop-blur-[2px] rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col items-center justify-center p-2 z-10 select-none">
+                      <span className="material-symbols-outlined text-[#a855f7] text-xl sm:text-2xl drop-shadow-md mb-0.5">
+                        location_on
+                      </span>
+                      <span className="text-[10px] sm:text-[11px] font-black uppercase text-white tracking-wider text-center leading-tight drop-shadow-md px-1 line-clamp-2">
+                        {client.location || client.name || 'INDIA'}
+                      </span>
+                    </div>
                   </div>
+                  <span className="text-[10px] sm:text-[11px] font-semibold text-center text-blue-100/90 group-hover:text-amber-300 truncate mt-2.5 w-32 sm:w-36 md:w-40 transition-colors drop-shadow-sm">
+                    {client.name}
+                  </span>
                 </div>
-                <span className="text-[10px] sm:text-[11px] font-semibold text-center text-blue-100/90 group-hover:text-amber-300 truncate mt-2.5 w-32 sm:w-36 md:w-40 transition-colors drop-shadow-sm">
-                  {client.name}
-                </span>
-              </div>
-            ))}
-          </motion.div>
+              ))}
+            </motion.div>
+          )}
         </motion.div>
       </Container>
     </section>

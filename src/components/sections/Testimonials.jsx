@@ -77,9 +77,10 @@ export default function Testimonials() {
   }, [])
 
   const activeReviews = useMemo(() => {
-    const list = reviews.filter((r) => r.status !== 'INACTIVE' && r.content)
-    return list.length > 0 ? list : initialTestimonials
+    return reviews.filter((r) => r.status !== 'INACTIVE' && r.content && r.content.trim())
   }, [reviews])
+
+  if (activeReviews.length === 0) return null
 
   return (
     <section className="py-16 md:py-24 bg-background-light">

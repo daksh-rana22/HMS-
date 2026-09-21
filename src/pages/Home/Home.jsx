@@ -148,11 +148,11 @@ export default function Home() {
 
   // Filter only ACTIVE clients for display and build seamless infinite loop
   const activeClients = useMemo(() => {
-    const list = clients.filter((c) => c.status !== 'INACTIVE')
-    return list.length > 0 ? list : initialClientLogos
+    return clients.filter((c) => c.status !== 'INACTIVE')
   }, [clients])
 
   const loopedClients = useMemo(() => {
+    if (activeClients.length === 0) return []
     let repeated = [...activeClients]
     // Ensure base length is at least 8-10 items so infinite loop never leaves blank gaps
     while (repeated.length < 10) {
@@ -164,8 +164,7 @@ export default function Home() {
 
   // Active reviews list & slide pagination state (6 reviews per slide)
   const activeReviews = useMemo(() => {
-    const list = reviews.filter((r) => r.status !== 'INACTIVE')
-    return list.length > 0 ? list : initialTestimonials
+    return reviews.filter((r) => r.status !== 'INACTIVE' && r.content && r.content.trim())
   }, [reviews])
 
   const [reviewPage, setReviewPage] = useState(0)
@@ -594,53 +593,55 @@ export default function Home() {
         </div>
 
         {/* ── CLIENT LOGOS CAROUSEL / TICKER AS SEEN IN REFERENCE IMAGE ── */}
-        <div className="relative w-full overflow-hidden z-10 py-2">
-          {/* Edge Blur / Fade Mask Overlays */}
-          <div className="absolute left-0 top-0 bottom-0 w-12 sm:w-20 bg-gradient-to-r from-[#07152d]/80 to-transparent z-20 pointer-events-none" />
-          <div className="absolute right-0 top-0 bottom-0 w-12 sm:w-20 bg-gradient-to-l from-[#07152d]/80 to-transparent z-20 pointer-events-none" />
+        {activeClients.length > 0 && (
+          <div className="relative w-full overflow-hidden z-10 py-2">
+            {/* Edge Blur / Fade Mask Overlays */}
+            <div className="absolute left-0 top-0 bottom-0 w-12 sm:w-20 bg-gradient-to-r from-[#07152d]/80 to-transparent z-20 pointer-events-none" />
+            <div className="absolute right-0 top-0 bottom-0 w-12 sm:w-20 bg-gradient-to-l from-[#07152d]/80 to-transparent z-20 pointer-events-none" />
 
-          {/* Continuous Infinite Ticker Row (Boundaryless Clean Logos) */}
-          <div className="flex w-max animate-omedo-marquee items-center gap-6 sm:gap-10 md:gap-12 px-4">
-            {loopedClients.map((client, idx) => (
-              <div
-                key={`${client.id || idx}-${idx}`}
-                className="flex flex-col items-center shrink-0 group transition-transform duration-300 hover:scale-105 px-1 sm:px-1.5"
-              >
-                {/* Uniform 4:3 Ratio Card (Borderless Edge-to-Edge with Hover Overlay) */}
-                <div className="relative w-32 sm:w-36 md:w-40 aspect-[4/3] rounded-2xl shadow-md flex items-center justify-center overflow-hidden transition-all duration-300 group-hover:shadow-2xl group-hover:scale-105 cursor-pointer">
-                  <SafeImage
-                    src={client.logoUrl}
-                    alt={client.name}
-                    className="w-full h-full object-fill select-none rounded-2xl transition-transform duration-300 group-hover:scale-105"
-                    fallback={
-                      <div
-                        className="w-full h-full rounded-2xl flex items-center justify-center text-xs sm:text-sm font-black tracking-wider text-white shadow-inner p-2 text-center"
-                        style={{ background: client.badgeColor || '#00685e' }}
-                      >
-                        {client.logoText || (client.name || 'HOSPITAL').slice(0, 10).toUpperCase()}
-                      </div>
-                    }
-                  />
+            {/* Continuous Infinite Ticker Row (Boundaryless Clean Logos) */}
+            <div className="flex w-max animate-omedo-marquee items-center gap-6 sm:gap-10 md:gap-12 px-4">
+              {loopedClients.map((client, idx) => (
+                <div
+                  key={`${client.id || idx}-${idx}`}
+                  className="flex flex-col items-center shrink-0 group transition-transform duration-300 hover:scale-105 px-1 sm:px-1.5"
+                >
+                  {/* Uniform 4:3 Ratio Card (Borderless Edge-to-Edge with Hover Overlay) */}
+                  <div className="relative w-32 sm:w-36 md:w-40 aspect-[4/3] rounded-2xl shadow-md flex items-center justify-center overflow-hidden transition-all duration-300 group-hover:shadow-2xl group-hover:scale-105 cursor-pointer">
+                    <SafeImage
+                      src={client.logoUrl}
+                      alt={client.name}
+                      className="w-full h-full object-fill select-none rounded-2xl transition-transform duration-300 group-hover:scale-105"
+                      fallback={
+                        <div
+                          className="w-full h-full rounded-2xl flex items-center justify-center text-xs sm:text-sm font-black tracking-wider text-white shadow-inner p-2 text-center"
+                          style={{ background: client.badgeColor || '#00685e' }}
+                        >
+                          {client.logoText || (client.name || 'HOSPITAL').slice(0, 10).toUpperCase()}
+                        </div>
+                      }
+                    />
 
-                  {/* Dark Frosted Hover Overlay with Purple Pin and Location */}
-                  <div className="absolute inset-0 bg-[#0f172a]/80 backdrop-blur-[2px] rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col items-center justify-center p-2 z-10 select-none">
-                    <span className="material-symbols-outlined text-[#a855f7] text-xl sm:text-2xl drop-shadow-md mb-0.5">
-                      location_on
-                    </span>
-                    <span className="text-[10px] sm:text-[11px] font-black uppercase text-white tracking-wider text-center leading-tight drop-shadow-md px-1 line-clamp-2">
-                      {client.location || client.name || 'INDIA'}
-                    </span>
+                    {/* Dark Frosted Hover Overlay with Purple Pin and Location */}
+                    <div className="absolute inset-0 bg-[#0f172a]/80 backdrop-blur-[2px] rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col items-center justify-center p-2 z-10 select-none">
+                      <span className="material-symbols-outlined text-[#a855f7] text-xl sm:text-2xl drop-shadow-md mb-0.5">
+                        location_on
+                      </span>
+                      <span className="text-[10px] sm:text-[11px] font-black uppercase text-white tracking-wider text-center leading-tight drop-shadow-md px-1 line-clamp-2">
+                        {client.location || client.name || 'INDIA'}
+                      </span>
+                    </div>
                   </div>
-                </div>
 
-                {/* Client Name Label Below (Uniform Fixed Width Matching 4:3 Card) */}
-                <p className="text-[10px] sm:text-[11px] font-semibold text-center truncate mt-2.5 w-32 sm:w-36 md:w-40 transition-colors tracking-wide text-blue-100/90 group-hover:text-amber-300 drop-shadow-sm">
-                  {client.name}
-                </p>
-              </div>
-            ))}
+                  {/* Client Name Label Below (Uniform Fixed Width Matching 4:3 Card) */}
+                  <p className="text-[10px] sm:text-[11px] font-semibold text-center truncate mt-2.5 w-32 sm:w-36 md:w-40 transition-colors tracking-wide text-blue-100/90 group-hover:text-amber-300 drop-shadow-sm">
+                    {client.name}
+                  </p>
+                </div>
+              ))}
+            </div>
           </div>
-        </div>
+        )}
       </section>
 
       {/* ── 2. PRODUCTS SHOWCASE (CLINIC & HMS SUITES) ── */}
@@ -654,164 +655,166 @@ export default function Home() {
       <HMSExplanationContainer />
 
       {/* ── 7. REVIEWS & TESTIMONIALS SLIDER / GRID ── */}
-      <section className="pt-6 sm:pt-8 lg:pt-10 pb-12 sm:pb-16 lg:pb-20 site-wrapper space-y-8 sm:space-y-10">
-        {/* Section Title & Top Slider Controls */}
-        <div className="flex flex-col md:flex-row items-center justify-between gap-4">
-          <div className="text-center md:text-left max-w-2xl space-y-2.5">
-            <span className="text-xs font-bold uppercase tracking-wider text-[#00685e] px-3.5 py-1 rounded-full bg-[#afecde]/60 inline-block">
-              TRUSTED BY HEALTHCARE LEADERS
-            </span>
-            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-[#121d1f]" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
-              Loved by Doctors, Admins &amp; IT Directors
-            </h2>
-            <p className="text-xs sm:text-sm text-[#3d4947] leading-relaxed">
-              See how OMEDO is transforming hospital operations across clinical management, billing, lab diagnostics, and patient satisfaction.
-            </p>
+      {activeReviews.length > 0 && (
+        <section className="pt-6 sm:pt-8 lg:pt-10 pb-12 sm:pb-16 lg:pb-20 site-wrapper space-y-8 sm:space-y-10">
+          {/* Section Title & Top Slider Controls */}
+          <div className="flex flex-col md:flex-row items-center justify-between gap-4">
+            <div className="text-center md:text-left max-w-2xl space-y-2.5">
+              <span className="text-xs font-bold uppercase tracking-wider text-[#00685e] px-3.5 py-1 rounded-full bg-[#afecde]/60 inline-block">
+                TRUSTED BY HEALTHCARE LEADERS
+              </span>
+              <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-[#121d1f]" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
+                Loved by Doctors, Admins &amp; IT Directors
+              </h2>
+              <p className="text-xs sm:text-sm text-[#3d4947] leading-relaxed">
+                See how OMEDO is transforming hospital operations across clinical management, billing, lab diagnostics, and patient satisfaction.
+              </p>
+            </div>
+
+            {/* Top Slider Navigation Arrows (shown if more than 6 reviews) */}
+            {totalReviewPages > 1 && (
+              <div className="flex items-center gap-3 shrink-0">
+                <span className="text-xs font-bold text-[#64748b] bg-white px-3 py-1.5 rounded-full border border-slate-200 shadow-2xs">
+                  Slide {reviewPage + 1} of {totalReviewPages}
+                </span>
+                <div className="flex items-center gap-1.5">
+                  <button
+                    type="button"
+                    onClick={handlePrevReviewPage}
+                    aria-label="Previous Reviews Slide"
+                    className="w-10 h-10 rounded-full bg-white border border-slate-200 text-[#1e293b] hover:bg-[#00685e] hover:text-white hover:border-[#00685e] flex items-center justify-center transition-all cursor-pointer shadow-xs active:scale-95"
+                  >
+                    <span className="material-symbols-outlined text-xl">arrow_back</span>
+                  </button>
+                  <button
+                    type="button"
+                    onClick={handleNextReviewPage}
+                    aria-label="Next Reviews Slide"
+                    className="w-10 h-10 rounded-full bg-white border border-slate-200 text-[#1e293b] hover:bg-[#00685e] hover:text-white hover:border-[#00685e] flex items-center justify-center transition-all cursor-pointer shadow-xs active:scale-95"
+                  >
+                    <span className="material-symbols-outlined text-xl">arrow_forward</span>
+                  </button>
+                </div>
+              </div>
+            )}
           </div>
 
-          {/* Top Slider Navigation Arrows (shown if more than 6 reviews) */}
+          {/* Reviews Slide View Container with Animated Transition */}
+          <div className="relative overflow-hidden min-h-[380px]">
+            <AnimatePresence mode="wait" custom={slideDirection}>
+              <motion.div
+                key={reviewPage}
+                custom={slideDirection}
+                initial={{ opacity: 0, x: slideDirection * 60 }}
+                animate={{ opacity: 1, x: 0 }}
+                exit={{ opacity: 0, x: -slideDirection * 60 }}
+                transition={{ duration: 0.3, ease: 'easeInOut' }}
+                className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-7"
+              >
+                {currentReviews.map((review, idx) => (
+                  <div
+                    key={`${reviewPage}-${idx}-${review.name}`}
+                    className="bg-white border-2 border-amber-400 rounded-3xl p-6 sm:p-7 shadow-xs hover:shadow-md transition-all duration-200 flex flex-col justify-between space-y-4"
+                  >
+                    <div className="space-y-3">
+                      {/* Stars Row */}
+                      <div className="flex items-center gap-1">
+                        {[1, 2, 3, 4, 5].map((star) => {
+                          const isFilled = star <= (review.rating || 5)
+                          return (
+                            <span
+                              key={star}
+                              className="material-symbols-outlined text-lg sm:text-xl transition-colors"
+                              style={{
+                                fontVariationSettings: isFilled ? "'FILL' 1" : "'FILL' 0",
+                                color: isFilled ? '#18428a' : '#cbd5e1',
+                              }}
+                            >
+                              star
+                            </span>
+                          )
+                        })}
+                      </div>
+                      {/* Content */}
+                      <blockquote className="text-xs sm:text-[13px] text-[#0f172a] leading-relaxed italic font-normal">
+                        "{review.content}"
+                      </blockquote>
+                    </div>
+
+                    {/* Author */}
+                    <div className="flex items-center gap-3 pt-3.5 border-t border-amber-400/70">
+                      <div className="w-10 h-10 rounded-full bg-[#18428a] text-white font-bold text-xs flex items-center justify-center shrink-0 shadow-2xs overflow-hidden">
+                        {review.avatarUrl ? (
+                          <img src={review.avatarUrl} alt={review.name} className="w-full h-full object-cover" onError={(e) => { e.currentTarget.style.display = 'none'; }} />
+                        ) : null}
+                        <span className={review.avatarUrl ? 'hidden' : ''}>{review.avatar || (review.name ? review.name.slice(0, 2).toUpperCase() : 'DR')}</span>
+                      </div>
+                      <div className="min-w-0">
+                        <div className="font-extrabold text-[#0f172a] text-xs sm:text-sm truncate">{review.name}</div>
+                        <div className="text-[10px] sm:text-xs text-[#64748b] font-medium truncate">
+                          {review.role || 'Hospital Administrator'} • <span className="text-[#18428a] font-semibold">{review.organization}</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </motion.div>
+            </AnimatePresence>
+          </div>
+
+          {/* Bottom Pagination Bar & Slide Dots */}
           {totalReviewPages > 1 && (
-            <div className="flex items-center gap-3 shrink-0">
-              <span className="text-xs font-bold text-[#64748b] bg-white px-3 py-1.5 rounded-full border border-slate-200 shadow-2xs">
-                Slide {reviewPage + 1} of {totalReviewPages}
+            <div className="flex flex-col sm:flex-row items-center justify-between gap-4 pt-2 border-t border-slate-200/60">
+              <span className="text-xs font-semibold text-[#64748b]">
+                Showing {reviewPage * reviewsPerPage + 1}–{Math.min((reviewPage + 1) * reviewsPerPage, activeReviews.length)} of {activeReviews.length} Doctor &amp; Client Reviews
               </span>
-              <div className="flex items-center gap-1.5">
+
+              <div className="flex items-center gap-2">
                 <button
                   type="button"
                   onClick={handlePrevReviewPage}
-                  aria-label="Previous Reviews Slide"
-                  className="w-10 h-10 rounded-full bg-white border border-slate-200 text-[#1e293b] hover:bg-[#00685e] hover:text-white hover:border-[#00685e] flex items-center justify-center transition-all cursor-pointer shadow-xs active:scale-95"
+                  className="px-3.5 py-1.5 rounded-xl text-xs font-bold bg-white border border-slate-200 text-[#334155] hover:bg-slate-50 transition-all flex items-center gap-1 cursor-pointer shadow-2xs"
                 >
-                  <span className="material-symbols-outlined text-xl">arrow_back</span>
+                  <span className="material-symbols-outlined text-base">arrow_back</span>
+                  <span>Previous</span>
                 </button>
+
+                {/* Slide Dots */}
+                <div className="flex items-center gap-1.5 px-2">
+                  {Array.from({ length: totalReviewPages }).map((_, pIdx) => {
+                    const isCurrent = pIdx === reviewPage
+                    return (
+                      <button
+                        key={pIdx}
+                        type="button"
+                        onClick={() => {
+                          setSlideDirection(pIdx > reviewPage ? 1 : -1)
+                          setReviewPage(pIdx)
+                        }}
+                        className={`h-2.5 rounded-full transition-all duration-300 cursor-pointer ${
+                          isCurrent
+                            ? 'w-7 bg-[#18428a] shadow-xs'
+                            : 'w-2.5 bg-slate-300 hover:bg-slate-400'
+                        }`}
+                        aria-label={`Go to review slide ${pIdx + 1}`}
+                      />
+                    )
+                  })}
+                </div>
+
                 <button
                   type="button"
                   onClick={handleNextReviewPage}
-                  aria-label="Next Reviews Slide"
-                  className="w-10 h-10 rounded-full bg-white border border-slate-200 text-[#1e293b] hover:bg-[#00685e] hover:text-white hover:border-[#00685e] flex items-center justify-center transition-all cursor-pointer shadow-xs active:scale-95"
+                  className="px-3.5 py-1.5 rounded-xl text-xs font-bold bg-white border border-slate-200 text-[#334155] hover:bg-slate-50 transition-all flex items-center gap-1 cursor-pointer shadow-2xs"
                 >
-                  <span className="material-symbols-outlined text-xl">arrow_forward</span>
+                  <span>Next</span>
+                  <span className="material-symbols-outlined text-base">arrow_forward</span>
                 </button>
               </div>
             </div>
           )}
-        </div>
-
-        {/* Reviews Slide View Container with Animated Transition */}
-        <div className="relative overflow-hidden min-h-[380px]">
-          <AnimatePresence mode="wait" custom={slideDirection}>
-            <motion.div
-              key={reviewPage}
-              custom={slideDirection}
-              initial={{ opacity: 0, x: slideDirection * 60 }}
-              animate={{ opacity: 1, x: 0 }}
-              exit={{ opacity: 0, x: -slideDirection * 60 }}
-              transition={{ duration: 0.3, ease: 'easeInOut' }}
-              className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-7"
-            >
-              {currentReviews.map((review, idx) => (
-                <div
-                  key={`${reviewPage}-${idx}-${review.name}`}
-                  className="bg-white border-2 border-amber-400 rounded-3xl p-6 sm:p-7 shadow-xs hover:shadow-md transition-all duration-200 flex flex-col justify-between space-y-4"
-                >
-                  <div className="space-y-3">
-                    {/* Stars Row */}
-                    <div className="flex items-center gap-1">
-                      {[1, 2, 3, 4, 5].map((star) => {
-                        const isFilled = star <= (review.rating || 5)
-                        return (
-                          <span
-                            key={star}
-                            className="material-symbols-outlined text-lg sm:text-xl transition-colors"
-                            style={{
-                              fontVariationSettings: isFilled ? "'FILL' 1" : "'FILL' 0",
-                              color: isFilled ? '#18428a' : '#cbd5e1',
-                            }}
-                          >
-                            star
-                          </span>
-                        )
-                      })}
-                    </div>
-                    {/* Content */}
-                    <blockquote className="text-xs sm:text-[13px] text-[#0f172a] leading-relaxed italic font-normal">
-                      "{review.content}"
-                    </blockquote>
-                  </div>
-
-                  {/* Author */}
-                  <div className="flex items-center gap-3 pt-3.5 border-t border-amber-400/70">
-                    <div className="w-10 h-10 rounded-full bg-[#18428a] text-white font-bold text-xs flex items-center justify-center shrink-0 shadow-2xs overflow-hidden">
-                      {review.avatarUrl ? (
-                        <img src={review.avatarUrl} alt={review.name} className="w-full h-full object-cover" onError={(e) => { e.currentTarget.style.display = 'none'; }} />
-                      ) : null}
-                      <span className={review.avatarUrl ? 'hidden' : ''}>{review.avatar || (review.name ? review.name.slice(0, 2).toUpperCase() : 'DR')}</span>
-                    </div>
-                    <div className="min-w-0">
-                      <div className="font-extrabold text-[#0f172a] text-xs sm:text-sm truncate">{review.name}</div>
-                      <div className="text-[10px] sm:text-xs text-[#64748b] font-medium truncate">
-                        {review.role || 'Hospital Administrator'} • <span className="text-[#18428a] font-semibold">{review.organization}</span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </motion.div>
-          </AnimatePresence>
-        </div>
-
-        {/* Bottom Pagination Bar & Slide Dots */}
-        {totalReviewPages > 1 && (
-          <div className="flex flex-col sm:flex-row items-center justify-between gap-4 pt-2 border-t border-slate-200/60">
-            <span className="text-xs font-semibold text-[#64748b]">
-              Showing {reviewPage * reviewsPerPage + 1}–{Math.min((reviewPage + 1) * reviewsPerPage, activeReviews.length)} of {activeReviews.length} Doctor &amp; Client Reviews
-            </span>
-
-            <div className="flex items-center gap-2">
-              <button
-                type="button"
-                onClick={handlePrevReviewPage}
-                className="px-3.5 py-1.5 rounded-xl text-xs font-bold bg-white border border-slate-200 text-[#334155] hover:bg-slate-50 transition-all flex items-center gap-1 cursor-pointer shadow-2xs"
-              >
-                <span className="material-symbols-outlined text-base">arrow_back</span>
-                <span>Previous</span>
-              </button>
-
-              {/* Slide Dots */}
-              <div className="flex items-center gap-1.5 px-2">
-                {Array.from({ length: totalReviewPages }).map((_, pIdx) => {
-                  const isCurrent = pIdx === reviewPage
-                  return (
-                    <button
-                      key={pIdx}
-                      type="button"
-                      onClick={() => {
-                        setSlideDirection(pIdx > reviewPage ? 1 : -1)
-                        setReviewPage(pIdx)
-                      }}
-                      className={`h-2.5 rounded-full transition-all duration-300 cursor-pointer ${
-                        isCurrent
-                          ? 'w-7 bg-[#18428a] shadow-xs'
-                          : 'w-2.5 bg-slate-300 hover:bg-slate-400'
-                      }`}
-                      aria-label={`Go to review slide ${pIdx + 1}`}
-                    />
-                  )
-                })}
-              </div>
-
-              <button
-                type="button"
-                onClick={handleNextReviewPage}
-                className="px-3.5 py-1.5 rounded-xl text-xs font-bold bg-white border border-slate-200 text-[#334155] hover:bg-slate-50 transition-all flex items-center gap-1 cursor-pointer shadow-2xs"
-              >
-                <span>Next</span>
-                <span className="material-symbols-outlined text-base">arrow_forward</span>
-              </button>
-            </div>
-          </div>
-        )}
-      </section>
+        </section>
+      )}
 
 
       {/* ── 8. CALL TO ACTION BANNER (DYNAMIC THEME) ── */}
