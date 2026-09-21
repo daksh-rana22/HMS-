@@ -7,6 +7,42 @@ import { sanitizeUrl } from '../utils/imageUtils'
 import { fetchWebsiteClients, postClientDetails } from './clients.service'
 
 /**
+ * Format payload according to the API specification:
+ * {
+ *   "client_hospital": "string",
+ *   "person_name": "string",
+ *   "designation": "string",
+ *   "profile_image_url": "string",
+ *   "testimonial": "string",
+ *   "rating": 1,
+ *   "display_order": 0,
+ *   "is_active": true
+ * }
+ *
+ * @param {Object} payload
+ * @returns {Object}
+ */
+export function formatTestimonialPayload(payload = {}) {
+  return {
+    client_hospital: (
+      payload.client_hospital ??
+      payload.organization ??
+      payload.facility ??
+      payload.client_name ??
+      payload.hospital ??
+      ''
+    ).trim(),
+    person_name: (payload.person_name || payload.name || '').trim().slice(0, 255),
+    designation: (payload.designation || payload.role || '').trim().slice(0, 255),
+    profile_image_url: sanitizeUrl(payload.profile_image_url || payload.avatarUrl || payload.image_url || '') || '',
+    testimonial: payload.testimonial || payload.content || '',
+    rating: Number(payload.rating ?? 5),
+    display_order: Number(payload.display_order ?? payload.displayOrder ?? 0),
+    is_active: payload.is_active !== undefined ? Boolean(payload.is_active) : (payload.status !== 'INACTIVE'),
+  }
+}
+
+/**
  * Fetch list of testimonials
  * @returns {Promise<{ success: boolean, list: any[], raw?: any }>}
  */
@@ -26,84 +62,72 @@ export async function fetchTestimonials() {
 }
 
 /**
- * Create testimonial under a specific client
- * Endpoint: POST /it/api/v1/omedo/websites/clients/{client_id}/testimonials
+ * Post / Create testimonial directly to the testimonials endpoint
+ * Endpoint: POST /it/api/v1/omedo/websites/testimonials
+ * @param {Object} payload
+ * @returns {Promise<any>}
+ */
+export async function postTestimonial(payload = {}) {
+  const body = formatTestimonialPayload(payload)
+  return http.post(API_ENDPOINTS.TESTIMONIALS, body)
+}
+
+/**
+ * Alias for postTestimonial
+ */
+export const createTestimonial = postTestimonial
+
+/**
+ * Create testimonial under a specific client or fallback to direct testimonials POST
+ * Endpoint: POST /it/api/v1/omedo/websites/clients/{client_id}/testimonials or POST /it/api/v1/omedo/websites/testimonials
  * @param {string|number} [clientId]
  * @param {Object} payload
  * @returns {Promise<any>}
  */
 export async function createClientTestimonial(clientId, payload = {}) {
+  // If called as createClientTestimonial(payload) where first argument is payload object
+  if (typeof clientId === 'object' && clientId !== null && Object.keys(payload).length === 0) {
+    payload = clientId
+    clientId = payload.client_id || payload.clientId
+  }
+
   let targetClientId = clientId || payload.client_id || payload.clientId
+  const body = formatTestimonialPayload(payload)
 
-  // 1. If no clientId provided, auto-resolve from existing website clients
-  if (!targetClientId) {
+  // If client ID is provided, try client-specific endpoint first
+  if (targetClientId) {
     try {
-      const clientListRes = await fetchWebsiteClients()
-      if (clientListRes && clientListRes.success && Array.isArray(clientListRes.list) && clientListRes.list.length > 0) {
-        targetClientId = clientListRes.list[0].id
-      }
+      const endpoint = `${API_ENDPOINTS.WEBSITE_CLIENTS}/${targetClientId}/testimonials`
+      return await http.post(endpoint, body)
     } catch (err) {
-      console.warn('Auto-resolve client ID notice:', err)
-    }
-
-    // 2. If no clients exist yet, create a client record first to obtain an ID
-    if (!targetClientId) {
-      try {
-        const newClient = await postClientDetails({
-          clientName: payload.organization || payload.facility || payload.name || 'Healthcare Client',
-          cityName: payload.location || 'India',
-          isActive: true,
-        })
-        if (newClient && newClient.data && newClient.data.id) {
-          targetClientId = newClient.data.id
-        }
-      } catch (clientErr) {
-        console.warn('Auto client registration notice:', clientErr)
-      }
+      console.warn('Client-specific testimonial post notice, attempting direct endpoint:', err.message)
     }
   }
 
-  // 3. Fallback default client ID if not resolved
-  if (!targetClientId) {
-    targetClientId = 1
+  // Auto-resolve or post directly to central testimonials endpoint
+  try {
+    return await http.post(API_ENDPOINTS.TESTIMONIALS, body)
+  } catch (err) {
+    console.warn('Direct testimonial post notice:', err.message)
+    throw err
   }
-
-  const body = {
-    person_name: (payload.person_name || payload.name || '').trim().slice(0, 255),
-    designation: (payload.designation || payload.role || '').slice(0, 255),
-    profile_image_url: sanitizeUrl(payload.profile_image_url || payload.avatarUrl),
-    testimonial: payload.testimonial || payload.content || '',
-    rating: Number(payload.rating || 5),
-    display_order: Number(payload.display_order ?? payload.displayOrder ?? 0),
-    is_active: payload.is_active ?? (payload.status !== 'INACTIVE'),
-  }
-
-  const endpoint = `${API_ENDPOINTS.WEBSITE_CLIENTS}/${targetClientId}/testimonials`
-  return http.post(endpoint, body)
 }
 
 /**
  * Update testimonial
+ * Endpoint: PUT /it/api/v1/omedo/websites/testimonials/{id}
  * @param {string|number} id
  * @param {Object} payload
  * @returns {Promise<any>}
  */
-export async function updateTestimonial(id, payload) {
-  const body = {
-    person_name: (payload.person_name || payload.name || '').trim().slice(0, 255),
-    designation: (payload.designation || payload.role || '').slice(0, 255),
-    profile_image_url: sanitizeUrl(payload.profile_image_url || payload.avatarUrl),
-    testimonial: payload.testimonial || payload.content || '',
-    rating: Number(payload.rating || 5),
-    display_order: Number(payload.display_order ?? payload.displayOrder ?? 0),
-    is_active: payload.is_active ?? (payload.status !== 'INACTIVE'),
-  }
-
+export async function updateTestimonial(id, payload = {}) {
+  const body = formatTestimonialPayload(payload)
   return http.put(`${API_ENDPOINTS.TESTIMONIALS}/${id}`, body)
 }
 
 /**
  * Delete testimonial
+ * Endpoint: DELETE /it/api/v1/omedo/websites/testimonials/{id}
  * @param {string|number} id
  * @returns {Promise<any>}
  */
@@ -114,6 +138,7 @@ export async function deleteTestimonial(id) {
 
 /**
  * Patch testimonial active status
+ * Endpoint: PATCH /it/api/v1/omedo/websites/testimonials/{id}/status?isActive=boolean
  * @param {string|number} id
  * @param {boolean} isActive
  * @returns {Promise<any>}

@@ -2,7 +2,7 @@ import { motion } from 'framer-motion'
 import { fadeUp } from '../../utils/animations'
 import { Star, Quote } from 'lucide-react'
 
-export default function TestimonialCard({ name, role, organization, content, rating, avatar }) {
+export default function TestimonialCard({ name, role, organization, content, rating, avatar, avatarUrl }) {
   return (
     <motion.div
       className="relative p-6 md:p-8 bg-white rounded-2xl border border-border/60 transition-all duration-300 flex flex-col"
@@ -27,13 +27,16 @@ export default function TestimonialCard({ name, role, organization, content, rat
       <p className="text-gray leading-relaxed text-sm mb-6 flex-1">"{content}"</p>
 
       <div className="flex items-center gap-3 pt-4 border-t border-border/60">
-        <div className="w-10 h-10 rounded-full gradient-bg flex items-center justify-center">
-          <span className="text-white text-sm font-bold">{avatar}</span>
+        <div className="w-10 h-10 rounded-full gradient-bg flex items-center justify-center overflow-hidden shrink-0">
+          {avatarUrl ? (
+            <img src={avatarUrl} alt={name} className="w-full h-full object-cover" onError={(e) => { e.currentTarget.style.display = 'none'; }} />
+          ) : null}
+          <span className={`text-white text-sm font-bold ${avatarUrl ? 'hidden' : ''}`}>{avatar}</span>
         </div>
         <div>
           <p className="font-semibold text-text text-sm">{name}</p>
           <p className="text-gray text-xs">
-            {role}, {organization}
+            {role}{organization ? `, ${organization}` : ''}
           </p>
         </div>
       </div>

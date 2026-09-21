@@ -24,6 +24,8 @@ import {
   patchCompanyClientStatus,
   patchCompanyClientFeatured,
   fetchTestimonials,
+  postTestimonial,
+  createTestimonial,
   createClientTestimonial,
   updateTestimonial,
   deleteTestimonial,
@@ -191,10 +193,12 @@ export default function Login() {
     clientId: t.client_id,
     name: t.person_name || t.name || 'Doctor / Administrator',
     role: t.designation || t.role || 'Verified Medical Practitioner',
-    organization: t.organization || t.facility || t.client_name || 'Healthcare Network',
+    organization: t.client_hospital || t.organization || t.facility || t.client_name || 'Healthcare Network',
     content: t.testimonial || t.content || '',
     rating: Number(t.rating) || 5,
     avatar: (t.person_name || t.name || 'DR').slice(0, 2).toUpperCase(),
+    avatarUrl: t.profile_image_url || t.avatarUrl || null,
+    displayOrder: Number(t.display_order ?? idx),
     status: (t.is_active ?? (t.status !== 'INACTIVE')) ? 'ACTIVE' : 'INACTIVE',
   })
 
@@ -354,6 +358,8 @@ export default function Login() {
       content: item.content || '',
       role: item.role || '',
       rating: item.rating || 5,
+      profileImageUrl: item.avatarUrl || item.profile_image_url || '',
+      displayOrder: item.displayOrder ?? item.display_order ?? 0,
       logoUrl: item.logoUrl || null,
       logoFileName: item.name ? `${item.name.toLowerCase().replace(/\s+/g, '-')}-logo.png` : 'current-logo.png',
     })
@@ -881,35 +887,32 @@ export default function Login() {
 
       setIsSaving(true)
       let savedReview = null
+      const payload = {
+        client_hospital: organization,
+        person_name: name,
+        designation: newItemData.role?.trim() || 'Verified Medical Practitioner',
+        profile_image_url: newItemData.profileImageUrl?.trim() || '',
+        testimonial: content,
+        rating: Number(newItemData.rating) || 5,
+        display_order: Number(newItemData.displayOrder ?? 0),
+        is_active: true,
+      }
+
       try {
         if (editingItem && editingItem.type === 'reviews') {
-          const apiRes = await updateTestimonial(editingItem.id, {
-            person_name: name,
-            designation: newItemData.role?.trim() || 'Verified Medical Practitioner',
-            testimonial: content,
-            rating: Number(newItemData.rating) || 5,
-            is_active: true,
-          }).catch((err) => {
+          const apiRes = await updateTestimonial(editingItem.id, payload).catch((err) => {
             console.warn('updateTestimonial notice:', err)
             return null
           })
           if (apiRes) savedReview = apiRes.data || apiRes
         } else {
-          const matchedClient = clients.find(
-            (c) => c && c.name && organization && c.name.toLowerCase().trim() === organization.toLowerCase().trim()
-          )
-          const targetClientId = matchedClient?.id || (clients[0] && typeof clients[0].id === 'number' ? clients[0].id : null)
-
-          const apiRes = await createClientTestimonial(targetClientId, {
-            person_name: name,
-            designation: newItemData.role?.trim() || 'Verified Medical Practitioner',
-            organization,
-            testimonial: content,
-            rating: Number(newItemData.rating) || 5,
-            is_active: true,
-          }).catch((err) => {
-            console.warn('createClientTestimonial notice:', err)
-            return null
+          const apiRes = await postTestimonial(payload).catch(async (err) => {
+            console.warn('postTestimonial direct notice, trying client fallback:', err)
+            const matchedClient = clients.find(
+              (c) => c && c.name && organization && c.name.toLowerCase().trim() === organization.toLowerCase().trim()
+            )
+            const targetClientId = matchedClient?.id || (clients[0] && typeof clients[0].id === 'number' ? clients[0].id : null)
+            return createClientTestimonial(targetClientId, payload).catch(() => null)
           })
           if (apiRes) savedReview = apiRes.data || apiRes
         }
@@ -927,11 +930,13 @@ export default function Login() {
                   ...item,
                   id: savedReview?.id || item.id,
                   name: savedReview?.person_name || name,
-                  organization: savedReview?.organization || organization,
+                  organization: savedReview?.client_hospital || savedReview?.organization || organization,
                   content: savedReview?.testimonial || content,
-                  role: newItemData.role?.trim() || item.role || 'Verified Medical Practitioner',
-                  rating: Number(newItemData.rating) || item.rating || 5,
+                  role: savedReview?.designation || newItemData.role?.trim() || item.role || 'Verified Medical Practitioner',
+                  rating: Number(savedReview?.rating ?? newItemData.rating ?? item.rating ?? 5),
                   avatar: name.slice(0, 2).toUpperCase(),
+                  avatarUrl: savedReview?.profile_image_url || newItemData.profileImageUrl || item.avatarUrl || null,
+                  displayOrder: Number(savedReview?.display_order ?? newItemData.displayOrder ?? item.displayOrder ?? 0),
                   status: (savedReview?.is_active ?? true) ? 'ACTIVE' : 'INACTIVE',
                 }
               : item
@@ -941,11 +946,13 @@ export default function Login() {
         const created = {
           id: savedReview?.id || Date.now(),
           name: savedReview?.person_name || name,
-          role: newItemData.role?.trim() || 'Verified Medical Practitioner',
-          organization,
+          role: savedReview?.designation || newItemData.role?.trim() || 'Verified Medical Practitioner',
+          organization: savedReview?.client_hospital || organization,
           content: savedReview?.testimonial || content,
-          rating: Number(newItemData.rating) || 5,
+          rating: Number(savedReview?.rating ?? newItemData.rating ?? 5),
           avatar: name.slice(0, 2).toUpperCase(),
+          avatarUrl: savedReview?.profile_image_url || newItemData.profileImageUrl || null,
+          displayOrder: Number(savedReview?.display_order ?? newItemData.displayOrder ?? 0),
           status: 'ACTIVE',
         }
         setReviews([created, ...reviews])
@@ -2288,17 +2295,49 @@ export default function Login() {
                           className="w-full px-3.5 py-2.5 text-xs border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[var(--t-primary)]/25 focus:border-[var(--t-primary)]"
                         />
                       </div>
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                        <div>
+                          <label className="block text-xs font-bold text-[#334155] mb-1">
+                            Hospital / Medical Center <span className="text-red-500">*</span>
+                          </label>
+                          <input
+                            type="text"
+                            required
+                            placeholder="e.g. Apollo Healthcare Network"
+                            value={newItemData.organization || ''}
+                            onChange={(e) => {
+                              setNewItemData({ ...newItemData, organization: e.target.value })
+                              if (modalError) setModalError(null)
+                            }}
+                            className="w-full px-3.5 py-2.5 text-xs border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[var(--t-primary)]/25 focus:border-[var(--t-primary)]"
+                          />
+                        </div>
+                        <div>
+                          <label className="block text-xs font-bold text-[#334155] mb-1">
+                            Role / Designation
+                          </label>
+                          <input
+                            type="text"
+                            placeholder="e.g. Senior Consultant / MD"
+                            value={newItemData.role || ''}
+                            onChange={(e) => {
+                              setNewItemData({ ...newItemData, role: e.target.value })
+                              if (modalError) setModalError(null)
+                            }}
+                            className="w-full px-3.5 py-2.5 text-xs border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[var(--t-primary)]/25 focus:border-[var(--t-primary)]"
+                          />
+                        </div>
+                      </div>
                       <div>
                         <label className="block text-xs font-bold text-[#334155] mb-1">
-                          Hospital / Medical Center <span className="text-red-500">*</span>
+                          Profile Photo URL <span className="text-slate-400 font-normal">(Optional)</span>
                         </label>
                         <input
-                          type="text"
-                          required
-                          placeholder="e.g. Apollo Healthcare Network"
-                          value={newItemData.organization || ''}
+                          type="url"
+                          placeholder="https://example.com/doctor-photo.jpg"
+                          value={newItemData.profileImageUrl || ''}
                           onChange={(e) => {
-                            setNewItemData({ ...newItemData, organization: e.target.value })
+                            setNewItemData({ ...newItemData, profileImageUrl: e.target.value })
                             if (modalError) setModalError(null)
                           }}
                           className="w-full px-3.5 py-2.5 text-xs border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[var(--t-primary)]/25 focus:border-[var(--t-primary)]"

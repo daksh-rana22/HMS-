@@ -91,10 +91,12 @@ export default function Home() {
             id: t.id ?? idx + 1,
             name: t.person_name || t.name || 'Healthcare Practitioner',
             role: t.designation || t.role || 'Medical Leader',
-            organization: t.organization || t.facility || t.client_name || 'Healthcare Network',
+            organization: t.client_hospital || t.organization || t.facility || t.client_name || 'Healthcare Network',
             content: t.testimonial || t.content || '',
             rating: Number(t.rating) || 5,
             avatar: (t.person_name || t.name || 'HP').slice(0, 2).toUpperCase(),
+            avatarUrl: t.profile_image_url || t.avatarUrl || null,
+            displayOrder: Number(t.display_order ?? idx),
             status: (t.is_active ?? (t.status !== 'INACTIVE')) ? 'ACTIVE' : 'INACTIVE',
           }))
           setReviews(normReviews)
@@ -739,8 +741,11 @@ export default function Home() {
 
                   {/* Author */}
                   <div className="flex items-center gap-3 pt-3.5 border-t border-amber-400/70">
-                    <div className="w-10 h-10 rounded-full bg-[#18428a] text-white font-bold text-xs flex items-center justify-center shrink-0 shadow-2xs">
-                      {review.avatar || (review.name ? review.name.slice(0, 2).toUpperCase() : 'DR')}
+                    <div className="w-10 h-10 rounded-full bg-[#18428a] text-white font-bold text-xs flex items-center justify-center shrink-0 shadow-2xs overflow-hidden">
+                      {review.avatarUrl ? (
+                        <img src={review.avatarUrl} alt={review.name} className="w-full h-full object-cover" onError={(e) => { e.currentTarget.style.display = 'none'; }} />
+                      ) : null}
+                      <span className={review.avatarUrl ? 'hidden' : ''}>{review.avatar || (review.name ? review.name.slice(0, 2).toUpperCase() : 'DR')}</span>
                     </div>
                     <div className="min-w-0">
                       <div className="font-extrabold text-[#0f172a] text-xs sm:text-sm truncate">{review.name}</div>

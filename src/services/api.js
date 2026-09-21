@@ -47,10 +47,13 @@ export {
 // Testimonials & Reviews
 export {
   fetchTestimonials,
+  postTestimonial,
+  createTestimonial,
   createClientTestimonial,
   updateTestimonial,
   deleteTestimonial,
   patchTestimonialStatus,
+  formatTestimonialPayload,
 } from './testimonials.service'
 
 // Export & File Utilities

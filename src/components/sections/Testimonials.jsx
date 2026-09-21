@@ -30,10 +30,12 @@ export default function Testimonials() {
     id: t.id ?? idx + 1,
     name: t.person_name || t.name || 'Healthcare Practitioner',
     role: t.designation || t.role || 'Medical Leader',
-    organization: t.organization || t.facility || t.client_name || 'Healthcare Network',
+    organization: t.client_hospital || t.organization || t.facility || t.client_name || 'Healthcare Network',
     content: t.testimonial || t.content || '',
     rating: Number(t.rating) || 5,
     avatar: (t.person_name || t.name || 'HP').slice(0, 2).toUpperCase(),
+    avatarUrl: t.profile_image_url || t.avatarUrl || null,
+    displayOrder: Number(t.display_order ?? idx),
     status: (t.is_active ?? (t.status !== 'INACTIVE')) ? 'ACTIVE' : 'INACTIVE',
   })
 
