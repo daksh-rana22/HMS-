@@ -83,10 +83,10 @@ export default function AuthRequiredModal() {
               </span>
             </div>
 
-            {/* Error Code Tag */}
+            {/* Session Out Tag */}
             <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-rose-50 border border-rose-200 text-rose-700 text-xs font-bold mb-3 shadow-2xs">
               <span className="w-2 h-2 rounded-full bg-rose-500 animate-pulse" />
-              <span>Error {authErrorDetails.errorCode}: Authorization Required</span>
+              <span>Session Out</span>
             </div>
 
             {/* Heading */}
@@ -95,17 +95,9 @@ export default function AuthRequiredModal() {
             </h3>
 
             {/* Explanatory Message */}
-            <p className="text-xs sm:text-sm text-slate-600 leading-relaxed mb-4">
+            <p className="text-xs sm:text-sm text-slate-600 leading-relaxed mb-6">
               {authErrorDetails.message || 'The authorization header is missing or your session token has expired. Please sign in again with your admin credentials to access this service.'}
             </p>
-
-            {/* Target Path Endpoint Badge */}
-            {authErrorDetails.path && (
-              <div className="mb-6 p-2.5 rounded-xl bg-slate-50 border border-slate-200 text-[11px] text-slate-500 font-mono text-left truncate flex items-center gap-2">
-                <span className="material-symbols-outlined text-sm text-slate-400 shrink-0">api</span>
-                <span className="truncate">{authErrorDetails.path}</span>
-              </div>
-            )}
 
             {/* Action Buttons */}
             <div className="flex flex-col sm:flex-row items-center gap-3">
