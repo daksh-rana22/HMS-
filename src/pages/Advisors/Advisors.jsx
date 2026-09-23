@@ -20,7 +20,7 @@ const advisorsData = [
     photo: sanjayImg,
     title: 'Healthcare & Pharmacy Advisor',
     credentials: 'Mechanical Engineer | Healthcare & Pharmacy Professional | Business Leader | Rotary Leader | Ultra Runner',
-    experience: '26+ Years Experience',
+    experience: '37+ Years Experience',
     consulting: '350-Bed Hospital Consultant',
     bio: [
       'Sanjay Shrotriya is a multidisciplinary professional with extensive experience across pharmacy, healthcare, hospital administration, technology and business operations. His career also includes around 12 years of experience in the steel industry across projects, operations and quality assurance.',
