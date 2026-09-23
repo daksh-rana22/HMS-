@@ -41,7 +41,7 @@ export default function Contact() {
     } else if (name === 'email') {
       setFormData((prev) => ({ ...prev, email: value }))
       if (fieldErrors.email) {
-        if (!value.trim() || emailRegex.test(value.trim())) {
+        if (value.trim() && emailRegex.test(value.trim())) {
           setFieldErrors((prev) => ({ ...prev, email: '' }))
         }
       }
@@ -60,7 +60,9 @@ export default function Contact() {
         setFieldErrors((prev) => ({ ...prev, mobile: 'Mobile number must be exactly 10 digits' }))
       }
     } else if (name === 'email') {
-      if (value.trim() && !emailRegex.test(value.trim())) {
+      if (!value.trim()) {
+        setFieldErrors((prev) => ({ ...prev, email: 'Email address is required' }))
+      } else if (!emailRegex.test(value.trim())) {
         setFieldErrors((prev) => ({ ...prev, email: 'Please enter a valid email address (e.g. name@clinic.com)' }))
       }
     }
@@ -80,7 +82,9 @@ export default function Contact() {
       errors.mobile = 'Mobile number must be exactly 10 digits'
     }
 
-    if (formData.email.trim() && !emailRegex.test(formData.email.trim())) {
+    if (!formData.email.trim()) {
+      errors.email = 'Email address is required'
+    } else if (!emailRegex.test(formData.email.trim())) {
       errors.email = 'Please enter a valid email address (e.g. name@clinic.com)'
     }
 
@@ -295,13 +299,14 @@ export default function Contact() {
                       htmlFor="email"
                       style={{ fontFamily: "'Inter', sans-serif" }}
                     >
-                      Email
+                      Email <span className="text-red-500 font-bold">*</span>
                     </label>
                     <input
                       id="email"
                       name="email"
                       type="email"
                       placeholder="sarah.j@clinic.com"
+                      required
                       value={formData.email}
                       onChange={handleChange}
                       onBlur={handleBlur}
