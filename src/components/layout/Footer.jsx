@@ -14,13 +14,9 @@ const moduleLinks = [
 const mainLinks = [
   { name: 'Home', path: '/' },
   { name: 'Products', path: '/products' },
-  { name: 'All Modules', path: '/modules' },
   { name: 'About Us', path: '/about' },
   { name: 'Advisors & Consultants', path: '/advisors-consultants' },
   { name: 'Contact Us', path: '/contact' },
-  { name: 'Terms & Conditions', path: '/terms' },
-  { name: 'Privacy Policy', path: '/privacy' },
-  { name: 'Refund & Cancellation', path: '/refund' },
 ]
 
 export default function Footer() {
