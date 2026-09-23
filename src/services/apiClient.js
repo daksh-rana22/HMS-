@@ -43,6 +43,8 @@ export async function request(endpoint, options = {}) {
     headers = {},
     timeout = 15000,
     isFormData = false,
+    skipAuth = false,
+    requireAuth = true,
     ...customConfig
   } = options
 
@@ -55,7 +57,7 @@ export async function request(endpoint, options = {}) {
   }
 
   const execute = async () => {
-    const authHeaders = getAuthHeaders()
+    const authHeaders = skipAuth || !requireAuth ? {} : getAuthHeaders()
     const defaultHeaders = {
       Accept: 'application/json',
       ...authHeaders,
@@ -104,7 +106,8 @@ export async function request(endpoint, options = {}) {
           ))
         ))
 
-      if (isUnauthorized) {
+      // Only dispatch unauthorized event for endpoints that require authentication
+      if (isUnauthorized && !skipAuth && requireAuth) {
         logoutAdmin()
         if (typeof window !== 'undefined') {
           window.dispatchEvent(

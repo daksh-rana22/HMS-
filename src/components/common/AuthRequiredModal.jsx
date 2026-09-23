@@ -11,7 +11,7 @@ export default function AuthRequiredModal() {
   const [authErrorDetails, setAuthErrorDetails] = useState({
     message: 'Authorization header is missing or session has expired.',
     errorCode: 1004,
-    path: '/it/api/v1/omedo/demo-requests',
+    path: '',
   })
 
   const navigate = useNavigate()
@@ -20,10 +20,14 @@ export default function AuthRequiredModal() {
   useEffect(() => {
     const handleUnauthorized = (e) => {
       const detail = e.detail || {}
+      // Do not trigger modal for public endpoints
+      if (detail.path && detail.path.includes('/demo-requests') && !detail.path.includes('/export') && !detail.path.includes('/archive')) {
+        return
+      }
       setAuthErrorDetails({
         message: detail.message || 'Authorization header is missing. Please log in again to continue.',
         errorCode: detail.errorCode || 1004,
-        path: detail.path || detail.endpoint || '/it/api/v1/omedo/demo-requests',
+        path: detail.path || detail.endpoint || '',
       })
       setIsOpen(true)
     }
