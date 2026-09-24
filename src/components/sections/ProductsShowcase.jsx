@@ -137,8 +137,7 @@ export const hmsModules = [
     icon: 'local_hospital',
     desc: 'Operation Theatre slot booking, Pre-Anesthesia Checkup (PAC) records, surgical safety checklists, and intra-operative logs.',
     features: ['OT Table Slot Booking', 'PAC Assessment Forms', 'Surgeon & Anesthetist Roster', 'Post-Op Recovery Tracking'],
-    badge: 'Coming Soon',
-    isComingSoon: true,
+    badge: 'Hospital Suite',
     previewType: 'ot',
   },
   {
@@ -218,8 +217,7 @@ export const hmsModules = [
     icon: 'folder_shared',
     desc: 'Medical Record Department file indexing, ICD-10 coding, Medico-Legal Case (MLC) file registers, and digitized archival retrieval.',
     features: ['Physical File Rack Indexing', 'ICD-10 Disease Coding', 'MLC & Birth/Death Registry', 'Digital Dossier Archival'],
-    badge: 'Coming Soon',
-    isComingSoon: true,
+    badge: 'Records Suite',
     previewType: 'mrd',
   },
   {
@@ -897,11 +895,6 @@ export default function ProductsShowcase({ showComparison = true }) {
                               : 'bg-white hover:bg-[#f2fafb] text-[var(--t-text)] border-[var(--t-border)]/50'
                           }`}
                         >
-                          {m.isComingSoon && (
-                            <span className="absolute -top-1.5 -right-1 px-1.5 py-0.2 rounded-full text-[8px] font-extrabold bg-amber-500 text-white shadow-2xs">
-                              Soon
-                            </span>
-                          )}
                           <span className={`material-symbols-outlined text-xl ${
                             isSelected ? 'text-white' : 'text-[var(--t-primary,#00685e)]'
                           }`}>
@@ -928,9 +921,7 @@ export default function ProductsShowcase({ showComparison = true }) {
                         <div className="w-12 h-12 rounded-2xl bg-[#00685e] text-white flex items-center justify-center shadow-xs">
                           <span className="material-symbols-outlined text-2xl">{currentModule.icon}</span>
                         </div>
-                        <span className={`inline-flex items-center px-3 py-1 rounded-full text-xs font-bold ${
-                          currentModule.isComingSoon ? 'bg-amber-100 text-amber-800' : 'bg-[#afecde] text-[#00685e]'
-                        }`}>
+                        <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-bold bg-[#afecde] text-[#00685e]">
                           {currentModule.badge}
                         </span>
                       </div>
@@ -1157,17 +1148,29 @@ export default function ProductsShowcase({ showComparison = true }) {
                       )}
 
                       {currentModule.id === 'ot' && (
-                        <div className="space-y-3 text-center py-6">
-                          <div className="w-14 h-14 rounded-full bg-amber-100 text-amber-600 flex items-center justify-center mx-auto mb-2">
-                            <span className="material-symbols-outlined text-2xl">local_hospital</span>
+                        <div className="space-y-3">
+                          <div className="bg-white p-3.5 rounded-xl border border-slate-100 text-xs space-y-2">
+                            <div className="flex justify-between items-center font-bold text-slate-800">
+                              <span>OT Schedule &amp; PAC Dashboard</span>
+                              <span className="text-[10px] px-2 py-0.5 rounded bg-emerald-100 text-emerald-800 font-bold">Theatre 01 Active</span>
+                            </div>
+                            <div className="divide-y divide-slate-100 text-[11px] space-y-1.5 pt-1">
+                              <div className="pt-1.5 flex justify-between items-center">
+                                <div>
+                                  <div className="font-bold text-slate-800">Laparoscopic Cholecystectomy</div>
+                                  <div className="text-[10px] text-slate-500">Dr. S. K. Sharma • OT-01 • 10:30 AM</div>
+                                </div>
+                                <span className="text-[10px] font-bold text-blue-600 bg-blue-50 px-2 py-0.5 rounded">In Procedure</span>
+                              </div>
+                              <div className="pt-1.5 flex justify-between items-center">
+                                <div>
+                                  <div className="font-bold text-slate-800">Total Knee Replacement (TKR)</div>
+                                  <div className="text-[10px] text-slate-500">Dr. A. Verma • OT-02 • 01:00 PM</div>
+                                </div>
+                                <span className="text-[10px] font-bold text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded">PAC Cleared</span>
+                              </div>
+                            </div>
                           </div>
-                          <h5 className="text-sm font-bold text-slate-800">Operation Theatre & PAC Module</h5>
-                          <p className="text-xs text-slate-500 max-w-sm mx-auto">
-                            Advanced OT Slot Booking, PAC evaluations, surgical checklists, and anesthesia logging are currently in active final deployment.
-                          </p>
-                          <span className="inline-block px-3 py-1 rounded-full text-xs font-bold bg-amber-500 text-white">
-                            Launching Soon
-                          </span>
                         </div>
                       )}
 
@@ -1190,7 +1193,7 @@ export default function ProductsShowcase({ showComparison = true }) {
                       {currentModule.id === 'pharmacy' && (
                         <div className="space-y-3">
                           <div className="bg-white p-3 rounded-xl border border-slate-100">
-                            <div className="text-xs font-bold text-slate-800 mb-2">Pharmacy Drug Formulary & FEFO</div>
+                            <div className="text-xs font-bold text-slate-800 mb-2">Pharmacy Drug Formulary &amp; FEFO</div>
                             <div className="space-y-1.5 text-xs">
                               {samplePharmacyStocks.map((p) => (
                                 <div key={p.batch} className="p-2 rounded-lg bg-slate-50 flex items-center justify-between text-[11px]">
@@ -1214,7 +1217,7 @@ export default function ProductsShowcase({ showComparison = true }) {
                       {currentModule.id === 'laboratory' && (
                         <div className="space-y-3">
                           <div className="bg-white p-3 rounded-xl border border-slate-100">
-                            <div className="text-xs font-bold text-slate-800 mb-2">LIS Investigation Queue & Barcodes</div>
+                            <div className="text-xs font-bold text-slate-800 mb-2">LIS Investigation Queue &amp; Barcodes</div>
                             <div className="space-y-1.5 text-xs">
                               {sampleLabOrders.map((l) => (
                                 <div key={l.id} className="p-2 rounded-lg bg-slate-50 flex items-center justify-between text-[11px]">
@@ -1276,9 +1279,9 @@ export default function ProductsShowcase({ showComparison = true }) {
                               <span className="text-[10px] font-mono text-emerald-600">INV-2026-8819</span>
                             </div>
                             <div className="divide-y divide-slate-100 text-[11px]">
-                              <div className="py-1 flex justify-between"><span>Bed & ICU Charges (4 Days)</span><span className="font-bold">₹28,000</span></div>
-                              <div className="py-1 flex justify-between"><span>Surgeon & PAC Fee</span><span className="font-bold">₹45,000</span></div>
-                              <div className="py-1 flex justify-between"><span>Pharmacy & Lab Consumables</span><span className="font-bold">₹18,500</span></div>
+                              <div className="py-1 flex justify-between"><span>Bed &amp; ICU Charges (4 Days)</span><span className="font-bold">₹28,000</span></div>
+                              <div className="py-1 flex justify-between"><span>Surgeon &amp; PAC Fee</span><span className="font-bold">₹45,000</span></div>
+                              <div className="py-1 flex justify-between"><span>Pharmacy &amp; Lab Consumables</span><span className="font-bold">₹18,500</span></div>
                               <div className="py-1.5 flex justify-between font-bold text-[var(--t-primary,#00685e)] text-xs border-t">
                                 <span>Total Net Payable</span>
                                 <span>₹91,500</span>
@@ -1296,7 +1299,7 @@ export default function ProductsShowcase({ showComparison = true }) {
                               <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-emerald-100 text-emerald-800">Approved</span>
                             </div>
                             <div className="p-2 bg-slate-50 rounded text-[11px] space-y-1">
-                              <div className="font-semibold text-slate-800">Star Health & Allied Insurance</div>
+                              <div className="font-semibold text-slate-800">Star Health &amp; Allied Insurance</div>
                               <div className="text-slate-500">Claim Ref: SH-9018274 • Approved Limit: ₹1,50,000</div>
                             </div>
                           </div>
@@ -1304,17 +1307,29 @@ export default function ProductsShowcase({ showComparison = true }) {
                       )}
 
                       {currentModule.id === 'mrd' && (
-                        <div className="space-y-3 text-center py-6">
-                          <div className="w-14 h-14 rounded-full bg-amber-100 text-amber-600 flex items-center justify-center mx-auto mb-2">
-                            <span className="material-symbols-outlined text-2xl">folder_shared</span>
+                        <div className="space-y-3">
+                          <div className="bg-white p-3.5 rounded-xl border border-slate-100 text-xs space-y-2">
+                            <div className="flex justify-between items-center font-bold text-slate-800">
+                              <span>Medical Records &amp; Digitized Dossier Registry</span>
+                              <span className="text-[10px] font-mono text-[var(--t-primary,#00685e)] font-bold">ICD-10 Sync</span>
+                            </div>
+                            <div className="space-y-1.5 text-[11px]">
+                              <div className="p-2 bg-slate-50 rounded flex justify-between items-center">
+                                <div>
+                                  <div className="font-bold text-slate-800">Patient Dossier #MRD-88219</div>
+                                  <div className="text-[10px] text-slate-500">Rack B-04 • Shelf 2 • Case: Acute Myocardial Infarction (I21.9)</div>
+                                </div>
+                                <span className="text-[10px] font-bold text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded">Archived &amp; Verified</span>
+                              </div>
+                              <div className="p-2 bg-slate-50 rounded flex justify-between items-center">
+                                <div>
+                                  <div className="font-bold text-slate-800">Medico-Legal Register #MLC-1042</div>
+                                  <div className="text-[10px] text-slate-500">Police Intimation Form &amp; Digital Discharge Summary Linked</div>
+                                </div>
+                                <span className="text-[10px] font-bold text-blue-600 bg-blue-50 px-2 py-0.5 rounded">Digitized</span>
+                              </div>
+                            </div>
                           </div>
-                          <h5 className="text-sm font-bold text-slate-800">Medical Record Department (MRD)</h5>
-                          <p className="text-xs text-slate-500 max-w-sm mx-auto">
-                            Digitized Physical File Rack Indexing, ICD-10 Coding, MLC Register & Legal Dossier Retrieval are in final integration.
-                          </p>
-                          <span className="inline-block px-3 py-1 rounded-full text-xs font-bold bg-amber-500 text-white">
-                            Launching Soon
-                          </span>
                         </div>
                       )}
 
@@ -1436,7 +1451,7 @@ export default function ProductsShowcase({ showComparison = true }) {
                   <tr className="hover:bg-slate-50/70 transition-colors">
                     <td className="py-3 px-4 font-semibold text-slate-900">OT (Operation Theatre) &amp; MRD</td>
                     <td className="py-3 px-4 text-slate-400">— Not Applicable</td>
-                    <td className="py-3 px-4 text-amber-600 font-bold">🚀 Coming Soon</td>
+                    <td className="py-3 px-4 text-emerald-600 font-bold">✓ Included</td>
                   </tr>
                   <tr className="hover:bg-slate-50/70 transition-colors">
                     <td className="py-3 px-4 font-semibold text-slate-900">Reports &amp; Analytical MIS</td>

@@ -32,7 +32,7 @@ const mainLinks = [
   { name: 'Home', path: '/' },
   { name: 'Products', path: '/products' },
   { name: 'About Us', path: '/about' },
-  { name: 'Advisors & Consultants', path: '/advisors-consultants' },
+  { name: 'Our Advisors', path: '/advisors-consultants' },
   { name: 'Contact Us', path: '/contact' },
 ]
 

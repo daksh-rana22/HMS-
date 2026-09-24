@@ -9,7 +9,7 @@ export const navLinks = [
     dropdownWidth: 'w-80',
     children: [
       { name: 'About Us', path: '/about', icon: 'info', desc: 'Our mission, vision, leadership & story' },
-      { name: 'Advisors & Consultants', path: '/advisors-consultants', icon: 'groups_2', desc: 'Industry experience that guides OMEDO' },
+      { name: 'Our Advisors', path: '/advisors-consultants', icon: 'groups_2', desc: 'Industry experience that guides OMEDO' },
       { name: 'Contact Us', path: '/contact', icon: 'support_agent', desc: 'Get in touch, sales enquiries & 24/7 support' },
     ]
   },

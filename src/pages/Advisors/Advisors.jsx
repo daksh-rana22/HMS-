@@ -162,7 +162,7 @@ export default function Advisors() {
           <div className="text-center max-w-3xl mx-auto space-y-3">
             <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#FDF3E7] text-[#8C4E13] border border-[#ECC599] text-xs font-extrabold uppercase tracking-wider">
               <span className="material-symbols-outlined text-sm text-[#8C4E13]">groups_2</span>
-              <span>Our Advisors &amp; Consultants</span>
+              <span>Our Advisors</span>
             </div>
             <h2
               className="text-2xl sm:text-3xl lg:text-4xl font-black text-[#0F172A]"

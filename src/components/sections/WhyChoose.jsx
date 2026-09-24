@@ -131,7 +131,7 @@ export default function WhyChoose() {
                 <span className="gradient-text">OMEDO</span>
               </h2>
               <p className="text-gray leading-relaxed mb-8">
-                Join 150+ Hospitals and 50+ Clinics that have transformed their operations with our intelligent, comprehensive hospital management platform.
+                Transform your healthcare operations with our intelligent, comprehensive, and ABDM-compliant management platform.
               </p>
             </motion.div>
 

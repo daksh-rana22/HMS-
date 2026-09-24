@@ -58,8 +58,8 @@ export default function Navbar() {
           />
         </Link>
 
-        {/* Desktop Nav — hidden on mobile, shown md+ */}
-        <nav className="hidden md:flex items-center gap-4 lg:gap-6 2xl:gap-8">
+        {/* Desktop Nav — centered, well-spaced, and prominent */}
+        <nav className="hidden md:flex items-center justify-center flex-1 mx-4 lg:mx-8 gap-3 sm:gap-4 md:gap-6 lg:gap-8 xl:gap-10">
           {navLinks.map((link) => {
             if (link.children) {
               const isHovered = activeDropdown === link.name
@@ -76,18 +76,19 @@ export default function Navbar() {
                 >
                   <Link
                     to={link.path}
-                    className="inline-flex items-center gap-1 text-sm 2xl:text-base font-medium transition-colors duration-200 whitespace-nowrap"
+                    className={`inline-flex items-center gap-1.5 px-4 py-2 lg:px-5 lg:py-2.5 rounded-full text-[15px] lg:text-[16px] xl:text-[17px] font-semibold transition-all duration-200 whitespace-nowrap ${
+                      isLinkActive
+                        ? 'bg-[color-mix(in_srgb,var(--t-primary)_12%,transparent)] text-[var(--t-primary)] font-bold shadow-xs'
+                        : 'text-[var(--t-text-secondary,#2c3836)] hover:text-[var(--t-primary)] hover:bg-[color-mix(in_srgb,var(--t-primary)_8%,transparent)]'
+                    }`}
                     style={{
                       fontFamily: "'Inter', sans-serif",
-                      color: isLinkActive ? 'var(--t-primary, #00685e)' : 'var(--t-text-secondary, #3d4947)',
-                      fontWeight: isLinkActive ? '700' : '500',
-                      borderBottom: isLinkActive ? '2px solid var(--t-primary, #00685e)' : 'none',
-                      paddingBottom: isLinkActive ? '4px' : '0',
                     }}
                   >
                     <span>{link.name}</span>
                     <ChevronDown
-                      size={14}
+                      size={16}
+                      className="transition-transform duration-200"
                       style={{
                         color: isHovered ? 'var(--t-primary)' : 'currentColor',
                         transform: isHovered ? 'rotate(180deg)' : 'none',
@@ -169,17 +170,19 @@ export default function Navbar() {
               )
             }
 
+            const isLinkActive = location.pathname === link.path
+
             return (
               <Link
                 key={link.path}
                 to={link.path}
-                className="text-sm 2xl:text-base font-medium transition-colors duration-200 whitespace-nowrap"
+                className={`inline-flex items-center px-4 py-2 lg:px-5 lg:py-2.5 rounded-full text-[15px] lg:text-[16px] xl:text-[17px] font-semibold transition-all duration-200 whitespace-nowrap ${
+                  isLinkActive
+                    ? 'bg-[color-mix(in_srgb,var(--t-primary)_12%,transparent)] text-[var(--t-primary)] font-bold shadow-xs'
+                    : 'text-[var(--t-text-secondary,#2c3836)] hover:text-[var(--t-primary)] hover:bg-[color-mix(in_srgb,var(--t-primary)_8%,transparent)]'
+                }`}
                 style={{
                   fontFamily: "'Inter', sans-serif",
-                  color: location.pathname === link.path ? 'var(--t-primary, #00685e)' : 'var(--t-text-secondary, #3d4947)',
-                  fontWeight: location.pathname === link.path ? '700' : '500',
-                  borderBottom: location.pathname === link.path ? '2px solid var(--t-primary, #00685e)' : 'none',
-                  paddingBottom: location.pathname === link.path ? '4px' : '0',
                 }}
               >
                 {link.name}
@@ -189,27 +192,13 @@ export default function Navbar() {
         </nav>
 
         {/* Desktop CTA */}
-        <div className="hidden md:flex items-center gap-2.5 lg:gap-3">
+        <div className="hidden md:flex items-center shrink-0">
           <Link
             to="/contact"
-            className="px-4 py-2 lg:px-5 lg:py-2 2xl:px-7 2xl:py-3 rounded-full text-sm 2xl:text-base font-bold hover:opacity-90 active:scale-95 transition-all duration-200 shadow-md whitespace-nowrap inline-flex items-center gap-1.5"
+            className="px-5 py-2.5 lg:px-6 lg:py-3 2xl:px-8 2xl:py-3.5 rounded-full text-[15px] lg:text-base font-bold hover:opacity-95 active:scale-95 transition-all duration-200 shadow-md hover:shadow-lg whitespace-nowrap inline-flex items-center gap-1.5"
             style={{ fontFamily: "'Inter', sans-serif", background: 'var(--t-primary, #00685e)', color: '#fff', boxShadow: '0 4px 14px var(--t-btn-shadow)' }}
           >
             Book a Demo
-          </Link>
-          <Link
-            to="/login"
-            className="px-3.5 py-1.5 lg:px-4 lg:py-2 2xl:px-5 2xl:py-2.5 rounded-full text-xs lg:text-sm 2xl:text-base font-semibold border hover:bg-white active:scale-95 transition-all duration-200 shadow-sm whitespace-nowrap inline-flex items-center gap-1.5 cursor-pointer"
-            style={{
-              fontFamily: "'Inter', sans-serif",
-              borderColor: 'var(--t-border, #bcc9c6)',
-              color: location.pathname === '/login' ? 'var(--t-primary, #00685e)' : 'var(--t-text, #121d1f)',
-              background: location.pathname === '/login' ? 'var(--t-active-bg, #effcfe)' : 'rgba(255,255,255,0.7)',
-            }}
-            title="Admin Portal Login"
-          >
-            <span className="material-symbols-outlined text-base" style={{ color: 'var(--t-primary, #00685e)' }}>admin_panel_settings</span>
-            <span>Login</span>
           </Link>
         </div>
 
@@ -356,25 +345,15 @@ export default function Navbar() {
                 animate={{ opacity: 1 }}
                 transition={{ delay: 0.2 }}
               >
-                <div className="flex items-center gap-2.5">
+                <div>
                   <Link
                     to="/contact"
                     onClick={() => setIsOpen(false)}
-                    className="flex-1 flex items-center justify-center gap-2 py-3.5 rounded-full text-sm font-bold shadow-md active:scale-98 transition-all"
+                    className="w-full flex items-center justify-center gap-2 py-3.5 rounded-full text-sm font-bold shadow-md active:scale-98 transition-all"
                     style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", background: 'var(--t-primary)', color: '#fff', boxShadow: '0 4px 14px var(--t-btn-shadow)' }}
                   >
                     <span>Book a Demo</span>
                     <span className="material-symbols-outlined text-base">arrow_forward</span>
-                  </Link>
-
-                  <Link
-                    to="/login"
-                    onClick={() => setIsOpen(false)}
-                    className="px-4 py-3 rounded-full text-sm font-bold border border-[#bcc9c6] bg-white text-[#121d1f] shadow-sm active:scale-98 transition-all flex items-center gap-1.5 shrink-0"
-                    style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}
-                  >
-                    <span className="material-symbols-outlined text-base" style={{ color: 'var(--t-primary)' }}>admin_panel_settings</span>
-                    <span>Login</span>
                   </Link>
                 </div>
 

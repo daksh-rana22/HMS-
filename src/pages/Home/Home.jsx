@@ -218,7 +218,7 @@ export default function Home() {
               {/* Badge */}
               <motion.div variants={fadeUp} className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-[var(--t-primary,#00685e)]/30 bg-white/90 backdrop-blur-sm shadow-[0_2px_16px_var(--t-btn-shadow,rgba(0,180,162,0.12))]">
                 <span className="flex w-2 h-2 rounded-full bg-[var(--t-primary,#00685e)] animate-pulse" />
-                <span className="text-[11px] sm:text-xs font-semibold text-[var(--t-primary,#00685e)] tracking-wide uppercase">Trusted by 200+ Healthcare Organizations</span>
+                <span className="text-[11px] sm:text-xs font-semibold text-[var(--t-primary,#00685e)] tracking-wide uppercase">Enterprise Healthcare Management System</span>
               </motion.div>
 
               {/* Headline */}
@@ -393,7 +393,7 @@ export default function Home() {
                   ))}
                 </div>
                 <span className="text-[11px] sm:text-xs text-[var(--t-text-muted)] font-semibold tracking-wide">
-                  150+ Hospitals · 50+ Clinics · 50+ Cities
+                  Hospitals · Specialty Clinics · Diagnostic Centers
                 </span>
               </motion.div>
 
@@ -574,14 +574,14 @@ export default function Home() {
             className="text-xl sm:text-2xl lg:text-3xl 2xl:text-4xl font-extrabold text-white tracking-tight drop-shadow-md"
             style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}
           >
-            200+ Healthcare Organizations &amp; Commercial Enterprises
+            Healthcare Organizations &amp; Medical Centers
           </h2>
 
           <p
             className="text-[11px] sm:text-xs md:text-sm font-semibold tracking-wide max-w-xl mx-auto text-blue-100/90"
             style={{ fontFamily: "'Inter', sans-serif" }}
           >
-            150+ Hospitals &nbsp;<span className="text-amber-300 font-normal">•</span>&nbsp; 50+ Clinics &nbsp;<span className="text-amber-300 font-normal">•</span>&nbsp; 50+ Cities Across India
+            Hospitals &nbsp;<span className="text-amber-300 font-normal">•</span>&nbsp; Specialty Clinics &nbsp;<span className="text-amber-300 font-normal">•</span>&nbsp; Diagnostic Centers Across India
           </p>
 
           {/* Glowing Indicator Accent Bars */}

@@ -26,7 +26,7 @@ export default function Hero() {
               <span className="flex w-2.5 h-2.5 rounded-full animate-pulse"
                 style={{ background: 'var(--t-accent)', boxShadow: '0 0 8px var(--t-accent)' }} />
               <span className="text-xs font-semibold tracking-wide uppercase" style={{ color: 'var(--t-primary)' }}>
-                Trusted by 200+ Healthcare Organizations
+                Enterprise Healthcare Management System
               </span>
             </motion.div>
 
@@ -77,7 +77,7 @@ export default function Hero() {
             <motion.div variants={fadeUp} className="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-4 w-full mt-2"
               style={{ borderTop: '1px solid color-mix(in srgb, var(--t-border) 60%, transparent)' }}>
               {[
-                { value: '150+ / 50+', label: 'Hospitals & Clinics', colorVar: '--t-primary' },
+                { value: 'ABDM', label: 'Milestone 1, 2 & 3', colorVar: '--t-primary' },
                 { value: '50K+', label: 'Patients Managed Daily', colorVar: '--t-accent' },
                 { value: '99.9%', label: 'Uptime', colorVar: '--t-accent-light' },
                 { value: '256-bit', label: 'Secure Cloud Platform', colorVar: '--t-primary-mid' },

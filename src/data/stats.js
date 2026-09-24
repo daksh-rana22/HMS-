@@ -3,10 +3,10 @@ import { Building2, UserCheck, Users, ArrowUpCircle } from 'lucide-react'
 export const stats = [
   {
     icon: Building2,
-    value: 150,
-    suffix: '+ Hospitals / 50+ Clinics',
-    label: 'Healthcare Facilities',
-    description: 'Trust OMEDO',
+    value: 100,
+    suffix: '%',
+    label: 'ABDM Compliant',
+    description: 'Milestone 1, 2 & 3 Certified',
   },
   {
     icon: UserCheck,
