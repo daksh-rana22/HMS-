@@ -16,7 +16,6 @@ const hmsModules = [
   { name: 'EMR / Prescription', path: '/products?product=hms&module=emr' },
   { name: 'IPD', path: '/products?product=hms&module=ipd' },
   { name: 'Day Care', path: '/products?product=hms&module=daycare' },
-  { name: 'OT (Operation Theatre)', path: '/products?product=hms&module=ot' },
   { name: 'Emergency', path: '/products?product=hms&module=emergency' },
   { name: 'Pharmacy', path: '/products?product=hms&module=pharmacy' },
   { name: 'Laboratory', path: '/products?product=hms&module=laboratory' },
@@ -24,7 +23,6 @@ const hmsModules = [
   { name: 'Nursing', path: '/products?product=hms&module=nursing' },
   { name: 'Billing & Accounts', path: '/products?product=hms&module=billing' },
   { name: 'TPA / Insurance', path: '/products?product=hms&module=tpa' },
-  { name: 'MRD', path: '/products?product=hms&module=mrd' },
   { name: 'Reports & Analytics', path: '/products?product=hms&module=reports' },
 ]
 
