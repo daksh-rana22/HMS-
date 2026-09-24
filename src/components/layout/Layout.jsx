@@ -5,11 +5,13 @@ import Footer from './Footer'
 import AuthRequiredModal from '../common/AuthRequiredModal'
 
 export default function Layout() {
-  const { pathname } = useLocation()
+  const { pathname, search } = useLocation()
 
   useEffect(() => {
-    window.scrollTo({ top: 0, behavior: 'instant' })
-  }, [pathname])
+    if (!search && !window.location.hash) {
+      window.scrollTo({ top: 0, behavior: 'instant' })
+    }
+  }, [pathname, search])
 
   const isLoginPage = pathname.startsWith('/login')
 

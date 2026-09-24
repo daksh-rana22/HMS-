@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useSearchParams, useLocation } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
 
 const fadeUp = {
@@ -326,10 +326,50 @@ const getModuleRoute = (id) => {
 }
 
 export default function ProductsShowcase({ showComparison = true }) {
+  const [searchParams] = useSearchParams()
+  const location = useLocation()
+
   const [activeProduct, setActiveProduct] = useState('clinic') // 'clinic' | 'hms'
   const [clinicActiveIndex, setClinicActiveIndex] = useState(0)
   const [hmsActiveIndex, setHmsActiveIndex] = useState(0)
   const [isPaused, setIsPaused] = useState(false)
+
+  // Sync state and smooth-scroll when URL query params change (?product=clinic&module=opd)
+  useEffect(() => {
+    const productParam = searchParams.get('product')
+    const moduleParam = searchParams.get('module')
+
+    if (productParam === 'clinic' || productParam === 'hms') {
+      setActiveProduct(productParam)
+      setIsPaused(true)
+
+      const modulesList = productParam === 'clinic' ? clinicModules : hmsModules
+      if (moduleParam) {
+        const foundIdx = modulesList.findIndex(
+          (m) =>
+            m.id.toLowerCase() === moduleParam.toLowerCase() ||
+            m.name.toLowerCase().replace(/[^a-z0-9]/g, '') === moduleParam.toLowerCase().replace(/[^a-z0-9]/g, '')
+        )
+        if (foundIdx !== -1) {
+          if (productParam === 'clinic') {
+            setClinicActiveIndex(foundIdx)
+          } else {
+            setHmsActiveIndex(foundIdx)
+          }
+        }
+      }
+
+      // Smooth scroll to the products showcase section
+      const timer = setTimeout(() => {
+        const section = document.getElementById('products')
+        if (section) {
+          section.scrollIntoView({ behavior: 'smooth', block: 'start' })
+        }
+      }, 150)
+
+      return () => clearTimeout(timer)
+    }
+  }, [searchParams, location.search, location.pathname])
 
   // Auto-cycle active module preview every 6 seconds when not paused
   useEffect(() => {

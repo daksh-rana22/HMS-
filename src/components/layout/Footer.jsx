@@ -2,30 +2,30 @@ import { Link } from 'react-router-dom'
 import omedoLogo from '../../assets/omedo_logo.png'
 
 const clinicModules = [
-  { name: 'Appointment', path: '/products' },
-  { name: 'ABDM', path: '/abdm-integration' },
-  { name: 'OPD', path: '/modules/clinical' },
-  { name: 'EMR / Prescription', path: '/modules/clinical' },
-  { name: 'Reports & Analytics', path: '/modules/reports' },
+  { name: 'Appointment', path: '/products?product=clinic&module=appointment' },
+  { name: 'ABDM', path: '/products?product=clinic&module=abdm' },
+  { name: 'OPD', path: '/products?product=clinic&module=opd' },
+  { name: 'EMR / Prescription', path: '/products?product=clinic&module=emr' },
+  { name: 'Reports & Analytics', path: '/products?product=clinic&module=reports' },
 ]
 
 const hmsModules = [
-  { name: 'Appointment', path: '/products' },
-  { name: 'ABDM', path: '/abdm-integration' },
-  { name: 'OPD', path: '/modules/clinical' },
-  { name: 'EMR / Prescription', path: '/modules/clinical' },
-  { name: 'IPD', path: '/modules/ipd' },
-  { name: 'Day Care', path: '/products' },
-  { name: 'OT (Operation Theatre)', path: '/products' },
-  { name: 'Emergency', path: '/modules/clinical' },
-  { name: 'Pharmacy', path: '/products' },
-  { name: 'Laboratory', path: '/modules/laboratory' },
-  { name: 'Radiology', path: '/products' },
-  { name: 'Nursing', path: '/modules/ipd' },
-  { name: 'Billing & Accounts', path: '/modules/billing-accounts' },
-  { name: 'TPA / Insurance', path: '/modules/billing-accounts' },
-  { name: 'MRD', path: '/products' },
-  { name: 'Reports & Analytics', path: '/modules/reports' },
+  { name: 'Appointment', path: '/products?product=hms&module=appointment' },
+  { name: 'ABDM', path: '/products?product=hms&module=abdm' },
+  { name: 'OPD', path: '/products?product=hms&module=opd' },
+  { name: 'EMR / Prescription', path: '/products?product=hms&module=emr' },
+  { name: 'IPD', path: '/products?product=hms&module=ipd' },
+  { name: 'Day Care', path: '/products?product=hms&module=daycare' },
+  { name: 'OT (Operation Theatre)', path: '/products?product=hms&module=ot' },
+  { name: 'Emergency', path: '/products?product=hms&module=emergency' },
+  { name: 'Pharmacy', path: '/products?product=hms&module=pharmacy' },
+  { name: 'Laboratory', path: '/products?product=hms&module=laboratory' },
+  { name: 'Radiology', path: '/products?product=hms&module=radiology' },
+  { name: 'Nursing', path: '/products?product=hms&module=nursing' },
+  { name: 'Billing & Accounts', path: '/products?product=hms&module=billing' },
+  { name: 'TPA / Insurance', path: '/products?product=hms&module=tpa' },
+  { name: 'MRD', path: '/products?product=hms&module=mrd' },
+  { name: 'Reports & Analytics', path: '/products?product=hms&module=reports' },
 ]
 
 const mainLinks = [
