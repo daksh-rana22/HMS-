@@ -73,8 +73,13 @@ export default function Footer() {
 
           {/* 2. OMEDO Clinic (2 cols) */}
           <div className="lg:col-span-2 space-y-3">
-            <h4 className="text-xs font-bold uppercase tracking-wider text-white" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
-              OMEDO Clinic
+            <h4 className="text-xs font-bold uppercase tracking-wider" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
+              <Link
+                to="/products?product=clinic"
+                className="text-white hover:text-cyan-300 hover:underline transition-colors inline-block"
+              >
+                OMEDO Clinic
+              </Link>
             </h4>
             <ul className="space-y-1.5 text-xs xl:text-sm">
               {clinicModules.map((item) => (
@@ -93,8 +98,13 @@ export default function Footer() {
 
           {/* 3. OMEDO HMS (2 cols) */}
           <div className="lg:col-span-2 space-y-3">
-            <h4 className="text-xs font-bold uppercase tracking-wider text-white" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
-              OMEDO HMS
+            <h4 className="text-xs font-bold uppercase tracking-wider" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
+              <Link
+                to="/products?product=hms"
+                className="text-white hover:text-cyan-300 hover:underline transition-colors inline-block"
+              >
+                OMEDO HMS
+              </Link>
             </h4>
             <ul className="space-y-1 text-xs xl:text-sm">
               {hmsModules.map((item) => (
