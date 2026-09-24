@@ -1,14 +1,31 @@
 import { Link } from 'react-router-dom'
 import omedoLogo from '../../assets/omedo_logo.png'
 
-const moduleLinks = [
-  { name: 'Clinical', path: '/modules/clinical' },
-  { name: 'IPD', path: '/modules/ipd' },
-  { name: 'Laboratory', path: '/modules/laboratory' },
-  { name: 'Billing & Accounts', path: '/modules/billing-accounts' },
+const clinicModules = [
+  { name: 'Appointment', path: '/products' },
   { name: 'ABDM', path: '/abdm-integration' },
+  { name: 'OPD', path: '/modules/clinical' },
+  { name: 'EMR / Prescription', path: '/modules/clinical' },
   { name: 'Reports & Analytics', path: '/modules/reports' },
-  { name: 'IT Admin', path: '/modules/it-admin' },
+]
+
+const hmsModules = [
+  { name: 'Appointment', path: '/products' },
+  { name: 'ABDM', path: '/abdm-integration' },
+  { name: 'OPD', path: '/modules/clinical' },
+  { name: 'EMR / Prescription', path: '/modules/clinical' },
+  { name: 'IPD', path: '/modules/ipd' },
+  { name: 'Day Care', path: '/products' },
+  { name: 'OT (Operation Theatre)', path: '/products' },
+  { name: 'Emergency', path: '/modules/clinical' },
+  { name: 'Pharmacy', path: '/products' },
+  { name: 'Laboratory', path: '/modules/laboratory' },
+  { name: 'Radiology', path: '/products' },
+  { name: 'Nursing', path: '/modules/ipd' },
+  { name: 'Billing & Accounts', path: '/modules/billing-accounts' },
+  { name: 'TPA / Insurance', path: '/modules/billing-accounts' },
+  { name: 'MRD', path: '/products' },
+  { name: 'Reports & Analytics', path: '/modules/reports' },
 ]
 
 const mainLinks = [
@@ -33,8 +50,8 @@ export default function Footer() {
         {/* Main 4-Column Flat Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-8 lg:gap-10 pb-10 border-b border-white/10">
 
-          {/* 1. Brand & Offices (4 cols) */}
-          <div className="lg:col-span-4 space-y-4">
+          {/* 1. Brand & Offices (3 cols on lg) */}
+          <div className="lg:col-span-3 space-y-4">
             <Link to="/" className="inline-block bg-white p-2 sm:p-2.5 rounded-2xl shadow-lg border border-white/20 hover:scale-[1.02] transition-all">
               <img
                 src={omedoLogo}
@@ -54,13 +71,33 @@ export default function Footer() {
             </div>
           </div>
 
-          {/* 2. OMEDO Core Modules (3 cols) */}
-          <div className="lg:col-span-3 space-y-3">
+          {/* 2. OMEDO Clinic (2 cols) */}
+          <div className="lg:col-span-2 space-y-3">
             <h4 className="text-xs font-bold uppercase tracking-wider text-white" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
-              OMEDO Core Modules
+              OMEDO Clinic
             </h4>
-            <ul className="space-y-2 text-xs sm:text-sm">
-              {moduleLinks.map((item) => (
+            <ul className="space-y-1.5 text-xs xl:text-sm">
+              {clinicModules.map((item) => (
+                <li key={item.name}>
+                  <Link
+                    to={item.path}
+                    className="text-slate-300 hover:text-white hover:underline transition-colors block py-0.5"
+                    style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}
+                  >
+                    {item.name}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* 3. OMEDO HMS (2 cols) */}
+          <div className="lg:col-span-2 space-y-3">
+            <h4 className="text-xs font-bold uppercase tracking-wider text-white" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
+              OMEDO HMS
+            </h4>
+            <ul className="space-y-1 text-xs xl:text-sm">
+              {hmsModules.map((item) => (
                 <li key={item.name}>
                   <Link
                     to={item.path}
