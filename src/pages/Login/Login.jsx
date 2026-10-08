@@ -341,6 +341,9 @@ export default function Login() {
     const handleUnauthorizedReset = (e) => {
       setIsAuthenticated(false)
       setAuthUser(null)
+      setEmail('')
+      setPassword('')
+      setShowPassword(false)
       const msg = e.detail?.message || 'Authorization header is missing or session expired. Please sign in again.'
       setAuthError(msg)
     }
@@ -353,6 +356,15 @@ export default function Login() {
       window.removeEventListener('auth:logout_reset', handleUnauthorizedReset)
     }
   }, [])
+
+  // Ensure credentials are reset when unauthenticated
+  useEffect(() => {
+    if (!isAuthenticated) {
+      setEmail('')
+      setPassword('')
+      setShowPassword(false)
+    }
+  }, [isAuthenticated])
 
   const openModal = () => {
     setEditingItem(null)
@@ -402,6 +414,9 @@ export default function Login() {
       if (res && res.success) {
         setIsAuthenticated(true)
         if (res.user) setAuthUser(res.user)
+        setEmail('')
+        setPassword('')
+        setShowPassword(false)
       } else {
         setAuthError('Authentication failed. Please verify your credentials.')
       }
@@ -418,6 +433,10 @@ export default function Login() {
     logoutAdmin()
     setIsAuthenticated(false)
     setAuthUser(null)
+    setEmail('')
+    setPassword('')
+    setShowPassword(false)
+    setAuthError(null)
   }
 
   // Toggle Item Status Handler for Clients & Reviews
@@ -2553,16 +2572,8 @@ export default function Login() {
       {/* ── RIGHT COLUMN: LOGIN FORM PANEL (RESPONSIVE FOR ALL SCREEN SIZES) ── */}
       <div className="w-full lg:w-[52%] xl:w-[55%] min-h-screen flex flex-col justify-between p-4 xs:p-6 sm:p-10 lg:p-14 bg-gradient-to-br from-[#effcfe]/40 via-[#f0fdfa]/30 to-[#f8fafc] relative">
         
-        {/* Top Back Navigation Bar */}
-        <div className="w-full flex items-center justify-between">
-          <Link
-            to="/"
-            className="inline-flex items-center gap-1.5 text-xs sm:text-sm font-semibold text-[#6d7a77] hover:text-[#00685e] transition-colors py-1 px-2 rounded-lg hover:bg-white/60"
-          >
-            <span className="material-symbols-outlined text-base">arrow_back</span>
-            <span>Back to main page</span>
-          </Link>
-
+        {/* Top Bar */}
+        <div className="w-full flex items-center justify-end">
           <span className="lg:hidden text-[10px] font-extrabold uppercase tracking-wider text-[#00685e] bg-teal-50 border border-teal-200/60 px-2 py-0.5 rounded-full">
             Admin Portal
           </span>
@@ -2593,7 +2604,7 @@ export default function Login() {
               </p>
             </div>
 
-            <form onSubmit={handleLoginSubmit} className="space-y-4">
+            <form onSubmit={handleLoginSubmit} className="space-y-4" autoComplete="off">
               <div>
                 <label className="block text-[11px] font-extrabold uppercase tracking-wider text-[#3d4947] mb-1.5">
                   USERNAME / EMAIL
@@ -2605,6 +2616,7 @@ export default function Login() {
                   <input
                     type="text"
                     required
+                    autoComplete="off"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     placeholder="Username or admin@omedosoft.com"
@@ -2624,6 +2636,7 @@ export default function Login() {
                   <input
                     type={showPassword ? 'text' : 'password'}
                     required
+                    autoComplete="new-password"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                     placeholder="••••••••••••"
