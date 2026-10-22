@@ -219,37 +219,7 @@ export default function IPD() {
 
   const currentSubFeature = ipdAccountingSubFeatures.find(f => f.id === activeSubFeatureId) || ipdAccountingSubFeatures[0]
 
-  const renderSoftwareUIPreview = () => {
-    const currentTopic = ipdTopics.find(t => t.id === activeTopicId) || ipdTopics[0]
-    let displayImg = currentTopic?.img
-    let displayTitle = currentTopic?.title
 
-    if (currentTopic.id === '03' || currentTopic.title === 'Accounting' || currentTopic.title === 'IPD Accounting') {
-      displayImg = currentSubFeature.img
-      displayTitle = `IPD Accounting — ${currentSubFeature.name}`
-    }
-
-    return (
-      <div className="bg-white rounded-2xl shadow-xl border border-[#bcc9c6]/50 overflow-hidden text-[#121d1f] w-full transition-all p-2 sm:p-3">
-        <div
-          onClick={() => setFullScreenImg({ src: displayImg, title: displayTitle })}
-          className="relative rounded-xl overflow-hidden shadow-sm border border-[#bcc9c6]/30 bg-white group cursor-pointer"
-        >
-          <img
-            src={displayImg}
-            alt={displayTitle}
-            className="w-full h-auto object-cover rounded-xl transition-transform duration-300 group-hover:scale-[1.02] max-h-[420px]"
-          />
-
-          {/* Hover Fullscreen Overlay Hint */}
-          <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-200 flex items-center justify-center gap-2 text-white font-bold text-xs sm:text-sm">
-            <span className="material-symbols-outlined text-xl">zoom_in</span>
-            <span>Click for Fullscreen</span>
-          </div>
-        </div>
-      </div>
-    )
-  }
 
   return (
     <motion.div {...pageTransition} className="min-h-screen bg-[#f8fdfe] pt-20 sm:pt-24 pb-16">
@@ -428,31 +398,8 @@ export default function IPD() {
                   </motion.div>
                 </div>
 
-                {/* Opposite Side — Screenshot Preview */}
-                <div className={`${isEven ? 'lg:order-1 lg:pr-8' : 'lg:order-2 lg:pl-8'}`}>
-                  {isActive ? (
-                    <motion.div
-                      initial={{ opacity: 0, scale: 0.96 }}
-                      animate={{ opacity: 1, scale: 1 }}
-                      transition={{ duration: 0.3 }}
-                      className="w-full"
-                    >
-                      {renderSoftwareUIPreview()}
-                    </motion.div>
-                  ) : (
-                    <div
-                      onClick={() => handleTopicSelect(topic.id)}
-                      className="hidden lg:block opacity-50 hover:opacity-100 transition-all cursor-pointer"
-                    >
-                      <div className="p-6 rounded-3xl border-2 border-dashed border-[#bcc9c6]/70 bg-white/70 text-center hover:bg-white hover:border-[#00685e]/50 shadow-sm hover:shadow-md">
-                        <span className="text-xs sm:text-sm font-mono font-bold text-[#00685e] flex items-center justify-center gap-2">
-                          <span className="material-symbols-outlined text-base">visibility</span>
-                          Click to view image
-                        </span>
-                      </div>
-                    </div>
-                  )}
-                </div>
+                {/* Opposite Side Spacer (Maintains alternating timeline layout with blank opposite side) */}
+                <div className={`${isEven ? 'lg:order-1 lg:pr-8' : 'lg:order-2 lg:pl-8'} hidden lg:block`} />
 
               </div>
             )
