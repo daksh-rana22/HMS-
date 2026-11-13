@@ -30,24 +30,6 @@ const clinicModulesData = [
     previewType: 'appointment',
   },
   {
-    id: 'abdm',
-    name: 'ABDM & ABHA ID',
-    tag: 'NHA HEALTH ID COMPLIANCE',
-    icon: 'badge',
-    desc: 'Full Ayushman Bharat Digital Mission enablement for clinics. Generate 14-digit ABHA numbers instantly, offer express 10-second Scan & Share counter check-in, and issue digital health cards.',
-    badge: 'ABDM Certified',
-    features: [
-      'Instant 14-Digit ABHA ID creation via Aadhaar OTP',
-      'Express Counter QR Scan & Share check-in (<10 secs)',
-      'Digital Health Card generation & patient printout',
-      'Secure Patient Consent Manager for medical records',
-      'Seamless Government NHA Milestone 1 integration',
-      'Dual-binding linking ABHA directly with Clinic UHID',
-    ],
-    stats: { primary: '10-Sec Express Check-in', secondary: '100% Consent Controlled' },
-    previewType: 'abdm',
-  },
-  {
     id: 'opd',
     name: 'OPD Management',
     tag: 'OUTPATIENT WORKFLOW',
@@ -82,6 +64,24 @@ const clinicModulesData = [
     ],
     stats: { primary: '15-Sec Fast Rx', secondary: 'Digital Print & WhatsApp' },
     previewType: 'emr',
+  },
+  {
+    id: 'billing',
+    name: 'Service/Procedure Billing',
+    tag: 'OUTPATIENT CASHIER & POS',
+    icon: 'receipt_long',
+    desc: 'Fast itemized billing for doctor consultations, diagnostic tests, dressings, and minor clinical procedures. Multi-mode payments (UPI, Cash, Card) with branded receipts and automated WhatsApp delivery.',
+    badge: 'Cashier & POS',
+    features: [
+      'Customizable service & procedure tariff catalog',
+      'Combined consultation fee + procedure bundling in single bill',
+      'Instant UPI QR code generation on billing screen',
+      'Configurable discounts, concession codes & tax calculations',
+      'Multi-doctor revenue split tracking per procedure',
+      'Print branded receipt or dispatch instantly via WhatsApp',
+    ],
+    stats: { primary: '1-Click Invoice', secondary: 'Instant UPI Settlement' },
+    previewType: 'billing',
   },
   {
     id: 'reports',
@@ -145,8 +145,8 @@ const clinicFaqs = [
     a: 'Yes. With one click from the consultation screen, OMEDO Clinic generates a professionally formatted PDF prescription on your clinic’s branded letterhead and transmits it directly to the patient’s WhatsApp number, saving paper and enhancing patient satisfaction.',
   },
   {
-    q: 'How does ABDM Scan & Share benefit our clinic counter?',
-    a: 'Patients scan an NHA-approved QR code placed at your reception counter using their ABHA or Aarogya Setu app. Their verified name, age, gender, and ABHA number are sent directly into your OPD register in 8 seconds, cutting reception queue times by up to 70%.',
+    q: 'How does Service and Procedure Billing work in OMEDO Clinic?',
+    a: 'You can define custom price tariffs for doctor consultations, diagnostic tests, dressings, and minor procedures. Cashiers or receptionists can bundle services into a single itemized invoice, apply approved discounts, accept instant UPI QR payments, and transmit branded WhatsApp receipts.',
   },
   {
     q: 'Does OMEDO Clinic support multi-doctor fee sharing and split settlements?',
@@ -220,7 +220,7 @@ export default function OmedoClinic() {
             </h1>
 
             <p className="text-base sm:text-lg text-[var(--t-text-secondary,#3d4947)] leading-relaxed max-w-3xl mx-auto font-normal">
-              Say goodbye to paper files and crowded waiting rooms. OMEDO Clinic empowers independent doctors, polyclinics, and OPD centers with 15-second electronic prescriptions, 10-second ABDM QR check-in, real-time queues, and daily revenue intelligence.
+              Say goodbye to paper files and crowded waiting rooms. OMEDO Clinic empowers independent doctors, polyclinics, and OPD centers with 15-second electronic prescriptions, 1-click service &amp; procedure billing, real-time queues, and daily revenue intelligence.
             </p>
           </motion.div>
 
@@ -261,7 +261,7 @@ export default function OmedoClinic() {
           <motion.div initial="hidden" animate="visible" variants={fadeUp} className="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4 pt-6">
             {[
               { num: '15 Sec', label: 'Rapid E-Prescription', icon: 'prescriptions' },
-              { num: '10 Sec', label: 'ABHA QR Check-In', icon: 'qr_code_scanner' },
+              { num: '1-Click', label: 'Service & Procedure POS', icon: 'receipt_long' },
               { num: '5 Modules', label: 'Complete OPD Suite', icon: 'domain_verification' },
               { num: '100% Cloud', label: 'Zero Local Server Cost', icon: 'cloud_done' },
             ].map((stat) => (
@@ -303,9 +303,9 @@ export default function OmedoClinic() {
               desc: 'Select frequently prescribed medicine templates, adjust dosage and duration in two taps, and print or dispatch via WhatsApp instantly.',
             },
             {
-              icon: 'qr_code_scanner',
-              title: '10-Second ABHA Scan & Share',
-              desc: 'Enable express OPD check-in. Patients scan your desk QR code to automatically populate patient demographics without manual data entry.',
+              icon: 'receipt_long',
+              title: 'Service & Procedure Billing POS',
+              desc: 'Bundle doctor consultations, diagnostic tests, dressings, and minor procedures into an itemized invoice with instant UPI QR payments.',
             },
             {
               icon: 'queue_play_next',
@@ -487,43 +487,6 @@ export default function OmedoClinic() {
                     </div>
                   )}
 
-                  {activeModule.previewType === 'abdm' && (
-                    <div className="space-y-3">
-                      <div className="bg-gradient-to-br from-[#00685e] to-[#004d46] text-white p-4 sm:p-5 rounded-2xl shadow-md space-y-3">
-                        <div className="flex items-center justify-between text-xs border-b border-white/20 pb-2">
-                          <div className="flex items-center gap-2 font-bold">
-                            <span className="material-symbols-outlined text-lg">badge</span>
-                            <span>Ayushman Bharat Health Account (ABHA)</span>
-                          </div>
-                          <span className="text-[10px] font-mono bg-white/20 px-2 py-0.5 rounded">NHA Validated</span>
-                        </div>
-                        <div className="grid grid-cols-2 gap-3 text-xs">
-                          <div>
-                            <div className="text-[10px] text-white/70">ABHA 14-Digit Number</div>
-                            <div className="font-mono font-bold text-sm sm:text-base tracking-wider text-[#85f5e6]">
-                              91-4829-1048-5729
-                            </div>
-                          </div>
-                          <div>
-                            <div className="text-[10px] text-white/70">ABHA Address Handle</div>
-                            <div className="font-semibold text-xs text-white">priya.sharma@abdm</div>
-                          </div>
-                        </div>
-                        <div className="flex items-center justify-between pt-1 text-[11px] text-[#afecde]">
-                          <span>✓ Aadhaar e-KYC Verified</span>
-                          <span>✓ Scan &amp; Share Linked in 8s</span>
-                        </div>
-                      </div>
-                      <div className="bg-white p-3 rounded-xl border border-slate-200 flex items-center justify-between text-xs">
-                        <div className="flex items-center gap-2">
-                          <span className="material-symbols-outlined text-emerald-600 text-base">qr_code_2</span>
-                          <span className="font-semibold text-slate-800">Counter QR Scan &amp; Share Ready</span>
-                        </div>
-                        <span className="font-bold text-[var(--t-primary,#00685e)]">Token Auto-Generated</span>
-                      </div>
-                    </div>
-                  )}
-
                   {activeModule.previewType === 'opd' && (
                     <div className="space-y-3">
                       <div className="flex items-center justify-between">
@@ -588,6 +551,50 @@ export default function OmedoClinic() {
                           <span className="px-3 py-1 rounded-lg bg-[#00685e] text-white font-bold text-[10px]">
                             Print &amp; WhatsApp Rx
                           </span>
+                        </div>
+                      </div>
+                    </div>
+                  )}
+
+                  {activeModule.previewType === 'billing' && (
+                    <div className="space-y-3">
+                      <div className="bg-white p-4 rounded-xl border border-slate-200 space-y-2.5 shadow-2xs text-xs">
+                        <div className="flex justify-between items-center border-b pb-2">
+                          <div>
+                            <div className="font-bold text-slate-800">OPD Service &amp; Procedure Receipt</div>
+                            <div className="text-[10px] text-slate-500 font-mono">INV-2026-4421 • Rajesh Kumar</div>
+                          </div>
+                          <span className="text-[10px] font-bold px-2.5 py-0.5 rounded-full bg-emerald-100 text-emerald-800 flex items-center gap-1">
+                            <span className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
+                            Paid via UPI
+                          </span>
+                        </div>
+
+                        <div className="divide-y divide-slate-100 text-[11px]">
+                          <div className="py-1.5 flex justify-between">
+                            <span className="text-slate-700">Dr. Consultation Fee (Cardiology)</span>
+                            <span className="font-bold text-slate-900">₹800</span>
+                          </div>
+                          <div className="py-1.5 flex justify-between">
+                            <span className="text-slate-700">ECG 12-Lead Diagnostic Trace</span>
+                            <span className="font-bold text-slate-900">₹500</span>
+                          </div>
+                          <div className="py-1.5 flex justify-between">
+                            <span className="text-slate-700">Minor Dressing &amp; Sterilization Bandage</span>
+                            <span className="font-bold text-slate-900">₹350</span>
+                          </div>
+                          <div className="py-2 flex justify-between font-bold text-[#00685e] text-xs border-t pt-2">
+                            <span>Total Settled Amount</span>
+                            <span>₹1,650</span>
+                          </div>
+                        </div>
+
+                        <div className="pt-1.5 border-t border-slate-100 flex items-center justify-between text-[10px] text-slate-500">
+                          <span className="flex items-center gap-1 text-emerald-600 font-semibold">
+                            <span className="material-symbols-outlined text-sm">send_to_mobile</span>
+                            Digital Receipt dispatched via WhatsApp
+                          </span>
+                          <span className="font-semibold text-slate-700">POS Counter 01</span>
                         </div>
                       </div>
                     </div>
@@ -660,27 +667,27 @@ export default function OmedoClinic() {
             },
             {
               step: '02',
-              title: '10-Sec ABHA Check-In',
-              desc: 'Patient scans counter QR code. Name, age, and ABHA ID auto-fill in reception screen without paper slips.',
-              icon: 'qr_code_scanner',
-            },
-            {
-              step: '03',
-              title: 'Vitals & Room Queue',
-              desc: 'Nurse records BP, pulse, and temperature. Patient is routed directly to the doctor’s consulting room queue.',
+              title: 'Intake & Vitals',
+              desc: 'Reception records demographic intake and nurse charts BP, pulse, and temperature for the consulting chamber.',
               icon: 'monitor_heart',
             },
             {
-              step: '04',
-              title: '15-Sec Rx Consultation',
+              step: '03',
+              title: '15-Sec Consult Rx',
               desc: 'Doctor examines patient, selects drug dosage template, and finalizes electronic prescription with 2 clicks.',
               icon: 'prescriptions',
             },
             {
-              step: '05',
-              title: 'WhatsApp Rx & Cashier',
-              desc: 'Prescription PDF is sent to patient’s WhatsApp. Cashier collects fee via UPI/Cash with automatic day-end settlement.',
+              step: '04',
+              title: 'Procedure Billing',
+              desc: 'Cashier bundles consultation and minor clinical procedure tariffs into an itemized bill with instant UPI QR collection.',
               icon: 'receipt_long',
+            },
+            {
+              step: '05',
+              title: 'WhatsApp Rx & Reports',
+              desc: 'Prescription PDF and digital payment receipt sent to patient’s WhatsApp with automatic day-end revenue settlement.',
+              icon: 'analytics',
             },
           ].map((item) => (
             <div

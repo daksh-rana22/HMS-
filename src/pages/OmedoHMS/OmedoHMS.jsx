@@ -1,7 +1,12 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useMemo } from 'react'
 import { Link, useSearchParams } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
 import { pageTransition } from '../../utils/animations'
+import { initialClientLogos } from '../../data/clientLogos'
+import { fetchCompanyClients, formatLogoUrl } from '../../services/api'
+import SafeImage from '../../components/common/SafeImage'
+import { safeSetItem, safeGetItem } from '../../utils/storage'
+import trustedByBg from '../../assets/trusted_by_bg.jpg'
 
 const fadeUp = {
   hidden: { opacity: 0, y: 32, scale: 0.96 },
@@ -263,15 +268,6 @@ const sampleLabOrders = [
   { id: 'LAB-9015', test: 'Troponin-I Rapid Assay', patient: 'Rajesh K. (ER)', status: 'Stat Verified' },
 ]
 
-const hmsCategories = [
-  'All Modules (13)',
-  'Clinical & Inpatient',
-  'Emergency & Critical Care',
-  'Diagnostics & Pharmacy',
-  'Financial & Insurance',
-  'Governance & Records',
-]
-
 const hmsFaqs = [
   {
     q: 'What bed size hospitals is OMEDO HMS best suited for?',
@@ -301,15 +297,84 @@ const hmsFaqs = [
 
 export default function OmedoHMS() {
   const [searchParams] = useSearchParams()
-  const [selectedCategory, setSelectedCategory] = useState('All Modules (13)')
   const [activeModuleIdx, setActiveModuleIdx] = useState(0)
   const [openFaq, setOpenFaq] = useState(null)
 
-  // Filter modules by category
-  const filteredModules = hmsModulesData.filter((m) => {
-    if (selectedCategory === 'All Modules (13)') return true
-    return m.category === selectedCategory
+  // Client Logos state synced with Admin Console
+  const [clients, setClients] = useState(() => {
+    const s = safeGetItem('omedo_admin_clients')
+    if (s) {
+      try {
+        const parsed = JSON.parse(s)
+        if (Array.isArray(parsed) && parsed.length > 0 && parsed.some((item) => item.logoUrl)) {
+          return parsed
+        }
+      } catch (e) {
+        console.error(e)
+      }
+    }
+    return initialClientLogos
   })
+
+  useEffect(() => {
+    const loadLive = async () => {
+      try {
+        const cRes = await fetchCompanyClients()
+        if (cRes && cRes.success && Array.isArray(cRes.list) && cRes.list.length > 0) {
+          const normClients = cRes.list.map((c, idx) => ({
+            id: c.id ?? idx + 1,
+            name: c.client_name || c.name || 'Healthcare Partner',
+            location: c.short_description || c.location || '',
+            logoUrl: formatLogoUrl(c.logo_url || c.logoUrl || c.image_base64 || null),
+            logoText: (c.client_name || c.name || 'HOSPITAL').slice(0, 10).toUpperCase(),
+            status: (c.is_active ?? (c.status !== 'INACTIVE')) ? 'ACTIVE' : 'INACTIVE',
+            featured: c.is_featured ?? c.featured ?? true,
+            badgeColor: c.badgeColor || '#00685e',
+          }))
+          setClients(normClients)
+          safeSetItem('omedo_admin_clients', normClients)
+        }
+      } catch (err) {
+        console.warn('Clients sync notice:', err)
+      }
+    }
+    loadLive()
+
+    const handleSync = () => {
+      const sClients = safeGetItem('omedo_admin_clients')
+      if (sClients) {
+        try {
+          const parsed = JSON.parse(sClients)
+          if (Array.isArray(parsed) && parsed.length > 0) {
+            const validClients = parsed.filter((item) => item && (item.logoUrl || item.location || !item.content))
+            if (validClients.length > 0) setClients(validClients)
+          }
+        } catch (e) {
+          console.error(e)
+        }
+      }
+    }
+
+    window.addEventListener('storage', handleSync)
+    window.addEventListener('omedo_clients_updated', handleSync)
+    return () => {
+      window.removeEventListener('storage', handleSync)
+      window.removeEventListener('omedo_clients_updated', handleSync)
+    }
+  }, [])
+
+  const activeClients = useMemo(() => {
+    return clients.filter((c) => c.status !== 'INACTIVE')
+  }, [clients])
+
+  const loopedClients = useMemo(() => {
+    if (activeClients.length === 0) return []
+    let repeated = [...activeClients]
+    while (repeated.length < 10) {
+      repeated = [...repeated, ...activeClients]
+    }
+    return [...repeated, ...repeated]
+  }, [activeClients])
 
   // Handle URL query parameter (?module=ipd)
   useEffect(() => {
@@ -321,7 +386,6 @@ export default function OmedoHMS() {
           m.name.toLowerCase().replace(/[^a-z0-9]/g, '') === moduleParam.toLowerCase().replace(/[^a-z0-9]/g, '')
       )
       if (idx !== -1) {
-        setSelectedCategory('All Modules (13)')
         setActiveModuleIdx(idx)
         const el = document.getElementById('hms-modules')
         if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' })
@@ -516,37 +580,18 @@ export default function OmedoHMS() {
               Explore the Complete OMEDO HMS Suite
             </h2>
             <p className="text-xs sm:text-sm text-[var(--t-text-secondary,#3d4947)] leading-relaxed max-w-2xl mx-auto">
-              Select a category to filter modules or click any module icon below to inspect its live command simulator.
+              Click any module tab below to inspect its features and experience a live command simulation.
             </p>
-
-            {/* Category Filter Pills */}
-            <div className="pt-1.5 flex flex-wrap justify-center gap-1.5">
-              {hmsCategories.map((cat) => (
-                <button
-                  key={cat}
-                  type="button"
-                  onClick={() => setSelectedCategory(cat)}
-                  className={`px-3 py-1 rounded-full text-xs font-bold transition-all cursor-pointer ${
-                    selectedCategory === cat
-                      ? 'bg-[var(--t-primary,#00685e)] text-white shadow-xs'
-                      : 'bg-white hover:bg-slate-100 text-slate-700 border border-slate-200'
-                  }`}
-                >
-                  {cat}
-                </button>
-              ))}
-            </div>
 
             {/* 13 Module Grid Buttons */}
             <div className="pt-2 grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-8 gap-1.5">
-              {filteredModules.map((m) => {
-                const globalIdx = hmsModulesData.findIndex((item) => item.id === m.id)
-                const isSelected = activeModuleIdx === globalIdx
+              {hmsModulesData.map((m, idx) => {
+                const isSelected = activeModuleIdx === idx
                 return (
                   <button
                     key={m.id}
                     type="button"
-                    onClick={() => setActiveModuleIdx(globalIdx)}
+                    onClick={() => setActiveModuleIdx(idx)}
                     className={`p-2 rounded-xl border text-center transition-all duration-200 cursor-pointer flex flex-col items-center justify-center gap-1 ${
                       isSelected
                         ? 'bg-[var(--t-primary,#00685e)] text-white border-[var(--t-primary,#00685e)] shadow-md scale-[1.02]'
@@ -929,7 +974,109 @@ export default function OmedoHMS() {
         </div>
       </section>
 
-      {/* ── 7. FINAL HIGH-IMPACT CTA ── */}
+      {/* ── 7. TRUSTED BY LEADING INSTITUTIONS CONTAINER (FROM HOME) ── */}
+      <section
+        className="py-12 sm:py-14 md:py-16 my-6 sm:my-8 relative overflow-hidden shadow-2xl transition-all duration-500 bg-cover bg-center bg-no-repeat"
+        style={{
+          backgroundImage: `url(${trustedByBg})`,
+          backgroundColor: '#07152d',
+          borderTop: '1px solid rgba(245, 158, 11, 0.28)',
+          borderBottom: '1px solid rgba(245, 158, 11, 0.22)',
+          boxShadow: 'inset 0 1px 0 rgba(255, 255, 255, 0.15), inset 0 -1px 0 rgba(255, 255, 255, 0.05), 0 18px 36px -12px rgba(7, 21, 45, 0.5)',
+        }}
+      >
+        {/* Subtle Ambient Radial Overlay */}
+        <div
+          className="absolute inset-0 pointer-events-none"
+          style={{
+            background: 'radial-gradient(ellipse 70% 50% at 50% 50%, rgba(7, 21, 45, 0.4) 0%, rgba(7, 21, 45, 0.8) 100%)',
+          }}
+        />
+
+        {/* Content Header */}
+        <div className="site-wrapper text-center relative z-10 space-y-2 sm:space-y-3 mb-8 sm:mb-10">
+          <p
+            className="text-[10px] sm:text-[11px] font-black uppercase tracking-[0.25em] text-transparent bg-clip-text bg-gradient-to-r from-amber-200 via-yellow-100 to-amber-300 drop-shadow-sm"
+            style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}
+          >
+            TRUSTED BY LEADING INSTITUTIONS
+          </p>
+
+          <h2
+            className="text-xl sm:text-2xl lg:text-3xl 2xl:text-4xl font-extrabold text-white tracking-tight drop-shadow-md"
+            style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}
+          >
+            Healthcare Organizations &amp; Medical Centers
+          </h2>
+
+          <p
+            className="text-[11px] sm:text-xs md:text-sm font-semibold tracking-wide max-w-xl mx-auto text-blue-100/90"
+            style={{ fontFamily: "'Inter', sans-serif" }}
+          >
+            Hospitals &nbsp;<span className="text-amber-300 font-normal">•</span>&nbsp; Specialty Clinics &nbsp;<span className="text-amber-300 font-normal">•</span>&nbsp; Diagnostic Centers Across India
+          </p>
+
+          {/* Glowing Indicator Accent Bars */}
+          <div className="flex items-center justify-center gap-1.5 pt-0.5">
+            <span className="w-6 h-1 rounded-full bg-white/25" />
+            <span className="w-11 h-1.5 rounded-full bg-gradient-to-r from-amber-400 via-yellow-200 to-amber-400 shadow-[0_0_12px_rgba(251,191,36,0.9)]" />
+            <span className="w-6 h-1 rounded-full bg-white/25" />
+          </div>
+        </div>
+
+        {/* ── CLIENT LOGOS CAROUSEL / TICKER AS SEEN IN REFERENCE IMAGE ── */}
+        {activeClients.length > 0 && (
+          <div className="relative w-full overflow-hidden z-10 py-2">
+            {/* Edge Blur / Fade Mask Overlays */}
+            <div className="absolute left-0 top-0 bottom-0 w-12 sm:w-20 bg-gradient-to-r from-[#07152d]/80 to-transparent z-20 pointer-events-none" />
+            <div className="absolute right-0 top-0 bottom-0 w-12 sm:w-20 bg-gradient-to-l from-[#07152d]/80 to-transparent z-20 pointer-events-none" />
+
+            {/* Continuous Infinite Ticker Row (Boundaryless Clean Logos) */}
+            <div className="flex w-max animate-omedo-marquee items-center gap-6 sm:gap-10 md:gap-12 px-4">
+              {loopedClients.map((client, idx) => (
+                <div
+                  key={`${client.id || idx}-${idx}`}
+                  className="flex flex-col items-center shrink-0 group transition-transform duration-300 hover:scale-105 px-1 sm:px-1.5"
+                >
+                  {/* Uniform 4:3 Ratio Card (Borderless Edge-to-Edge with Hover Overlay) */}
+                  <div className="relative w-32 sm:w-36 md:w-40 aspect-[4/3] rounded-2xl shadow-md flex items-center justify-center overflow-hidden transition-all duration-300 group-hover:shadow-2xl group-hover:scale-105 cursor-pointer">
+                    <SafeImage
+                      src={client.logoUrl}
+                      alt={client.name}
+                      className="w-full h-full object-fill select-none rounded-2xl transition-transform duration-300 group-hover:scale-105"
+                      fallback={
+                        <div
+                          className="w-full h-full rounded-2xl flex items-center justify-center text-xs sm:text-sm font-black tracking-wider text-white shadow-inner p-2 text-center"
+                          style={{ background: client.badgeColor || '#00685e' }}
+                        >
+                          {client.logoText || (client.name || 'HOSPITAL').slice(0, 10).toUpperCase()}
+                        </div>
+                      }
+                    />
+
+                    {/* Dark Frosted Hover Overlay with Purple Pin and Location */}
+                    <div className="absolute inset-0 bg-[#0f172a]/80 backdrop-blur-[2px] rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col items-center justify-center p-2 z-10 select-none">
+                      <span className="material-symbols-outlined text-[#a855f7] text-xl sm:text-2xl drop-shadow-md mb-0.5">
+                        location_on
+                      </span>
+                      <span className="text-[10px] sm:text-[11px] font-black uppercase text-white tracking-wider text-center leading-tight drop-shadow-md px-1 line-clamp-2">
+                        {client.location || client.name || 'INDIA'}
+                      </span>
+                    </div>
+                  </div>
+
+                  {/* Client Name Label Below (Uniform Fixed Width Matching 4:3 Card) */}
+                  <p className="text-[10px] sm:text-[11px] font-semibold text-center truncate mt-2.5 w-32 sm:w-36 md:w-40 transition-colors tracking-wide text-blue-100/90 group-hover:text-amber-300 drop-shadow-sm">
+                    {client.name}
+                  </p>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+      </section>
+
+      {/* ── 8. FINAL HIGH-IMPACT CTA ── */}
       <section className="pt-2 sm:pt-3 pb-8 sm:pb-12 site-wrapper">
         <div className="bg-white rounded-3xl p-6 sm:p-8 lg:p-10 border border-[var(--t-border,#bcc9c6)]/60 shadow-xl text-center space-y-4 w-full max-w-5xl xl:max-w-6xl mx-auto">
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-bold bg-[#afecde]/70 text-[#00685e]">

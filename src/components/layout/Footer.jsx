@@ -3,9 +3,9 @@ import omedoLogo from '../../assets/omedo_logo.png'
 
 const clinicModules = [
   { name: 'Appointment', path: '/omedo-clinic?module=appointment' },
-  { name: 'ABDM', path: '/omedo-clinic?module=abdm' },
   { name: 'OPD', path: '/omedo-clinic?module=opd' },
   { name: 'EMR / Prescription', path: '/omedo-clinic?module=emr' },
+  { name: 'Service / Procedure Billing', path: '/omedo-clinic?module=billing' },
   { name: 'Reports & Analytics', path: '/omedo-clinic?module=reports' },
 ]
 

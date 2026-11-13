@@ -23,17 +23,6 @@ export const clinicModules = [
     stats: { primary: '45+ Appointments/Day', secondary: '0 Booking Clashes' }
   },
   {
-    id: 'abdm',
-    name: 'ABDM',
-    tag: 'NHA HEALTH ID',
-    icon: 'badge',
-    desc: 'Full Ayushman Bharat Digital Mission enablement with 14-digit ABHA ID creation, Scan & Share check-in, and digital health records.',
-    features: ['Instant 14-Digit ABHA ID', 'Express Scan & Share QR', 'Patient Consent Manager', 'Digital Health Card Printing'],
-    badge: 'ABDM Enabled',
-    previewType: 'abdm',
-    stats: { primary: '10-Sec Express Check-in', secondary: '100% Consent Controlled' }
-  },
-  {
     id: 'opd',
     name: 'OPD',
     tag: 'OUTPATIENT WORKFLOW',
@@ -54,6 +43,17 @@ export const clinicModules = [
     badge: 'Doctor Suite',
     previewType: 'emr',
     stats: { primary: '15-Sec Fast Rx', secondary: 'Digital Print & WhatsApp' }
+  },
+  {
+    id: 'billing',
+    name: 'Service/Procedure Billing',
+    tag: 'OUTPATIENT CASHIER & POS',
+    icon: 'receipt_long',
+    desc: 'Itemized billing for consultations, dressing, ECG, and minor clinical procedures with instant UPI payments and WhatsApp receipts.',
+    features: ['Custom Service Tariffs', 'Consultation + Procedure Bundling', 'Instant UPI QR Code POS', 'Direct WhatsApp Receipts'],
+    badge: 'Cashier & POS',
+    previewType: 'billing',
+    stats: { primary: '1-Click Invoice', secondary: 'Instant UPI Settlement' }
   },
   {
     id: 'reports',
@@ -617,38 +617,6 @@ export default function ProductsShowcase({ showComparison = true }) {
                         </div>
                       )}
 
-                      {currentModule.previewType === 'abdm' && (
-                        <div className="space-y-3">
-                          <div className="bg-gradient-to-br from-[#00685e] to-[#004d46] text-white p-4 rounded-2xl shadow-md space-y-3">
-                            <div className="flex items-center justify-between text-xs border-b border-white/20 pb-2">
-                              <div className="flex items-center gap-1.5 font-bold">
-                                <span className="material-symbols-outlined text-base">badge</span>
-                                <span>ABHA Digital Health Profile</span>
-                              </div>
-                              <span className="text-[10px] font-mono bg-white/20 px-2 py-0.5 rounded">NHA Ready</span>
-                            </div>
-                            <div className="grid grid-cols-2 gap-2 text-xs">
-                              <div>
-                                <div className="text-[10px] text-white/70">ABHA Number</div>
-                                <div className="font-mono font-bold text-sm tracking-wider text-[#85f5e6]">91-4829-1048-5729</div>
-                              </div>
-                              <div>
-                                <div className="text-[10px] text-white/70">ABHA Address</div>
-                                <div className="font-semibold text-xs text-white">priya.sharma@abdm</div>
-                              </div>
-                            </div>
-                            <div className="flex items-center justify-between pt-1 text-[11px] text-[#afecde]">
-                              <span>✓ Aadhaar e-KYC Linked</span>
-                              <span>✓ Scan & Share Auto-Linked</span>
-                            </div>
-                          </div>
-                          <div className="bg-white p-3 rounded-xl border border-slate-100 flex items-center justify-between text-xs">
-                            <span className="font-semibold text-slate-700">Counter QR Scan & Share</span>
-                            <span className="font-bold text-[var(--t-primary,#00685e)]">Token #14 Generated in 8 Secs</span>
-                          </div>
-                        </div>
-                      )}
-
                       {currentModule.previewType === 'opd' && (
                         <div className="flex-1 flex flex-col justify-between space-y-3">
                           <div>
@@ -693,6 +661,30 @@ export default function ProductsShowcase({ showComparison = true }) {
                                   <div className="text-slate-500">{drug.dose} • {drug.timing} • {drug.duration}</div>
                                 </div>
                               ))}
+                            </div>
+                          </div>
+                        </div>
+                      )}
+
+                      {currentModule.previewType === 'billing' && (
+                        <div className="space-y-3">
+                          <div className="bg-white p-3.5 rounded-xl border border-slate-100 space-y-2 text-xs">
+                            <div className="flex justify-between items-center border-b pb-1.5 font-bold text-slate-800">
+                              <span>Service &amp; Procedure Receipt</span>
+                              <span className="text-[10px] font-mono text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded font-bold">Paid UPI</span>
+                            </div>
+                            <div className="divide-y divide-slate-100 text-[11px]">
+                              <div className="py-1 flex justify-between"><span>Dr. Consultation (Cardiology)</span><span className="font-bold">₹800</span></div>
+                              <div className="py-1 flex justify-between"><span>ECG 12-Lead Diagnostic Trace</span><span className="font-bold">₹500</span></div>
+                              <div className="py-1 flex justify-between"><span>Wound Dressing &amp; Sterile Bandage</span><span className="font-bold">₹350</span></div>
+                              <div className="py-1.5 flex justify-between font-bold text-[#00685e] text-xs border-t">
+                                <span>Total Settled Amount</span>
+                                <span>₹1,650</span>
+                              </div>
+                            </div>
+                            <div className="pt-1 text-[10px] text-emerald-600 font-semibold flex items-center justify-between">
+                              <span>✓ Digital Receipt sent on WhatsApp</span>
+                              <span className="text-slate-500 font-normal">Counter 01</span>
                             </div>
                           </div>
                         </div>
@@ -1267,8 +1259,13 @@ export default function ProductsShowcase({ showComparison = true }) {
                     <td className="py-3 px-4 text-emerald-600 font-bold">✓ Included (Multi-Department)</td>
                   </tr>
                   <tr className="hover:bg-slate-50/70 transition-colors">
+                    <td className="py-3 px-4 font-semibold text-slate-900">Service &amp; Procedure Billing POS</td>
+                    <td className="py-3 px-4 text-emerald-600 font-bold">✓ Included (Outpatient Tariffs)</td>
+                    <td className="py-3 px-4 text-emerald-600 font-bold">✓ Full IPD/OPD Billing Command</td>
+                  </tr>
+                  <tr className="hover:bg-slate-50/70 transition-colors">
                     <td className="py-3 px-4 font-semibold text-slate-900">ABDM &amp; ABHA Express Check-In</td>
-                    <td className="py-3 px-4 text-emerald-600 font-bold">✓ Included</td>
+                    <td className="py-3 px-4 text-slate-400">— Enterprise HMS Module</td>
                     <td className="py-3 px-4 text-emerald-600 font-bold">✓ Full M1, M2 &amp; M3</td>
                   </tr>
                   <tr className="hover:bg-slate-50/70 transition-colors">
