@@ -2,33 +2,34 @@ import { Link } from 'react-router-dom'
 import omedoLogo from '../../assets/omedo_logo.png'
 
 const clinicModules = [
-  { name: 'Appointment', path: '/products?product=clinic&module=appointment' },
-  { name: 'ABDM', path: '/products?product=clinic&module=abdm' },
-  { name: 'OPD', path: '/products?product=clinic&module=opd' },
-  { name: 'EMR / Prescription', path: '/products?product=clinic&module=emr' },
-  { name: 'Reports & Analytics', path: '/products?product=clinic&module=reports' },
+  { name: 'Appointment', path: '/omedo-clinic?module=appointment' },
+  { name: 'ABDM', path: '/omedo-clinic?module=abdm' },
+  { name: 'OPD', path: '/omedo-clinic?module=opd' },
+  { name: 'EMR / Prescription', path: '/omedo-clinic?module=emr' },
+  { name: 'Reports & Analytics', path: '/omedo-clinic?module=reports' },
 ]
 
 const hmsModules = [
-  { name: 'Appointment', path: '/products?product=hms&module=appointment' },
-  { name: 'ABDM', path: '/products?product=hms&module=abdm' },
-  { name: 'OPD', path: '/products?product=hms&module=opd' },
-  { name: 'EMR / Prescription', path: '/products?product=hms&module=emr' },
-  { name: 'IPD', path: '/products?product=hms&module=ipd' },
-  { name: 'Day Care', path: '/products?product=hms&module=daycare' },
-  { name: 'Emergency', path: '/products?product=hms&module=emergency' },
-  { name: 'Pharmacy', path: '/products?product=hms&module=pharmacy' },
-  { name: 'Laboratory', path: '/products?product=hms&module=laboratory' },
-  { name: 'Radiology', path: '/products?product=hms&module=radiology' },
-  { name: 'Nursing', path: '/products?product=hms&module=nursing' },
-  { name: 'Billing & Accounts', path: '/products?product=hms&module=billing' },
-  { name: 'TPA / Insurance', path: '/products?product=hms&module=tpa' },
-  { name: 'Reports & Analytics', path: '/products?product=hms&module=reports' },
+  { name: 'Appointment', path: '/omedo-hms?module=appointment' },
+  { name: 'ABDM', path: '/omedo-hms?module=abdm' },
+  { name: 'OPD', path: '/omedo-hms?module=opd' },
+  { name: 'EMR / Prescription', path: '/omedo-hms?module=emr' },
+  { name: 'IPD', path: '/omedo-hms?module=ipd' },
+  { name: 'Day Care', path: '/omedo-hms?module=daycare' },
+  { name: 'Emergency', path: '/omedo-hms?module=emergency' },
+  { name: 'Pharmacy', path: '/omedo-hms?module=pharmacy' },
+  { name: 'Laboratory', path: '/omedo-hms?module=laboratory' },
+  { name: 'Radiology', path: '/omedo-hms?module=radiology' },
+  { name: 'Nursing', path: '/omedo-hms?module=nursing' },
+  { name: 'Billing & Accounts', path: '/omedo-hms?module=billing' },
+  { name: 'TPA / Insurance', path: '/omedo-hms?module=tpa' },
+  { name: 'Reports & Analytics', path: '/omedo-hms?module=reports' },
 ]
 
 const mainLinks = [
   { name: 'Home', path: '/' },
-  { name: 'Products', path: '/products' },
+  { name: 'OMEDO Clinic', path: '/omedo-clinic' },
+  { name: 'OMEDO HMS', path: '/omedo-hms' },
   { name: 'About Us', path: '/about' },
   { name: 'Our Advisors', path: '/advisors-consultants' },
   { name: 'Contact Us', path: '/contact' },
@@ -73,7 +74,7 @@ export default function Footer() {
           <div className="lg:col-span-2 space-y-3">
             <h4 className="text-xs font-bold uppercase tracking-wider" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
               <Link
-                to="/products?product=clinic"
+                to="/omedo-clinic"
                 className="text-white hover:text-cyan-300 hover:underline transition-colors inline-block"
               >
                 OMEDO Clinic
@@ -98,7 +99,7 @@ export default function Footer() {
           <div className="lg:col-span-2 space-y-3">
             <h4 className="text-xs font-bold uppercase tracking-wider" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
               <Link
-                to="/products?product=hms"
+                to="/omedo-hms"
                 className="text-white hover:text-cyan-300 hover:underline transition-colors inline-block"
               >
                 OMEDO HMS

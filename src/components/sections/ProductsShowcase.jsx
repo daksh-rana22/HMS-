@@ -286,42 +286,6 @@ const sampleLabOrders = [
   { id: 'LAB-9014', test: 'Liver Function Test (LFT)', patient: 'Kavita Reddy', status: 'Sample Collected' },
 ]
 
-const getModuleRoute = (id) => {
-  switch (id) {
-    case 'appointment':
-      return '/modules/clinical?module=appointments#03'
-    case 'abdm':
-      return '/abdm-integration'
-    case 'opd':
-      return '/modules/clinical?module=opd#06'
-    case 'emr':
-      return '/modules/clinical?module=doctor#09'
-    case 'emergency':
-      return '/modules/clinical?module=emergency#05'
-    case 'reports':
-      return '/modules/reports'
-    case 'ipd':
-      return '/modules/ipd'
-    case 'daycare':
-      return '/modules/ipd'
-    case 'nursing':
-      return '/modules/ipd'
-    case 'laboratory':
-      return '/modules/laboratory'
-    case 'billing':
-    case 'tpa':
-    case 'pharmacy':
-      return '/modules/billing-accounts'
-    case 'radiology':
-      return '/modules/clinical'
-    case 'ot':
-      return '/modules/clinical'
-    case 'mrd':
-      return '/modules/reports'
-    default:
-      return '/modules/clinical'
-  }
-}
 
 export default function ProductsShowcase({ showComparison = true }) {
   const [searchParams] = useSearchParams()
@@ -537,10 +501,11 @@ export default function ProductsShowcase({ showComparison = true }) {
                       <span className="material-symbols-outlined text-sm">arrow_forward</span>
                     </Link>
                     <Link
-                      to="/modules/clinical"
-                      className="w-full sm:w-auto lg:w-full inline-flex items-center justify-center gap-2 px-6 py-3 rounded-full text-xs sm:text-sm font-bold bg-white border border-[var(--t-border)] text-[var(--t-primary,#00685e)] hover:bg-[#eaf6f8] transition-all shadow-xs"
+                      to="/omedo-clinic"
+                      className="w-full sm:w-auto lg:w-full inline-flex items-center justify-center gap-2 px-6 py-2.5 rounded-full text-xs sm:text-sm font-bold bg-white border border-[var(--t-border,#bcc9c6)] text-[var(--t-primary,#00685e)] hover:bg-[#eaf6f8] transition-all shadow-xs"
                     >
-                      <span>Explore Clinic Modules</span>
+                      <span>View Dedicated Clinic Page</span>
+                      <span className="material-symbols-outlined text-sm">arrow_forward</span>
                     </Link>
                   </div>
                 </div>
@@ -615,16 +580,6 @@ export default function ProductsShowcase({ showComparison = true }) {
                             <span>{feat}</span>
                           </div>
                         ))}
-                      </div>
-
-                      <div className="pt-2">
-                        <Link
-                          to={getModuleRoute(currentModule.id)}
-                          className="inline-flex items-center gap-2 bg-[#00685e] hover:bg-[#005149] text-white px-5 py-2.5 rounded-full text-xs sm:text-sm font-bold shadow-md hover:scale-[1.02] active:scale-95 transition-all cursor-pointer group"
-                        >
-                          <span>Explore Features</span>
-                          <span className="material-symbols-outlined text-sm sm:text-base group-hover:translate-x-1 transition-transform">arrow_forward</span>
-                        </Link>
                       </div>
                     </div>
 
@@ -864,8 +819,15 @@ export default function ProductsShowcase({ showComparison = true }) {
                       <span className="material-symbols-outlined text-sm">arrow_forward</span>
                     </Link>
                     <Link
+                      to="/omedo-hms"
+                      className="w-full sm:w-auto lg:w-full inline-flex items-center justify-center gap-2 px-6 py-2.5 rounded-full text-xs font-bold bg-white border border-[var(--t-border,#bcc9c6)] text-[var(--t-primary,#00685e)] hover:bg-[#eaf6f8] transition-all shadow-xs"
+                    >
+                      <span>View Dedicated HMS Page</span>
+                      <span className="material-symbols-outlined text-sm">arrow_forward</span>
+                    </Link>
+                    <Link
                       to="/modules"
-                      className="w-full sm:w-auto lg:w-full inline-flex items-center justify-center gap-2 px-6 py-3 rounded-full text-xs sm:text-sm font-bold bg-white border border-[var(--t-border)] text-[var(--t-primary,#00685e)] hover:bg-[#eaf6f8] transition-all shadow-xs"
+                      className="w-full sm:w-auto lg:w-full inline-flex items-center justify-center gap-2 px-6 py-2.5 rounded-full text-xs font-bold bg-slate-50 border border-[var(--t-border)] text-slate-700 hover:bg-[#eaf6f8] transition-all shadow-2xs"
                     >
                       <span>Explore All 16 Modules</span>
                     </Link>
@@ -946,16 +908,6 @@ export default function ProductsShowcase({ showComparison = true }) {
                             <span>{feat}</span>
                           </div>
                         ))}
-                      </div>
-
-                      <div className="pt-2">
-                        <Link
-                          to={getModuleRoute(currentModule.id)}
-                          className="inline-flex items-center gap-2 bg-[#00685e] hover:bg-[#005149] text-white px-5 py-2.5 rounded-full text-xs sm:text-sm font-bold shadow-md hover:scale-[1.02] active:scale-95 transition-all cursor-pointer group"
-                        >
-                          <span>Explore Features</span>
-                          <span className="material-symbols-outlined text-sm sm:text-base group-hover:translate-x-1 transition-transform">arrow_forward</span>
-                        </Link>
                       </div>
                     </div>
 

@@ -17,6 +17,8 @@ const Contact = lazy(() => import('../pages/Contact/Contact'))
 const Login = lazy(() => import('../pages/Login/Login'))
 const ABDM = lazy(() => import('../pages/ABDM/ABDM'))
 const Products = lazy(() => import('../pages/Products/Products'))
+const OmedoClinic = lazy(() => import('../pages/OmedoClinic/OmedoClinic'))
+const OmedoHMS = lazy(() => import('../pages/OmedoHMS/OmedoHMS'))
 const Terms = lazy(() => import('../pages/Terms/Terms'))
 const Privacy = lazy(() => import('../pages/Privacy/Privacy'))
 const Refund = lazy(() => import('../pages/Refund/Refund'))
@@ -54,6 +56,10 @@ const router = createBrowserRouter([
     errorElement: <RouteErrorBoundary />,
     children: [
       { path: '/', element: <Suspense fallback={<Loader />}><Home /></Suspense> },
+      { path: '/omedo-clinic', element: <Suspense fallback={<Loader />}><OmedoClinic /></Suspense> },
+      { path: '/clinic', element: <Suspense fallback={<Loader />}><OmedoClinic /></Suspense> },
+      { path: '/omedo-hms', element: <Suspense fallback={<Loader />}><OmedoHMS /></Suspense> },
+      { path: '/hms', element: <Suspense fallback={<Loader />}><OmedoHMS /></Suspense> },
       { path: '/products', element: <Suspense fallback={<Loader />}><Products /></Suspense> },
       { path: '/modules', element: <Suspense fallback={<Loader />}><Modules /></Suspense> },
       { path: '/modules/billing-accounts', element: <Suspense fallback={<Loader />}><BillingAccounts /></Suspense> },

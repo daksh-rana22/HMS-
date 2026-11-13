@@ -332,7 +332,14 @@ export default function Navbar() {
                         fontWeight: location.pathname === link.path ? '700' : '600',
                       }}
                     >
-                      <span>{link.name}</span>
+                      <div className="flex items-center gap-2">
+                        {link.icon && (
+                          <span className="material-symbols-outlined text-lg" style={{ color: 'var(--t-primary)' }}>
+                            {link.icon}
+                          </span>
+                        )}
+                        <span>{link.name}</span>
+                      </div>
                       <span className="material-symbols-outlined text-sm opacity-60">chevron_right</span>
                     </Link>
                   </motion.div>

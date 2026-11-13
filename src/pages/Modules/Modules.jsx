@@ -701,12 +701,6 @@ export default function Modules() {
                   ))}
                 </div>
               </div>
-
-              <div className="pt-1">
-                <Link to="/modules/clinical" className="inline-flex items-center gap-2 bg-[#2d685e] text-white px-5 py-2.5 2xl:px-6 2xl:py-3 rounded-full text-xs sm:text-sm 2xl:text-base font-bold shadow-md hover:bg-[#00685e] transition-all cursor-pointer">
-                  Explore Clinical Features <span className="material-symbols-outlined text-sm 2xl:text-base">arrow_forward</span>
-                </Link>
-              </div>
             </div>
 
             <div className="lg:col-span-7 bg-white/95 backdrop-blur-sm rounded-2xl border border-[#bcc9c6]/40 shadow-sm overflow-hidden flex flex-col justify-between min-h-[420px] sm:h-[400px] 2xl:h-[480px] 3xl:h-[500px] relative z-10">
@@ -1060,16 +1054,6 @@ export default function Modules() {
                   ))}
                 </div>
               </div>
-
-              <div className="pt-1">
-                <Link
-                  to="/modules/ipd"
-                  className="inline-flex items-center gap-2 bg-[#2d685e] text-white px-5 py-2.5 2xl:px-6 2xl:py-3 rounded-full text-xs sm:text-sm 2xl:text-base font-bold shadow-md hover:bg-[#00685e] transition-all"
-                  style={{ fontFamily: "'Inter', sans-serif" }}
-                >
-                  Explore IPD Features <span className="material-symbols-outlined text-sm 2xl:text-base">arrow_forward</span>
-                </Link>
-              </div>
             </div>
 
             {/* Right: Interactive IPD Card */}
@@ -1354,12 +1338,6 @@ export default function Modules() {
                   ))}
                 </div>
               </div>
-
-              <div className="pt-1">
-                <Link to="/modules/laboratory" className="inline-flex items-center gap-2 bg-[#00685e] text-white px-5 py-2.5 2xl:px-6 2xl:py-3 rounded-full text-xs sm:text-sm 2xl:text-base font-bold shadow-md hover:bg-[#005049] transition-all">
-                  Explore Laboratory Features <span className="material-symbols-outlined text-sm 2xl:text-base">arrow_forward</span>
-                </Link>
-              </div>
             </div>
 
             <div className="lg:col-span-7 bg-white/95 backdrop-blur-sm rounded-2xl border border-[#bcc9c6]/40 shadow-sm overflow-hidden flex flex-col justify-between min-h-[420px] sm:h-[400px] 2xl:h-[480px] 3xl:h-[500px] relative z-10">
@@ -1529,12 +1507,6 @@ export default function Modules() {
                     </div>
                   ))}
                 </div>
-              </div>
-
-              <div className="pt-1">
-                <Link to="/modules/billing-accounts" className="inline-flex items-center gap-2 bg-[#008378] text-white px-5 py-2.5 2xl:px-6 2xl:py-3 rounded-full text-xs sm:text-sm 2xl:text-base font-bold shadow-md hover:bg-[#00685e] transition-all cursor-pointer">
-                  Explore Billing & Accounts Features <span className="material-symbols-outlined text-sm 2xl:text-base">arrow_forward</span>
-                </Link>
               </div>
             </div>
 
@@ -1729,16 +1701,6 @@ export default function Modules() {
                   ))}
                 </div>
               </div>
-
-              <div className="pt-1">
-                <Link
-                  to="/abdm-integration"
-                  className="inline-flex items-center gap-2 bg-[#2d685e] text-white px-5 py-2.5 2xl:px-6 2xl:py-3 rounded-full text-xs sm:text-sm 2xl:text-base font-bold shadow-md hover:bg-[#00685e] transition-all"
-                  style={{ fontFamily: "'Inter', sans-serif" }}
-                >
-                  Explore ABDM Integration <span className="material-symbols-outlined text-sm 2xl:text-base">arrow_forward</span>
-                </Link>
-              </div>
             </div>
 
             {/* Right Column: Interactive Card */}
@@ -1929,12 +1891,6 @@ export default function Modules() {
                     </div>
                   ))}
                 </div>
-              </div>
-
-              <div className="pt-1">
-                <Link to="/modules/reports" className="inline-flex items-center gap-2 bg-[#00685e] text-white px-5 py-2.5 2xl:px-6 2xl:py-3 rounded-full text-xs sm:text-sm 2xl:text-base font-bold shadow-md hover:bg-[#005049] transition-all">
-                  Explore Reports & Analytics <span className="material-symbols-outlined text-sm 2xl:text-base">arrow_forward</span>
-                </Link>
               </div>
             </div>
 
@@ -2288,18 +2244,6 @@ export default function Modules() {
                     </div>
                   ))}
                 </div>
-              </div>
-
-              {/* Action Link */}
-              <div className="pt-1">
-                <Link 
-                  to="/modules/it-admin"
-                  className="inline-flex items-center gap-2 bg-[#326c62] text-white px-5 py-2.5 2xl:px-6 2xl:py-3 rounded-full text-xs sm:text-sm 2xl:text-base font-bold shadow-md hover:bg-[#00685e] transition-all"
-                  style={{ fontFamily: "'Inter', sans-serif" }}
-                >
-                  Explore IT Administration
-                  <span className="material-symbols-outlined text-sm 2xl:text-base">arrow_forward</span>
-                </Link>
               </div>
             </div>
 
