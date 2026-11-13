@@ -8,7 +8,7 @@ const fadeUp = {
   visible: { opacity: 1, y: 0, scale: 1, transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1] } },
 }
 
-// ── 16 COMPREHENSIVE HMS MODULES ──
+// ── 13 COMPREHENSIVE HMS MODULES ──
 const hmsModulesData = [
   {
     id: 'appointment',
@@ -72,7 +72,7 @@ const hmsModulesData = [
     features: [
       'Specialty clinical templates (Cardio, Ortho, Neuro, etc.)',
       'Digital hospital drug formulary & dosage calculators',
-      'Automated bi-directional lab & radiology order entry',
+      'Automated bi-directional lab order entry',
       'Electronic discharge summary builder with e-Sign',
       'Known drug allergy & cross-interaction warnings',
       'Longitudinal medical history and timeline flowsheets',
@@ -96,43 +96,9 @@ const hmsModulesData = [
     ],
   },
   {
-    id: 'daycare',
-    name: 'Day Care Management',
-    category: 'Clinical & Inpatient',
-    tag: 'SHORT-STAY CARE',
-    icon: 'bed',
-    badge: 'Short-Stay Suite',
-    desc: 'Streamlined workflows for short-stay procedures (4-6 hours), chemotherapy cycles, hemodialysis sessions, endoscopy, and same-day surgical observation beds.',
-    features: [
-      'Same-day procedure bed allocation & turnover tracking',
-      'Dialysis & chemotherapy cycle session scheduling',
-      'Procedure time tracking with nursing notes',
-      'Day care packaged invoicing and insurance sync',
-      'Fast-track discharge clearance within 10 minutes',
-      'Automated follow-up reminders post-discharge',
-    ],
-  },
-  {
-    id: 'ot',
-    name: 'Operation Theatre (OT)',
-    category: 'Surgical & Emergency',
-    tag: 'SURGICAL SUITE COMMAND',
-    icon: 'local_hospital',
-    badge: 'Surgical Suite',
-    desc: 'Operation Theatre slot booking, Pre-Anesthesia Checkup (PAC) records, WHO surgical safety checklists, surgeon/anesthetist rosters, and intra-operative logs.',
-    features: [
-      'Multi-table OT slot booking & conflict resolution',
-      'Digital Pre-Anesthesia Checkup (PAC) clearance forms',
-      'WHO surgical safety checklist enforcement',
-      'Surgeon, anesthetist & scrub nurse roster tracking',
-      'Post-op recovery room and PACU bed tracking',
-      'Surgical implant and sterile consumable indenting',
-    ],
-  },
-  {
     id: 'emergency',
     name: '24/7 Emergency & Trauma',
-    category: 'Surgical & Emergency',
+    category: 'Emergency & Critical Care',
     tag: '24/7 CRITICAL CARE',
     icon: 'emergency',
     badge: 'Critical Care',
@@ -142,7 +108,7 @@ const hmsModulesData = [
       'Instant emergency UHID generation in under 5 seconds',
       'Immediate emergency deposit & credit billing',
       'Critical Code Blue, Code Red, and Trauma alerts',
-      'Direct priority bed transfer to ICU / Cath Lab / OT',
+      'Direct priority bed transfer to ICU and High Dependency Units',
       'Medico-Legal Case (MLC) registration with police intimation',
     ],
   },
@@ -178,23 +144,6 @@ const hmsModulesData = [
       'Digital pathologist signature and verification flow',
       'Instant SMS/WhatsApp delivery of verified PDF reports',
       'NABL compliant quality control (QC) tracking',
-    ],
-  },
-  {
-    id: 'radiology',
-    name: 'Radiology (RIS & PACS)',
-    category: 'Diagnostics & Pharmacy',
-    tag: 'RIS & PACS IMAGING',
-    icon: 'radiology',
-    badge: 'Imaging Suite',
-    desc: 'Radiology Information System (RIS) with modality worklist sync (X-Ray, CT, MRI, Ultrasound), direct DICOM PACS image link into doctor EMR, and report builder.',
-    features: [
-      'DICOM Modality Worklist (MWL) automated scheduling',
-      'Seamless link to hospital PACS archive for direct viewing',
-      'Radiologist reporting suite with pre-formatted templates',
-      'Stat / Emergency scan prioritization flag',
-      'Contrast media reaction logging and safety alerts',
-      'Cross-departmental radiology film and digital push',
     ],
   },
   {
@@ -290,7 +239,7 @@ const sampleBeds = [
   { ward: 'General Ward - Male', total: 30, occupied: 24, available: 6, status: 'Normal' },
   { ward: 'General Ward - Female', total: 30, occupied: 22, available: 8, status: 'Normal' },
   { ward: 'Deluxe Private Rooms', total: 12, occupied: 10, available: 2, status: 'High Occupancy' },
-  { ward: 'Day Care Observation', total: 10, occupied: 6, available: 4, status: 'Fast Turnover' },
+  { ward: 'High Dependency Unit (HDU)', total: 8, occupied: 6, available: 2, status: 'Active Monitoring' },
 ]
 
 const sampleEmergencyTriage = [
@@ -315,10 +264,10 @@ const sampleLabOrders = [
 ]
 
 const hmsCategories = [
-  'All Modules (16)',
+  'All Modules (13)',
   'Clinical & Inpatient',
+  'Emergency & Critical Care',
   'Diagnostics & Pharmacy',
-  'Surgical & Emergency',
   'Financial & Insurance',
   'Governance & Records',
 ]
@@ -333,8 +282,8 @@ const hmsFaqs = [
     a: 'The system features an interactive visual Bed Matrix that displays real-time occupancy across all wards (ICU, Private, Semi-Private, General). Clinicians and admission desks can allocate beds, schedule transfers, reserve beds for planned surgeries, and view provisional billing estimates instantly.',
   },
   {
-    q: 'Can our laboratory analyzers and radiology PACS machines be integrated?',
-    a: 'Yes. OMEDO Laboratory integrates bi-directionally with standard clinical pathology analyzers using HL7 / ASTM protocols, eliminating manual result typing. Our Radiology module integrates seamlessly with DICOM PACS archives so doctors can view scans directly inside patient EMR files.',
+    q: 'Can our laboratory analyzers and external diagnostic devices be integrated?',
+    a: 'Yes. OMEDO Laboratory integrates bi-directionally with standard clinical pathology analyzers using HL7 / ASTM protocols, eliminating manual result typing and pushing verified digital test reports directly into patient EMR files.',
   },
   {
     q: 'How does the TPA and cashless insurance claim workflow work?',
@@ -352,13 +301,13 @@ const hmsFaqs = [
 
 export default function OmedoHMS() {
   const [searchParams] = useSearchParams()
-  const [selectedCategory, setSelectedCategory] = useState('All Modules (16)')
+  const [selectedCategory, setSelectedCategory] = useState('All Modules (13)')
   const [activeModuleIdx, setActiveModuleIdx] = useState(0)
   const [openFaq, setOpenFaq] = useState(null)
 
   // Filter modules by category
   const filteredModules = hmsModulesData.filter((m) => {
-    if (selectedCategory === 'All Modules (16)') return true
+    if (selectedCategory === 'All Modules (13)') return true
     return m.category === selectedCategory
   })
 
@@ -372,7 +321,7 @@ export default function OmedoHMS() {
           m.name.toLowerCase().replace(/[^a-z0-9]/g, '') === moduleParam.toLowerCase().replace(/[^a-z0-9]/g, '')
       )
       if (idx !== -1) {
-        setSelectedCategory('All Modules (16)')
+        setSelectedCategory('All Modules (13)')
         setActiveModuleIdx(idx)
         const el = document.getElementById('hms-modules')
         if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' })
@@ -420,7 +369,7 @@ export default function OmedoHMS() {
             </h1>
 
             <p className="text-base sm:text-lg text-[var(--t-text-secondary,#3d4947)] leading-relaxed max-w-3xl mx-auto font-normal">
-              A unified healthcare infrastructure connecting clinical, diagnostic, inpatient, and financial operations across 16 synchronized modules. From emergency triage and IPD bed census to operation theatre scheduling, pharmacy POS, LIS lab, RIS radiology, and cashless insurance claims.
+              A unified healthcare infrastructure connecting clinical, diagnostic, inpatient, and financial operations across 13 synchronized modules. From emergency triage and IPD bed census to pharmacy POS, diagnostic laboratory LIS, nursing MAR charting, and cashless insurance claims.
             </p>
           </motion.div>
 
@@ -452,7 +401,7 @@ export default function OmedoHMS() {
               href="#hms-modules"
               className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-7 py-3.5 rounded-full text-sm font-bold bg-white text-[var(--t-primary,#00685e)] border border-[var(--t-primary,#00685e)]/40 hover:bg-[#eaf6f8] transition-all shadow-xs"
             >
-              <span>Explore 16 Hospital Modules</span>
+              <span>Explore 13 Hospital Modules</span>
               <span className="material-symbols-outlined text-base">expand_more</span>
             </a>
           </motion.div>
@@ -460,7 +409,7 @@ export default function OmedoHMS() {
           {/* Key Stat Cards Strip */}
           <motion.div initial="hidden" animate="visible" variants={fadeUp} className="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4 pt-6">
             {[
-              { num: '16 Modules', label: 'Hospital Wide Integration', icon: 'domain' },
+              { num: '13 Modules', label: 'Hospital Wide Integration', icon: 'domain' },
               { num: 'ABDM M1, M2, M3', label: 'NHA Certified Interoperability', icon: 'verified' },
               { num: '360° Bed Matrix', label: 'Real-Time Ward & ICU Census', icon: 'hotel' },
               { num: 'Zero Leakage', label: 'Itemized Billing & TPA Sync', icon: 'receipt_long' },
@@ -508,9 +457,9 @@ export default function OmedoHMS() {
               desc: 'Color-coded Red/Yellow/Green prioritization, 5-second emergency UHID dispatch, immediate bedside orders, and Code Blue alerts.',
             },
             {
-              icon: 'local_hospital',
-              title: 'OT & PAC Suite',
-              desc: 'Multi-theatre slot scheduling, Pre-Anesthesia Checkups (PAC), WHO surgical safety checklists, and intra-operative consumable logging.',
+              icon: 'receipt_long',
+              title: 'Billing & Financial Command',
+              desc: 'Itemized consolidated IPD/OPD billing, advance receipts, multi-tier refund approvals, custom tariffs, and direct Tally/GST sync.',
             },
             {
               icon: 'biotech',
@@ -518,9 +467,9 @@ export default function OmedoHMS() {
               desc: 'Barcode sample generation, bi-directional analyzer interfacing, delta check abnormal alerts, and automated pathologist e-Sign.',
             },
             {
-              icon: 'radiology',
-              title: 'RIS & DICOM PACS',
-              desc: 'Modality worklist integration (X-Ray, CT, MRI, USG), immediate image viewing inside doctor EMR, and digital radiologist reports.',
+              icon: 'analytics',
+              title: 'Executive BI & Quality MIS',
+              desc: '12+ analytical sub-modules tracking bed occupancy (BOR), length of stay (ALOS), department revenue, and NABH quality indicators.',
             },
             {
               icon: 'medication',
@@ -556,12 +505,12 @@ export default function OmedoHMS() {
         </div>
       </section>
 
-      {/* ── 3. INTERACTIVE 16 MODULES GRID & LIVE SIMULATOR ── */}
+      {/* ── 3. INTERACTIVE 13 MODULES GRID & LIVE SIMULATOR ── */}
       <section id="hms-modules" className="py-4 sm:py-6 lg:py-8 bg-white/70 border-y border-[var(--t-border,#bcc9c6)]/30 scroll-mt-20">
         <div className="site-wrapper space-y-3 sm:space-y-4">
           <div className="text-center w-full mx-auto space-y-1 sm:space-y-1.5">
             <span className="text-[11px] font-extrabold uppercase tracking-widest text-[var(--t-primary,#00685e)]">
-              16 ENTERPRISE HOSPITAL MODULES
+              13 ENTERPRISE HOSPITAL MODULES
             </span>
             <h2 className="text-xl sm:text-2xl lg:text-3xl font-extrabold text-[var(--t-text,#121d1f)]" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
               Explore the Complete OMEDO HMS Suite
@@ -588,7 +537,7 @@ export default function OmedoHMS() {
               ))}
             </div>
 
-            {/* 16 Module Grid Buttons */}
+            {/* 13 Module Grid Buttons */}
             <div className="pt-2 grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-8 gap-1.5">
               {filteredModules.map((m) => {
                 const globalIdx = hmsModulesData.findIndex((item) => item.id === m.id)
@@ -747,34 +696,6 @@ export default function OmedoHMS() {
                     </div>
                   )}
 
-                  {/* OT Screen */}
-                  {activeModule.id === 'ot' && (
-                    <div className="space-y-3">
-                      <div className="bg-white p-4 rounded-xl border border-slate-200 space-y-3 shadow-2xs text-xs">
-                        <div className="flex justify-between items-center border-b pb-2">
-                          <div className="font-bold text-slate-800">Operation Theatre Active Slot Schedule</div>
-                          <span className="text-[10px] px-2 py-0.5 rounded bg-emerald-100 text-emerald-800 font-bold">Theatre 01 Active</span>
-                        </div>
-                        <div className="space-y-2 text-[11px]">
-                          <div className="p-2.5 bg-slate-50 rounded-lg flex justify-between items-center">
-                            <div>
-                              <div className="font-bold text-slate-800">Laparoscopic Cholecystectomy</div>
-                              <div className="text-slate-500 text-[10px]">Surgeon: Dr. S. K. Sharma • Anesthetist: Dr. N. Mehra • OT-01</div>
-                            </div>
-                            <span className="text-[10px] font-bold text-blue-700 bg-blue-100 px-2 py-1 rounded">In Surgery</span>
-                          </div>
-                          <div className="p-2.5 bg-slate-50 rounded-lg flex justify-between items-center">
-                            <div>
-                              <div className="font-bold text-slate-800">Total Knee Replacement (TKR)</div>
-                              <div className="text-slate-500 text-[10px]">Surgeon: Dr. A. Verma • PAC Status: Cleared • OT-02 (01:00 PM)</div>
-                            </div>
-                            <span className="text-[10px] font-bold text-emerald-700 bg-emerald-100 px-2 py-1 rounded">PAC Cleared</span>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  )}
-
                   {/* Pharmacy Screen */}
                   {activeModule.id === 'pharmacy' && (
                     <div className="space-y-3">
@@ -838,9 +759,9 @@ export default function OmedoHMS() {
                         </div>
                         <div className="divide-y divide-slate-100 text-[11px]">
                           <div className="py-1.5 flex justify-between"><span>Bed &amp; ICU Charges (4 Days)</span><span className="font-bold">₹28,000</span></div>
-                          <div className="py-1.5 flex justify-between"><span>Surgeon &amp; PAC Team Fee</span><span className="font-bold">₹45,000</span></div>
+                          <div className="py-1.5 flex justify-between"><span>Doctor &amp; Nursing Care Fee</span><span className="font-bold">₹45,000</span></div>
                           <div className="py-1.5 flex justify-between"><span>Pharmacy &amp; Consumables</span><span className="font-bold">₹18,500</span></div>
-                          <div className="py-1.5 flex justify-between"><span>Diagnostic Lab &amp; Radiology</span><span className="font-bold">₹12,400</span></div>
+                          <div className="py-1.5 flex justify-between"><span>Diagnostic Pathology Lab</span><span className="font-bold">₹12,400</span></div>
                           <div className="py-2 flex justify-between font-bold text-[#00685e] text-xs border-t pt-2">
                             <span>Total Net Payable</span>
                             <span>₹1,03,900</span>
@@ -851,7 +772,7 @@ export default function OmedoHMS() {
                   )}
 
                   {/* Default Preview Screen for Other Modules */}
-                  {!['ipd', 'emergency', 'ot', 'pharmacy', 'laboratory', 'billing'].includes(activeModule.id) && (
+                  {!['ipd', 'emergency', 'pharmacy', 'laboratory', 'billing'].includes(activeModule.id) && (
                     <div className="space-y-3">
                       <div className="bg-white p-4 rounded-xl border border-slate-200 shadow-2xs text-xs space-y-2">
                         <div className="flex justify-between font-bold text-slate-800 border-b pb-1.5">
@@ -904,7 +825,7 @@ export default function OmedoHMS() {
             { step: '01', title: 'Intake / ER Triage', desc: 'Patient arrives via OPD or 24/7 ER. Instant 5-sec UHID & ABHA QR binding.', icon: 'emergency' },
             { step: '02', title: 'Consult & Admission', desc: 'Doctor examination with clinical templates & direct admission advice.', icon: 'stethoscope' },
             { step: '03', title: 'Bed Allocation', desc: 'Admission desk assigns ward or ICU bed via visual matrix with advance receipt.', icon: 'hotel' },
-            { step: '04', title: 'Diagnostics & OT', desc: 'Lab orders, PACS imaging, and OT slots executed with zero paper indents.', icon: 'local_hospital' },
+            { step: '04', title: 'Pathology Diagnostics', desc: 'LIS investigation barcodes, bi-directional analyzer sync, and digital reports.', icon: 'biotech' },
             { step: '05', title: 'Nursing MAR & Care', desc: 'Hourly vitals flowsheet, medication administration, and doctor shift notes.', icon: 'assignment_ind' },
             { step: '06', title: 'TPA & Discharge', desc: 'Cashless pre-auth clearance, itemized invoice, and e-Signed discharge card.', icon: 'check_circle' },
           ].map((s) => (
@@ -943,7 +864,7 @@ export default function OmedoHMS() {
               Operating an Outpatient Clinic or Polyclinic?
             </h3>
             <p className="text-xs sm:text-sm text-slate-300 leading-relaxed">
-              If your healthcare center does not require inpatient beds or operation theatres, explore our streamlined 5-module OMEDO Clinic Edition designed specifically for outpatient doctors.
+              If your healthcare center does not require inpatient bed management or 24/7 hospital wards, explore our streamlined 5-module OMEDO Clinic Edition designed specifically for outpatient doctors.
             </p>
           </div>
           <Link

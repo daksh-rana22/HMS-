@@ -153,7 +153,7 @@ const clinicFaqs = [
     a: 'Absolutely. If you run a polyclinic with multiple visiting doctors, OMEDO Clinic tracks collections per doctor, applies custom revenue-sharing percentages, and generates automated daily payout summaries.',
   },
   {
-    q: 'What if our clinic grows and wants to add IPD beds, Pharmacy, or OT in the future?',
+    q: 'What if our clinic grows and wants to add IPD beds, Pharmacy, or Lab in the future?',
     a: 'You can upgrade seamlessly to OMEDO HMS at any time without losing a single patient record, history note, or billing ledger. The platforms share the same enterprise data schema.',
   },
 ]
@@ -715,17 +715,17 @@ export default function OmedoClinic() {
               LOOKING FOR HOSPITAL / IPD SUITE?
             </span>
             <h3 className="text-2xl sm:text-3xl font-extrabold" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
-              Operating an Inpatient Facility, OT, or 24/7 ER?
+              Operating an Inpatient Facility or 24/7 Hospital?
             </h3>
             <p className="text-xs sm:text-sm text-white/80 leading-relaxed">
-              If your facility includes Inpatient Beds (IPD), Operation Theatres, Pharmacy POS, Laboratory LIS, Radiology PACS, or Cashless TPA Insurance, explore our flagship enterprise system.
+              If your facility includes Inpatient Beds (IPD), Emergency ER, Pharmacy POS, Laboratory LIS, or Cashless TPA Insurance, explore our flagship enterprise system.
             </p>
           </div>
           <Link
             to="/omedo-hms"
             className="shrink-0 inline-flex items-center gap-2 px-6 py-3.5 rounded-full text-xs sm:text-sm font-bold bg-white text-[#00685e] shadow-md hover:bg-slate-100 hover:scale-[1.02] transition-all"
           >
-            <span>Explore OMEDO HMS (16 Modules)</span>
+            <span>Explore OMEDO HMS (13 Modules)</span>
             <span className="material-symbols-outlined text-base">arrow_forward</span>
           </Link>
         </div>

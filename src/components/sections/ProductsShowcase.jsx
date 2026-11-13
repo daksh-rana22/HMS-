@@ -121,26 +121,6 @@ export const hmsModules = [
     previewType: 'ipd',
   },
   {
-    id: 'daycare',
-    name: 'Day Care',
-    tag: 'SHORT-STAY CARE',
-    icon: 'bed',
-    desc: 'Streamlined workflows for short-stay procedures, chemotherapy, hemodialysis, and same-day surgical observation beds.',
-    features: ['Same-Day Bed Allocation', 'Procedure Time Tracking', 'Package Invoicing Sync', 'Fast-Track Discharge'],
-    badge: 'Hospital Suite',
-    previewType: 'daycare',
-  },
-  {
-    id: 'ot',
-    name: 'OT',
-    tag: 'SURGICAL SUITE',
-    icon: 'local_hospital',
-    desc: 'Operation Theatre slot booking, Pre-Anesthesia Checkup (PAC) records, surgical safety checklists, and intra-operative logs.',
-    features: ['OT Table Slot Booking', 'PAC Assessment Forms', 'Surgeon & Anesthetist Roster', 'Post-Op Recovery Tracking'],
-    badge: 'Hospital Suite',
-    previewType: 'ot',
-  },
-  {
     id: 'emergency',
     name: 'Emergency',
     tag: '24/7 TRAUMA & ER',
@@ -169,16 +149,6 @@ export const hmsModules = [
     features: ['Barcode Sample Labeling', 'Bi-Directional Analyzer Sync', 'Pathologist Verification', 'Instant Patient Portal Push'],
     badge: 'Diagnostics',
     previewType: 'laboratory',
-  },
-  {
-    id: 'radiology',
-    name: 'Radiology',
-    tag: 'RIS & PACS IMAGING',
-    icon: 'radiology',
-    desc: 'Radiology Information System (RIS) with test scheduling, modality worklist sync, and direct DICOM PACS image link into doctor EMR.',
-    features: ['Modality Worklist Sync', 'DICOM PACS Integration', 'Radiologist Report Builder', 'Stat Scan Prioritization'],
-    badge: 'Diagnostics',
-    previewType: 'radiology',
   },
   {
     id: 'nursing',
@@ -264,7 +234,7 @@ const sampleBeds = [
   { ward: 'ICU Ward A', total: 10, occupied: 8, available: 2 },
   { ward: 'General Ward', total: 30, occupied: 24, available: 6 },
   { ward: 'Deluxe Private', total: 8, occupied: 6, available: 2 },
-  { ward: 'Day Care Bay', total: 12, occupied: 7, available: 5 },
+  { ward: 'HDU Step-Down', total: 12, occupied: 7, available: 5 },
 ]
 
 const sampleEmergencyTriage = [
@@ -436,7 +406,7 @@ export default function ProductsShowcase({ showComparison = true }) {
                 <span className={`px-2 py-0.5 rounded-full text-[10px] font-bold ${
                   activeProduct === 'hms' ? 'bg-white/20 text-white' : 'bg-[#eaf6f8] text-[var(--t-primary,#00685e)]'
                 }`}>
-                  16 Modules
+                  13 Modules
                 </span>
               </button>
             </div>
@@ -790,14 +760,14 @@ export default function ProductsShowcase({ showComparison = true }) {
                         ENTERPRISE HOSPITAL MANAGEMENT SUITE
                       </span>
                       <span className="text-xs font-bold text-[var(--t-text-muted,#6d7a77)]">
-                        16 Comprehensive Modules
+                        13 Comprehensive Modules
                       </span>
                     </div>
                     <h3 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-[var(--t-text,#121d1f)]" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
                       OMEDO Hospital (HMS) Edition
                     </h3>
                     <p className="text-xs sm:text-sm text-[var(--t-text-secondary,#3d4947)] leading-relaxed max-w-2xl">
-                      Full-spectrum enterprise operating system for single and multi-chain hospitals. Integrates clinical EMR, IPD bed census, 24/7 ER triage, operation theatre scheduling, pharmacy POS, laboratory LIS, radiology PACS, nursing MAR charting, cashless TPA insurance, and comprehensive executive BI analytics.
+                      Full-spectrum enterprise operating system for single and multi-chain hospitals. Integrates clinical EMR, IPD bed census, 24/7 ER triage, pharmacy POS, laboratory LIS, nursing MAR charting, cashless TPA insurance, MRD records, and comprehensive executive BI analytics.
                     </p>
                     <div className="pt-1 flex flex-wrap items-center gap-2">
                       <span className="text-xs font-bold text-[var(--t-primary,#00685e)]">Ideal for:</span>
@@ -829,16 +799,16 @@ export default function ProductsShowcase({ showComparison = true }) {
                       to="/modules"
                       className="w-full sm:w-auto lg:w-full inline-flex items-center justify-center gap-2 px-6 py-2.5 rounded-full text-xs font-bold bg-slate-50 border border-[var(--t-border)] text-slate-700 hover:bg-[#eaf6f8] transition-all shadow-2xs"
                     >
-                      <span>Explore All 16 Modules</span>
+                      <span>Explore All 13 Modules</span>
                     </Link>
                   </div>
                 </div>
 
-                {/* 16 Module Grid with Badges */}
+                {/* 13 Module Grid with Badges */}
                 <div className="mt-6 pt-6 border-t border-[var(--t-border)]/30">
                   <div className="flex items-center justify-between mb-3">
                     <div className="text-[11px] font-extrabold uppercase tracking-wider text-[var(--t-primary,#00685e)]">
-                      16 MODULES UNDER OMEDO HMS SUITE:
+                      13 MODULES UNDER OMEDO HMS SUITE:
                     </div>
                     <span className="text-[10px] text-slate-500 font-semibold">Click any module to preview</span>
                   </div>
@@ -913,7 +883,7 @@ export default function ProductsShowcase({ showComparison = true }) {
 
                     <div className="pt-2 border-t border-[var(--t-border)]/30 flex items-center justify-between">
                       <div className="text-[11px] text-[var(--t-text-muted)] font-medium">
-                        Showing module {hmsActiveIndex + 1} of 16
+                        Showing module {hmsActiveIndex + 1} of 13
                       </div>
                       <div className="flex gap-1">
                         <button
@@ -1078,54 +1048,6 @@ export default function ProductsShowcase({ showComparison = true }) {
                         </div>
                       )}
 
-                      {currentModule.id === 'daycare' && (
-                        <div className="space-y-3">
-                          <div className="bg-white p-3.5 rounded-xl border border-slate-100 space-y-2 text-xs">
-                            <div className="flex justify-between items-center border-b pb-1.5 font-bold text-slate-800">
-                              <span>Day Care Procedure Bay</span>
-                              <span className="text-[10px] px-2 py-0.5 rounded bg-blue-100 text-blue-800">Short-Stay (4-6 Hrs)</span>
-                            </div>
-                            <div className="space-y-1.5 text-[11px]">
-                              <div className="p-2 bg-slate-50 rounded flex justify-between">
-                                <span className="font-semibold">Dialysis Session — Bed 04</span>
-                                <span className="text-emerald-600 font-bold">Completed (Discharged)</span>
-                              </div>
-                              <div className="p-2 bg-slate-50 rounded flex justify-between">
-                                <span className="font-semibold">Chemotherapy Cycle — Bed 02</span>
-                                <span className="text-amber-600 font-bold">In Infusion (2h remaining)</span>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      )}
-
-                      {currentModule.id === 'ot' && (
-                        <div className="space-y-3">
-                          <div className="bg-white p-3.5 rounded-xl border border-slate-100 text-xs space-y-2">
-                            <div className="flex justify-between items-center font-bold text-slate-800">
-                              <span>OT Schedule &amp; PAC Dashboard</span>
-                              <span className="text-[10px] px-2 py-0.5 rounded bg-emerald-100 text-emerald-800 font-bold">Theatre 01 Active</span>
-                            </div>
-                            <div className="divide-y divide-slate-100 text-[11px] space-y-1.5 pt-1">
-                              <div className="pt-1.5 flex justify-between items-center">
-                                <div>
-                                  <div className="font-bold text-slate-800">Laparoscopic Cholecystectomy</div>
-                                  <div className="text-[10px] text-slate-500">Dr. S. K. Sharma • OT-01 • 10:30 AM</div>
-                                </div>
-                                <span className="text-[10px] font-bold text-blue-600 bg-blue-50 px-2 py-0.5 rounded">In Procedure</span>
-                              </div>
-                              <div className="pt-1.5 flex justify-between items-center">
-                                <div>
-                                  <div className="font-bold text-slate-800">Total Knee Replacement (TKR)</div>
-                                  <div className="text-[10px] text-slate-500">Dr. A. Verma • OT-02 • 01:00 PM</div>
-                                </div>
-                                <span className="text-[10px] font-bold text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded">PAC Cleared</span>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      )}
-
                       {currentModule.id === 'emergency' && (
                         <div className="space-y-3">
                           <div className="grid grid-cols-2 gap-2">
@@ -1182,27 +1104,6 @@ export default function ProductsShowcase({ showComparison = true }) {
                                   </span>
                                 </div>
                               ))}
-                            </div>
-                          </div>
-                        </div>
-                      )}
-
-                      {currentModule.id === 'radiology' && (
-                        <div className="space-y-3">
-                          <div className="bg-white p-3.5 rounded-xl border border-slate-100 text-xs space-y-2">
-                            <div className="flex justify-between items-center border-b pb-1.5 font-bold text-slate-800">
-                              <span>RIS Modality Worklist</span>
-                              <span className="text-[10px] px-2 py-0.5 rounded bg-purple-100 text-purple-800">DICOM PACS</span>
-                            </div>
-                            <div className="space-y-1.5 text-[11px]">
-                              <div className="p-2 bg-slate-50 rounded flex justify-between">
-                                <span className="font-semibold">MRI Brain with Contrast (1.5T)</span>
-                                <span className="text-emerald-600 font-bold">Images Archived</span>
-                              </div>
-                              <div className="p-2 bg-slate-50 rounded flex justify-between">
-                                <span className="font-semibold">HRCT Chest Non-Contrast</span>
-                                <span className="text-blue-600 font-bold">Report Signed</span>
-                              </div>
                             </div>
                           </div>
                         </div>
@@ -1286,7 +1187,7 @@ export default function ProductsShowcase({ showComparison = true }) {
                       )}
 
                       {/* Default Fallback for other modules */}
-                      {!['ipd', 'daycare', 'ot', 'emergency', 'pharmacy', 'laboratory', 'radiology', 'nursing', 'billing', 'tpa', 'mrd'].includes(currentModule.id) && (
+                      {!['ipd', 'emergency', 'pharmacy', 'laboratory', 'nursing', 'billing', 'tpa', 'mrd'].includes(currentModule.id) && (
                         <div className="space-y-3">
                           <div className="bg-white p-3.5 rounded-xl border border-slate-100 text-xs space-y-2">
                             <div className="flex justify-between font-bold text-slate-800">
@@ -1350,7 +1251,7 @@ export default function ProductsShowcase({ showComparison = true }) {
                       🩺 OMEDO Clinic (5 Modules)
                     </th>
                     <th className="py-3 px-4 text-[var(--t-primary,#00685e)] font-extrabold text-sm w-1/3">
-                      🏥 OMEDO HMS (16 Modules)
+                      🏥 OMEDO HMS (13 Modules)
                     </th>
                   </tr>
                 </thead>
@@ -1381,7 +1282,7 @@ export default function ProductsShowcase({ showComparison = true }) {
                     <td className="py-3 px-4 text-emerald-600 font-bold">✓ Live Interactive Bed Map</td>
                   </tr>
                   <tr className="hover:bg-slate-50/70 transition-colors">
-                    <td className="py-3 px-4 font-semibold text-slate-900">Day Care &amp; Short-Stay Bays</td>
+                    <td className="py-3 px-4 font-semibold text-slate-900">Nursing MAR &amp; Ward Care</td>
                     <td className="py-3 px-4 text-slate-400">— Not Applicable</td>
                     <td className="py-3 px-4 text-emerald-600 font-bold">✓ Included</td>
                   </tr>
@@ -1401,7 +1302,7 @@ export default function ProductsShowcase({ showComparison = true }) {
                     <td className="py-3 px-4 text-emerald-600 font-bold">✓ Included (Pre-Auth Desk)</td>
                   </tr>
                   <tr className="hover:bg-slate-50/70 transition-colors">
-                    <td className="py-3 px-4 font-semibold text-slate-900">OT (Operation Theatre) &amp; MRD</td>
+                    <td className="py-3 px-4 font-semibold text-slate-900">MRD &amp; Medico-Legal Records</td>
                     <td className="py-3 px-4 text-slate-400">— Not Applicable</td>
                     <td className="py-3 px-4 text-emerald-600 font-bold">✓ Included</td>
                   </tr>
